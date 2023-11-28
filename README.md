@@ -1,4 +1,4 @@
-# ME : <p align="center">Flakkari<br><br><img src="Docs/Images/Vagabundo.png" alt="Flakkari logo" style="height: 200px"></p>
+# ME : <p align="center">Flakkari<br><br><img src="Docs/Images/Flakkari.png" alt="Flakkari logo" style="height: 200px"></p>
 
 <p align="center">
     <h3 align="center">📦 Download &#xa0; : &#xa0;
