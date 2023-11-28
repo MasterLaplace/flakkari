@@ -31,7 +31,7 @@ jobs:
             old_patch_version="${BASH_REMATCH[3]}"
           else
             echo "Failed to parse the latest tag version."
-            exit 1
+            latest_tag="v0.0.0"
           fi
 
           # Increment the patch version

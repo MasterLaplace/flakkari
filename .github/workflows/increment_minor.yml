@@ -19,7 +19,7 @@ jobs:
 
           if [[ -z "$latest_tag" ]]; then
             echo "Failed to get the latest tag."
-            exit 1
+            latest_tag="v0.0.0"
           fi
 
           # Extract the major, minor, and patch versions from the tag
