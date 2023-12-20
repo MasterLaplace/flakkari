@@ -22,7 +22,7 @@ Socket::Socket(std::shared_ptr<Address> address)
         }
     #endif
 
-    auto &addr =  _address->getAddrInfo();
+    auto &addr = _address->getAddrInfo();
     _socket = ::socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
     if (_socket == INVALID_SOCKET) {
         FLAKKARI_LOG_FATAL("Failed to create socket, error: " + std::string(::strerror(errno)));
@@ -63,7 +63,7 @@ Socket::Socket(Address address)
         }
     #endif
 
-    auto &addr =  _address->getAddrInfo();
+    auto &addr = _address->getAddrInfo();
     _socket = ::socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
     if (_socket == INVALID_SOCKET) {
         FLAKKARI_LOG_FATAL("Failed to create socket, error: " + std::string(::strerror(errno)));
@@ -87,7 +87,7 @@ Socket::Socket(ip_t ip, port_t port, Address::IpType ip_type, Address::SocketTyp
         }
     #endif
 
-    auto &addr =  _address->getAddrInfo();
+    auto &addr = _address->getAddrInfo();
     _socket = ::socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
     if (_socket == INVALID_SOCKET) {
         FLAKKARI_LOG_FATAL("Failed to create socket, error: " + std::string(::strerror(errno)));
@@ -108,7 +108,7 @@ Socket::~Socket() {
 }
 
 void Socket::bind() {
-    auto &addr =  _address->getAddrInfo();
+    auto &addr = _address->getAddrInfo();
     if (::bind(_socket, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
         FLAKKARI_LOG_FATAL("Failed to bind socket, error: " + std::string(::strerror(errno)));
         return;
@@ -123,13 +123,13 @@ void Socket::listen(int backlog) {
 }
 
 void Socket::connect() {
-    auto &addr =  _address->getAddrInfo();
+    auto &addr = _address->getAddrInfo();
     if (::connect(_socket, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
         FLAKKARI_LOG_FATAL("Failed to connect socket, error: " + std::string(::strerror(errno)));
         return;
     }
 }
- // sockaddr_storage?
+
 std::shared_ptr<Socket> Socket::accept() {
     sockaddr_storage clientAddr;
     socklen_t clientAddrLen = sizeof(clientAddr);
@@ -161,7 +161,7 @@ void Socket::send(const byte *data, size_t size, int flags) {
 }
 
 void Socket::sendTo(const std::string &data, const std::shared_ptr<Address> &address, int flags) {
-    auto &addr =  address->getAddrInfo();
+    auto &addr = address->getAddrInfo();
 
     if (::sendto(_socket, data.c_str(), data.size(), flags, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
         FLAKKARI_LOG_ERROR("Failed to send \"" + data + "\" to \"" + address->toString().value_or("No address") + "\", error: " + std::string(::strerror(errno)));
@@ -170,7 +170,7 @@ void Socket::sendTo(const std::string &data, const std::shared_ptr<Address> &add
 }
 
 void Socket::sendTo(const byte *data, const size_t &size, const std::shared_ptr<Address> &address, int flags) {
-    auto &addr =  address->getAddrInfo();
+    auto &addr = address->getAddrInfo();
 
     if (::sendto(_socket, (const char*)data, size, flags, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
         FLAKKARI_LOG_ERROR("Failed to send \"" + std::string((const char*)data, size) + "\" to \"" + address->toString().value_or("No address") + "\", error: " + std::string(::strerror(errno)));
