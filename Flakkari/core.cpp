@@ -6,10 +6,16 @@
 */
 
 #include <iostream>
+#include "FlakkariMessage.hpp"
 
 using namespace std;
 
 int main() {
-    cout << "Server: Hello, World!" << endl;
+    FLAKKARI_LOG_INFO("Server: Hello, World!");
+    FLAKKARI_LOG_LOG("Server: Hello, World!");
+    FLAKKARI_LOG_DEBUG("Server: Hello, World!");
+    FLAKKARI_LOG_WARNING("Server: Hello, World!");
+    FLAKKARI_LOG_ERROR("Server: Hello, World!");
+    FLAKKARI_LOG_FATAL("Server: Hello, World!");
     return 0;
 }
