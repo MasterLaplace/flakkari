@@ -1,16 +1,20 @@
 /*
 ** EPITECH PROJECT, 2023
-** B-CPP-500-REN-5-2-rtype-mathys.thevenot
+** Flakkari
 ** File description:
 ** core
 */
 
 #include <iostream>
-#include "FlakkariMessage.hpp"
 
-using namespace std;
+#include "FlakkariMessage.hpp"
+#include "Network/Address.hpp"
+
+
 
 int main() {
+    Flakkari::Network::Address address(-1, Flakkari::Network::Address::SocketType::UDP, Flakkari::Network::Address::IpType::IPv4);
+    std::cout << address << std::endl;
     FLAKKARI_LOG_INFO("Server: Hello, World!");
     FLAKKARI_LOG_LOG("Server: Hello, World!");
     FLAKKARI_LOG_DEBUG("Server: Hello, World!");

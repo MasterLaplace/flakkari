@@ -7,10 +7,12 @@ project(R-Type_Server)
 set(SOURCES
     Flakkari/core.cpp
     Flakkari/Logger/Logger.cpp
+    Flakkari/Network/Address.cpp
 )
 
 set(HEADERS
     Flakkari/Logger/Logger.hpp
+    Flakkari/Network/Address.hpp
 )
 
 # Separate Build Artifacts:
