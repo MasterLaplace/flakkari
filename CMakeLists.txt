@@ -6,10 +6,11 @@ project(R-Type_Server)
 # Add all your source and headers files:
 set(SOURCES
     Flakkari/core.cpp
+    Flakkari/Logger/Logger.cpp
 )
 
 set(HEADERS
-    Flakkari/FlakkariLogger.hpp
+    Flakkari/Logger/Logger.hpp
 )
 
 # Separate Build Artifacts:
