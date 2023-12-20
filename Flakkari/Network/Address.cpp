@@ -59,12 +59,14 @@ Address::Address(port_t port, SocketType socket_type, IpType ip_type)
     });
 }
 
-Address::Address(sockaddr_in clientAddr)
+Address::Address(const sockaddr_in &clientAddr, SocketType socket_type, IpType ip_type)
+    : _socket_type(socket_type), _ip_type(ip_type)
 {
     addrinfo hints;
-    hints.ai_family = AF_INET;
-    hints.ai_socktype = SOCK_STREAM;
-    hints.ai_protocol = IPPROTO_TCP;
+
+    hints.ai_family = (_ip_type == IpType::IPv4) ? AF_INET : AF_INET6;
+    hints.ai_socktype = (_socket_type == SocketType::TCP) ? SOCK_STREAM : SOCK_DGRAM;
+    hints.ai_protocol = (_socket_type == SocketType::TCP) ? IPPROTO_TCP : IPPROTO_UDP;
     hints.ai_flags = (AI_PASSIVE | AI_V4MAPPED | AI_ALL);
 
     addrinfo *result = nullptr;
@@ -79,12 +81,13 @@ Address::Address(sockaddr_in clientAddr)
     });
 }
 
-Address::Address(sockaddr clientAddr)
+Address::Address(const sockaddr_storage &clientAddr, SocketType socket_type, IpType ip_type)
+    : _socket_type(socket_type), _ip_type(ip_type)
 {
     addrinfo hints;
-    hints.ai_family = AF_INET;
-    hints.ai_socktype = SOCK_STREAM;
-    hints.ai_protocol = IPPROTO_TCP;
+    hints.ai_family = (_ip_type == IpType::IPv4) ? AF_INET : AF_INET6;
+    hints.ai_socktype = (_socket_type == SocketType::TCP) ? SOCK_STREAM : SOCK_DGRAM;
+    hints.ai_protocol = (_socket_type == SocketType::TCP) ? IPPROTO_TCP : IPPROTO_UDP;
     hints.ai_flags = (AI_PASSIVE | AI_V4MAPPED | AI_ALL);
 
     addrinfo *result = nullptr;
