@@ -8,11 +8,13 @@ set(SOURCES
     Flakkari/core.cpp
     Flakkari/Logger/Logger.cpp
     Flakkari/Network/Address.cpp
+    Flakkari/Network/Socket.cpp
 )
 
 set(HEADERS
     Flakkari/Logger/Logger.hpp
     Flakkari/Network/Address.hpp
+    Flakkari/Network/Socket.hpp
 )
 
 # Separate Build Artifacts:

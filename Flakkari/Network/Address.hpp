@@ -63,8 +63,8 @@ class Address {
     public:
         Address(address_t &address, port_t port, SocketType socket_type, IpType ip_type);
         Address(port_t port, SocketType socket_type, IpType ip_type);
-        Address(sockaddr_in clientAddr);
-        Address(sockaddr clientAddr);
+        Address(const sockaddr_in &clientAddr, SocketType socket_type, IpType ip_type);
+        Address(const sockaddr_storage &clientAddr, SocketType socket_type, IpType ip_type);
         Address(const Address &) = default;
         Address(Address &&) = default;
         Address() = default;
