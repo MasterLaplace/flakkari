@@ -1,9 +1,16 @@
-/*
-** EPITECH PROJECT, 2023
-** Flakkari
-** File description:
-** IOMultiplexer
-*/
+/**************************************************************************
+ * Flakkari Library v0.0.0
+ *
+ * Flakkari Library is a C++ Library for Network.
+ * @file IOMultiplexer.hpp
+ * @brief This file contains the IOMultiplexer interface and the different IOMultiplexer implementations for different platforms.
+ *
+ * Flakkari Library is under MIT License.
+ * https://opensource.org/licenses/MIT
+ * © 2023 @MasterLaplace
+ * @version 0.0.0
+ * @date 2023-12-23
+ **************************************************************************/
 
 #ifndef IOMULTIPLEXER_HPP_
 #define IOMULTIPLEXER_HPP_
@@ -25,6 +32,7 @@
 #include <vector>
 
 namespace Flakkari::Network {
+
 /**
  * @brief IOMultiplexer is an interface for the different I/O multiplexing
  * @interface IOMultiplexer
@@ -85,89 +93,68 @@ class PPOLL : public IOMultiplexer {
         using nfds_t = unsigned long int;
 
     public:
-        PPOLL(int fileDescriptor, event_t events)
-        {
-            if (fileDescriptor == -1) {
-                FLAKKARI_LOG_ERROR("Socket is -1");
-                throw std::runtime_error("Socket is -1");
-            }
-
-            if (_pollfds.size() < std::size_t(fileDescriptor))
-                _pollfds.resize(fileDescriptor + 1);
-            _pollfds[fileDescriptor] = pollfd{fileDescriptor, events, 0};
-
-            _timeout.tv_sec = 1;
-            _timeout.tv_nsec = 0;// 100000000;  // 100ms
-        }
-        PPOLL() {
-            _timeout.tv_sec = 1;
-            _timeout.tv_nsec = 0;// 100000000;  // 100ms
-        }
+        PPOLL(int fileDescriptor, event_t events);
+        PPOLL();
         ~PPOLL() = default;
 
-        void addSocket(FileDescriptor socket) override {
-            if (socket == -1)
-                throw std::runtime_error("Socket is -1");
-            if (_pollfds.size() < std::size_t(socket))
-                _pollfds.resize(socket + 1);
-            _pollfds[socket] = pollfd{socket, POLLIN | POLLPRI, 0};
-        }
+        /**
+         * @brief Add a socket to the PPOLL list
+         *
+         * @param socket  The socket to add to the list
+         */
+        void addSocket(FileDescriptor socket) override;
 
-        void addSocket(FileDescriptor socket, event_t events) {
-            if (socket == -1)
-                throw std::runtime_error("Socket is -1");
-            if (_pollfds.size() < std::size_t(socket))
-                _pollfds.resize(socket + 1);
-            _pollfds[socket] = pollfd{socket, events, 0};
-        }
+        /**
+         * @brief Add a socket to the PPOLL list with specific events
+         *
+         * @param socket  The socket to add to the list
+         * @param events  The events to listen to on the socket (POLLIN | POLLPRI)
+         */
+        void addSocket(FileDescriptor socket, event_t events);
 
-        void removeSocket(FileDescriptor socket) override {
-            if (socket == -1)
-                throw std::runtime_error("Socket is -1");
-            if (_pollfds.size() < std::size_t(socket))
-                throw std::runtime_error("Index out of range");
-            if (_pollfds.size() == std::size_t(socket))
-                _pollfds.pop_back();
-            else
-                _pollfds[socket] = pollfd{-1, 0, 0};
-        }
+        /**
+         * @brief Remove a socket from the PPOLL list
+         *
+         * @param socket  The socket to remove from the list
+         */
+        void removeSocket(FileDescriptor socket) override;
 
-        int wait() override {
-            return ppoll(_pollfds.data(), _pollfds.size(), &_timeout, nullptr);
-        }
+        /**
+         * @brief Wait for an event to happen on a socket or timeout
+         *
+         * @return int  The number of events that happened or -1 if an error occured or 0 if the timeout expired (EINTR)
+         * @see ppoll
+         * @see errno
+         */
+        int wait() override;
 
-        pollfd &operator[](std::size_t index) {
-            if (_pollfds.size() < index)
-                throw std::runtime_error("Index out of range");
-            return _pollfds[index];
-        }
-
-        pollfd &operator[](FileDescriptor socket) {
-            if (socket == -1)
-                throw std::runtime_error("Socket is -1");
-            if (_pollfds.size() < std::size_t(socket))
-                throw std::runtime_error("Index out of range");
-            return _pollfds[socket];
-        }
+        pollfd &operator[](std::size_t index);
+        pollfd &operator[](FileDescriptor socket);
 
         std::vector<pollfd>::iterator begin() { return _pollfds.begin(); }
         std::vector<pollfd>::iterator end() { return _pollfds.end(); }
 
+        /**
+         * @brief Check if a socket is ready to read from
+         *
+         * @param fd  The pollfd to check
+         * @return true  If the socket is ready
+         * @return false  If the socket is not ready
+         */
         [[nodiscard]] bool isReady(pollfd fd) {
             if (fd.fd == -1)
                 throw std::runtime_error("Socket is -1");
             return fd.revents & (POLLIN | POLLPRI);
         }
 
-        [[nodiscard]] bool isReady(FileDescriptor socket) override {
-            if (socket == -1)
-                throw std::runtime_error("Socket is -1");
-            if (_pollfds.size() < std::size_t(socket))
-                throw std::runtime_error("Index out of range");
-            if (_pollfds[socket].revents & (POLLIN | POLLPRI))
-                return true;
-            return false;
-        }
+        /**
+         * @brief Check if a socket is ready to read from
+         *
+         * @param socket  The socket to check
+         * @return true  If the socket is ready
+         * @return false  If the socket is not ready
+         */
+        [[nodiscard]] bool isReady(FileDescriptor socket) override;
 
     protected:
     private:
@@ -187,6 +174,7 @@ class PPOLL : public IOMultiplexer {
 #if defined(_IO_URING_)
 #include <liburing.h>
 #endif
+
 } // namespace Flakkari::Network
 
 #endif /* !IOMULTIPLEXER_HPP_ */
