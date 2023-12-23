@@ -1,21 +1,41 @@
 /*
 ** EPITECH PROJECT, 2023
-** B-CPP-500-REN-5-2-rtype-mathys.thevenot
+** Flakkari
 ** File description:
 ** core
 */
 
 #include <iostream>
-#include "FlakkariMessage.hpp"
-
-using namespace std;
+#include "Network/IOMultiplexer.hpp"
 
 int main() {
-    FLAKKARI_LOG_INFO("Server: Hello, World!");
-    FLAKKARI_LOG_LOG("Server: Hello, World!");
-    FLAKKARI_LOG_DEBUG("Server: Hello, World!");
-    FLAKKARI_LOG_WARNING("Server: Hello, World!");
-    FLAKKARI_LOG_ERROR("Server: Hello, World!");
-    FLAKKARI_LOG_FATAL("Server: Hello, World!");
+    Flakkari::Network::Socket socket("localhost", 8080, Flakkari::Network::Address::IpType::IPv4, Flakkari::Network::Address::SocketType::UDP);
+    std::cout << socket << std::endl;
+    socket.bind();
+
+    auto io = std::make_unique<Flakkari::Network::PPOLL>();
+    io->addSocket(socket.getSocket());
+
+    while (true)
+    {
+        int result = io->wait();
+
+        if (result == -1) {
+            FLAKKARI_LOG_FATAL("Failed to poll sockets, error: " + std::string(::strerror(errno)));
+            return 84;
+        } else if (result == 0) {
+            FLAKKARI_LOG_DEBUG("ppoll timed out");
+            continue;
+        }
+        for (auto &fd : *io) {
+            if (io->isReady(fd)) {
+        auto packet = socket.receiveFrom();
+        std::cout << (*packet.value().first.get());
+        std::cout << " : ";
+        std::cout << packet.value().second << std::endl;
+        socket.sendTo(packet.value().first, packet.value().second);
+            }
+        }
+    }
     return 0;
 }
