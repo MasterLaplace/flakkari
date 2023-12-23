@@ -17,6 +17,7 @@ set(HEADERS
     Flakkari/Network/Address.hpp
     Flakkari/Network/Buffer.hpp
     Flakkari/Network/Socket.hpp
+    Flakkari/Network/IOMultiplexer.hpp
 )
 
 # Separate Build Artifacts:
