@@ -70,7 +70,7 @@ void Buffer::runLengthEncode() {
     }
     encodedBuffer.push_back(currentCount);
     encodedBuffer.push_back(currentByte);
-    *this = encodedBuffer;
+    std::copy(encodedBuffer.begin(), encodedBuffer.end(), begin());
 }
 
 void Buffer::runLengthDecode() {
@@ -82,7 +82,7 @@ void Buffer::runLengthDecode() {
             decodedBuffer.push_back(currentByte);
         }
     }
-    *this = decodedBuffer;
+    std::copy(decodedBuffer.begin(), decodedBuffer.end(), begin());
 }
 
 void Buffer::convertToHex() {
@@ -91,7 +91,7 @@ void Buffer::convertToHex() {
         hexBuffer.push_back(byte / 16);
         hexBuffer.push_back(byte % 16);
     }
-    *this = hexBuffer;
+    std::copy(hexBuffer.begin(), hexBuffer.end(), begin());
 }
 
 void Buffer::convertFromHex() {
@@ -100,7 +100,7 @@ void Buffer::convertFromHex() {
         byte currentByte = (*this)[i] * 16 + (*this)[i + 1];
         hexBuffer.push_back(currentByte);
     }
-    *this = hexBuffer;
+    std::copy(hexBuffer.begin(), hexBuffer.end(), begin());
 }
 
 Buffer::operator byte *() {
