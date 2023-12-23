@@ -8,12 +8,14 @@ set(SOURCES
     Flakkari/core.cpp
     Flakkari/Logger/Logger.cpp
     Flakkari/Network/Address.cpp
+    Flakkari/Network/Buffer.cpp
     Flakkari/Network/Socket.cpp
 )
 
 set(HEADERS
     Flakkari/Logger/Logger.hpp
     Flakkari/Network/Address.hpp
+    Flakkari/Network/Buffer.hpp
     Flakkari/Network/Socket.hpp
 )
 

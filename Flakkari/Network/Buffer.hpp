@@ -19,6 +19,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <algorithm>
 
 using byte = unsigned char;
 using byte_t = byte;
@@ -109,6 +110,66 @@ class Buffer : public std::vector<byte> {
          * @return const byte*  Data of the buffer
          */
         const byte *getData() const;
+
+        /**
+         * @brief Get the data of the buffer
+         *
+         * @param offset  Offset of the data to extract
+         * @param length  Length of the data to extract
+         * @return std::string  Data of the buffer
+         */
+        Buffer extractData(std::size_t offset, std::size_t length) const;
+
+        /**
+         * @brief Concatenate two buffers together
+         *
+         * @param otherBuffer Buffer to concatenate
+         */
+        void concat(const Buffer& otherBuffer);
+
+        /**
+         * @brief Calculate the checksum of the buffer
+         *
+         * @return uint16_t Checksum of the buffer
+         *
+         * @note The checksum is calculated by adding all the bytes of the buffer.
+         * The result is then truncated to 16 bits.
+         * @see https://en.wikipedia.org/wiki/Checksum
+         */
+        uint16_t calculateChecksum() const;
+
+        /**
+         * @brief Encode the buffer using XOR algorithm with a key
+         *
+         * @param key  Key to encode the buffer
+         */
+        void bitwiseXOR(const Buffer& otherBuffer);
+
+        /**
+         * @brief Encode the buffer using run-length encoding algorithm
+         *
+         * @note The buffer must be encoded using run-length decoding algorithm.
+         * @see https://en.wikipedia.org/wiki/Run-length_encoding
+         */
+        void runLengthEncode();
+
+        /**
+         * @brief Decode the buffer using run-length decoding algorithm
+         *
+         */
+        void runLengthDecode();
+
+        /**
+         * @brief Convert the buffer from binary to hexadecimal
+         *
+         */
+        void convertToHex();
+
+        /**
+         * @brief Convert the buffer from hexadecimal to binary
+         *
+         */
+        void convertFromHex();
 
         /**
          * @brief Get the data of the buffer
