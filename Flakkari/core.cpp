@@ -17,15 +17,10 @@ int main() {
     while (true)
     {
         auto packet = socket.receiveFrom();
-        std::cout << packet.first;
+        std::cout << (*packet.value().first.get());
         std::cout << " : ";
-        std::cout << packet.second.value_or("No packet") << std::endl;
+        std::cout << packet.value().second << std::endl;
+        socket.sendTo(packet.value().first, packet.value().second);
     }
-    FLAKKARI_LOG_INFO("Server: Hello, World!");
-    FLAKKARI_LOG_LOG("Server: Hello, World!");
-    FLAKKARI_LOG_DEBUG("Server: Hello, World!");
-    FLAKKARI_LOG_WARNING("Server: Hello, World!");
-    FLAKKARI_LOG_ERROR("Server: Hello, World!");
-    FLAKKARI_LOG_FATAL("Server: Hello, World!");
     return 0;
 }

@@ -16,6 +16,12 @@
 #define SOCKET_HPP_
 
 #include "Address.hpp"
+#include "Buffer.hpp"
+
+#include <iostream>
+#include <memory>
+#include <optional>
+#include <utility>
 
 #ifdef _WIN32
     #include <winsock2.h>
@@ -29,7 +35,6 @@
     #define INVALID_SOCKET (SOCKET)(~0)
     #define SOCKET_ERROR (-1)
 #else
-    #include <iostream>
     #include <cstring>
     #include <arpa/inet.h>
 
@@ -112,7 +117,6 @@ class Socket {
         using port_t = Address::port_t;
         using ip_t = const std::string &;
         using socket_t = SOCKET;
-        using byte = unsigned char;
 
     public:
         Socket(std::shared_ptr<Address> address);
@@ -135,15 +139,15 @@ class Socket {
         std::shared_ptr<Socket> accept();
         void setBlocking(bool blocking = true);
 
-        void send(const std::string &data, int flags = 0);
-        void send(const byte *data, size_t size, int flags = 0);
-        void sendTo(const std::string &data, const std::shared_ptr<Address> &address, int flags = 0);
-        void sendTo(const byte *data, const size_t &size, const std::shared_ptr<Address> &address, int flags = 0);
+        void send(const Buffer &data, int flags = 0);
+        void send(const Buffer &data, size_t size, int flags = 0);
+        void sendTo(const std::shared_ptr<Address> &address, const Buffer &data, int flags = 0);
+        void sendTo(const std::shared_ptr<Address> &address, const byte *data, const size_t &size, int flags = 0);
 
-        std::optional<std::string> receive(size_t size, int flags = 0);
-        std::optional<std::string> receive(int flags = 0);
-        std::optional<std::pair<Address, std::string>> receiveFrom(size_t size, int flags = 0);
-        std::pair<Address, std::optional<std::string>> receiveFrom(int flags = 0);
+        std::optional<Buffer> receive(size_t size, int flags = 0);
+        std::optional<Buffer> receive(int flags = 0);
+        std::optional<std::pair<std::shared_ptr<Address>, Buffer>> receiveFrom(size_t size, int flags = 0);
+        std::optional<std::pair<std::shared_ptr<Address>, Buffer>> receiveFrom(int flags = 0);
 
         void close();
 

@@ -146,40 +146,40 @@ std::shared_ptr<Socket> Socket::accept() {
     return std::make_shared<Socket>(clientSocket, clientAddress);
 }
 
-void Socket::send(const std::string &data, int flags) {
-    if (::send(_socket, data.c_str(), data.size(), flags) == SOCKET_ERROR) {
-        FLAKKARI_LOG_ERROR("Failed to send \"" + data + "\" to socket(" + std::to_string(_socket) + "), error: " + std::string(::strerror(errno)));
+void Socket::send(const Buffer &data, int flags) {
+    if (::send(_socket, data.getData(), data.getSize(), flags) == SOCKET_ERROR) {
+        FLAKKARI_LOG_ERROR("Failed to send \"" + std::string(data.begin(), data.end()) + "\" to socket(" + std::to_string(_socket) + "), error: " + std::string(::strerror(errno)));
         return;
     }
 }
 
-void Socket::send(const byte *data, size_t size, int flags) {
-    if (::send(_socket, (const char*)data, size, flags) == SOCKET_ERROR) {
-        FLAKKARI_LOG_ERROR("Failed to send \"" + std::string((const char*)data, size) + "\" to socket(" + std::to_string(_socket) + "), error: " + std::string(::strerror(errno)));
+void Socket::send(const Buffer &data, size_t size, int flags) {
+    if (::send(_socket, data.getData(), size, flags) == SOCKET_ERROR) {
+        FLAKKARI_LOG_ERROR("Failed to send \"" + std::string(data.begin(), data.end()) + "\" to socket(" + std::to_string(_socket) + "), error: " + std::string(::strerror(errno)));
         return;
     }
 }
 
-void Socket::sendTo(const std::string &data, const std::shared_ptr<Address> &address, int flags) {
+void Socket::sendTo(const std::shared_ptr<Address> &address, const Buffer &data, int flags) {
     auto &addr = address->getAddrInfo();
 
-    if (::sendto(_socket, data.c_str(), data.size(), flags, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
-        FLAKKARI_LOG_ERROR("Failed to send \"" + data + "\" to \"" + address->toString().value_or("No address") + "\", error: " + std::string(::strerror(errno)));
+    if (::sendto(_socket, data.getData(), data.getSize(), flags, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
+        FLAKKARI_LOG_ERROR("Failed to send \"" + std::string(data.begin(), data.end()) + "\" to \"" + address->toString().value_or("No address") + "\", error: " + std::string(::strerror(errno)));
         return;
     }
 }
 
-void Socket::sendTo(const byte *data, const size_t &size, const std::shared_ptr<Address> &address, int flags) {
+void Socket::sendTo(const std::shared_ptr<Address> &address, const byte *data, const size_t &size, int flags) {
     auto &addr = address->getAddrInfo();
 
-    if (::sendto(_socket, (const char*)data, size, flags, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
-        FLAKKARI_LOG_ERROR("Failed to send \"" + std::string((const char*)data, size) + "\" to \"" + address->toString().value_or("No address") + "\", error: " + std::string(::strerror(errno)));
+    if (::sendto(_socket, data, size, flags, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
+        FLAKKARI_LOG_ERROR("Failed to send \"" + std::string(data, data + size) + "\" to \"" + address->toString().value_or("No address") + "\", error: " + std::string(::strerror(errno)));
         return;
     }
 }
 
-std::optional<std::string> Socket::receive(size_t size, int flags) {
-    std::string data(size, 0);
+std::optional<Buffer> Socket::receive(size_t size, int flags) {
+    Buffer data(size, 0);
 
     if (::recv(_socket, &data[0], size, flags) == SOCKET_ERROR) {
         FLAKKARI_LOG_ERROR("Failed to receive data from socket(" + std::to_string(_socket) + "), error: " + std::string(::strerror(errno)));
@@ -188,8 +188,8 @@ std::optional<std::string> Socket::receive(size_t size, int flags) {
     return data;
 }
 
-std::optional<std::string> Socket::receive(int flags) {
-    std::string data(4096, 0);
+std::optional<Buffer> Socket::receive(int flags) {
+    Buffer data(4096, 0);
 
     if (::recv(_socket, &data[0], 4096, flags) == SOCKET_ERROR) {
         FLAKKARI_LOG_ERROR("Failed to receive data from socket(" + std::to_string(_socket) + "), error: " + std::string(::strerror(errno)));
@@ -198,12 +198,12 @@ std::optional<std::string> Socket::receive(int flags) {
     return data;
 }
 
-std::optional<std::pair<Address, std::string>> Socket::receiveFrom(size_t size, int flags) {
-    std::string data(size, 0);
+std::optional<std::pair<std::shared_ptr<Address>, Buffer>> Socket::receiveFrom(size_t size, int flags) {
+    Buffer data(size, 0);
     sockaddr_storage addr;
     socklen_t addrlen = sizeof(addr);
 
-    if (::recvfrom(_socket, &data[0], size, flags, (sockaddr*)&addr, &addrlen) == SOCKET_ERROR) {
+    if (::recvfrom(_socket, data.data(), size, flags, (sockaddr*)&addr, &addrlen) == SOCKET_ERROR) {
         if (errno == EAGAIN || errno == EWOULDBLOCK)
             return {};
         FLAKKARI_LOG_ERROR("Failed to receive data from \"" + _address->toString().value_or("No address") + "\", error: " + std::string(::strerror(errno)));
@@ -211,11 +211,11 @@ std::optional<std::pair<Address, std::string>> Socket::receiveFrom(size_t size, 
     }
     auto _ip_type = (addr.ss_family == AF_INET) ? Address::IpType::IPv4 : (addr.ss_family == AF_INET6) ? Address::IpType::IPv6 : Address::IpType::None;
 
-    return std::make_pair(Address(addr, _address->getSocketType(), _ip_type), data);
+    return std::make_pair(std::make_shared<Address>(addr, _address->getSocketType(), _ip_type), Buffer(data.begin(), data.end()));
 }
 
-std::pair<Address, std::optional<std::string>> Socket::receiveFrom(int flags) {
-    std::string data(4096, 0);
+std::optional<std::pair<std::shared_ptr<Address>, Buffer>> Socket::receiveFrom(int flags) {
+    Buffer data(4096, 0);
     sockaddr_storage addr;
     socklen_t addrlen = sizeof(addr);
 
@@ -226,7 +226,7 @@ std::pair<Address, std::optional<std::string>> Socket::receiveFrom(int flags) {
 
     auto _ip_type = (addr.ss_family == AF_INET) ? Address::IpType::IPv4 : (addr.ss_family == AF_INET6) ? Address::IpType::IPv6 : Address::IpType::None;
 
-    return std::make_pair(Address(addr, _address->getSocketType(), _ip_type), data);
+    return std::make_pair(std::make_shared<Address>(addr, _address->getSocketType(), _ip_type), data);
 }
 
 void Socket::close() {
