@@ -11,6 +11,7 @@ set(SOURCES
     Flakkari/Network/Buffer.cpp
     Flakkari/Network/Socket.cpp
     Flakkari/Network/IOMultiplexer.cpp
+    Flakkari/Server/Client/Client.cpp
 )
 
 set(HEADERS
@@ -19,6 +20,7 @@ set(HEADERS
     Flakkari/Network/Buffer.hpp
     Flakkari/Network/Socket.hpp
     Flakkari/Network/IOMultiplexer.hpp
+    Flakkari/Server/Client/Client.hpp
 )
 
 # Separate Build Artifacts:
