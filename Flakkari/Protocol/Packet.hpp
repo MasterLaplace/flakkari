@@ -75,6 +75,18 @@ namespace Flakkari::Protocol::API {
             void deleteFragment(Network::Buffer fragment);
         };
 
+        void serializeHeader(Header header, Network::Buffer& buffer);
+
+        void serializeBuffer(Network::Buffer buffer, Network::Buffer& buffer2);
+
+        void serializePacket(Packet packet, Network::Buffer& buffer);
+
+        void deserializeHeader(Network::Buffer buffer, Header& header);
+
+        void deserializeBuffer(Network::Buffer buffer, Network::Buffer& buffer2);
+
+        void deserializePacket(Network::Buffer buffer, Packet& packet);
+
     } /* namespace V_1 */
 
 } // namespace Flakkari::Protocol::API
