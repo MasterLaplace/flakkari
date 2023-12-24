@@ -18,6 +18,7 @@
 
 #include "Network/IOMultiplexer.hpp"
 #include "Client/ClientManager.hpp"
+#include "Protocol/Packet.hpp"
 
 namespace Flakkari {
 
@@ -60,7 +61,6 @@ class UDPServer {
     private:
         Network::Socket _socket;
         std::unique_ptr<Network::PPOLL> _io;
-        ClientManager _clientManager;
 };
 
 } /* namespace Flakkari */
