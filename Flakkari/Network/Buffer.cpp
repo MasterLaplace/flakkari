@@ -123,6 +123,30 @@ Buffer::operator const std::string() const {
     return std::string((char *)data(), size());
 }
 
+Buffer Buffer::operator+(const Buffer& otherBuffer) const {
+    Buffer newBuffer = *this;
+    newBuffer += otherBuffer;
+    return newBuffer;
+}
+
+Buffer Buffer::operator+=(const Buffer& otherBuffer){
+    concat(otherBuffer);
+    return *this;
+}
+
+Buffer Buffer::operator-(const Buffer& otherBuffer) const {
+    Buffer newBuffer = *this;
+    newBuffer -= otherBuffer;
+    return newBuffer;
+}
+
+Buffer Buffer::operator-=(const Buffer& otherBuffer) {
+    for (const auto &byte : otherBuffer) {
+        erase(std::find(begin(), end(), byte));
+    }
+    return *this;
+}
+
 std::ostream &operator<<(std::ostream &os, const Buffer &buffer) {
     os << buffer.getData();
     return os;

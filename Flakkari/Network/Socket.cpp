@@ -94,10 +94,15 @@ Socket::Socket(ip_t ip, port_t port, Address::IpType ip_type, Address::SocketTyp
         return;
     }
 
+    #if __APPLE__
+        int optval = 1;
+        ::setsockopt(_socket, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval));
+    #elif __linux__
     if (::setsockopt(_socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, "\001", 4)) {
         FLAKKARI_LOG_FATAL("Failed to set socket to reuse address and port, error: " + std::string(::strerror(errno)));
         return;
     }
+    #endif
 }
 
 Socket::~Socket() {

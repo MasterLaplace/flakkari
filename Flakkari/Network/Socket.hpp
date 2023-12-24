@@ -34,7 +34,7 @@
     typedef SOCKET SOCKET;
     #define INVALID_SOCKET (SOCKET)(~0)
     #define SOCKET_ERROR (-1)
-#else
+#elif __linux__
     #include <cstring>
     #include <arpa/inet.h>
 
@@ -44,6 +44,17 @@
     #else
     #error "POSIX not defined"
     #endif
+
+    typedef int SOCKET;
+    #define INVALID_SOCKET (-1)
+    #define SOCKET_ERROR (-1)
+#elif __APPLE__
+    #include <arpa/inet.h>
+    #include <fcntl.h>
+    #include <netdb.h>
+    #include <netinet/in.h>
+    #include <sys/socket.h>
+    #include <unistd.h>
 
     typedef int SOCKET;
     #define INVALID_SOCKET (-1)
