@@ -11,6 +11,7 @@ set(SOURCES
     Flakkari/Network/Buffer.cpp
     Flakkari/Network/Socket.cpp
     Flakkari/Network/IOMultiplexer.cpp
+    Flakkari/Protocol/Header.cpp
     Flakkari/Server/UDPServer.cpp
     Flakkari/Server/Client/Client.cpp
     Flakkari/Server/Client/ClientManager.cpp
