@@ -35,18 +35,17 @@ int UDPServer::run() {
             return 84;
         } else if (result == 0) {
             FLAKKARI_LOG_DEBUG("ppoll timed out");
-            _clientManager.checkInactiveClients();
+            ClientManager::checkInactiveClients();
             continue;
         }
         for (auto &fd : *_io) {
             if (_io->isReady(fd)) {
                 auto packet = _socket.receiveFrom();
-                std::cout << (*packet.value().first.get());
+                std::cout << (*packet->first.get());
                 std::cout << " : ";
-                std::cout << packet.value().second << std::endl;
-                _clientManager.addClient(packet.value().first);
-                _clientManager.checkInactiveClients();
-                _socket.sendTo(packet.value().first, packet.value().second);
+                std::cout << packet->second << std::endl;
+                ClientManager::addClient(packet->first);
+                ClientManager::checkInactiveClients();
             }
         }
     }

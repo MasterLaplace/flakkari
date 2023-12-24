@@ -46,20 +46,50 @@ namespace Flakkari {
  * @endcode
  */
 class ClientManager {
+    private:
+        static std::shared_ptr<ClientManager> _instance;
+
     public:
+        std::unordered_map<std::string /*ip:port*/, std::shared_ptr<Client>> _clients;
+
+    public:
+        ClientManager(const ClientManager &) = delete;
+        ClientManager(const std::shared_ptr<ClientManager> &) = delete;
+        void operator=(const ClientManager &) = delete;
+        void operator=(const std::shared_ptr<ClientManager> &) = delete;
+
+        /**
+         * @brief Construct a new ClientManager object
+         *
+         */
+        ClientManager() = default;
+
+        /**
+         * @brief Destroy the ClientManager object
+         *
+         */
+        ~ClientManager() = default;
+
+        /**
+         * @brief Get the instance of the client manager
+         *
+         * @return std::shared_ptr<ClientManager>  The instance of the client manager
+         */
+        static std::shared_ptr<ClientManager> getInstance();
+
         /**
          * @brief Add a client to the client manager or update the last activity of the client
          *
          * @param client  The client's address
          */
-        void addClient(std::shared_ptr<Network::Address> client);
+        static void addClient(std::shared_ptr<Network::Address> client);
 
         /**
          * @brief Remove a client from the client manager
          *
          * @param client  The client's address
          */
-        void removeClient(std::shared_ptr<Network::Address> client);
+        static void removeClient(std::shared_ptr<Network::Address> client);
 
         /**
          * @brief Check if the clients are still connected to the server
@@ -70,11 +100,31 @@ class ClientManager {
          * @see Client::isConnected()
          * @see Client::keepAlive()
          */
-        void checkInactiveClients();
+        static void checkInactiveClients();
 
-    protected:
-    private:
-        std::unordered_map<std::string /*ip:port*/, std::shared_ptr<Client>> _clients;
+        /**
+         * @brief Get the Client object
+         *
+         * @param ip  The client's ip address and port
+         * @return std::shared_ptr<Client>  The client object
+         */
+        static std::shared_ptr<Client> getClient(std::string ip);
+
+        /**
+         * @brief Get the Address object
+         *
+         * @param ip  The client's ip address and port
+         * @return std::shared_ptr<Network::Address>  The client's address
+         */
+        static std::shared_ptr<Network::Address> getAddress(std::string ip);
+
+        /**
+         * @brief Get the client object from the client manager
+         *
+         * @param ip  The client's ip address and port
+         * @return std::shared_ptr<Client>  The client object
+         */
+        std::shared_ptr<Client> operator[](std::string ip);
 };
 
 } /* namespace Flakkari */

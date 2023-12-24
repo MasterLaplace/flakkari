@@ -12,11 +12,10 @@ set(SOURCES
     Flakkari/Network/Socket.cpp
     Flakkari/Network/IOMultiplexer.cpp
     Flakkari/Protocol/Header.cpp
+    Flakkari/Protocol/Packet.cpp
     Flakkari/Server/UDPServer.cpp
     Flakkari/Server/Client/Client.cpp
     Flakkari/Server/Client/ClientManager.cpp
-    Flakkari/Protocol/Header.cpp
-    Flakkari/Protocol/Packet.cpp
 )
 
 set(HEADERS

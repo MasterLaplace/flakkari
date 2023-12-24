@@ -59,6 +59,13 @@ class Client {
          */
         void keepAlive();
 
+        /**
+         * @brief Get the client's address
+         *
+         * @return std::shared_ptr<Network::Address>  The client's address
+         */
+        [[nodiscard]] std::shared_ptr<Network::Address> getAddress() const { return _address; }
+
     protected:
     private:
         std::chrono::steady_clock::time_point _lastActivity;

@@ -60,7 +60,6 @@ class UDPServer {
     private:
         Network::Socket _socket;
         std::unique_ptr<Network::PPOLL> _io;
-        ClientManager _clientManager;
 };
 
 } /* namespace Flakkari */
