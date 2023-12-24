@@ -206,6 +206,38 @@ class Buffer : public std::vector<byte> {
          */
         operator const std::string() const;
 
+        /**
+         * @brief Concatenate two buffers together
+         *
+         * @param otherBuffer  Buffer to add
+         * @return Buffer  Result of the addition
+         */
+        Buffer operator+(const Buffer& otherBuffer) const;
+
+        /**
+         * @brief Concatenate two buffers together
+         *
+         * @param otherBuffer  Buffer to add
+         * @return Buffer  Result of the addition
+         */
+        Buffer operator+=(const Buffer& otherBuffer);
+
+        /**
+         * @brief Remove a buffer from another buffer
+         *
+         * @param otherBuffer  Buffer to remove
+         * @return Buffer  Result of the subtraction
+         */
+        Buffer operator-(const Buffer& otherBuffer) const;
+
+        /**
+         * @brief Remove a buffer from another buffer
+         *
+         * @param otherBuffer  Buffer to remove
+         * @return Buffer  Result of the subtraction
+         */
+        Buffer operator-=(const Buffer& otherBuffer);
+
     protected:
     private:
 };

@@ -22,6 +22,8 @@ set(HEADERS
     Flakkari/Network/Buffer.hpp
     Flakkari/Network/Socket.hpp
     Flakkari/Network/IOMultiplexer.hpp
+    Flakkari/Protocol/Header.hpp
+    Flakkari/Protocol/Packet.hpp
     Flakkari/Server/UDPServer.hpp
     Flakkari/Server/Client/Client.hpp
     Flakkari/Server/Client/ClientManager.hpp
@@ -70,4 +72,4 @@ configure_file(${CMAKE_SOURCE_DIR}/config.h.in ${CMAKE_BINARY_DIR}/Flakkari/conf
 
 # Install Targets:
 install(TARGETS r-type_server DESTINATION bin)
-install(FILES ${CMAKE_BINARY_DIR}/config.h DESTINATION include)
+install(FILES ${CMAKE_BINARY_DIR}/Flakkari/config.h DESTINATION include)
