@@ -82,7 +82,7 @@ Socket::Socket(ip_t ip, port_t port, Address::IpType ip_type, Address::SocketTyp
     #ifdef _WIN32
         WSADATA WSAData;
         if (::WSAStartup(MAKEWORD(2, 2), &WSAData) != 0) {
-            std::cerr << "WSAStartup failed\n";
+            FLAKKARI_LOG_FATAL("WSAStartup failed");
             return;
         }
     #endif

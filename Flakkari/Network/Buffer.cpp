@@ -11,6 +11,10 @@
 
 namespace Flakkari::Network {
 
+Buffer::Buffer(std::string data) {
+    std::copy(data.begin(), data.end(), std::back_inserter(*this));
+}
+
 std::size_t Buffer::getSize() const {
     return size();
 }
@@ -122,6 +126,13 @@ Buffer::operator const std::string() const {
 std::ostream &operator<<(std::ostream &os, const Buffer &buffer) {
     os << buffer.getData();
     return os;
+}
+
+std::istream &operator>>(std::istream &is, Buffer &buffer) {
+    std::string data;
+    is >> data;
+    buffer = Buffer(data);
+    return is;
 }
 
 } // namespace Flakkari::Network

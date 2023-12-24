@@ -1,5 +1,5 @@
 /**************************************************************************
- * Flakkari Library v0.0.0
+ * Flakkari Library v0.1.0
  *
  * Flakkari Library is a C++ Library for Network.
  * @file Buffer.hpp
@@ -9,7 +9,7 @@
  * Flakkari Library is under MIT License.
  * https://opensource.org/licenses/MIT
  * © 2023 @MasterLaplace
- * @version 0.0.0
+ * @version 0.1.0
  * @date 2023-12-21
  **************************************************************************/
 
@@ -76,6 +76,13 @@ class Buffer : public std::vector<byte> {
         using std::vector<byte>::vector;
 
     public:
+        /**
+         * @brief Construct a new Buffer object
+         *
+         * @param data  Data of the buffer
+         */
+        Buffer(std::string data);
+
         /**
          * @brief Get the size of the buffer
          *
@@ -211,6 +218,15 @@ class Buffer : public std::vector<byte> {
  * @return std::ostream&  Output stream
  */
 std::ostream &operator<<(std::ostream &os, const Buffer &buffer);
+
+/**
+ * @brief Convert string to Buffer
+ *
+ * @param is  Input stream
+ * @param addr  Buffer to convert
+ * @return std::istream&  Input stream
+ */
+std::istream &operator>>(std::istream &is, Buffer &buffer);
 
 } // namespace Flakkari::Network
 
