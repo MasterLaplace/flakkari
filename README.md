@@ -64,11 +64,11 @@ $> cd build
 # Configure the project
 (build)$> cmake .. && cmake --build .
 
-# Run the server executable
-(build)$> ./bin/r-type_server/r-type_server
+# Or configure the project with Ninja
+(build)$> cmake -G Ninja .. && cmake --build .
 
-# Clean up
-(build)$> cmake --build . --target clean-server
+# Run the server executable
+(build)$> ./r-type_server
 ```
 
 
