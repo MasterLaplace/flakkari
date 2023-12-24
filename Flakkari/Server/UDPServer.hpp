@@ -18,6 +18,7 @@
 
 #include "Network/IOMultiplexer.hpp"
 #include "Client/ClientManager.hpp"
+#include "Protocol/Packet.hpp"
 
 namespace Flakkari {
 

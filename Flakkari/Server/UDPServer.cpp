@@ -46,6 +46,40 @@ int UDPServer::run() {
                 std::cout << packet->second << std::endl;
                 ClientManager::addClient(packet->first);
                 ClientManager::checkInactiveClients();
+                Protocol::API::Header header(
+                    Protocol::API::Priority::LOW,
+                    Protocol::API::ApiVersion::V_1,
+                    int(Protocol::API::FlakkariEventId::REP_ENTITY_SPAWN),
+                    0
+                );
+
+                PlayerPacket playerPacket {
+                    PlayerPacketType::REP_ENTITY_SPAWN,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    std::vector<std::uint8_t>()
+                };
+
+                header._contentLength = sizeof(playerPacket);
+
+                Network::Buffer buffer(sizeof(header) + sizeof(playerPacket));
+                std::copy(reinterpret_cast<const char*>(&header), reinterpret_cast<const char*>(&header) + sizeof(header), buffer.begin());
+
+                std::cout << "Header: " << std::endl;
+                std::cout << "  Priority: " << (int)header._priority << std::endl;
+                std::cout << "  ApiVersion: " << (int)header._apiVersion << std::endl;
+                std::cout << "  CommandId: " << (int)header._commandId << std::endl;
+                std::cout << "  ContentLength: " << (int)header._contentLength << std::endl;
+
+                std::cout << buffer << std::endl;
+
+                _socket.sendTo(packet->first, buffer);
             }
         }
     }

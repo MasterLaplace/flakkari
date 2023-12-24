@@ -81,8 +81,8 @@ namespace Flakkari::Protocol::API {
             byte _apiVersion: 4;
             byte _commandId;
             ushort _contentLength;
-            ulong _sequenceNumber;
-            ushort _checksum;
+            // ulong _sequenceNumber;
+            // ushort _checksum;
 
             /**
              * @brief Construct a new Header object from a buffer
@@ -94,8 +94,8 @@ namespace Flakkari::Protocol::API {
 
             Header(
                 Priority priority, ApiVersion apiVersion,
-                byte commandId, ushort contentLength = 0,
-                ulong sequenceNumber = 0, ushort checksum = 0
+                byte commandId, ushort contentLength = 0//,
+                // ulong sequenceNumber = 0, ushort checksum = 0
             );
 
             Header();

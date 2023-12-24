@@ -19,15 +19,15 @@ namespace Flakkari::Protocol::API {
 
         Header::Header(
             Priority priority, ApiVersion apiVersion,
-            byte commandId, ushort contentLength,
-            ulong sequenceNumber, ushort checksum
+            byte commandId, ushort contentLength//,
+            // ulong sequenceNumber, ushort checksum
         ) {
             _priority = (byte)priority;
             _apiVersion = (byte)apiVersion;
             _commandId = commandId;
             _contentLength = contentLength;
-            _sequenceNumber = sequenceNumber;
-            _checksum = checksum;
+            // _sequenceNumber = sequenceNumber;
+            // _checksum = checksum;
         }
 
         Header::Header() {
@@ -47,8 +47,8 @@ namespace Flakkari::Protocol::API {
             std::cout << "  ApiVersion: " << (int)_apiVersion << std::endl;
             std::cout << "  CommandId: " << (int)_commandId << std::endl;
             std::cout << "  ContentLength: " << (int)_contentLength << std::endl;
-            std::cout << "  SequenceNumber: " << (int)_sequenceNumber << std::endl;
-            std::cout << "  Checksum: " << (int)_checksum << std::endl;
+            // std::cout << "  SequenceNumber: " << (int)_sequenceNumber << std::endl;
+            // std::cout << "  Checksum: " << (int)_checksum << std::endl;
         }
 
         std::ostream &operator<<(std::ostream &os, const Header &header) {
@@ -57,8 +57,8 @@ namespace Flakkari::Protocol::API {
             os << "  ApiVersion: " << (int)header._apiVersion << std::endl;
             os << "  CommandId: " << (int)header._commandId << std::endl;
             os << "  ContentLength: " << (int)header._contentLength << std::endl;
-            os << "  SequenceNumber: " << (int)header._sequenceNumber << std::endl;
-            os << "  Checksum: " << (int)header._checksum << std::endl;
+            // os << "  SequenceNumber: " << (int)header._sequenceNumber << std::endl;
+            // os << "  Checksum: " << (int)header._checksum << std::endl;
             return os;
         }
 
