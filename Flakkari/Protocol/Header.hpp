@@ -18,6 +18,7 @@
 #define HEADER_HPP_
 
 #include "Network/Buffer.hpp"
+#include "Event.hpp"
 
 namespace Flakkari::Protocol::API {
 
@@ -122,6 +123,44 @@ namespace Flakkari::Protocol::API {
          * @return std::ostream&  the output stream
          */
         std::ostream &operator<<(std::ostream &os, const Header &header);
+
+
+        struct PlayerPacket {
+            FlakkariEventId type;
+            std::uint32_t x;
+            std::uint32_t y;
+            std::uint32_t z;
+            std::uint32_t vx;
+            std::uint32_t vy;
+            std::uint32_t vz;
+            std::uint32_t soundInfo;
+            std::uint32_t textureInfo;
+            bool left;
+            bool right;
+            bool up;
+            bool down;
+            bool jump;
+            bool shoot;
+            std::uint32_t tagSize;
+            std::vector<std::uint8_t> tag; // variable size
+
+            std::size_t getSize() {
+                return sizeof(type) + sizeof(x) + sizeof(y) + sizeof(z) + sizeof(vx) + sizeof(vy) + sizeof(vz) + sizeof(soundInfo) + sizeof(textureInfo) + sizeof(left) + sizeof(right) + sizeof(up) + sizeof(down) + sizeof(jump) + sizeof(shoot) + sizeof(tagSize) + tagSize;
+            }
+
+            PlayerPacket(Network::Buffer data) {
+                std::copy(data.begin(), data.begin() + sizeof(PlayerPacket) - sizeof(tag), (byte *)this);
+                tag.resize(tagSize);
+                std::copy(data.begin() + sizeof(PlayerPacket) - sizeof(tag), data.end(), tag.begin());
+            }
+
+            [[nodiscard]] Network::Buffer toBuffer() {
+                Network::Buffer buffer(getSize());
+                std::copy((byte *)this, (byte *)this + sizeof(PlayerPacket) - sizeof(tag), buffer.begin());
+                std::copy(tag.begin(), tag.end(), buffer.begin() + sizeof(PlayerPacket) - sizeof(tag));
+                return buffer;
+            }
+        };
 
     } /* namespace V_1 */
 
