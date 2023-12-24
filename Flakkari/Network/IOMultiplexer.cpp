@@ -61,7 +61,11 @@ void PPOLL::removeSocket(FileDescriptor socket) {
 }
 
 int PPOLL::wait() {
+    #ifdef __linux__
     return ppoll(_pollfds.data(), _pollfds.size(), &_timeout, nullptr);
+    #elif defined(__APPLE__)
+    return poll(_pollfds.data(), _pollfds.size(), 100);
+    #endif
 }
 
 pollfd &PPOLL::operator[](std::size_t index) {

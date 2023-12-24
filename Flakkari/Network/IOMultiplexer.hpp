@@ -164,7 +164,11 @@ class PPOLL : public IOMultiplexer {
 #endif
 
 #if defined(_EPOLL_)
-#include <sys/epoll.h>
+    #if __APPLE__
+        #include <sys/event.h>
+    #else
+        #include <sys/epoll.h>
+    #endif
 #endif
 
 #if defined(_KQUEUE_)
