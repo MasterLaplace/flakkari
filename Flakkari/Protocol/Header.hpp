@@ -124,9 +124,7 @@ namespace Flakkari::Protocol::API {
          */
         std::ostream &operator<<(std::ostream &os, const Header &header);
 
-
         struct PlayerPacket {
-            FlakkariEventId type;
             std::uint32_t x;
             std::uint32_t y;
             std::uint32_t z;
@@ -144,8 +142,27 @@ namespace Flakkari::Protocol::API {
             std::uint32_t tagSize;
             std::vector<std::uint8_t> tag; // variable size
 
+            PlayerPacket() {
+                x = 0;
+                y = 0;
+                z = 0;
+                vx = 0;
+                vy = 0;
+                vz = 0;
+                soundInfo = 0;
+                textureInfo = 0;
+                left = false;
+                right = false;
+                up = false;
+                down = false;
+                jump = false;
+                shoot = false;
+                tagSize = 0;
+                tag = std::vector<std::uint8_t>();
+            }
+
             std::size_t getSize() {
-                return sizeof(type) + sizeof(x) + sizeof(y) + sizeof(z) + sizeof(vx) + sizeof(vy) + sizeof(vz) + sizeof(soundInfo) + sizeof(textureInfo) + sizeof(left) + sizeof(right) + sizeof(up) + sizeof(down) + sizeof(jump) + sizeof(shoot) + sizeof(tagSize) + tagSize;
+                return sizeof(x) + sizeof(y) + sizeof(z) + sizeof(vx) + sizeof(vy) + sizeof(vz) + sizeof(soundInfo) + sizeof(textureInfo) + sizeof(left) + sizeof(right) + sizeof(up) + sizeof(down) + sizeof(jump) + sizeof(shoot) + sizeof(tagSize) + tagSize;
             }
 
             PlayerPacket(Network::Buffer data) {

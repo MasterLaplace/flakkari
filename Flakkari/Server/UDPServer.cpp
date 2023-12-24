@@ -53,18 +53,7 @@ int UDPServer::run() {
                     0
                 );
 
-                PlayerPacket playerPacket {
-                    PlayerPacketType::REP_ENTITY_SPAWN,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    std::vector<std::uint8_t>()
-                };
+                Protocol::API::PlayerPacket playerPacket;
 
                 header._contentLength = sizeof(playerPacket);
 
