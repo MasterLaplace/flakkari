@@ -1,0 +1,458 @@
+Network Working Group                                             Master Laplace
+Internet-Draft                                                  Laplace&Me, Inc.
+Expires: December 31, 2023                                         June 30, 2023
+
+                       Flakkari Protocol Version 1 (FPv1)
+                       draft-laplace-flakkari-protocol-01
+
+Abstract
+
+   This document describes the Flakkari Protocol Version 1 (FPv1), a
+   communication protocol designed for [provide a brief description of
+   the protocol's purpose].
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF). Note that other groups may also distribute working
+   documents as Internet-Drafts. The list of current Internet-Drafts is
+   at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time. It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on Month Day, Year.
+
+Copyright Notice
+
+   Copyright (c) [year] IETF Trust and the persons identified as the
+   document authors. All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (https://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document. Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.
+
+Table of Contents
+
+   1. Introduction .................................................... 3
+   2. Protocol Overview .............................................. 3
+   3. Message Format .................................................. 4
+      3.1. Header Structure .......................................... 4
+      3.2. FlakkariEventId Enum ...................................... 5
+      3.3. Priority Enum ............................................. 6
+      3.4. ApiVersion Enum ............................................ 6
+   4. Message Semantics .............................................. 7
+      4.1. System Messages ........................................... 7
+      4.2. Network Messages .......................................... 8
+      4.3. Game Messages ............................................. 9
+      4.4. User Messages ............................................. 10
+   5. Security Considerations ........................................ 11
+   6. IANA Considerations ............................................ 12
+   7. References ..................................................... 12
+      7.1. Normative References ...................................... 12
+      7.2. Informative References .................................... 13
+   Author's Address .................................................. 13
+
+1. Introduction
+
+   The Flakkari Protocol Version 1 (FPv1) is a communication protocol designed
+   to facilitate efficient and reliable data exchange between clients and
+   servers in a networked environment. The primary purpose of FPv1 is to
+   support real-time interactions for multiplayer gaming applications.
+   By defining a structured and extensible format for messages, FPv1 enables
+   seamless communication between game clients and servers, allowing for the
+   synchronization of game states, events, and user actions.
+
+1.1 Background
+
+   In the realm of online multiplayer gaming, timely and accurate communication
+   between clients and servers is crucial to maintaining a coherent and
+   immersive gaming experience. The Flakkari Protocol was conceived to address
+   the specific challenges posed by the dynamic and interactive nature of
+   multiplayer games. By providing a standardized framework for data exchange,
+   FPv1 aims to optimize network efficiency, reduce latency, and ensure a
+   consistent gaming experience across diverse platforms.
+
+1.2 Objectives
+
+   The key objectives of FPv1 include:
+
+   - Efficiency: FPv1 is designed to minimize the overhead associated with
+         communication, ensuring that the protocol itself does not introduce
+         unnecessary delays or resource consumption.
+
+   - Scalability: The protocol accommodates a scalable number of clients and
+         servers, supporting the demands of both small-scale and large-scale
+         multiplayer gaming environments.
+
+   - Extensibility: FPv1 allows for the easy addition of new features and
+         message types, ensuring compatibility with evolving game requirements
+         without necessitating a complete protocol overhaul.
+
+   - Reliability: The protocol incorporates mechanisms to detect and recover
+         from communication errors, enhancing the reliability of data exchange
+         between clients and servers.
+
+1.3 Intended Use
+
+   FPv1 is specifically tailored for use in multiplayer gaming scenarios where
+   real-time communication is essential. Its intended use cases include, but are
+   not limited to:
+
+   - Online Games: FPv1 serves as the communication backbone for online
+         multiplayer games, facilitating the exchange of player actions, game
+         events, and state updates.
+
+   - Virtual Worlds: Virtual worlds and simulations that involve multiple
+         participants benefit from FPv1's ability to synchronize diverse
+         elements and maintain a coherent virtual environment.
+
+   - Interactive Applications: Any application that requires low-latency,
+         bidirectional communication between distributed entities can leverage
+         FPv1 for efficient data exchange.
+
+1.4 Audience
+
+   The primary audience for this protocol specification includes game
+   developers, network engineers, and other stakeholders involved in the design
+   and implementation of multiplayer gaming systems. Familiarity with network
+   protocols, messaging formats, and game development concepts is assumed for
+   readers of this document.
+
+   In subsequent sections, this document will delve into the detailed structure
+   of FPv1 messages, the semantics associated with different message types, and
+   considerations for security and extensibility.
+
+2. Protocol Overview
+
+   The Flakkari Protocol Version 1 (FPv1) is designed as a communication
+   protocol with a primary focus on facilitating efficient and structured
+   communication between client and server entities. The protocol is intended to
+   support various applications, particularly those within the context of a
+   multiplayer online game environment.
+
+2.1. High-Level Structure
+
+   The protocol adopts a modular and extensible structure to accommodate diverse
+   communication requirements. It comprises distinct components to handle
+   different types of messages, allowing for flexibility in addressing the needs
+   of system-level, network-related, game-specific, and user-centric
+   interactions.
+
+2.1.1. Message Types
+
+   - System Messages: Responsible for handling fundamental system-level
+         operations such as connection establishment, termination, and heartbeat
+         functionalities.
+
+   - Network Messages: Addressing networking aspects, including entity spawning,
+         destruction, movement, and sound playback.
+
+   - Game Messages: Tailored to support game-related functionalities, such as
+         entity actions (e.g., shooting) and other game-specific events.
+
+   - User Messages: Handling user inputs and interactions, including player
+         movement, actions, and custom user-defined data.
+
+2.1.2. Header Structure
+
+   The protocol employs a well-defined header structure that encapsulates
+   essential information for each message. This includes priority levels, API
+   version identification, command IDs for message type categorization, content
+   length for payload size, sequence numbers for message ordering, and checksums
+   for data integrity verification.
+
+2.2. Goals
+
+   - Efficiency: FPv1 aims to optimize data transfer by minimizing overhead and
+         efficiently encoding information, ensuring swift communication between
+         clients and servers.
+
+   - Scalability: The protocol is designed to scale with the complexity and
+         requirements of multiplayer applications, allowing for seamless
+         integration into various gaming environments.
+
+   - Flexibility: Supporting extensibility, FPv1 accommodates future protocol
+         enhancements or customizations to adapt to evolving application needs.
+
+   - Reliability: Emphasizing reliability, the protocol includes mechanisms for
+         message sequencing, error checking, and acknowledgment to guarantee
+         the integrity of data transmission.
+
+   - Security: While not explicitly detailed in this overview, FPv1 incorporates
+         considerations for secure communication, and developers are encouraged
+         to implement additional security measures based on specific deployment
+         scenarios.
+
+2.3. Use Cases
+
+   - Multiplayer Gaming: FPv1 is well-suited for real-time multiplayer gaming
+         applications, providing a structured framework for communication
+         between players and the game server.
+
+   - IoT Applications: The protocol's modular design allows for adaptation
+         to Internet of Things (IoT) scenarios where efficient, low-latency
+         communication is essential.
+
+   - Custom Applications: FPv1's flexibility supports custom applications with
+         unique communication requirements, offering a versatile solution for
+         developers.
+
+   In summary, the Flakkari Protocol Version 1 is a versatile and efficient
+   communication protocol designed to support the dynamic requirements of
+   multiplayer applications, with a focus on scalability, flexibility, and
+   reliability.
+
+3. Message Format
+
+   The Flakkari Protocol messages consist of a header followed by the message
+   content. The header contains essential information about the message, such
+   as priority, API version, command ID, content length, sequence number, and
+   checksum.
+
+3.1 Header Structure
+
+   The header structure is defined by the Flakkari::Protocol::API::Header struct
+   and consists of the following fields:
+
+      _priority: 4 bits - Represents the priority of the message in the queue
+            (LOW, MEDIUM, HIGH, CRITICAL).
+      _apiVersion: 4 bits - Indicates the version of the Flakkari Protocol (V_1)
+      _commandId: 8 bits - Identifies the command to be executed.
+      _contentLength: 16 bits - Specifies the length of the content in the
+            message.
+      _sequenceNumber: 64 bits (commented out) - Reserved for determining the
+            sequence of the message.
+      _checksum: 16 bits (commented out) - Reserved for determining the checksum
+            of the message.
+
+3.2 FlakkariEventId Enum
+
+   The FlakkariEventId enum class defines various event IDs, categorizing
+   messages into different types. These IDs help in identifying the purpose of
+   the message. For example:
+
+      REQ_CONNECT: Client to Server - Request to connect to the server.
+      REP_CONNECT: Server to Client - Acknowledgment of connection acceptance.
+      REQ_DISCONNECT: Client to Server - Request to disconnect from the server.
+      REP_DISCONNECT: Server to Client - Acknowledgment of disconnection.
+
+   (And similarly for other event IDs.)
+
+3.3 Priority Enum
+
+   The Priority enum class defines different priority levels for messages:
+
+      LOW: Low priority.
+      MEDIUM: Medium priority.
+      HIGH: High priority.
+      CRITICAL: Critical priority.
+
+   These priorities determine the order in which messages are processed.
+
+3.4 ApiVersion Enum
+
+   The ApiVersion enum class indicates the version of the Flakkari Protocol.
+   In this case, there's only one version defined:
+
+      V_1: Version 1 of the protocol.
+
+   Example:
+
+   An example of a message header for a message with a command ID of 1 and a
+   content length of 0:
+
+   '''cpp
+
+   Flakkari::Protocol::API::Header header(
+      Flakkari::Protocol::API::Priority::LOW,
+      Flakkari::Protocol::API::ApiVersion::V_1,
+      1, 0
+   );
+
+   '''
+
+   This example creates a header with low priority, API version 1, command ID 1,
+   and content length 0.
+
+   Conclusion:
+
+   This section defines the fundamental structure of Flakkari Protocol messages,
+   providing a clear understanding of how headers are composed and the meaning
+   behind specific fields and enums.
+
+4. Message Semantics
+
+   [Describe the semantics of different types of messages in the protocol.]
+
+   4.1. System Messages
+
+      [Explain the purpose and semantics of system messages.]
+
+   4.2. Network Messages
+
+      [Describe the meaning and use of network-related messages.]
+
+   4.3. Game Messages
+
+      [Provide information about messages related to the game layer.]
+
+   4.4. User Messages
+
+      [Explain the semantics of user-related messages.]
+
+4. Message Semantics
+
+   The Flakkari Protocol Version 1 (FPv1) defines various types of messages,
+   each serving a distinct purpose within the communication framework. The
+   semantics of these messages are categorized into different types, including
+   System Messages, Network Messages, Game Messages, and User Messages.
+
+4.1. System Messages
+
+   System messages in FPv1 serve fundamental functions related to the
+   establishment and management of connections between clients and servers.
+   These messages facilitate the control and coordination of the communication
+   process. Key system messages include:
+
+      REQ_CONNECT (Request Connect): Sent by a client to initiate a connection
+            with the server.
+      REP_CONNECT (Response Connect): Sent by the server to acknowledge and
+            accept a client's connection request.
+      REQ_DISCONNECT (Request Disconnect): Initiated by a client to request
+            disconnection from the server.
+      REP_DISCONNECT (Response Disconnect): Sent by the server to confirm and
+            acknowledge a client's disconnection request.
+      REQ_HEARTBEAT (Request Heartbeat): Used by clients to send keep-alive
+            signals to the server, ensuring the connection remains active.
+      REP_HEARTBEAT (Response Heartbeat): Sent by the server in response to a
+            client's heartbeat, confirming the connection status.
+
+4.2. Network Messages
+
+   Network messages in FPv1 are designed to handle communication aspects related
+   to the network layer. These messages enable the transmission of data across
+   the network efficiently. Key network messages include:
+
+      REQ_ENTITY_SPAWN (Request Entity Spawn): Clients use this message to
+            request the spawning of a game entity on the server.
+      REP_ENTITY_SPAWN (Response Entity Spawn): Servers respond to a client's
+            entity spawn request, confirming the successful spawning of the
+            entity.
+      REQ_SOUND_PLAY (Request Sound Play): Clients send this message to request
+            the server to play a specific sound.
+      REP_SOUND_PLAY (Response Sound Play): Servers acknowledge the sound play
+            request by confirming the successful playback.
+      REQ_ENTITY_DESTROY (Request Entity Destroy): Clients request the server to
+            destroy a specific game entity.
+      REP_ENTITY_DESTROY (Response Entity Destroy): Servers confirm the
+            successful destruction of the specified entity.
+
+4.3. Game Messages
+
+   Game messages in FPv1 are dedicated to handling interactions and updates
+   within the game layer. These messages ensure synchronization and
+   communication of game-specific events. Key game messages include:
+
+      REQ_ENTITY_MOVED (Request Entity Moved): Clients send this message to
+            inform the server about the movement of a game entity.
+      REP_ENTITY_MOVED (Response Entity Moved): Servers acknowledge the movement
+            of the specified entity.
+      REQ_ETITY_STOP (Request Entity Stopped): Clients send this message to
+            notify the server that a game entity has stopped moving.
+      REP_ENTITY_STOP (Response Entity Stopped): Servers confirm the successful
+            stopping of the specified entity.
+      REQ_ENTITY_SHOOT (Request Entity Shoot): Clients use this message to
+            notify the server about a game entity shooting.
+      REP_ENTITY_SHOOT (Response Entity Shoot): Servers confirm the shooting
+            even and its outcome.
+
+4.4. User Messages
+
+   User messages in FPv1 pertain to communication involving user-specific
+   actions and inputs within the application. These messages facilitate the
+   interaction between users and the game or application. Key user messages
+   include:
+
+      PlayerPacket: A detailed structure containing information about the
+            player's position, velocity, actions (e.g., movement, jumping,
+            shooting), and additional data (e.g., sound and texture information)
+            This message is used to synchronize player state between clients
+            and servers.
+
+   These message semantics provide a structured understanding of the different
+   types of messages in the Flakkari Protocol Version 1 and their intended
+   purposes within the communication framework.
+
+5. Security Considerations
+
+   [Discuss security considerations related to the protocol.]
+
+6. IANA Considerations (#https://www.iana.org/protocols)
+
+
+   This section documents the actions IANA has taken or needs to take
+   in response to the specifications outlined in this document. These
+   actions may include assignments of values, creation of registries,
+   or updates to existing registries.
+
+6.1. Protocol Registration
+
+   The Flakkari Protocol Version 1 (FPv1) requires the allocation of a
+   unique protocol identifier by IANA. This identifier is to be used in
+   the "Protocol Numbers" registry [RFC1700] under the "Internet
+   Protocol Numbers" section.
+
+   IANA is requested to assign the following value for Flakkari
+   Protocol Version 1:
+
+   Protocol Name: Flakkari Protocol Version 1
+   Protocol Number: [TBD] (To Be Determined by IANA)
+
+   Future assignments for additional versions of the Flakkari Protocol
+   will follow a similar format, with the version number appended to
+   the protocol name.
+
+6.2. FlakkariEventId Enum Registration
+
+   The FlakkariEventId enum requires registration with IANA for
+   interoperability. IANA is requested to create and maintain a new
+   registry named "FlakkariEventId Enum" under the "Protocol Numbers"
+   section.
+
+   The initial values for the FlakkariEventId enum are as follows:
+
+   Value  Description
+   -----  -----------
+   0      REQ_CONNECT
+   1      REP_CONNECT
+   2      REQ_DISCONNECT
+   3      REP_DISCONNECT
+   ...    ...
+
+   Future assignments for additional FlakkariEventId values will follow
+   the same format.
+
+7. References
+
+   7.1. Normative References
+
+      [List any normative references to other documents.]
+
+   7.2. Informative References
+
+      [List any informative references that provide additional context.]
+
+Author's Address
+
+   Master Laplace
+   Laplace&Me, Inc.
+   Email: master.laplace@me.com
