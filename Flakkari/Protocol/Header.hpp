@@ -17,7 +17,7 @@
 #ifndef HEADER_HPP_
 #define HEADER_HPP_
 
-#include "Network/Buffer.hpp"
+#include "../Network/Buffer.hpp"
 #include "Event.hpp"
 
 namespace Flakkari::Protocol::API {
