@@ -570,6 +570,8 @@ _deps
 flakkari
 r-type_server
 
-Docs/Flakkari/
+docs/Flakkari/
 build/
 .Test/
+poc/
+Game/

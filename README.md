@@ -1,4 +1,4 @@
-# ME : <p align="center">Flakkari<br><br><img src="Docs/Images/Flakkari.png" alt="Flakkari logo" style="height: 200px"></p>
+# ME : <p align="center">Flakkari<br><br><img src="docs/Images/Flakkari.png" alt="Flakkari logo" style="height: 200px"></p>
 
 <p align="center">
     <h3 align="center">📦 Download &#xa0; : &#xa0;
@@ -110,7 +110,7 @@ Wiki:
 - [**Technical Documentation & Wiki**](https://MasterLaplace.github.io/Flakkari/)
 
 For detailed documentation on the Flakkari protocol, see:
-- [**Flakkari Protocol Documentation**](Docs/RFC.txt)
+- [**Flakkari Protocol Documentation**](docs/RFC.txt)
 
 
 ## :rocket: LATEST RELEASE

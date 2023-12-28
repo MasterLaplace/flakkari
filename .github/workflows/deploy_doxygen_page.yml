@@ -31,7 +31,7 @@ jobs:
 
       - name: Copy documentation to gh-pages branch
         run: |
-          cp -r Docs/Flakkari/html/* .
+          cp -r docs/Flakkari/html/* docs/
 
       - name: Push documentation to gh-pages branch
         run: |
