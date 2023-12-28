@@ -107,10 +107,10 @@ $ docker rm <container-id>
 ### :wrench: **DOCUMENTATION**
 
 Wiki:
-- [**Technical Documentation & Wiki**](https://github.com/MasterLaplace/Flakkari/wiki)
+- [**Technical Documentation & Wiki**](https://MasterLaplace.github.io/Flakkari/)
 
 For detailed documentation on the Flakkari protocol, see:
-- [**Flakkari Protocol Documentation**](https://github.com/MasterLaplace/Flakkari/wiki/Flakkari-protocol)
+- [**Flakkari Protocol Documentation**](Docs/RFC.txt)
 
 
 ## :rocket: LATEST RELEASE

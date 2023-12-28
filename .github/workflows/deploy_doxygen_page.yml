@@ -1,0 +1,42 @@
+name: Doxygen GitHub Pages Deploy Action
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  doxygen:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Git
+        run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+
+      - name: Install Doxygen
+        run: |
+          sudo apt-get install doxygen
+
+      - name: Generate Doxygen Documentation
+        run: |
+          doxygen Doxyfile.cfg
+
+      - name: Create gh-pages branch
+        run: |
+          git checkout -b gh-pages
+
+      - name: Copy documentation to gh-pages branch
+        run: |
+          cp -r Docs/Flakkari/html/* .
+
+      - name: Push documentation to gh-pages branch
+        run: |
+          git add .
+          git commit -m "deploy(root): Deploying documentation to GitHub Pages"
+          git push origin gh-pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
