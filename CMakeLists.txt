@@ -70,8 +70,8 @@ set(PROJECT_VERSION_MAJOR 0)
 set(PROJECT_VERSION_MINOR 1)
 set(PROJECT_VERSION_PATCH 0)
 
-configure_file(${CMAKE_SOURCE_DIR}/config.h.in ${CMAKE_BINARY_DIR}/Flakkari/config.h)
+configure_file(${CMAKE_SOURCE_DIR}/Flakkari/config.h.in ${CMAKE_BINARY_DIR}/config.h)
 
 # Install Targets:
 install(TARGETS r-type_server DESTINATION bin)
-install(FILES ${CMAKE_BINARY_DIR}/Flakkari/config.h DESTINATION include)
+install(FILES ${CMAKE_BINARY_DIR}/config.h DESTINATION include/Flakkari)

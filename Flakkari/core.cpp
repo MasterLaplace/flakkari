@@ -7,9 +7,8 @@
 
 #include "Server/UDPServer.hpp"
 
-#include "Protocol/Packet.hpp"
-
-int main() {
+int main()
+{
     Flakkari::UDPServer server("localhost", 8080);
     return server.run();
 }
