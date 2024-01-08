@@ -141,26 +141,148 @@ class Socket {
         bool operator==(const Socket &other) const { return _socket == other._socket; }
         bool operator==(const int &socket) const { return _socket == socket; }
 
+        /**
+         * @brief Get the Socket object (SOCKET).
+         *
+         * @return socket_t  The socket.
+         */
         socket_t getSocket() const { return _socket; }
+
+        /**
+         * @brief Get the Address object (std::shared_ptr<Address>).
+         *
+         * @return std::shared_ptr<Address>  The address.
+         * @see Address
+         */
         std::shared_ptr<Address> getAddress() const { return _address; }
 
+        /**
+         * @brief Bind the socket to the address and port specified in the constructor.
+         *
+         */
         void bind();
+
+        /**
+         * @brief Start listening for incoming connections.
+         * This function is only used by TCP sockets.
+         *
+         * @param backlog  Maximum number of pending connections. Default is SOMAXCONN.
+         */
         void listen(int backlog = SOMAXCONN);
+
+        /**
+         * @brief Accept an incoming connection.
+         * This function is only used by TCP sockets.
+         *
+         * @return std::shared_ptr<Socket>  The socket of the client.
+         */
         void connect();
+
+        /**
+         * @brief Accept an incoming connection.
+         * This function is only used by TCP sockets.
+         *
+         * @return std::shared_ptr<Socket>  The socket of the client.
+         */
         std::shared_ptr<Socket> accept();
+
+        /**
+         * @brief Set the socket to blocking or non-blocking.
+         *
+         * @param blocking  True to set the socket to blocking, false to set it to non-blocking.
+         */
         void setBlocking(bool blocking = true);
 
+        /**
+         * @brief Send data to the socket.
+         * This function is only used by TCP sockets.
+         *
+         * @param data  Data to send.
+         * @param flags  Flags to pass to the send function.
+         */
         void send(const Buffer &data, int flags = 0);
+
+        /**
+         * @brief Send data to the socket.
+         * This function is only used by TCP sockets.
+         *
+         * @param data  Data to send.
+         * @param size  Size of the data to send.
+         * @param flags  Flags to pass to the send function.
+         */
         void send(const Buffer &data, size_t size, int flags = 0);
+
+        /**
+         * @brief Send data to the socket.
+         * This function is only used by UDP sockets.
+         *
+         * @param address  Address to send the data to.
+         * @param data  Data to send.
+         * @param flags  Flags to pass to the send function.
+         */
         void sendTo(const std::shared_ptr<Address> &address, const Buffer &data, int flags = 0);
+
+        /**
+         * @brief Send data to the socket.
+         * This function is only used by UDP sockets.
+         *
+         * @param address  Address to send the data to.
+         * @param data  Data to send.
+         * @param size  Size of the data to send.
+         * @param flags  Flags to pass to the send function.
+         */
         void sendTo(const std::shared_ptr<Address> &address, const byte *data, const size_t &size, int flags = 0);
 
+        /**
+         * @brief Receive data from the socket.
+         * This function is only used by TCP sockets.
+         *
+         * @param size  Size of the data to receive.
+         * @param flags  Flags to pass to the recv function.
+         * @return std::optional<Buffer>  The data received.
+         */
         std::optional<Buffer> receive(size_t size, int flags = 0);
+
+        /**
+         * @brief Receive data from the socket. The size of the data is determined by the size of the buffer.
+         * This function is only used by TCP sockets.
+         *
+         * @param flags  Flags to pass to the recv function.
+         * @return std::optional<Buffer>  The data received.
+         */
         std::optional<Buffer> receive(int flags = 0);
+
+        /**
+         * @brief Receive data from the socket.
+         * This function is only used by UDP sockets.
+         *
+         * @param size  Size of the data to receive.
+         * @param flags  Flags to pass to the recvfrom function.
+         * @return std::optional<std::pair<std::shared_ptr<Address>, Buffer>>  The data received and the address of the sender.
+         */
         std::optional<std::pair<std::shared_ptr<Address>, Buffer>> receiveFrom(size_t size, int flags = 0);
+
+        /**
+         * @brief Receive data from the socket. The size of the data is determined by the size of the buffer.
+         * This function is only used by UDP sockets.
+         *
+         * @param flags  Flags to pass to the recvfrom function.
+         * @return std::optional<std::pair<std::shared_ptr<Address>, Buffer>>  The data received and the address of the sender.
+         */
         std::optional<std::pair<std::shared_ptr<Address>, Buffer>> receiveFrom(int flags = 0);
 
+        /**
+         * @brief Close the socket.
+         *
+         */
         void close();
+
+        /**
+         * @brief Convert Socket to string (ip:port).
+         *
+         * @return std::string  The string representation of the socket.
+         */
+        operator std::string() const;
 
     protected:
     private:
