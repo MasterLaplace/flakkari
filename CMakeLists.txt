@@ -13,6 +13,7 @@ set(SOURCES
     Flakkari/Network/IOMultiplexer.cpp
     Flakkari/Protocol/Header.cpp
     Flakkari/Protocol/Packet.cpp
+    Flakkari/Engine/EntityComponentSystem/Registry.cpp
     Flakkari/Server/UDPServer.cpp
     Flakkari/Server/Client/Client.cpp
     Flakkari/Server/Client/ClientManager.cpp
@@ -27,6 +28,9 @@ set(HEADERS
     Flakkari/Network/IOMultiplexer.hpp
     Flakkari/Protocol/Header.hpp
     Flakkari/Protocol/Packet.hpp
+    Flakkari/Engine/EntityComponentSystem/Entity.hpp
+    Flakkari/Engine/EntityComponentSystem/SparseArrays.hpp
+    Flakkari/Engine/EntityComponentSystem/Registry.hpp
     Flakkari/Server/UDPServer.hpp
     Flakkari/Server/Client/Client.hpp
     Flakkari/Server/Client/ClientManager.hpp
