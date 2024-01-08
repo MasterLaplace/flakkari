@@ -19,6 +19,7 @@
 #include "Network/IOMultiplexer.hpp"
 #include "Client/ClientManager.hpp"
 #include "Protocol/Packet.hpp"
+#include "Internals/CommandManager.hpp"
 
 namespace Flakkari {
 

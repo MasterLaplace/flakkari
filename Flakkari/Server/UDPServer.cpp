@@ -41,6 +41,7 @@ bool UDPServer::handleInput(int fd)
         return false;
     if (std::cin.eof())
         throw std::runtime_error("EOF on stdin");
+    Internals::CommandManager::handleCommand();
     return true;
 }
 
