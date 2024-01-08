@@ -21,11 +21,7 @@
 <h3 align="center">📡 Supported Protocol</h3>
 <p align="center">
     <img src="https://img.shields.io/badge/UDP-blue?style=for-the-badge" alt="UDP">
-</p>
-<h3 align="center">🚀 Supported Languages</h3>
-<p align="center">
-    <img src="https://img.shields.io/badge/C-11-blue?style=for-the-badge" alt="C: 11"> &#xa0; | &#xa0;
-    <img src="https://img.shields.io/badge/C++-17-blue?style=for-the-badge" alt="C++: 17">
+    <img src="https://img.shields.io/badge/TCP-blue?style=for-the-badge" alt="TCP">
 </p>
 
 
@@ -44,7 +40,7 @@
 
 Flakkari is a UDP server created for the R-Type Epitech project.<br>
 
-> [!IMPORTANT]
+> **Note**:
 > The project is still under development and may not be stable.
 
 
@@ -70,6 +66,25 @@ $> cd build
 # Run the server executable
 (build)$> ./r-type_server
 ```
+
+other build commands:
+```shell
+# Install the project
+(build)$> sudo cmake --build . --target install
+
+# Build project documentation
+(build)$> cmake --build . --target doc
+
+# Build project package
+(build)$> cmake --build . --target package
+(build)$> sudo dpkg -i r-type_server-<version>-Linux.deb
+```
+
+> **Note:**:
+> - the install target will install the server executable in the /usr/local/bin directory,
+>   the network library in the /usr/local/lib directory and
+>   the header files in the /usr/local/include directory.
+> - the doc target will generate the doxygen documentation in the docs directory.
 
 
 <div id='docker'/>

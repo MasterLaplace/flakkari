@@ -3,7 +3,8 @@
  *
  * Flakkari Library is a C++ Library for Network.
  * @file IOMultiplexer.hpp
- * @brief This file contains the IOMultiplexer interface and the different IOMultiplexer implementations for different platforms.
+ * @brief This file contains the IOMultiplexer interface and the different
+ *        IOMultiplexer implementations for different platforms.
  *
  * Flakkari Library is under MIT License.
  * https://opensource.org/licenses/MIT

@@ -4,7 +4,7 @@
  * Flakkari Library is a C++ Library for Network.
  * @file Buffer.hpp
  * @brief Buffer is a class that represents a buffer of bytes.
- * It is used to store data that will be sent or received.
+ *        It is used to store data that will be sent or received.
  *
  * Flakkari Library is under MIT License.
  * https://opensource.org/licenses/MIT

@@ -29,6 +29,15 @@ set(HEADERS
     Flakkari/Server/UDPServer.hpp
     Flakkari/Server/Client/Client.hpp
     Flakkari/Server/Client/ClientManager.hpp
+set(HEADER_LIB_LOGGER
+    Flakkari/Logger/Logger.hpp
+)
+
+set(HEADER_LIB_NETWORK
+    Flakkari/Network/Address.hpp
+    Flakkari/Network/Buffer.hpp
+    Flakkari/Network/Socket.hpp
+    Flakkari/Network/IOMultiplexer.hpp
 )
 
 # Separate Build Artifacts:
@@ -62,7 +71,8 @@ if(DOXYGEN_FOUND)
         COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_SOURCE_DIR}/Doxyfile.cfg
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         COMMENT "Generating API documentation with Doxygen"
-        VERBATIM)
+        VERBATIM
+    )
 endif()
 
 # Versioning:
@@ -75,3 +85,37 @@ configure_file(${CMAKE_SOURCE_DIR}/Flakkari/config.h.in ${CMAKE_BINARY_DIR}/conf
 # Install Targets:
 install(TARGETS r-type_server DESTINATION bin)
 install(FILES ${CMAKE_BINARY_DIR}/config.h DESTINATION include/Flakkari)
+install(FILES ${HEADER_LIB_LOGGER} DESTINATION include/Flakkari/Logger)
+install(FILES ${HEADER_LIB_NETWORK} DESTINATION include/Flakkari/Network)
+
+# Packaging:
+set(CPACK_PACKAGE_NAME "r-type_server")
+set(CPACK_PACKAGE_VENDOR "R-Type")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "R-Type Server")
+set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+set(CPACK_RESOURCE_FILE_README "${CMAKE_SOURCE_DIR}/README.md")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
+
+set(CPACK_GENERATOR "DEB")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "R-Type Team")
+set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
+
+include(CPack)
+
+# Create a dynamic library for the Network components
+set(SOURCES_LIB_NETWORK
+    Flakkari/Logger/Logger.cpp
+    Flakkari/Network/Address.cpp
+    Flakkari/Network/Buffer.cpp
+    Flakkari/Network/Socket.cpp
+    Flakkari/Network/IOMultiplexer.cpp
+)
+add_library(r-type_server_network SHARED ${SOURCES_LIB_NETWORK} ${HEADER_LIB_NETWORK} ${HEADER_LIB_LOGGER})
+
+# Include Directories:
+target_include_directories(r-type_server_network PRIVATE ${CMAKE_SOURCE_DIR}/Flakkari)
+# Install dynamic library:
+install(TARGETS r-type_server_network DESTINATION lib)
+install(FILES ${HEADER_LIB_NETWORK} DESTINATION include/Flakkari/Network)

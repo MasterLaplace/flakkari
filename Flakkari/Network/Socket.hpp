@@ -3,7 +3,8 @@
  *
  * Flakkari Library is a C++ Library for Network.
  * @file Socket.hpp
- * @brief This file contains the Socket class. It is used to create a socket and send/receive data from it.
+ * @brief This file contains the Socket class. It is used to create a socket
+ *        and send/receive data from it.
  *
  * Flakkari Library is under MIT License.
  * https://opensource.org/licenses/MIT
