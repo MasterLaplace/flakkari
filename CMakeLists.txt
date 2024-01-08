@@ -31,6 +31,7 @@ set(HEADERS
     Flakkari/Protocol/Header.hpp
     Flakkari/Protocol/Packet.hpp
     Flakkari/Engine/Math/Vector.hpp
+    Flakkari/Engine/EntityComponentSystem/Components/Components2D.hpp
     Flakkari/Engine/EntityComponentSystem/Entity.hpp
     Flakkari/Engine/EntityComponentSystem/SparseArrays.hpp
     Flakkari/Engine/EntityComponentSystem/Registry.hpp
