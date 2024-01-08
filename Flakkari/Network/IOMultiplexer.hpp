@@ -53,6 +53,84 @@ class IOMultiplexer {
 
 #if defined(_PSELECT_)
 #include <sys/select.h>
+#include <sys/time.h>
+#include <sys/types.h>
+
+/**
+ * @brief PSELECT is a class that represents a PSELECT
+ *
+ * @class PSELECT
+ * @implements IOMultiplexer
+ * @see IOMultiplexer
+ *
+ * @example "PSELECT example":
+ * @code
+ * auto socket = std::make_shared<Socket>(12345, Address::IpType::IPv4, Address::SocketType::UDP);
+ * socket->bind();
+ *
+ * auto io = std::make_unique<PSELECT>();
+ * io->addSocket(socket->getSocket());
+ *
+ * while (true) {
+ *    int result = io->wait();
+ *    if (result > 0) {
+ *       for (auto &fd : *io) {
+ *         if (io->isReady(fd)) {
+ *          // do something
+ *         }
+ *       }
+ *    }
+ * }
+ * @endcode
+ */
+class PSELECT : public IOMultiplexer {
+    public:
+        PSELECT(int fileDescriptor);
+        PSELECT();
+        ~PSELECT() = default;
+
+        /**
+         * @brief Add a socket to the PSELECT list
+         *
+         * @param socket  The socket to add to the list
+         */
+        void addSocket(FileDescriptor socket) override;
+
+        /**
+         * @brief Remove a socket from the PSELECT list
+         *
+         * @param socket  The socket to remove from the list
+         */
+        void removeSocket(FileDescriptor socket) override;
+
+        /**
+         * @brief Wait for an event to happen on a socket or timeout
+         *
+         * @return int  The number of events that happened or -1 if an error occured or 0 if the timeout expired (EINTR)
+         * @see pselect
+         * @see errno
+         */
+        int wait() override;
+
+        std::vector<FileDescriptor>::iterator begin() { return _sockets.begin(); }
+        std::vector<FileDescriptor>::iterator end() { return _sockets.end(); }
+
+        /**
+         * @brief Check if a socket is ready to read from
+         *
+         * @param socket  The socket to check
+         * @return true  If the socket is ready
+         * @return false  If the socket is not ready
+         */
+        [[nodiscard]] bool isReady(FileDescriptor socket) override;
+
+    protected:
+    private:
+        fd_set _fds;
+        std::vector<FileDescriptor> _sockets;
+        FileDescriptor _maxFd = 0;
+        struct timespec _timeout = {0, 0};
+};
 #endif
 
 #if defined(_PPOLL_)
@@ -141,11 +219,7 @@ class PPOLL : public IOMultiplexer {
          * @return true  If the socket is ready
          * @return false  If the socket is not ready
          */
-        [[nodiscard]] bool isReady(pollfd fd) {
-            if (fd.fd == -1)
-                throw std::runtime_error("Socket is -1");
-            return fd.revents & (POLLIN | POLLPRI);
-        }
+        [[nodiscard]] bool isReady(pollfd fd);
 
         /**
          * @brief Check if a socket is ready to read from
