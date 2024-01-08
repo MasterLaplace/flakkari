@@ -81,6 +81,7 @@ namespace Flakkari {
         public:
             static void setMode(Mode mode) noexcept;
             static const std::string get_current_time() noexcept;
+            static const std::string fatal_error_message() noexcept;
             static void log(int level, std::string message, std::string file, int line);
             static void log(int level, std::string message);
             static void log(int level, std::string message, std::string file);

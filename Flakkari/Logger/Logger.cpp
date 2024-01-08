@@ -36,6 +36,51 @@ void setColor(int color) {
 }
 #endif
 
+const std::string Logger::fatal_error_message() noexcept
+{
+    #if !defined(_WIN32) || !defined(_WIN64)
+    return std::string(
+        "\nThis is a fatal error, the program will now exit.\n"
+        "Please check the following issues:\n"
+        COLOR_BRIGHT_CYAN
+        "\thttps://github.com/masterlaplace/Flakkari/issues?q=is%3Aissue+is%3Aopen+label%3Abug\n"
+        COLOR_RESET
+        "\nPlease report this error to the developers by opening an issue on GitHub:\n"
+        COLOR_BRIGHT_CYAN
+        "\thttps://github.com/MasterLaplace/Flakkari/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml&title=[Bug :: "
+        #ifdef __APPLE__
+        "macOS]"
+        #elif __linux__
+        "Linux]"
+        #elif __unix__
+        "Unix]"
+        #elif __posix__
+        "Posix]"
+        #endif
+        COLOR_RESET
+        "\nThank you for your help!"
+    );
+
+    #else
+
+    std::string message = std::string(
+        "\nThis is a fatal error, the program will now exit.\n"
+        "Please check the following issues:\n"
+    );
+    setColor(COLOR_BRIGHT_CYAN);
+    message += "\thttps://github.com/masterlaplace/Flakkari/issues?q=is%3Aissue+is%3Aopen+label%3Abug\n";
+    setColor(COLOR_RESET);
+    message += "\nPlease report this error to the developers by opening an issue on GitHub:\n";
+    setColor(COLOR_BRIGHT_CYAN);
+    message += "\thttps://github.com/MasterLaplace/Flakkari/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml&title=[Bug :: ";
+    #if defined(_WIN32) || defined(_WIN64)
+    message += "Windows]";
+    #endif
+    setColor(COLOR_RESET);
+    message += "\nThank you for your help!";
+    return message;
+    #endif
+}
 
 void Logger::log(int level, std::string message, std::string file, int line)
 {
@@ -114,6 +159,9 @@ void Logger::log(int level, std::string message, std::string file, int line)
     std::cout << " [" << levelStr << "] " << message << " (" << file << ":" << line << ")" << std::endl;
     setColor(COLOR_RESET);
     #endif
+
+    if (level == LOG_FATAL)
+        std::cout << fatal_error_message() << std::endl;
 }
 
 void Logger::log(int level, std::string message)
@@ -193,6 +241,9 @@ void Logger::log(int level, std::string message)
     std::cout << " [" << levelStr << "] " << message << std::endl;
     setColor(COLOR_RESET);
     #endif
+
+    if (level == LOG_FATAL)
+        std::cout << fatal_error_message() << std::endl;
 }
 
 void Logger::log(int level, std::string message, std::string file)
@@ -272,6 +323,9 @@ void Logger::log(int level, std::string message, std::string file)
     std::cout << " [" << levelStr << "] " << message << " (" << file << ")" << std::endl;
     setColor(COLOR_RESET);
     #endif
+
+    if (level == LOG_FATAL)
+        std::cout << fatal_error_message() << std::endl;
 }
 
 void Logger::log(int level, std::string message, int line)
@@ -351,4 +405,7 @@ void Logger::log(int level, std::string message, int line)
     std::cout << " [" << levelStr << "] " << message << " (" << line << ")" << std::endl;
     setColor(COLOR_RESET);
     #endif
+
+    if (level == LOG_FATAL)
+        std::cout << fatal_error_message() << std::endl;
 }
