@@ -16,6 +16,7 @@
  * @date 2023-01-06
  **************************************************************************/
 
+
 #ifndef GAME_HPP_
     #define GAME_HPP_
 
@@ -25,10 +26,15 @@
 #include <nlohmann/json.hpp>
 
 #include "Engine/EntityComponentSystem/Registry.hpp"
+#include "Engine/EntityComponentSystem/Systems/Systems.hpp"
 
 namespace Flakkari {
 
     class Client;
+
+using nl_entity = nlohmann::json_abi_v3_11_3::detail::iteration_proxy<nlohmann::json_abi_v3_11_3::detail::iter_impl<nlohmann::json_abi_v3_11_3::json>>;
+using nl_template = nlohmann::json_abi_v3_11_3::basic_json<std::map, std::vector, std::string, bool, int64_t, uint64_t, double, std::allocator, nlohmann::json_abi_v3_11_3::adl_serializer, std::vector<uint8_t, std::allocator<uint8_t>>, void>;
+using nl_component = nlohmann::json_abi_v3_11_3::json ;
 
 class Game {
     public:
@@ -41,6 +47,32 @@ class Game {
          */
         Game(const std::string &name, std::shared_ptr<nlohmann::json> config);
         ~Game();
+
+        /**
+         * @brief Add all the systems of the game to the registry.
+         *
+         * @param registry  Registry to add the systems to.
+         * @param name  Name of the scene to load.
+         */
+        void loadSystems(Engine::ECS::Registry &registry, const std::string &name);
+
+        /**
+         * @brief Add all the components of the game to the registry.
+         *
+         * @param registry  Registry to add the components to.
+         * @param componentInfo  Info of the components to add.
+         * @param newEntity  Entity to add the components to.
+         */
+        void loadComponents(Engine::ECS::Registry &registry, const nl_component &componentInfo, Engine::ECS::Entity newEntity);
+
+        /**
+         * @brief Add all the entities of the game to the registry.
+         *
+         * @param registry  Registry to add the entities to.
+         * @param entity  Entity to add to the registry.
+         * @param templates  Templates of the game.
+         */
+        void loadEntityFromTemplate(Engine::ECS::Registry &registry, const nl_entity &entity, const nl_template &templates);
 
         /**
          * @brief Load a scene from the game.
