@@ -16,6 +16,7 @@ set(SOURCES
     Flakkari/Server/UDPServer.cpp
     Flakkari/Server/Client/Client.cpp
     Flakkari/Server/Client/ClientManager.cpp
+    Flakkari/Server/Internals/CommandManager.cpp
 )
 
 set(HEADERS
@@ -29,6 +30,7 @@ set(HEADERS
     Flakkari/Server/UDPServer.hpp
     Flakkari/Server/Client/Client.hpp
     Flakkari/Server/Client/ClientManager.hpp
+    Flakkari/Server/Internals/CommandManager.hpp
 )
 
 set(HEADER_LIB_LOGGER

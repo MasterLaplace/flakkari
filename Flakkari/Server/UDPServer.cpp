@@ -9,37 +9,44 @@
 
 #include "UDPServer.hpp"
 
-namespace Flakkari {
+using namespace Flakkari;
+
 
 UDPServer::UDPServer(std::string ip, std::size_t port) :
-    _socket(Flakkari::Network::Socket(
+    _socket(Network::Socket(
         ip, port,
-        Flakkari::Network::Address::IpType::IPv4,
-        Flakkari::Network::Address::SocketType::UDP
+        Network::Address::IpType::IPv4,
+        Network::Address::SocketType::UDP
     ))
 {
-    std::cout << _socket << std::endl;
+    FLAKKARI_LOG_INFO(std::string(_socket));
     _socket.bind();
 
-    _io = std::make_unique<Flakkari::Network::PPOLL>();
+    _io = std::make_unique<Network::PSELECT>();
     _io->addSocket(_socket.getSocket());
 }
 
-int UDPServer::run() {
-    while (true)
-    {
-        int result = _io->wait();
-
-        if (result == -1) {
-            FLAKKARI_LOG_FATAL("Failed to poll sockets, error: " + std::string(::strerror(errno)));
-            return 84;
-        } else if (result == 0) {
+bool UDPServer::handleTimeout(int event)
+{
+    if (event != 0)
+        return false;
             FLAKKARI_LOG_DEBUG("ppoll timed out");
             ClientManager::checkInactiveClients();
-            continue;
+    return true;
         }
-        for (auto &fd : *_io) {
-            if (_io->isReady(fd)) {
+
+bool UDPServer::handleInput(int fd)
+{
+    if (fd != STDIN_FILENO)
+        return false;
+    if (std::cin.eof())
+        throw std::runtime_error("EOF on stdin");
+    Internals::CommandManager::handleCommand();
+    return true;
+}
+
+void UDPServer::handlePacket()
+{
                 auto packet = _socket.receiveFrom();
                 std::cout << (*packet->first.get());
                 std::cout << " : ";
@@ -69,10 +76,32 @@ int UDPServer::run() {
                 std::cout << buffer << std::endl;
 
                 _socket.sendTo(packet->first, buffer);
-            }
-        }
-    }
-    return 0;
 }
 
-} /* namespace Flakkari */
+void UDPServer::run()
+{
+    INIT_LOOP;
+    int result = _io->wait();
+
+    if (result == -1) {
+        if (errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK)
+            GOTO_LOOP;
+        throw std::runtime_error("Failed to poll sockets, error: " + STD_ERROR);
+    }
+
+    if (handleTimeout(result))
+        GOTO_LOOP;
+
+    for (auto &fd : *_io) {
+        if (!_io->isReady(fd))
+            continue;
+        if (handleInput(fd))
+            continue;
+        handlePacket();
+    }
+    GOTO_LOOP;
+}
+
+int runGames() {
+    return 0;
+}

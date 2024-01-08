@@ -10,5 +10,6 @@
 int main()
 {
     Flakkari::UDPServer server("localhost", 8080);
-    return server.run();
+        server.run();
+    return 0;
 }
