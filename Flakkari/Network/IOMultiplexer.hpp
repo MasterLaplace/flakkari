@@ -56,6 +56,7 @@ class IOMultiplexer {
 #include <sys/select.h>
 #include <sys/time.h>
 #include <sys/types.h>
+#include <signal.h>
 
 /**
  * @brief PSELECT is a class that represents a PSELECT
@@ -131,11 +132,13 @@ class PSELECT : public IOMultiplexer {
         std::vector<FileDescriptor> _sockets;
         FileDescriptor _maxFd = 0;
         struct timespec _timeout = {0, 0};
+        sigset_t _sigmask;
 };
 #endif
 
 #if defined(_PPOLL_)
 #include <sys/poll.h>
+#include <signal.h>
 
 /**
  * @brief PPOLL is a class that represents a PPOLL
@@ -235,6 +238,7 @@ class PPOLL : public IOMultiplexer {
     private:
         std::vector<pollfd> _pollfds;
         struct timespec _timeout = {0, 0};
+        sigset_t _sigmask;
 };
 #endif
 

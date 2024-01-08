@@ -26,12 +26,30 @@ PSELECT::PSELECT(int fileDescriptor)
 
     _timeout.tv_sec = 1;
     _timeout.tv_nsec = 0; // 100ms
+
+    // handle ctrl+c or break
+    sigemptyset(&_sigmask);
+    sigaddset(&_sigmask, SIGINT);
+
+    struct sigaction sa;
+    sa.sa_handler = SIG_IGN;
+    sigaction(SIGINT, &sa, nullptr);
 }
+
 PSELECT::PSELECT()
 {
     FD_ZERO(&_fds);
+
     _timeout.tv_sec = 1;
     _timeout.tv_nsec = 0; // 100ms
+
+    // handle ctrl+c or break
+    sigemptyset(&_sigmask);
+    sigaddset(&_sigmask, SIGINT);
+
+    struct sigaction sa;
+    sa.sa_handler = SIG_IGN;
+    sigaction(SIGINT, &sa, nullptr);
 }
 
 void PSELECT::addSocket(FileDescriptor socket)
@@ -61,7 +79,7 @@ int PSELECT::wait()
     FD_ZERO(&_fds);
     for (auto &fd : _sockets)
         FD_SET(fd, &_fds);
-    return ::pselect(_maxFd + 1, &_fds, nullptr, nullptr, &_timeout, nullptr);
+    return ::pselect(_maxFd + 1, &_fds, nullptr, nullptr, &_timeout, &_sigmask);
 }
 
 bool PSELECT::isReady(FileDescriptor socket)
@@ -90,11 +108,27 @@ PPOLL::PPOLL(int fileDescriptor, event_t events)
 
     _timeout.tv_sec = 1;
     _timeout.tv_nsec = 0;// 100000000;  // 100ms
+
+    // handle ctrl+c or break
+    sigemptyset(&_sigmask);
+    sigaddset(&_sigmask, SIGINT);
+
+    struct sigaction sa;
+    sa.sa_handler = SIG_IGN;
+    sigaction(SIGINT, &sa, nullptr);
 }
 
 PPOLL::PPOLL() {
     _timeout.tv_sec = 1;
     _timeout.tv_nsec = 0;// 100000000;  // 100ms
+
+    // handle ctrl+c or break
+    sigemptyset(&_sigmask);
+    sigaddset(&_sigmask, SIGINT);
+
+    struct sigaction sa;
+    sa.sa_handler = SIG_IGN;
+    sigaction(SIGINT, &sa, nullptr);
 }
 
 void PPOLL::addSocket(FileDescriptor socket)
@@ -130,7 +164,7 @@ void PPOLL::removeSocket(FileDescriptor socket)
 int PPOLL::wait()
 {
     #ifdef __linux__
-        return ppoll(_pollfds.data(), _pollfds.size(), &_timeout, nullptr);
+        return ppoll(_pollfds.data(), _pollfds.size(), &_timeout, &_sigmask);
     #elif defined(__APPLE__)
         return poll(_pollfds.data(), _pollfds.size(), 100);
     #endif
