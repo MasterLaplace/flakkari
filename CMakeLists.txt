@@ -14,6 +14,7 @@ set(SOURCES
     Flakkari/Protocol/Header.cpp
     Flakkari/Protocol/Packet.cpp
     Flakkari/Engine/Math/Vector.cpp
+    Flakkari/Engine/EntityComponentSystem/Systems/Systems.cpp
     Flakkari/Engine/EntityComponentSystem/Registry.cpp
     Flakkari/Server/UDPServer.cpp
     Flakkari/Server/Client/Client.cpp
@@ -33,6 +34,7 @@ set(HEADERS
     Flakkari/Engine/Math/Vector.hpp
     Flakkari/Engine/EntityComponentSystem/Components/Components2D.hpp
     Flakkari/Engine/EntityComponentSystem/Components/ComponentsCommon.hpp
+    Flakkari/Engine/EntityComponentSystem/Systems/Systems.hpp
     Flakkari/Engine/EntityComponentSystem/Entity.hpp
     Flakkari/Engine/EntityComponentSystem/SparseArrays.hpp
     Flakkari/Engine/EntityComponentSystem/Registry.hpp
