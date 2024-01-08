@@ -3,7 +3,7 @@
 # vim:fenc=utf-8
 # File name: cpp_norm_checker.py
 # Author: MasterLaplace
-# Created on: 2023-10-12
+# Created on: 2023-28-11
 
 import os
 import re
@@ -26,14 +26,14 @@ class NormChecker:
 
     def check_structure_name(self, file_name: str, content: str):
         """_summary_
-        * All the structure names must start with a capital letter and end with _s
+        * All the structure names must start with a capital letter
         """
         pattern = r'struct\s+(\w+)\s*{'
         incorrect_structures = []
 
         matches = re.findall(pattern, content)
         for struct_name in matches:
-            if not struct_name[0].isupper() or not struct_name.endswith('_s'):
+            if not struct_name[0].isupper():
                 incorrect_structures.append(struct_name)
 
         if incorrect_structures:
@@ -90,7 +90,7 @@ class NormChecker:
         self.check_End_Of_File(file_name, content)
 
 
-FOLDER_SRC = 'src'
+FOLDER_SRC = 'Flakkari'
 
 def main():
     check_norm = NormChecker()
@@ -102,7 +102,7 @@ def main():
             try:
                 # We're only interested in C++ files
                 if file_path.endswith('.cpp'):
-                    if file != 'main.cpp' and not file[0].isupper() or file[0].isdigit():
+                    if file != 'core.cpp' and not file[0].isupper() or file[0].isdigit():
                         raise AssertionError("The name of the file \"" + file_path + "\" does not start with a capital letter")
                     with open(file_path, 'r', encoding='latin-1') as f:
                         check_norm.call_all_checks(file_path, f.read())
