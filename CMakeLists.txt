@@ -28,6 +28,7 @@ set(HEADERS
     Flakkari/Protocol/Header.hpp
     Flakkari/Protocol/Packet.hpp
     Flakkari/Engine/EntityComponentSystem/Entity.hpp
+    Flakkari/Engine/EntityComponentSystem/SparseArrays.hpp
     Flakkari/Server/UDPServer.hpp
     Flakkari/Server/Client/Client.hpp
     Flakkari/Server/Client/ClientManager.hpp
