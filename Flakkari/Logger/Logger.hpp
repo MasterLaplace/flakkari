@@ -28,6 +28,7 @@
 #define FLAKKARI_LOG_ERROR(message) FLAKKARI_LOG(LOG_ERROR, message)
 #define FLAKKARI_LOG_FATAL(message) FLAKKARI_LOG(LOG_FATAL, message)
 
+#define STD_ERROR std::string(::strerror(errno))
 #define COLOR_RESET "\033[0m"
 #define COLOR_RED "\033[31m"
 #define COLOR_GREEN "\033[32m"
@@ -48,12 +49,20 @@
 namespace Flakkari {
     class Logger {
         public:
+            enum class Mode {
+                SILENT,
+                NORMAL,
+                DEBUG
+            };
+
+        public:
+            static void setMode(Mode mode) noexcept;
             static const std::string get_current_time() noexcept;
             static void log(int level, std::string message, std::string file, int line);
             static void log(int level, std::string message);
             static void log(int level, std::string message, std::string file);
             static void log(int level, std::string message, int line);
     };
-} // namespace Flakkari
+} /* namespace Flakkari */
 
 #endif /* !FLAKKARI_LOGGER_HPP_ */

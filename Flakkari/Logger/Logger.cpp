@@ -7,7 +7,17 @@
 
 #include "Logger.hpp"
 
-namespace Flakkari {
+using namespace Flakkari;
+
+#if defined(DEBUG) || defined(_DEBUG)
+static Logger::Mode _mode = Logger::Mode::DEBUG;
+#else
+static Logger::Mode _mode = Logger::Mode::NORMAL;
+#endif
+
+void Logger::setMode(Logger::Mode mode) noexcept {
+    _mode = mode;
+}
 
 const std::string Logger::get_current_time() noexcept
 {
@@ -21,6 +31,12 @@ const std::string Logger::get_current_time() noexcept
 
 void Logger::log(int level, std::string message, std::string file, int line)
 {
+    if (_mode == Logger::Mode::SILENT && level != LOG_FATAL)
+        return;
+
+    if (_mode == Logger::Mode::NORMAL && level == LOG_DEBUG)
+        return;
+
     std::string color = COLOR_RESET;
     std::string levelStr = "INFO";
 
@@ -57,6 +73,12 @@ void Logger::log(int level, std::string message, std::string file, int line)
 
 void Logger::log(int level, std::string message)
 {
+    if (_mode == Logger::Mode::SILENT && level != LOG_FATAL)
+        return;
+
+    if (_mode == Logger::Mode::NORMAL && level == LOG_DEBUG)
+        return;
+
     std::string color = COLOR_RESET;
     std::string levelStr = "INFO";
 
@@ -93,6 +115,12 @@ void Logger::log(int level, std::string message)
 
 void Logger::log(int level, std::string message, std::string file)
 {
+    if (_mode == Logger::Mode::SILENT && level != LOG_FATAL)
+        return;
+
+    if (_mode == Logger::Mode::NORMAL && level == LOG_DEBUG)
+        return;
+
     std::string color = COLOR_RESET;
     std::string levelStr = "INFO";
 
@@ -129,6 +157,12 @@ void Logger::log(int level, std::string message, std::string file)
 
 void Logger::log(int level, std::string message, int line)
 {
+    if (_mode == Logger::Mode::SILENT && level != LOG_FATAL)
+        return;
+
+    if (_mode == Logger::Mode::NORMAL && level == LOG_DEBUG)
+        return;
+
     std::string color = COLOR_RESET;
     std::string levelStr = "INFO";
 
@@ -162,5 +196,3 @@ void Logger::log(int level, std::string message, int line)
     std::cout << get_current_time();
     std::cout << color << " [" << levelStr << "] " << message << " (" << line << ")" << COLOR_RESET << std::endl;
 }
-
-} // namespace Flakkari
