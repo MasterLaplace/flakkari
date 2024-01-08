@@ -21,6 +21,7 @@
 #define COMMANDMANAGER_HPP_
 
 #include <iostream>
+#include "Logger/Logger.hpp"
 #include "config.h.in"
 
 namespace Flakkari::Internals {
