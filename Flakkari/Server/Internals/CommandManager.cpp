@@ -11,7 +11,12 @@
 
 using namespace Flakkari::Internals;
 
+std::regex CommandManager::PASSWORD_REGEX("^unlock [\\w-]+");
+bool CommandManager::_unlocked = false;
+
 static const std::string HELP_MESSAGE = "Commands:\n"
+                                "unlock <password>\n"
+                                "lock (admin only)\n"
                                 "version\n"
                                 "help\n";
 
@@ -27,12 +32,45 @@ bool CommandManager::handleOpenCommand(const std::string &input)
     }
     return false;
 }
+
+bool CommandManager::handlePasswordCommand(const std::string &input)
+{
+    if (!std::regex_match(input, PASSWORD_REGEX))
+        return false;
+
+    const char *password = std::getenv("FLAKKARI_PASSWORD");
+
+    if (password == nullptr || !*password) {
+        FLAKKARI_LOG_WARNING("No password set: please set FLAKKARI_PASSWORD environment variable");
+        return true;
+    }
+
+    if (input.substr(7) == password) {
+        _unlocked = true;
+        FLAKKARI_LOG_INFO("Command manager unlocked");
+        return true;
+    } else {
+        FLAKKARI_LOG_WARNING("Wrong password");
+        return true;
+    }
+
+    if (input == "lock" && _unlocked) {
+        _unlocked = false;
+        FLAKKARI_LOG_INFO("Command manager locked");
+        return true;
+    }
+    return false;
+}
+
 void CommandManager::handleCommand()
 {
     std::string input;
     std::getline(std::cin, input);
 
     if (handleOpenCommand(input))
+        return;
+
+    if (handlePasswordCommand(input))
         return;
 
     FLAKKARI_LOG_WARNING("Unknown command, type 'help' for a list of commands");

@@ -21,12 +21,18 @@
 #define COMMANDMANAGER_HPP_
 
 #include <iostream>
+#include <regex>
+
 #include "Logger/Logger.hpp"
 #include "config.h.in"
 
 namespace Flakkari::Internals {
 
 class CommandManager {
+    public:
+        static std::regex PASSWORD_REGEX;
+        static bool _unlocked;
+
     public:
         /**
          * @brief Handle a command from the admin user and execute it.
@@ -50,6 +56,21 @@ class CommandManager {
          * @example help
          */
         [[nodiscard]] static bool handleOpenCommand(const std::string &input);
+
+        /**
+         * @brief Handle a command from the admin user and execute it.
+         *
+         * @note Need to export `FLAKKARI_PASSWORD` environment variable to use some
+         *      commands.
+         *
+         * @param input  The command to execute.
+         * @return true  If the command was executed.
+         * @return false  If the command was not executed.
+         *
+         * @example unlock <password>
+         * @example lock
+         */
+        [[nodiscard]] static bool handlePasswordCommand(const std::string &input);
 };
 
 } // namespace Flakkari::Internals
