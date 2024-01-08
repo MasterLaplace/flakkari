@@ -71,6 +71,20 @@ class CommandManager {
          * @example lock
          */
         [[nodiscard]] static bool handlePasswordCommand(const std::string &input);
+
+        /**
+         * @brief Handle a command from the admin user and execute it.
+         *
+         * @note Need to export `FLAKKARI_PASSWORD` environment variable to use some
+         *       commands.
+         *
+         * @param input  The command to execute.
+         * @return true  If the command was executed.
+         * @return false  If the command was not executed.
+         *
+         * @example exit
+         */
+        [[nodiscard]] static bool handleAdminCommand(const std::string &input);
 };
 
 } // namespace Flakkari::Internals

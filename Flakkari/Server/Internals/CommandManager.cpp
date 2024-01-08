@@ -18,7 +18,8 @@ static const std::string HELP_MESSAGE = "Commands:\n"
                                 "unlock <password>\n"
                                 "lock (admin only)\n"
                                 "version\n"
-                                "help\n";
+                                "help\n"
+                                "exit (admin only)";
 
 
 bool CommandManager::handleOpenCommand(const std::string &input)
@@ -62,6 +63,21 @@ bool CommandManager::handlePasswordCommand(const std::string &input)
     return false;
 }
 
+bool CommandManager::handleAdminCommand(const std::string &input)
+{
+    if (!_unlocked) {
+        FLAKKARI_LOG_WARNING("Please unlock or type 'help' for a list of commands");
+        return true;
+    }
+
+    if (input == "exit") {
+        FLAKKARI_LOG_INFO("Exiting...");
+        throw std::runtime_error("exit");
+    }
+
+    return false;
+}
+
 void CommandManager::handleCommand()
 {
     std::string input;
@@ -71,6 +87,9 @@ void CommandManager::handleCommand()
         return;
 
     if (handlePasswordCommand(input))
+        return;
+
+    if (handleAdminCommand(input))
         return;
 
     FLAKKARI_LOG_WARNING("Unknown command, type 'help' for a list of commands");
