@@ -20,6 +20,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include <cstdint>
 
 using byte = unsigned char;
 using byte_t = byte;
