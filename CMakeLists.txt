@@ -29,6 +29,8 @@ set(HEADERS
     Flakkari/Server/UDPServer.hpp
     Flakkari/Server/Client/Client.hpp
     Flakkari/Server/Client/ClientManager.hpp
+)
+
 set(HEADER_LIB_LOGGER
     Flakkari/Logger/Logger.hpp
 )
