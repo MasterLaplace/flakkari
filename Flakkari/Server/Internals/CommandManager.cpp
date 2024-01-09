@@ -12,11 +12,18 @@
 using namespace Flakkari::Internals;
 
 std::regex CommandManager::PASSWORD_REGEX("^unlock [\\w-]+");
+std::regex CommandManager::ADD_GAME_REGEX("^addGame [\\w-]+");
+std::regex CommandManager::UPDATE_GAME_REGEX("^updateGame [\\w-]+");
+std::regex CommandManager::REMOVE_GAME_REGEX("^removeGame [\\w-]+");
 bool CommandManager::_unlocked = false;
 
 static const std::string HELP_MESSAGE = "Commands:\n"
                                 "unlock <password>\n"
                                 "lock (admin only)\n"
+                                "addGame <gameName> (admin only)\n"
+                                "updateGame <gameName> (admin only)\n"
+                                "removeGame <gameName> (admin only)\n"
+                                "listGames (admin only)\n"
                                 "version\n"
                                 "help\n"
                                 "exit (admin only)";
@@ -67,6 +74,26 @@ bool CommandManager::handleAdminCommand(const std::string &input)
 {
     if (!_unlocked) {
         FLAKKARI_LOG_WARNING("Please unlock or type 'help' for a list of commands");
+        return true;
+    }
+
+    if (std::regex_match(input, ADD_GAME_REGEX)) {
+        GameManager::addGame(input.substr(8));
+        return true;
+    }
+
+    if (std::regex_match(input, UPDATE_GAME_REGEX)) {
+        GameManager::updateGame(input.substr(11));
+        return true;
+    }
+
+    if (std::regex_match(input, REMOVE_GAME_REGEX)) {
+        GameManager::removeGame(input.substr(11));
+        return true;
+    }
+
+    if (input == "listGames") {
+        GameManager::listGames();
         return true;
     }
 

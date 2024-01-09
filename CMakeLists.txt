@@ -20,6 +20,7 @@ set(SOURCES
     Flakkari/Server/Client/Client.cpp
     Flakkari/Server/Client/ClientManager.cpp
     Flakkari/Server/Game/Game.cpp
+    Flakkari/Server/Game/GameManager.cpp
     Flakkari/Server/Internals/CommandManager.cpp
 )
 
@@ -42,6 +43,7 @@ set(HEADERS
     Flakkari/Server/Client/Client.hpp
     Flakkari/Server/Client/ClientManager.hpp
     Flakkari/Server/Game/Game.hpp
+    Flakkari/Server/Game/GameManager.hpp
     Flakkari/Server/Internals/CommandManager.hpp
 )
 
