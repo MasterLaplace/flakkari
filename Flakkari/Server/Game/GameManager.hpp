@@ -85,6 +85,13 @@ class GameManager {
         static std::shared_ptr<Game> getGame(std::string gameName);
 
         /**
+         * @brief Get the Games Instances object (all games loaded)
+         *
+         * @return std::vector<std::shared_ptr<Game>> Games Instances
+         */
+        static std::vector<std::shared_ptr<Game>> getGamesInstances();
+
+        /**
          * @brief Update a game from the GameManager
          *
          * @param gameName Game to update
@@ -123,6 +130,15 @@ class GameManager {
          * @param client Client to remove from the game
          */
         static void removeClientFromGame(std::string gameName, std::shared_ptr<Client> client);
+
+        /**
+         * @brief Get the index of a client in the waiting queue
+         *
+         * @param gameName Game to get the index from
+         * @param client Client to get the index of
+         * @return int Index of the client in the waiting queue
+         */
+        static int getIndexInWaitingQueue(std::string gameName, std::shared_ptr<Client> client);
 };
 
 } /* namespace Flakkari */

@@ -78,6 +78,16 @@ std::shared_ptr<Game> GameManager::getGame(std::string gameName)
     return std::make_shared<Game>(gameName, _gamesStore[gameName]);
 }
 
+std::vector<std::shared_ptr<Game>> GameManager::getGamesInstances()
+{
+    auto &_gamesInstances = getInstance()->_gamesInstances;
+    std::vector<std::shared_ptr<Game>> gamesInstances;
+
+    for (auto &game : _gamesInstances)
+        gamesInstances.insert(gamesInstances.end(), game.second.begin(), game.second.end());
+    return gamesInstances;
+}
+
 int GameManager::updateGame(std::string gameName)
 {
     auto &_gamesStore = getInstance()->_gamesStore;
@@ -193,6 +203,22 @@ void GameManager::removeClientFromGame(std::string gameName, std::shared_ptr<Cli
         return;
     }
     FLAKKARI_LOG_ERROR("could not remove client \""+ STR_ADDRESS +"\" from game \"" + gameName + "\"");
+}
+
+int GameManager::getIndexInWaitingQueue(std::string gameName, std::shared_ptr<Client> client)
+{
+    auto &waitingClients = getInstance()->_waitingClients;
+    auto &gamesStore = getInstance()->_gamesStore;
+    if (gamesStore.find(gameName) == gamesStore.end())
+        return FLAKKARI_LOG_ERROR("game not found"), -1;
+
+    auto tmpQueue = waitingClients[gameName];
+    for (int i = 0; !tmpQueue.empty(); i++) {
+        if (tmpQueue.front() == client)
+            return FLAKKARI_LOG_INFO("client \""+ STR_ADDRESS +"\" found in waiting queue at " + std::to_string(i)), i;
+        tmpQueue.pop();
+    }
+    return FLAKKARI_LOG_ERROR("client \""+ STR_ADDRESS +"\" not found in waiting queue"), -1;
 }
 
 } /* namespace Flakkari */
