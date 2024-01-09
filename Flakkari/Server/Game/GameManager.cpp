@@ -8,10 +8,13 @@
 */
 
 #include "GameManager.hpp"
+#include "../Client/Client.hpp"
 
 namespace Flakkari {
 
 std::shared_ptr<GameManager> GameManager::_instance = nullptr;
+
+#define STR_ADDRESS std::string(*client->getAddress())
 
 GameManager::GameManager()
 {
@@ -112,6 +115,44 @@ void GameManager::listGames()
     for (const auto &game : _gamesStore)
         gamesList += " - " + game.first + "\n";
     FLAKKARI_LOG_INFO(gamesList);
+}
+
+void GameManager::addClientToGame(std::string gameName, std::shared_ptr<Client> client)
+{
+    auto current = getInstance();
+    auto &gamesStore = current->_gamesStore;
+    auto &gamesInstances = current->_gamesInstances;
+    auto &waitingClients = current->_waitingClients;
+    if (gamesStore.find(gameName) == gamesStore.end())
+        return FLAKKARI_LOG_ERROR("game not found"), void();
+
+    auto &gameStore = gamesStore[gameName];
+    auto &gameInstance = gamesInstances[gameName];
+
+    auto minPlayers = gameStore->at("minPlayers").get<size_t>();
+    auto maxPlayers = gameStore->at("maxPlayers").get<size_t>();
+    auto maxInstances = gameStore->at("maxInstances").get<size_t>();
+    auto lobby = gameStore->at("lobby").get<std::string>();
+
+    if (gameInstance.empty() || gameInstance.back()->getPlayers().size() >= maxPlayers) {
+        if (gameInstance.size() >= maxInstances) {
+            FLAKKARI_LOG_ERROR("game \"" + gameName + "\"is full");
+            waitingClients[gameName].push(client);
+            return;
+        }
+        gameInstance.push_back(std::make_shared<Game>(gameName, gameStore));
+        FLAKKARI_LOG_INFO("game \"" + gameName + "\" created");
+    }
+
+    if (gameInstance.back()->addPlayer(client)) {
+        FLAKKARI_LOG_INFO("client \""+ STR_ADDRESS +"\" added to game \"" + gameName + "\"");
+        if (lobby == "Matchmaking" && gameInstance.back()->getPlayers().size() >= minPlayers && !gameInstance.back()->isRunning())
+            gameInstance.back()->start();
+        if (lobby == "OpenWorld" && !gameInstance.back()->isRunning())
+            gameInstance.back()->start();
+        return;
+    }
+    FLAKKARI_LOG_ERROR("could not add client \""+ STR_ADDRESS +"\" to game \"" + gameName + "\"");
 }
 
 } /* namespace Flakkari */

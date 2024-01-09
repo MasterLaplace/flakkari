@@ -33,6 +33,8 @@ class GameManager {
         static std::shared_ptr<GameManager> _instance;
 
     public:
+        std::unordered_map<std::string /*gameName*/, std::queue<std::shared_ptr<Client>> /*waitingClients*/> _waitingClients;
+        std::unordered_map<std::string /*gameName*/, std::vector<std::shared_ptr<Game>> /*gamesInstances*/> _gamesInstances;
         std::unordered_map<std::string /*gameName*/, std::shared_ptr<nlohmann::json> /*data*/> _gamesStore;
 
     public:
@@ -105,6 +107,14 @@ class GameManager {
          *
          */
         static void listGames();
+
+        /**
+         * @brief Add a client to a game
+         *
+         * @param gameName Game to add the client to
+         * @param client Client to add to the game
+         */
+        static void addClientToGame(std::string gameName, std::shared_ptr<Client> client);
 };
 
 } /* namespace Flakkari */
