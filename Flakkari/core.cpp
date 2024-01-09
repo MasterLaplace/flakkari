@@ -7,9 +7,14 @@
 
 #include "Server/UDPServer.hpp"
 
-#include "Protocol/Packet.hpp"
-
-int main() {
-    Flakkari::UDPServer server("localhost", 8080);
-    return server.run();
+int main()
+{
+    try {
+        Flakkari::UDPServer server("localhost", 8080);
+        server.run();
+    } catch (const std::exception &e) {
+        if (std::string(e.what()) != "exit")
+            return FLAKKARI_LOG_FATAL(e.what()), 84;
+    }
+    return 0;
 }

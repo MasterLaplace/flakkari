@@ -16,8 +16,8 @@
 
 ## Additional information
 
-**Area Dino Client requesting: (if applicable)**
+**Flakkari Client requesting: (if applicable)**
 
-- [ ] Contributor has read Area Dino's [GitHub code of conduct](https://MasterLaplace/Flakkari/blob/main/.github/CODE_OF_CONDUCT.md)
+- [ ] Contributor has read Flakkari's [GitHub code of conduct](https://MasterLaplace/Flakkari/blob/main/.github/CODE_OF_CONDUCT.md)
 - [ ] Contributor would like to be mentioned in the release notes as: (fill in this blank)
 - [ ] Contributor agrees to the license terms of this repository.

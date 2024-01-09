@@ -105,7 +105,8 @@ Address::Address(const sockaddr_storage &clientAddr, SocketType socket_type, IpT
     });
 }
 
-std::optional<std::string> Address::toString() const {
+std::optional<std::string> Address::toString() const
+{
     if (_addrInfo == nullptr)
         return {};
     char host[NI_MAXHOST];
@@ -145,7 +146,20 @@ constexpr const char *Address::socketTypeToString(SocketType socket_type)
     }
 }
 
-std::ostream &operator<<(std::ostream &os, const Address &addr) {
+Address::operator std::string() const
+{
+    return std::string(
+        toString().value_or("null")
+        + " ("
+        + socketTypeToString(_socket_type)
+        + ", "
+        + ipTypeToString(_ip_type)
+        + ")"
+    );
+}
+
+std::ostream &operator<<(std::ostream &os, const Address &addr)
+{
     os << addr.toString().value_or("null");
     os << " (";
     os << Address::socketTypeToString(addr.getSocketType());

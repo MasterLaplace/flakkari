@@ -28,6 +28,9 @@
 #define FLAKKARI_LOG_ERROR(message) FLAKKARI_LOG(LOG_ERROR, message)
 #define FLAKKARI_LOG_FATAL(message) FLAKKARI_LOG(LOG_FATAL, message)
 
+#define STD_ERROR std::string(::strerror(errno))
+
+#ifdef __linux__
 #define COLOR_RESET "\033[0m"
 #define COLOR_RED "\033[31m"
 #define COLOR_GREEN "\033[32m"
@@ -45,15 +48,45 @@
 #define COLOR_BRIGHT_CYAN "\033[96m"
 #define COLOR_BRIGHT_WHITE "\033[97m"
 
+#elif _WIN32
+#include <windows.h>
+
+#define COLOR_RESET 7
+#define COLOR_RED 12
+#define COLOR_GREEN 10
+#define COLOR_YELLOW 14
+#define COLOR_BLUE 9
+#define COLOR_MAGENTA 13
+#define COLOR_CYAN 11
+#define COLOR_WHITE 15
+#define COLOR_ORANGE 208
+#define COLOR_BRIGHT_RED FOREGROUND_RED | FOREGROUND_INTENSITY
+#define COLOR_BRIGHT_GREEN FOREGROUND_GREEN | FOREGROUND_INTENSITY
+#define COLOR_BRIGHT_YELLOW FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY
+#define COLOR_BRIGHT_BLUE FOREGROUND_BLUE | FOREGROUND_INTENSITY
+#define COLOR_BRIGHT_MAGENTA FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY
+#define COLOR_BRIGHT_CYAN FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY
+#define COLOR_BRIGHT_WHITE FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY
+#endif
+
 namespace Flakkari {
     class Logger {
         public:
+            enum class Mode {
+                SILENT,
+                NORMAL,
+                DEBUG
+            };
+
+        public:
+            static void setMode(Mode mode) noexcept;
             static const std::string get_current_time() noexcept;
+            static const std::string fatal_error_message() noexcept;
             static void log(int level, std::string message, std::string file, int line);
             static void log(int level, std::string message);
             static void log(int level, std::string message, std::string file);
             static void log(int level, std::string message, int line);
     };
-} // namespace Flakkari
+} /* namespace Flakkari */
 
 #endif /* !FLAKKARI_LOGGER_HPP_ */

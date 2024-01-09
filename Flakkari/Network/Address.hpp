@@ -1,5 +1,5 @@
 /**************************************************************************
- * Flakkari Library v0.0.0
+ * Flakkari Library v0.2.0
  *
  * Flakkari Library is a C++ Library for Network.
  * @file Address.hpp
@@ -8,7 +8,7 @@
  * Flakkari Library is under MIT License.
  * https://opensource.org/licenses/MIT
  * © 2023 @MasterLaplace
- * @version 0.0.0
+ * @version 0.2.0
  * @date 2023-12-20
  **************************************************************************/
 
@@ -25,6 +25,7 @@
 #include "../Logger/Logger.hpp"
 
 namespace Flakkari::Network {
+
 class Address {
     public:
         enum class IpType {
@@ -118,6 +119,13 @@ class Address {
          * @return IpType  Ip Type
          */
         [[nodiscard]] IpType getIpType() const { return _ip_type; }
+
+        /**
+         * @brief Convert Address to string (std::string)
+         *
+         * @return std::string  String representation of Address
+         */
+        operator std::string() const;
 
     protected:
     private:

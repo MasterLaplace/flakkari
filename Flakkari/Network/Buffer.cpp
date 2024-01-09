@@ -43,25 +43,30 @@ void Buffer::concat(const Buffer& otherBuffer) {
     insert(end(), otherBuffer.begin(), otherBuffer.end());
 }
 
-uint16_t Buffer::calculateChecksum() const {
+uint16_t Buffer::calculateChecksum() const
+{
     uint16_t checksum = 0;
-    for (const auto &byte : *this) {
+
+    for (const auto &byte : *this)
         checksum += byte;
-    }
+
     return checksum;
 }
 
-void Buffer::bitwiseXOR(const Buffer& otherBuffer) {
+void Buffer::bitwiseXOR(const Buffer& otherBuffer)
+{
     std::size_t minSize = std::min(size(), otherBuffer.size());
-    for (std::size_t i = 0; i < minSize; ++i) {
+
+    for (std::size_t i = 0; i < minSize; ++i)
         (*this)[i] ^= otherBuffer[i];
-    }
 }
 
-void Buffer::runLengthEncode() {
+void Buffer::runLengthEncode()
+{
     Buffer encodedBuffer;
     byte currentByte = (*this)[0];
     byte currentCount = 1;
+
     for (std::size_t i = 1; i < size(); ++i) {
         if ((*this)[i] == currentByte) {
             ++currentCount;
@@ -77,20 +82,23 @@ void Buffer::runLengthEncode() {
     std::copy(encodedBuffer.begin(), encodedBuffer.end(), begin());
 }
 
-void Buffer::runLengthDecode() {
+void Buffer::runLengthDecode()
+{
     Buffer decodedBuffer;
+
     for (std::size_t i = 0; i < size(); i += 2) {
         byte currentCount = (*this)[i];
         byte currentByte = (*this)[i + 1];
-        for (std::size_t j = 0; j < currentCount; ++j) {
+        for (std::size_t j = 0; j < currentCount; ++j)
             decodedBuffer.push_back(currentByte);
-        }
     }
     std::copy(decodedBuffer.begin(), decodedBuffer.end(), begin());
 }
 
-void Buffer::convertToHex() {
+void Buffer::convertToHex()
+{
     Buffer hexBuffer;
+
     for (const auto &byte : *this) {
         hexBuffer.push_back(byte / 16);
         hexBuffer.push_back(byte % 16);
@@ -98,8 +106,10 @@ void Buffer::convertToHex() {
     std::copy(hexBuffer.begin(), hexBuffer.end(), begin());
 }
 
-void Buffer::convertFromHex() {
+void Buffer::convertFromHex()
+{
     Buffer hexBuffer;
+
     for (std::size_t i = 0; i < size(); i += 2) {
         byte currentByte = (*this)[i] * 16 + (*this)[i + 1];
         hexBuffer.push_back(currentByte);
@@ -123,27 +133,29 @@ Buffer::operator const std::string() const {
     return std::string((char *)data(), size());
 }
 
-Buffer Buffer::operator+(const Buffer& otherBuffer) const {
+Buffer Buffer::operator+(const Buffer& otherBuffer) const
+{
     Buffer newBuffer = *this;
     newBuffer += otherBuffer;
     return newBuffer;
 }
 
-Buffer Buffer::operator+=(const Buffer& otherBuffer){
+Buffer Buffer::operator+=(const Buffer& otherBuffer) {
     concat(otherBuffer);
     return *this;
 }
 
-Buffer Buffer::operator-(const Buffer& otherBuffer) const {
+Buffer Buffer::operator-(const Buffer& otherBuffer) const
+{
     Buffer newBuffer = *this;
     newBuffer -= otherBuffer;
     return newBuffer;
 }
 
-Buffer Buffer::operator-=(const Buffer& otherBuffer) {
-    for (const auto &byte : otherBuffer) {
+Buffer Buffer::operator-=(const Buffer& otherBuffer)
+{
+    for (const auto &byte : otherBuffer)
         erase(std::find(begin(), end(), byte));
-    }
     return *this;
 }
 
@@ -152,7 +164,8 @@ std::ostream &operator<<(std::ostream &os, const Buffer &buffer) {
     return os;
 }
 
-std::istream &operator>>(std::istream &is, Buffer &buffer) {
+std::istream &operator>>(std::istream &is, Buffer &buffer)
+{
     std::string data;
     is >> data;
     buffer = Buffer(data);

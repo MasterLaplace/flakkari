@@ -1,5 +1,5 @@
 /**************************************************************************
- * Flakkari Library v0.1.0
+ * Flakkari Library v0.2.0
  *
  * Flakkari Library is a C++ Library for Network.
  * @file ClientManager.hpp
@@ -9,7 +9,7 @@
  * Flakkari Library is under MIT License.
  * https://opensource.org/licenses/MIT
  * © 2023 @MasterLaplace
- * @version 0.1.0
+ * @version 0.2.0
  * @date 2023-12-24
  **************************************************************************/
 
@@ -40,9 +40,8 @@ namespace Flakkari {
  * @code
  * #include "ClientManager.hpp"
  *
- * Flakkari::ClientManager clientManager;
- * clientManager.addClient(std::make_shared<Flakkari::Network::Address>("...")>);
- * clientManager.checkInactiveClients();
+ * Flakkari::ClientManager::addClient(std::make_shared<Flakkari::Network::Address>("...")>);
+ * Flakkari::ClientManager::checkInactiveClients();
  * @endcode
  */
 class ClientManager {
@@ -101,6 +100,14 @@ class ClientManager {
          * @see Client::keepAlive()
          */
         static void checkInactiveClients();
+
+        /**
+         * @brief Get the Client object
+         *
+         * @param client  The client's address
+         * @return std::shared_ptr<Client>  The client object
+         */
+        static std::shared_ptr<Client> getClient(std::shared_ptr<Network::Address> client);
 
         /**
          * @brief Get the Client object

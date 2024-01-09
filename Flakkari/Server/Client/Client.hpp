@@ -19,6 +19,7 @@
 #include <chrono>
 
 #include "Network/Address.hpp"
+#include "../Game/GameManager.hpp"
 
 namespace Flakkari {
 
@@ -42,7 +43,7 @@ class Client {
          * @param address The client's address
          */
         Client(std::shared_ptr<Network::Address> address);
-        ~Client() = default;
+        ~Client();
 
         /**
          * @brief Check if the client is still connected to the server
@@ -70,6 +71,7 @@ class Client {
     private:
         std::chrono::steady_clock::time_point _lastActivity;
         std::shared_ptr<Network::Address> _address;
+        bool _isConnected = true;
 };
 
 } /* namespace Flakkari */
