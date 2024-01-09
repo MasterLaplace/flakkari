@@ -11,9 +11,11 @@
 
 namespace Flakkari {
 
+
 std::shared_ptr<ClientManager> ClientManager::_instance = nullptr;
 
-std::shared_ptr<ClientManager> ClientManager::getInstance() {
+std::shared_ptr<ClientManager> ClientManager::getInstance()
+{
     if (!_instance)
         _instance = std::make_shared<ClientManager>();
     return _instance;
@@ -24,7 +26,7 @@ void ClientManager::addClient(std::shared_ptr<Network::Address> client)
     auto &clients = getInstance()->_clients;
     if (clients.find(client->toString().value_or("")) == clients.end()) {
         clients[client->toString().value_or("")] = std::make_shared<Client>(client);
-        FLAKKARI_LOG_LOG("Client " + client->toString().value_or("") + " connected");
+        FLAKKARI_LOG_LOG("Client " + client->toString().value_or("Unknown") + " connected");
     } else
         clients[client->toString().value_or("")]->keepAlive();
 }
@@ -32,8 +34,9 @@ void ClientManager::addClient(std::shared_ptr<Network::Address> client)
 void ClientManager::removeClient(std::shared_ptr<Network::Address> client)
 {
     auto &clients = getInstance()->_clients;
-    if (clients.find(client->toString().value_or("")) != clients.end())
+    if (clients.find(client->toString().value_or("")) != clients.end()) {
         clients.erase(client->toString().value_or(""));
+    }
 }
 
 void ClientManager::checkInactiveClients()
@@ -47,6 +50,10 @@ void ClientManager::checkInactiveClients()
             ++it;
         }
     }
+}
+
+std::shared_ptr<Client> ClientManager::getClient(std::shared_ptr<Network::Address> client) {
+    return getInstance()->_clients[client->toString().value_or("")];
 }
 
 std::shared_ptr<Client> ClientManager::getClient(std::string ip) {

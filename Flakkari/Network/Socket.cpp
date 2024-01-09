@@ -23,6 +23,12 @@ Socket::Socket(std::shared_ptr<Address> address)
     #endif
 
     auto &addr = _address->getAddrInfo();
+
+    if (addr == nullptr) {
+        FLAKKARI_LOG_ERROR("Address is nullptr");
+        return;
+    }
+
     _socket = ::socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
     if (_socket == INVALID_SOCKET) {
         FLAKKARI_LOG_FATAL("Failed to create socket, error: " + STD_ERROR);
@@ -64,6 +70,12 @@ Socket::Socket(Address address)
     #endif
 
     auto &addr = _address->getAddrInfo();
+
+    if (addr == nullptr) {
+        FLAKKARI_LOG_ERROR("Address is nullptr");
+        return;
+    }
+
     _socket = ::socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
     if (_socket == INVALID_SOCKET) {
         FLAKKARI_LOG_FATAL("Failed to create socket, error: " + STD_ERROR);
@@ -88,6 +100,12 @@ Socket::Socket(ip_t ip, port_t port, Address::IpType ip_type, Address::SocketTyp
     #endif
 
     auto &addr = _address->getAddrInfo();
+
+    if (addr == nullptr) {
+        FLAKKARI_LOG_ERROR("Address is nullptr");
+        return;
+    }
+
     _socket = ::socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
     if (_socket == INVALID_SOCKET) {
         FLAKKARI_LOG_FATAL("Failed to create socket, error: " + STD_ERROR);
@@ -117,6 +135,9 @@ void Socket::bind()
 {
     auto &addr = _address->getAddrInfo();
 
+    if (addr == nullptr)
+        return FLAKKARI_LOG_ERROR("Address is nullptr"), void();
+
     if (::bind(_socket, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
         FLAKKARI_LOG_FATAL("Failed to bind socket, error: " + STD_ERROR);
         return;
@@ -135,6 +156,9 @@ void Socket::connect()
 {
     auto &addr = _address->getAddrInfo();
 
+    if (addr == nullptr)
+        return FLAKKARI_LOG_ERROR("Address is nullptr"), void();
+
     if (::connect(_socket, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
         FLAKKARI_LOG_FATAL("Failed to connect socket, error: " + STD_ERROR);
         return;
@@ -152,7 +176,9 @@ std::shared_ptr<Socket> Socket::accept()
         return nullptr;
     }
 
-    auto _ip_type = (clientAddr.ss_family == AF_INET) ? Address::IpType::IPv4 : (clientAddr.ss_family == AF_INET6) ? Address::IpType::IPv6 : Address::IpType::None;
+    auto _ip_type = (clientAddr.ss_family == AF_INET)
+        ? Address::IpType::IPv4 : (clientAddr.ss_family == AF_INET6)
+            ? Address::IpType::IPv6 : Address::IpType::None;
 
     auto clientAddress = std::make_shared<Address>(clientAddr, _address->getSocketType(), _ip_type);
     return std::make_shared<Socket>(clientSocket, clientAddress);
@@ -178,6 +204,9 @@ void Socket::sendTo(const std::shared_ptr<Address> &address, const Buffer &data,
 {
     auto &addr = address->getAddrInfo();
 
+    if (addr == nullptr)
+        return FLAKKARI_LOG_ERROR("Address is nullptr"), void();
+
     if (::sendto(_socket, data.getData(), data.getSize(), flags, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
         FLAKKARI_LOG_ERROR("Failed to send \"" + std::string(data) + "\" to \"" + address->toString().value_or("No address") + "\", error: " + STD_ERROR);
         return;
@@ -187,6 +216,9 @@ void Socket::sendTo(const std::shared_ptr<Address> &address, const Buffer &data,
 void Socket::sendTo(const std::shared_ptr<Address> &address, const byte *data, const size_t &size, int flags)
 {
     auto &addr = address->getAddrInfo();
+
+    if (addr == nullptr)
+        return FLAKKARI_LOG_ERROR("Address is nullptr"), void();
 
     if (::sendto(_socket, data, size, flags, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
         FLAKKARI_LOG_ERROR(
@@ -234,6 +266,7 @@ std::optional<std::pair<std::shared_ptr<Address>, Buffer>> Socket::receiveFrom(s
         FLAKKARI_LOG_ERROR("Failed to receive data from \"" + _address->toString().value_or("No address") + "\", error: " + STD_ERROR);
         return {};
     }
+
     auto _ip_type = (addr.ss_family == AF_INET)
         ? Address::IpType::IPv4 : (addr.ss_family == AF_INET6)
             ? Address::IpType::IPv6 : Address::IpType::None;
@@ -248,6 +281,8 @@ std::optional<std::pair<std::shared_ptr<Address>, Buffer>> Socket::receiveFrom(i
     socklen_t addrlen = sizeof(addr);
 
     if (::recvfrom(_socket, &data[0], 4096, flags, (sockaddr*)&addr, &addrlen) == SOCKET_ERROR) {
+        if (errno == EAGAIN || errno == EWOULDBLOCK)
+            return {};
         FLAKKARI_LOG_ERROR("Failed to receive data from \"" + _address->toString().value_or("No address") + "\", error: " + STD_ERROR);
         return {};
     }
@@ -283,6 +318,7 @@ void Socket::setBlocking(bool blocking)
 
         int result = ::fcntl(_socket, F_SETFL, flags | (blocking ? 0 : O_NONBLOCK));
     #endif
+
     if (result == SOCKET_ERROR)
         FLAKKARI_LOG_ERROR("Failed to set socket to " + std::string(blocking?"":"non") + "blocking, error: " + STD_ERROR);
 }
