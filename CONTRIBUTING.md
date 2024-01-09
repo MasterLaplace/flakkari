@@ -39,7 +39,7 @@ See the [Table of Contents](#table-of-contents) for different ways to help and d
 
 Here, you can provide a brief overview of what the Flakkari project is about and why contributions are important.
 
-v0.1.6 of the project is currently under development. You can find the latest release [here](https://github.com/MasterLaplace/Flakkari/releases/latest/) and the changelog [here](CHANGELOG.md).
+v0.2.0 of the project is currently under development. You can find the latest release [here](https://github.com/MasterLaplace/Flakkari/releases/latest/) and the changelog [here](CHANGELOG.md).
 
 ----
 

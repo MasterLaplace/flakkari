@@ -114,7 +114,7 @@ endif()
 
 # Versioning:
 set(PROJECT_VERSION_MAJOR 0)
-set(PROJECT_VERSION_MINOR 1)
+set(PROJECT_VERSION_MINOR 2)
 set(PROJECT_VERSION_PATCH 0)
 
 configure_file(${CMAKE_SOURCE_DIR}/Flakkari/config.h.in ${CMAKE_BINARY_DIR}/config.h)
