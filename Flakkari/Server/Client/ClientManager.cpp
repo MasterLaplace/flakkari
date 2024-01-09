@@ -8,12 +8,15 @@
 */
 
 #include "ClientManager.hpp"
+#include "../Game/GameManager.hpp"
 
 namespace Flakkari {
 
+
 std::shared_ptr<ClientManager> ClientManager::_instance = nullptr;
 
-std::shared_ptr<ClientManager> ClientManager::getInstance() {
+std::shared_ptr<ClientManager> ClientManager::getInstance()
+{
     if (!_instance)
         _instance = std::make_shared<ClientManager>();
     return _instance;
@@ -24,7 +27,8 @@ void ClientManager::addClient(std::shared_ptr<Network::Address> client)
     auto &clients = getInstance()->_clients;
     if (clients.find(client->toString().value_or("")) == clients.end()) {
         clients[client->toString().value_or("")] = std::make_shared<Client>(client);
-        FLAKKARI_LOG_LOG("Client " + client->toString().value_or("") + " connected");
+        FLAKKARI_LOG_LOG("Client " + client->toString().value_or("Unknown") + " connected");
+        GameManager::addClientToGame("R-Type", clients[client->toString().value_or("")]);
     } else
         clients[client->toString().value_or("")]->keepAlive();
 }
@@ -32,8 +36,10 @@ void ClientManager::addClient(std::shared_ptr<Network::Address> client)
 void ClientManager::removeClient(std::shared_ptr<Network::Address> client)
 {
     auto &clients = getInstance()->_clients;
-    if (clients.find(client->toString().value_or("")) != clients.end())
+    if (clients.find(client->toString().value_or("")) != clients.end()) {
+        GameManager::removeClientFromGame("R-Type", clients[client->toString().value_or("")]);
         clients.erase(client->toString().value_or(""));
+    }
 }
 
 void ClientManager::checkInactiveClients()
@@ -42,11 +48,16 @@ void ClientManager::checkInactiveClients()
     for (auto it = clients.begin(); it != clients.end();) {
         if (!it->second->isConnected()) {
             FLAKKARI_LOG_LOG("Client " + it->first + " disconnected");
+            GameManager::removeClientFromGame("R-Type", it->second);
             it = clients.erase(it);
         } else {
             ++it;
         }
     }
+}
+
+std::shared_ptr<Client> ClientManager::getClient(std::shared_ptr<Network::Address> client) {
+    return getInstance()->_clients[client->toString().value_or("")];
 }
 
 std::shared_ptr<Client> ClientManager::getClient(std::string ip) {

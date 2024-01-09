@@ -13,9 +13,14 @@ set(SOURCES
     Flakkari/Network/IOMultiplexer.cpp
     Flakkari/Protocol/Header.cpp
     Flakkari/Protocol/Packet.cpp
+    Flakkari/Engine/Math/Vector.cpp
+    Flakkari/Engine/EntityComponentSystem/Systems/Systems.cpp
+    Flakkari/Engine/EntityComponentSystem/Registry.cpp
     Flakkari/Server/UDPServer.cpp
     Flakkari/Server/Client/Client.cpp
     Flakkari/Server/Client/ClientManager.cpp
+    Flakkari/Server/Game/Game.cpp
+    Flakkari/Server/Game/GameManager.cpp
     Flakkari/Server/Internals/CommandManager.cpp
 )
 
@@ -27,9 +32,18 @@ set(HEADERS
     Flakkari/Network/IOMultiplexer.hpp
     Flakkari/Protocol/Header.hpp
     Flakkari/Protocol/Packet.hpp
+    Flakkari/Engine/Math/Vector.hpp
+    Flakkari/Engine/EntityComponentSystem/Components/Components2D.hpp
+    Flakkari/Engine/EntityComponentSystem/Components/ComponentsCommon.hpp
+    Flakkari/Engine/EntityComponentSystem/Systems/Systems.hpp
+    Flakkari/Engine/EntityComponentSystem/Entity.hpp
+    Flakkari/Engine/EntityComponentSystem/SparseArrays.hpp
+    Flakkari/Engine/EntityComponentSystem/Registry.hpp
     Flakkari/Server/UDPServer.hpp
     Flakkari/Server/Client/Client.hpp
     Flakkari/Server/Client/ClientManager.hpp
+    Flakkari/Server/Game/Game.hpp
+    Flakkari/Server/Game/GameManager.hpp
     Flakkari/Server/Internals/CommandManager.hpp
 )
 
@@ -43,6 +57,17 @@ set(HEADER_LIB_NETWORK
     Flakkari/Network/Socket.hpp
     Flakkari/Network/IOMultiplexer.hpp
 )
+
+# CMake Modules:
+INCLUDE(FetchContent)
+
+FetchContent_Declare(
+    nlohmann_json
+    GIT_REPOSITORY https://github.com/nlohmann/json.git
+    GIT_TAG v3.11.3
+)
+
+FetchContent_MakeAvailable(nlohmann_json)
 
 # Separate Build Artifacts:
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
@@ -67,6 +92,9 @@ add_executable(r-type_server ${SOURCES} ${HEADERS})
 
 # Include Directories:
 target_include_directories(r-type_server PRIVATE ${CMAKE_SOURCE_DIR}/Flakkari)
+
+# Link Libraries:
+target_link_libraries(r-type_server PRIVATE nlohmann_json::nlohmann_json)
 
 # Documentation: sudo apt-get install graphviz
 find_package(Doxygen)
@@ -104,6 +132,7 @@ set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
 
 set(CPACK_GENERATOR "DEB")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "R-Type Team")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "nlohmann-json3-dev (>= 3.9.1)" "doxygen (>= 1.8.17)" "graphviz (>= 2.40.1)")
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
 
 include(CPack)
@@ -120,6 +149,10 @@ add_library(r-type_server_network SHARED ${SOURCES_LIB_NETWORK} ${HEADER_LIB_NET
 
 # Include Directories:
 target_include_directories(r-type_server_network PRIVATE ${CMAKE_SOURCE_DIR}/Flakkari)
+
+# Link Libraries:
+target_link_libraries(r-type_server_network PRIVATE nlohmann_json::nlohmann_json)
+
 # Install dynamic library:
 install(TARGETS r-type_server_network DESTINATION lib)
 install(FILES ${HEADER_LIB_NETWORK} DESTINATION include/Flakkari/Network)

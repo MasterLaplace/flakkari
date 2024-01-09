@@ -72,6 +72,7 @@ void PSELECT::removeSocket(FileDescriptor socket)
         throw std::runtime_error("Index out of range");
     FD_CLR(socket, &_fds);
     _sockets.erase(std::remove(_sockets.begin(), _sockets.end(), socket), _sockets.end());
+    _maxFd = *std::max_element(_sockets.begin(), _sockets.end());
 }
 
 int PSELECT::wait()

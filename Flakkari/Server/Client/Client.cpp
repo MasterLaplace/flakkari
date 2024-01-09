@@ -11,11 +11,20 @@
 
 namespace Flakkari {
 
-Client::Client(std::shared_ptr<Network::Address> address) : _address(address) {
+Client::Client(std::shared_ptr<Network::Address> address)
+    : _address(address)
+{
     _lastActivity = std::chrono::steady_clock::now();
 }
 
-bool Client::isConnected(float timeout) {
+Client::~Client() {
+    _isConnected = false;
+}
+
+bool Client::isConnected(float timeout)
+{
+    if (!_isConnected)
+        return false;
     return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - _lastActivity).count() < timeout;
 }
 

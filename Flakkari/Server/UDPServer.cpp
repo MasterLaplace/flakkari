@@ -24,16 +24,19 @@ UDPServer::UDPServer(std::string ip, std::size_t port) :
 
     _io = std::make_unique<Network::PSELECT>();
     _io->addSocket(_socket.getSocket());
+    _io->addSocket(STDIN_FILENO);
+
+    GameManager::getInstance();
 }
 
 bool UDPServer::handleTimeout(int event)
 {
     if (event != 0)
         return false;
-            FLAKKARI_LOG_DEBUG("ppoll timed out");
-            ClientManager::checkInactiveClients();
+    FLAKKARI_LOG_DEBUG("ppoll timed out");
+    ClientManager::checkInactiveClients();
     return true;
-        }
+}
 
 bool UDPServer::handleInput(int fd)
 {
@@ -47,35 +50,46 @@ bool UDPServer::handleInput(int fd)
 
 void UDPServer::handlePacket()
 {
-                auto packet = _socket.receiveFrom();
-                std::cout << (*packet->first.get());
-                std::cout << " : ";
-                std::cout << packet->second << std::endl;
-                ClientManager::addClient(packet->first);
-                ClientManager::checkInactiveClients();
-                Protocol::API::Header header(
-                    Protocol::API::Priority::LOW,
-                    Protocol::API::ApiVersion::V_1,
-                    int(Protocol::API::FlakkariEventId::REP_ENTITY_SPAWN),
-                    0
-                );
+    auto packet = _socket.receiveFrom();
+    ClientManager::addClient(packet->first);
+    ClientManager::checkInactiveClients();
 
-                Protocol::API::PlayerPacket playerPacket;
+    // parse packet
+    Protocol::API::Header header;
+    std::copy(packet->second.begin(), packet->second.begin() + sizeof(header), reinterpret_cast<char*>(&header));
 
-                header._contentLength = sizeof(playerPacket);
+    std::cout << (*packet->first.get()); // Address
+    std::cout << " : ";
+    std::cout << packet->second << std::endl; // Buffer
 
-                Network::Buffer buffer(sizeof(header) + sizeof(playerPacket));
-                std::copy(reinterpret_cast<const char*>(&header), reinterpret_cast<const char*>(&header) + sizeof(header), buffer.begin());
+    std::cout << "RECV Header: " << std::endl;
+    std::cout << "  Priority: " << (int)header._priority << std::endl;
+    std::cout << "  ApiVersion: " << (int)header._apiVersion << std::endl;
+    std::cout << "  CommandId: " << (int)header._commandId << std::endl;
+    std::cout << "  ContentLength: " << (int)header._contentLength << std::endl;
 
-                std::cout << "Header: " << std::endl;
-                std::cout << "  Priority: " << (int)header._priority << std::endl;
-                std::cout << "  ApiVersion: " << (int)header._apiVersion << std::endl;
-                std::cout << "  CommandId: " << (int)header._commandId << std::endl;
-                std::cout << "  ContentLength: " << (int)header._contentLength << std::endl;
+    // send to all clients
+    Protocol::API::Header sendHeader(
+        Protocol::API::Priority::LOW,
+        Protocol::API::ApiVersion::V_1,
+        int(Protocol::API::FlakkariEventId::REP_ENTITY_SPAWN),
+        0
+    );
 
-                std::cout << buffer << std::endl;
+    Protocol::API::PlayerPacket playerPacket;
 
-                _socket.sendTo(packet->first, buffer);
+    sendHeader._contentLength = sizeof(playerPacket);
+
+    Network::Buffer buffer(sizeof(sendHeader) + sizeof(playerPacket));
+    std::copy(reinterpret_cast<const char*>(&sendHeader), reinterpret_cast<const char*>(&sendHeader) + sizeof(sendHeader), buffer.begin());
+
+    std::cout << "SEND Header: " << std::endl;
+    std::cout << "  Priority: " << (int)sendHeader._priority << std::endl;
+    std::cout << "  ApiVersion: " << (int)sendHeader._apiVersion << std::endl;
+    std::cout << "  CommandId: " << (int)sendHeader._commandId << std::endl;
+    std::cout << "  ContentLength: " << (int)sendHeader._contentLength << std::endl;
+
+    _socket.sendTo(packet->first, buffer);
 }
 
 void UDPServer::run()
