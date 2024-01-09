@@ -28,6 +28,7 @@ void ClientManager::addClient(std::shared_ptr<Network::Address> client)
     if (clients.find(client->toString().value_or("")) == clients.end()) {
         clients[client->toString().value_or("")] = std::make_shared<Client>(client);
         FLAKKARI_LOG_LOG("Client " + client->toString().value_or("Unknown") + " connected");
+        GameManager::addClientToGame("R-Type", clients[client->toString().value_or("")]);
     } else
         clients[client->toString().value_or("")]->keepAlive();
 }
@@ -36,6 +37,7 @@ void ClientManager::removeClient(std::shared_ptr<Network::Address> client)
 {
     auto &clients = getInstance()->_clients;
     if (clients.find(client->toString().value_or("")) != clients.end()) {
+        GameManager::removeClientFromGame("R-Type", clients[client->toString().value_or("")]);
         clients.erase(client->toString().value_or(""));
     }
 }
@@ -46,6 +48,7 @@ void ClientManager::checkInactiveClients()
     for (auto it = clients.begin(); it != clients.end();) {
         if (!it->second->isConnected()) {
             FLAKKARI_LOG_LOG("Client " + it->first + " disconnected");
+            GameManager::removeClientFromGame("R-Type", it->second);
             it = clients.erase(it);
         } else {
             ++it;

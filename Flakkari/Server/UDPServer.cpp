@@ -25,6 +25,8 @@ UDPServer::UDPServer(std::string ip, std::size_t port) :
     _io = std::make_unique<Network::PSELECT>();
     _io->addSocket(_socket.getSocket());
     _io->addSocket(STDIN_FILENO);
+
+    GameManager::getInstance();
 }
 
 bool UDPServer::handleTimeout(int event)
