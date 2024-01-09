@@ -81,6 +81,15 @@ class GameManager {
          * @deprecated Use getGameInstance instead
          */
         static std::shared_ptr<Game> getGame(std::string gameName);
+
+        /**
+         * @brief Update a game from the GameManager
+         *
+         * @param gameName Game to update
+         * @return 0 Game updated
+         * @return 1 Game not updated (not found)
+         */
+        static int updateGame(std::string gameName);
 };
 
 } /* namespace Flakkari */

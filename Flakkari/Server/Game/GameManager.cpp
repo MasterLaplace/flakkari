@@ -75,4 +75,21 @@ std::shared_ptr<Game> GameManager::getGame(std::string gameName)
     return std::make_shared<Game>(gameName, _gamesStore[gameName]);
 }
 
+int GameManager::updateGame(std::string gameName)
+{
+    auto &_gamesStore = getInstance()->_gamesStore;
+    if (_gamesStore.find(gameName) == _gamesStore.end())
+        return FLAKKARI_LOG_ERROR("game not found"), 1;
+    std::ifstream configFile("../Games/" + gameName + "/config.cfg");
+    nlohmann::json config;
+
+    if (!configFile.is_open())
+        return FLAKKARI_LOG_ERROR("could not open config file"), 3;
+    configFile >> config;
+
+    _gamesStore[gameName] = std::make_shared<nlohmann::json>(config);
+    FLAKKARI_LOG_INFO("\"" + gameName + "\" game updated");
+    return 0;
+}
+
 } /* namespace Flakkari */
