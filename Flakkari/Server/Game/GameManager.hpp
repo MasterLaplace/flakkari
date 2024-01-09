@@ -20,7 +20,10 @@
 
 #include <memory>
 #include <iostream>
+#include <filesystem>
+#include <queue>
 
+#include "Game.hpp"
 #include "Logger/Logger.hpp"
 
 namespace Flakkari {
@@ -30,11 +33,19 @@ class GameManager {
         static std::shared_ptr<GameManager> _instance;
 
     public:
+        std::unordered_map<std::string /*gameName*/, std::shared_ptr<nlohmann::json> /*data*/> _gamesStore;
+
+    public:
         GameManager(const GameManager &) = delete;
         GameManager(const std::shared_ptr<GameManager> &) = delete;
         void operator=(const GameManager &) = delete;
         void operator=(const std::shared_ptr<GameManager> &) = delete;
 
+        /**
+         * @brief Construct a new GameManager object and load all games
+         * already present in the Games folder
+         *
+         */
         GameManager();
 
         /**
@@ -50,6 +61,26 @@ class GameManager {
          */
         static std::shared_ptr<GameManager> getInstance();
 
+        /**
+         * @brief Add a game to the GameManager and load it from the Games folder
+         *
+         * @param gameName Game to add
+         * @return 0 Game added
+         * @return 1 Game not added (already exists)
+         * @return 2 Game not added (certificate not valid) (not implemented)
+         * @return 3 Game not added (corrupted game) (not implemented)
+         */
+        static int addGame(std::string gameName);
+
+        /**
+         * @brief Get the Game object
+         *
+         * @param gameName Game to get
+         * @return std::shared_ptr<Game> Game
+         *
+         * @deprecated Use getGameInstance instead
+         */
+        static std::shared_ptr<Game> getGame(std::string gameName);
 };
 
 } /* namespace Flakkari */
