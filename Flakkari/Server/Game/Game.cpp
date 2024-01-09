@@ -128,6 +128,7 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
     if (_players.size() >= (*_config)["maxPlayers"] || !player->isConnected())
         return false;
     _players.push_back(player);
+    FLAKKARI_LOG_INFO("client \""+ std::string(*player->getAddress()) +"\" added to game \""+ _name +"\"");
     return true;
 }
 
@@ -137,6 +138,7 @@ bool Game::removePlayer(std::shared_ptr<Client> player)
     if (it == _players.end())
         return false;
     _players.erase(it);
+    FLAKKARI_LOG_INFO("client \""+ std::string(*player->getAddress()) +"\" removed from game \""+ _name +"\"");
     return true;
 }
 

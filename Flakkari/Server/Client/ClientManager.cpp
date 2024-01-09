@@ -8,6 +8,7 @@
 */
 
 #include "ClientManager.hpp"
+#include "../Game/GameManager.hpp"
 
 namespace Flakkari {
 

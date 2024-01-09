@@ -19,6 +19,7 @@
 #include <chrono>
 
 #include "Network/Address.hpp"
+#include "../Game/GameManager.hpp"
 
 namespace Flakkari {
 

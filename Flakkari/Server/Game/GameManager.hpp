@@ -115,6 +115,14 @@ class GameManager {
          * @param client Client to add to the game
          */
         static void addClientToGame(std::string gameName, std::shared_ptr<Client> client);
+
+        /**
+         * @brief Remove a client from a game
+         *
+         * @param gameName Game to remove the client from
+         * @param client Client to remove from the game
+         */
+        static void removeClientFromGame(std::string gameName, std::shared_ptr<Client> client);
 };
 
 } /* namespace Flakkari */

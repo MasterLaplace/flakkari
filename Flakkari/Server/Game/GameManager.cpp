@@ -145,7 +145,6 @@ void GameManager::addClientToGame(std::string gameName, std::shared_ptr<Client> 
     }
 
     if (gameInstance.back()->addPlayer(client)) {
-        FLAKKARI_LOG_INFO("client \""+ STR_ADDRESS +"\" added to game \"" + gameName + "\"");
         if (lobby == "Matchmaking" && gameInstance.back()->getPlayers().size() >= minPlayers && !gameInstance.back()->isRunning())
             gameInstance.back()->start();
         if (lobby == "OpenWorld" && !gameInstance.back()->isRunning())
@@ -153,6 +152,47 @@ void GameManager::addClientToGame(std::string gameName, std::shared_ptr<Client> 
         return;
     }
     FLAKKARI_LOG_ERROR("could not add client \""+ STR_ADDRESS +"\" to game \"" + gameName + "\"");
+}
+
+void GameManager::removeClientFromGame(std::string gameName, std::shared_ptr<Client> client)
+{
+    auto &gamesStore = getInstance()->_gamesStore;
+    auto &gamesInstances = getInstance()->_gamesInstances;
+    auto &waitingClients = getInstance()->_waitingClients;
+    if (gamesStore.find(gameName) == gamesStore.end())
+        return FLAKKARI_LOG_ERROR("game not found"), void();
+
+    auto &waitingQueue = waitingClients[gameName];
+
+    auto minPlayers = gamesStore[gameName]->at("minPlayers").get<size_t>();
+
+    for (auto &instance : gamesInstances[gameName]) {
+        if (!instance->removePlayer(client))
+            continue;
+
+        if (instance->getPlayers().empty()) {
+            gamesInstances[gameName].erase(
+                std::find(
+                    gamesInstances[gameName].begin(), gamesInstances[gameName].end(), instance
+                )
+            );
+            FLAKKARI_LOG_INFO("game \"" + gameName + "\" removed");
+        } else if (instance->getPlayers().size() > minPlayers) {
+            FLAKKARI_LOG_INFO("game \"" + gameName + "\" is not full anymore");
+            if (waitingQueue.empty())
+                return;
+            auto client = waitingQueue.front();
+            if (instance->addPlayer(client)) {
+                waitingQueue.pop();
+                return;
+            }
+            FLAKKARI_LOG_WARNING("could not add client \""+ STR_ADDRESS +"\" to game \"" + gameName + "\"");
+            if (client->isConnected())
+                waitingQueue.pop();
+        }
+        return;
+    }
+    FLAKKARI_LOG_ERROR("could not remove client \""+ STR_ADDRESS +"\" from game \"" + gameName + "\"");
 }
 
 } /* namespace Flakkari */
