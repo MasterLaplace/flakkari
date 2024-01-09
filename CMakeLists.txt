@@ -58,6 +58,11 @@ set(HEADER_LIB_NETWORK
     Flakkari/Network/IOMultiplexer.hpp
 )
 
+set(HEADER_LIB_PROTOCOL
+    Flakkari/Protocol/Header.hpp
+    Flakkari/Protocol/Packet.hpp
+)
+
 # CMake Modules:
 INCLUDE(FetchContent)
 
@@ -119,6 +124,7 @@ install(TARGETS r-type_server DESTINATION bin)
 install(FILES ${CMAKE_BINARY_DIR}/config.h DESTINATION include/Flakkari)
 install(FILES ${HEADER_LIB_LOGGER} DESTINATION include/Flakkari/Logger)
 install(FILES ${HEADER_LIB_NETWORK} DESTINATION include/Flakkari/Network)
+install(FILES ${HEADER_LIB_PROTOCOL} DESTINATION include/Flakkari/Protocol)
 
 # Packaging:
 set(CPACK_PACKAGE_NAME "r-type_server")
