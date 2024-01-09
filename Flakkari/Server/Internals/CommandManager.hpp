@@ -23,7 +23,7 @@
 #include <iostream>
 #include <regex>
 
-#include "Logger/Logger.hpp"
+#include "../Game/GameManager.hpp"
 #include "config.h.in"
 
 namespace Flakkari::Internals {
@@ -31,6 +31,9 @@ namespace Flakkari::Internals {
 class CommandManager {
     public:
         static std::regex PASSWORD_REGEX;
+        static std::regex ADD_GAME_REGEX;
+        static std::regex UPDATE_GAME_REGEX;
+        static std::regex REMOVE_GAME_REGEX;
         static bool _unlocked;
 
     public:
@@ -82,6 +85,10 @@ class CommandManager {
          * @return true  If the command was executed.
          * @return false  If the command was not executed.
          *
+         * @example addGame <gameName>
+         * @example updateGame <gameName>
+         * @example removeGame <gameName>
+         * @example listGames
          * @example exit
          */
         [[nodiscard]] static bool handleAdminCommand(const std::string &input);
