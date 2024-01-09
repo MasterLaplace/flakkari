@@ -92,4 +92,16 @@ int GameManager::updateGame(std::string gameName)
     return 0;
 }
 
+int GameManager::removeGame(std::string gameName)
+{
+    auto &_gamesStore = getInstance()->_gamesStore;
+    if (_gamesStore.find(gameName) == _gamesStore.end())
+        return FLAKKARI_LOG_ERROR("game not found"), 1;
+
+    _gamesStore[gameName].reset();
+    _gamesStore.erase(gameName);
+    FLAKKARI_LOG_INFO("\"" + gameName + "\" game removed");
+    return 0;
+}
+
 } /* namespace Flakkari */

@@ -90,6 +90,15 @@ class GameManager {
          * @return 1 Game not updated (not found)
          */
         static int updateGame(std::string gameName);
+
+        /**
+         * @brief Remove a game from the GameManager
+         *
+         * @param gameName Game to remove
+         * @return 0 Game removed
+         * @return 1 Game not removed (not found)
+         */
+        static int removeGame(std::string gameName);
 };
 
 } /* namespace Flakkari */
