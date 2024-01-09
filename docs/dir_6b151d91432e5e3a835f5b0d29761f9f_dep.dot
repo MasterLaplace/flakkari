@@ -1,0 +1,18 @@
+digraph "Flakkari/Engine/EntityComponentSystem/Components" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_a60a0a50912261337a6df9770eafa8d1 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="EntityComponentSystem" fontname="Helvetica", fontsize="10", URL="dir_a60a0a50912261337a6df9770eafa8d1.html"]
+  subgraph clusterdir_6b151d91432e5e3a835f5b0d29761f9f {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_6b151d91432e5e3a835f5b0d29761f9f.html"];
+    dir_6b151d91432e5e3a835f5b0d29761f9f [shape=plaintext label="Components"];
+  dir_86261fce5fe115366b5bef7c76c3a9a4 [shape=box label="2D" fillcolor="white" style="filled" URL="dir_86261fce5fe115366b5bef7c76c3a9a4.html"];
+  dir_aaa58dc6b360614d27e0acb7167682cd [shape=box label="Common" fillcolor="white" style="filled" URL="dir_aaa58dc6b360614d27e0acb7167682cd.html"];
+  }
+  }
+  dir_91bfd317f0d822e02c021ee39d31f634 [shape=box label="Math" URL="dir_91bfd317f0d822e02c021ee39d31f634.html"];
+  dir_6b151d91432e5e3a835f5b0d29761f9f->dir_86261fce5fe115366b5bef7c76c3a9a4 [headlabel="2", labeldistance=1.5 headhref="dir_000004_000005.html"];
+  dir_6b151d91432e5e3a835f5b0d29761f9f->dir_aaa58dc6b360614d27e0acb7167682cd [headlabel="2", labeldistance=1.5 headhref="dir_000004_000006.html"];
+  dir_86261fce5fe115366b5bef7c76c3a9a4->dir_91bfd317f0d822e02c021ee39d31f634 [headlabel="2", labeldistance=1.5 headhref="dir_000005_000008.html"];
+}

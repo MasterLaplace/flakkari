@@ -1,0 +1,18 @@
+digraph "Flakkari::Network::operator&lt;&lt;"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="Flakkari::Network::\loperator\<\<",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Overload of operator<< for Address."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Flakkari::Network::\lAddress::getIpType",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d4f/classFlakkari_1_1Network_1_1Address.html#a815ceebc852d7373326cf85a5f4f1896",tooltip="Get the Ip Type object."];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="Flakkari::Network::\lAddress::getSocketType",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d4f/classFlakkari_1_1Network_1_1Address.html#a9f8987e4073c6af88012222bf6946815",tooltip="Get the Socket Type object."];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="Flakkari::Network::\lAddress::ipTypeToString",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d4f/classFlakkari_1_1Network_1_1Address.html#ad294efeb787ad3a4977da24e6107cfbe",tooltip="Convert IpType to string."];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="Flakkari::Network::\lAddress::socketTypeToString",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d4f/classFlakkari_1_1Network_1_1Address.html#ade93b893c1d9e9e4898638e155fe0a14",tooltip="Convert SocketType to string."];
+  Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="Flakkari::Network::\lAddress::toString",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d4f/classFlakkari_1_1Network_1_1Address.html#a7075d815e6bc63d5ba430fb8ab7252ba",tooltip="Convert Address to string."];
+}

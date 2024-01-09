@@ -1,0 +1,25 @@
+var classFlakkari_1_1Network_1_1Buffer =
+[
+    [ "Buffer", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#acf6139241c71fa29efd930b4f3c5dcec", null ],
+    [ "bitwiseXOR", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#a6478c97a7fd31432516d0af30233b773", null ],
+    [ "calculateChecksum", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#a6b73b94697996b857f4352dbe89d94df", null ],
+    [ "concat", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#a3460bc3e878b1387b5908a1dbeef50b8", null ],
+    [ "convertFromHex", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#ac2f3c2a8da663b59baf33590879ce895", null ],
+    [ "convertToHex", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#a5f434d2811ce00fba868924f1a3cd414", null ],
+    [ "extractData", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#ad7ad2e3a4a5727c72a585093d93cd016", null ],
+    [ "getCapacity", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#ac50e13ad7d495d1f3fa17354d4cffafc", null ],
+    [ "getData", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#ae308d60e79fe9387b58c0cb8640e5ef7", null ],
+    [ "getData", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#a5fc6af419c16529adf12939adc872739", null ],
+    [ "getRemainingSpace", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#a521ac0f9265c25428fc13a376c300fe8", null ],
+    [ "getSize", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#a273543a4d7a5cfca6e0c8e22f14c6501", null ],
+    [ "operator byte *", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#ac3173e1e2b09e5cc18011d5706843f87", null ],
+    [ "operator const byte *", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#a964c546ab345470801d8785fa4d37bfe", null ],
+    [ "operator const std::string", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#ab88b9bf8dc55e49f7c14c6c824728554", null ],
+    [ "operator std::string", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#a39f0a4d4c1e8c500976c23a732868149", null ],
+    [ "operator+", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#aaaffe5f5d6c3b9aa0714322d671832d8", null ],
+    [ "operator+=", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#aed31f56d6b0d94a6f8c6ebeba96a4487", null ],
+    [ "operator-", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#a466069646e5faff5f8aeb1036cefd1d6", null ],
+    [ "operator-=", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#ac93b8f29092f3c740f04ee412bd6dba6", null ],
+    [ "runLengthDecode", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#a7a59d253895a731183a229116d875d6f", null ],
+    [ "runLengthEncode", "d4/df8/classFlakkari_1_1Network_1_1Buffer.html#a5d82b2cb88e1e1d96d1ceb0ed56b7c78", null ]
+];

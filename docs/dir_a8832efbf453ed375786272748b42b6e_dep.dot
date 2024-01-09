@@ -1,0 +1,15 @@
+digraph "Flakkari/Engine" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_7252f805497af2c98d8ae536646df97b {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Flakkari" fontname="Helvetica", fontsize="10", URL="dir_7252f805497af2c98d8ae536646df97b.html"]
+  subgraph clusterdir_a8832efbf453ed375786272748b42b6e {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_a8832efbf453ed375786272748b42b6e.html"];
+    dir_a8832efbf453ed375786272748b42b6e [shape=plaintext label="Engine"];
+  dir_a60a0a50912261337a6df9770eafa8d1 [shape=box label="EntityComponentSystem" fillcolor="white" style="filled" color="red" URL="dir_a60a0a50912261337a6df9770eafa8d1.html"];
+  dir_91bfd317f0d822e02c021ee39d31f634 [shape=box label="Math" fillcolor="white" style="filled" URL="dir_91bfd317f0d822e02c021ee39d31f634.html"];
+  }
+  }
+  dir_a60a0a50912261337a6df9770eafa8d1->dir_91bfd317f0d822e02c021ee39d31f634 [headlabel="2", labeldistance=1.5 headhref="dir_000003_000008.html"];
+}

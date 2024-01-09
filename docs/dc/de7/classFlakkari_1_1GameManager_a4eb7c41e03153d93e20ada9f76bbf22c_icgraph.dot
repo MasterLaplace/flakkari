@@ -1,0 +1,34 @@
+digraph "Flakkari::GameManager::getInstance"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="Flakkari::GameManager\l::getInstance",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Get the instance of the GameManager."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Flakkari::GameManager\l::addClientToGame",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/de7/classFlakkari_1_1GameManager.html#a40e2748db0b1659fe259636b6c802d81",tooltip="Add a client to a game."];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="Flakkari::ClientManager\l::addClient",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/da5/classFlakkari_1_1ClientManager.html#a088dd8c46ecce4884626b08f88b0dc13",tooltip="Add a client to the client manager or update the last activity of the client."];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="Flakkari::GameManager\l::addGame",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/de7/classFlakkari_1_1GameManager.html#afaf2eb5e127f3132aff80b811d9ff0a3",tooltip="Add a game to the GameManager and load it from the Games folder."];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="Flakkari::GameManager\l::getGame",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/de7/classFlakkari_1_1GameManager.html#acf706b5c40d7a85843892acc1f07b591",tooltip="Get the Game object."];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="Flakkari::GameManager\l::getGamesInstances",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/de7/classFlakkari_1_1GameManager.html#a78a5ed327542b15831cabc319c3d10fc",tooltip="Get the Games Instances object (all games loaded)"];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="Flakkari::GameManager\l::getIndexInWaitingQueue",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/de7/classFlakkari_1_1GameManager.html#aa54d652241bc773e658dd5cf55fd6926",tooltip="Get the index of a client in the waiting queue."];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="Flakkari::GameManager\l::listGames",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/de7/classFlakkari_1_1GameManager.html#a67b734ceba74a48925d7085b2ca34082",tooltip="List all games present in the GameManager."];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="Flakkari::GameManager\l::removeClientFromGame",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/de7/classFlakkari_1_1GameManager.html#aa41ed38434b2a04d5e086f60cbe56139",tooltip="Remove a client from a game."];
+  Node9 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="Flakkari::ClientManager\l::checkInactiveClients",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/da5/classFlakkari_1_1ClientManager.html#afc56daddc0d88305a337c9b024284ff8",tooltip="Check if the clients are still connected to the server and remove the inactive clients from the clien..."];
+  Node9 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="Flakkari::ClientManager\l::removeClient",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/da5/classFlakkari_1_1ClientManager.html#a600d576ce8bb271c4f5951d2278a42ee",tooltip="Remove a client from the client manager."];
+  Node1 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="Flakkari::GameManager\l::removeGame",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/de7/classFlakkari_1_1GameManager.html#a92130e7f14d2a22b84ea40e561119342",tooltip="Remove a game from the GameManager."];
+  Node1 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="Flakkari::UDPServer\l::UDPServer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd1/classFlakkari_1_1UDPServer.html#a540e9173cae4bd0bf33fd80f85bf1458",tooltip="Construct a new UDPServer object."];
+  Node1 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="Flakkari::GameManager\l::updateGame",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/de7/classFlakkari_1_1GameManager.html#a365e0b2241ead18bf22ab91d52dc8e7c",tooltip="Update a game from the GameManager."];
+}

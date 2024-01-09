@@ -1,0 +1,10 @@
+digraph "Flakkari::Network::Address::getPort"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="Flakkari::Network::\lAddress::getPort",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Get the Port object."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Flakkari::Network::\lAddress::getSockAddrIn",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d4f/classFlakkari_1_1Network_1_1Address.html#abe81c543bee027406c75f2629e0d1214",tooltip="Get the Sock Addr In object."];
+}
