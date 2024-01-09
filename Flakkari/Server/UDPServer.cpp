@@ -24,16 +24,17 @@ UDPServer::UDPServer(std::string ip, std::size_t port) :
 
     _io = std::make_unique<Network::PSELECT>();
     _io->addSocket(_socket.getSocket());
+    _io->addSocket(STDIN_FILENO);
 }
 
 bool UDPServer::handleTimeout(int event)
 {
     if (event != 0)
         return false;
-            FLAKKARI_LOG_DEBUG("ppoll timed out");
-            ClientManager::checkInactiveClients();
+    FLAKKARI_LOG_DEBUG("ppoll timed out");
+    ClientManager::checkInactiveClients();
     return true;
-        }
+}
 
 bool UDPServer::handleInput(int fd)
 {
