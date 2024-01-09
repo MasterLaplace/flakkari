@@ -104,4 +104,14 @@ int GameManager::removeGame(std::string gameName)
     return 0;
 }
 
+void GameManager::listGames()
+{
+    auto &_gamesStore = getInstance()->_gamesStore;
+    std::string gamesList = "Games list:\n";
+
+    for (const auto &game : _gamesStore)
+        gamesList += " - " + game.first + "\n";
+    FLAKKARI_LOG_INFO(gamesList);
+}
+
 } /* namespace Flakkari */

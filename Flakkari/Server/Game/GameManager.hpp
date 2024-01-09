@@ -99,6 +99,12 @@ class GameManager {
          * @return 1 Game not removed (not found)
          */
         static int removeGame(std::string gameName);
+
+        /**
+         * @brief List all games present in the GameManager
+         *
+         */
+        static void listGames();
 };
 
 } /* namespace Flakkari */
