@@ -8,7 +8,7 @@
 import re
 
 # Define your regex pattern
-keyword_regex = r"^([a-z]+\([A-Za-z_.-]+\)|^[a-z]+): "
+keyword_regex = r"^([a-z]+\([\w_.-]+\)|^[a-z]+): "
 
 # List of sample commit messages
 commit_messages = [
@@ -17,6 +17,7 @@ commit_messages = [
     "feat(main): add new feature",
     "style: fix linting issues",
     "style(docs-folder): style the docs folder",
+    "docs(2D): add new documentation",
 ]
 
 # Test the regex pattern on each commit message
