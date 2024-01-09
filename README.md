@@ -67,6 +67,16 @@ $> cd build
 (build)$> ./r-type_server
 ```
 
+> **Note**:
+> - the server load Games from the `./Games` directory, so if you want to add a game,
+>  you have to put it in this directory before running.
+>  If the server is already running, use the `addGame <gameName>` command to load it.
+
+> **Note**:
+> - some input commands need administrator privileges to execute.
+> `export FLAKKARI_PASSWORD=<password>` to set the password for the server
+> to run with administrator privileges.
+
 other build commands:
 ```shell
 # Install the project
@@ -80,7 +90,7 @@ other build commands:
 (build)$> sudo dpkg -i r-type_server-<version>-Linux.deb
 ```
 
-> **Note:**:
+> **Note**:
 > - the install target will install the server executable in the /usr/local/bin directory,
 >   the network library in the /usr/local/lib directory and
 >   the header files in the /usr/local/include directory.
