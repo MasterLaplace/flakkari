@@ -72,7 +72,7 @@ void UDPServer::handlePacket()
     Protocol::API::Header sendHeader(
         Protocol::API::Priority::LOW,
         Protocol::API::ApiVersion::V_1,
-        int(Protocol::API::FlakkariEventId::REP_ENTITY_SPAWN),
+        Protocol::API::FlakkariEventId::REP_ENTITY_SPAWN,
         0
     );
 

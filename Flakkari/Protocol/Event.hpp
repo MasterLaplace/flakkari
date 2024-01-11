@@ -12,7 +12,7 @@ namespace Flakkari::Protocol::API {
 
     inline namespace V_1 {
 
-        enum class FlakkariEventId {
+        enum class FlakkariEventId : uint8_t {
             // 0 - 99: System
             REQ_CONNECT = 0, // Client -> Server (Connect to server)
             REP_CONNECT = 1, // Server -> Client (Connection accepted)

@@ -33,22 +33,6 @@
 
 #if __GNUC__
 #define __PACKED __attribute__((packed))
-
-#define PACKED(name, body)      \
-do {                            \
-    struct name body __PACKED;  \
-} while (0)
-
-#else
-
-#define PACKED(name, body)  \
-do {                        \
-    PACKED_START            \
-    struct name             \
-    body;                   \
-    PACKED_END              \
-} while (0)
-
 #endif
 
 #endif /* !PACKED_HPP_ */

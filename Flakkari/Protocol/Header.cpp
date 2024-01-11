@@ -19,11 +19,11 @@ inline namespace V_1 {
 
     Header::Header(
         Priority priority, ApiVersion apiVersion,
-        byte commandId, ushort contentLength//,
+        FlakkariEventId commandId, ushort contentLength//,
         // ulong sequenceNumber, ushort checksum
     ) {
-        _priority = (byte)priority;
-        _apiVersion = (byte)apiVersion;
+        _priority = priority;
+        _apiVersion = apiVersion;
         _commandId = commandId;
         _contentLength = contentLength;
         // _sequenceNumber = sequenceNumber;
@@ -31,8 +31,8 @@ inline namespace V_1 {
     }
 
     Header::Header() {
-        _priority = 0;
-        _apiVersion = (byte)ApiVersion::V_1;
+        _priority = Priority::LOW;
+        _apiVersion = ApiVersion::V_1;
     }
 
     Network::Buffer Header::toBuffer()

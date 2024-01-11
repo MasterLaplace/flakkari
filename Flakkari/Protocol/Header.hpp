@@ -19,6 +19,7 @@
 
 #define PROTOCOL_VERSION 1
 
+#include "../Network/Serializer.hpp"
 #include "../Network/Packed.hpp"
 #include "Event.hpp"
 
@@ -38,14 +39,14 @@ namespace Flakkari::Protocol::API {
          * @note The priority is used to determine the order of the messages in the queue.
          *      The higher the priority, the faster the message will be processed.
          */
-        enum class Priority {
+    enum class Priority : byte {
             LOW = 0,
             MEDIUM = 1,
             HIGH = 2,
             CRITICAL = 3
         };
 
-        enum class ApiVersion {
+    enum class ApiVersion : byte {
             V_1 = 1
         };
 
@@ -82,9 +83,9 @@ namespace Flakkari::Protocol::API {
          * @endcode
          */
         struct Header {
-            byte _priority: 4;
-            byte _apiVersion: 4;
-            byte _commandId;
+        Priority _priority: 4;
+        ApiVersion _apiVersion: 4;
+        FlakkariEventId _commandId;
             ushort _contentLength;
             // ulong _sequenceNumber;
             // ushort _checksum;
@@ -99,7 +100,7 @@ namespace Flakkari::Protocol::API {
 
             Header(
                 Priority priority, ApiVersion apiVersion,
-                byte commandId, ushort contentLength = 0//,
+            FlakkariEventId commandId, ushort contentLength = 0//,
                 // ulong sequenceNumber = 0, ushort checksum = 0
             );
 
