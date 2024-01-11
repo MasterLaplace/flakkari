@@ -1,4 +1,4 @@
-name: Build Checker
+name: Build Checker MacOs
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   verify-commit-name:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - name: Set up Git repository
@@ -18,12 +18,13 @@ jobs:
 
       - name: Install dependencies
         run: |
-            sudo apt update
-            sudo apt install cmake
+            brew install cmake
+            brew install ninja
+
 
       - name: Build
         run: |
             mkdir build
             cd build
-            cmake ..
-            cmake --build .
+            cmake -G Ninja ..
+            ninja
