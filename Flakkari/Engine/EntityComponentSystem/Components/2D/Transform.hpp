@@ -13,6 +13,7 @@
 #include "../../../Math/Vector.hpp"
 
 namespace Flakkari::Engine::ECS::Components::_2D {
+PACKED_START
 
 struct Transform {
     Math::Vector2d position;
@@ -22,8 +23,13 @@ struct Transform {
     Transform() : position(0, 0), scale(1, 1), rotation(0) {};
     Transform(const Math::Vector2d &position, const Math::Vector2d &scale, double rotation) : position(position), scale(scale), rotation(rotation) {};
     Transform(const Transform &other) : position(other.position), scale(other.scale), rotation(other.rotation) {};
+
+    std::size_t size() const {
+        return sizeof(*this);
+    }
 };
 
+PACKED_END
 } // namespace Game::ECS::Components::_2D
 
 #endif /* !TRANSFORM_HPP_ */

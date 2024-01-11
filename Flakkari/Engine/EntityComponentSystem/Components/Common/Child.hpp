@@ -11,8 +11,12 @@
 #define CHILD_HPP_
 
 #include <string>
+#include <cstring>
+
+#include "Network/Packed.hpp"
 
 namespace Flakkari::Engine::ECS::Components::Common {
+PACKED_START
 
 /**
  * @brief Child component for ECS entities that have a child entity attached to them
@@ -21,13 +25,19 @@ namespace Flakkari::Engine::ECS::Components::Common {
  *          and attach it to the entity that has this component
  */
 struct Child {
-    std::string name;
+    const char *name;
 
     Child() : name("") {}
-    Child(const std::string &name) : name(name) {}
+    Child(const std::string &nname) : name(nname.c_str()) {}
+    Child(const char *nname) : name(nname) {}
     Child(const Child &other) : name(other.name) {}
+
+    std::size_t size() const {
+        return std::strlen(name);
+    }
 };
 
+PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::Common
 
 #endif /* !CHILD_HPP_ */

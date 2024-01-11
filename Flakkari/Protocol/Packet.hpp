@@ -27,6 +27,8 @@ namespace Flakkari::Protocol::API {
 
     inline namespace V_1 {
 
+    PACKED_START
+
         /**
          * @brief Flakkari Packet v1 (new packet)
          *
@@ -74,6 +76,8 @@ namespace Flakkari::Protocol::API {
              */
             void deleteFragment(Network::Buffer fragment);
         };
+
+    PACKED_END
 
         void serializeHeader(Header header, Network::Buffer& buffer);
 

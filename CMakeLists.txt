@@ -26,7 +26,7 @@ set(SOURCES
 
 set(HEADERS
     Flakkari/Logger/Logger.hpp
-    Flakkari/Network/packed.hpp
+    Flakkari/Network/Packed.hpp
     Flakkari/Network/Address.hpp
     Flakkari/Network/Buffer.hpp
     Flakkari/Network/Socket.hpp
@@ -53,7 +53,7 @@ set(HEADER_LIB_LOGGER
 )
 
 set(HEADER_LIB_NETWORK
-    Flakkari/Network/packed.hpp
+    Flakkari/Network/Packed.hpp
     Flakkari/Network/Address.hpp
     Flakkari/Network/Buffer.hpp
     Flakkari/Network/Socket.hpp
@@ -148,7 +148,7 @@ include(CPack)
 # Create a dynamic library for the Network components
 set(SOURCES_LIB_NETWORK
     Flakkari/Logger/Logger.cpp
-    Flakkari/Network/packed.hpp
+    Flakkari/Network/Packed.hpp
     Flakkari/Network/Address.cpp
     Flakkari/Network/Buffer.cpp
     Flakkari/Network/Socket.cpp

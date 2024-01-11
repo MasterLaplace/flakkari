@@ -19,10 +19,9 @@
 
 #define PROTOCOL_VERSION 1
 
-#define PACKED __attribute__((packed))
-
-#include "../Network/Buffer.hpp"
+#include "../Network/Packed.hpp"
 #include "Event.hpp"
+
 
 namespace Flakkari::Protocol::API {
 
@@ -49,6 +48,8 @@ namespace Flakkari::Protocol::API {
         enum class ApiVersion {
             V_1 = 1
         };
+
+    PACKED_START
 
         /** @brief Flakkari Header v1 (new header)
          *
@@ -117,7 +118,9 @@ namespace Flakkari::Protocol::API {
              *
              */
             void print();
-        } PACKED;
+    };
+
+    PACKED_END
 
         /**
          * @brief Overload of the << operator to print the header in the console (for debug)

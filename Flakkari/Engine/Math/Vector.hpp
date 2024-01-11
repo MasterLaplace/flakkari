@@ -22,38 +22,39 @@
 #include <cmath>
 #include <iostream>
 
-namespace Flakkari::Engine::Math {
+#include "Network/Packed.hpp"
 
-#define PACKED __attribute__((packed))
+namespace Flakkari::Engine::Math {
 
 template<typename Type>
 struct Vector {
 
+PACKED_START
     union {
         struct {
             Type x;
             Type y;
             Type z;
             Type w;
-        } PACKED;
+        };
         struct {
             Type r;
             Type g;
             Type b;
             Type a;
-        } PACKED;
+        };
         struct {
             Type width;
             Type height;
             Type depth;
             Type time;
-        } PACKED;
+        };
         struct {
             Type dx;
             Type dy;
             Type dz;
             Type _;
-        } PACKED;
+        };
         Type v[4];
     };
 
@@ -63,6 +64,7 @@ struct Vector {
     Vector(Type x, Type y) : v{x, y, 0, 1} {};
     Vector(Type x) : v{x, 0, 0, 1} {};
     Vector(const Vector<Type> &other) : v{other.v[0], other.v[1], other.v[2], other.v[3]} {};
+PACKED_END
 
     Vector<Type> &operator=(const Vector<Type> &other)
     {

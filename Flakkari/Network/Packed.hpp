@@ -2,8 +2,8 @@
  * Flakkari Library v0.2.0
  *
  * Flakkari Library is a C++ Library for Network.
- * @file packed.hpp
- * @brief packed header. Contains PACKED macros.
+ * @file Packed.hpp
+ * @brief Packed header. Contains PACKED macros.
  *        (PACKED_START, PACKED_END, PACKED)
  *
  * @details PACKED_START and PACKED_END macros are used to pack structs:

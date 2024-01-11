@@ -13,6 +13,7 @@
 #include "../../../Math/Vector.hpp"
 
 namespace Flakkari::Engine::ECS::Components::_2D {
+PACKED_START
 
 struct Movable {
     Math::Vector2d velocity; // pixels / second
@@ -23,8 +24,13 @@ struct Movable {
     Movable() : velocity(0, 0), acceleration(0, 0) {};
     Movable(const Math::Vector2d &velocity, const Math::Vector2d &acceleration) : velocity(velocity), acceleration(acceleration) {};
     Movable(const Movable &other) : velocity(other.velocity), acceleration(other.acceleration) {};
+
+    std::size_t size() const {
+        return sizeof(*this);
+    }
 };
 
+PACKED_END
 } // namespace Game::ECS::Components::_2D
 
 #endif /* !MOVABLE_HPP_ */
