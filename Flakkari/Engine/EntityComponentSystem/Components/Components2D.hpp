@@ -16,6 +16,7 @@
 #ifndef COMPONENTS2D_HPP_
 #define COMPONENTS2D_HPP_
 
+#include "2D/Control.hpp"       // Control component (up, down, left, right, shoot)
 #include "2D/Movable.hpp"       // Movable component (velocity, angularVelocity, acceleration, angularAcceleration)
 #include "2D/Transform.hpp"     // Transform component (position, rotation, scale)
 
