@@ -47,9 +47,9 @@ void Game::loadComponents(Engine::ECS::Registry &registry, const nl_component &c
         if (componentName == "Transform") {
             registry.registerComponent<Engine::ECS::Components::_2D::Transform>();
             Engine::ECS::Components::_2D::Transform transform;
-            transform.position = Engine::Math::Vector2d(componentContent["position"]["x"], componentContent["position"]["y"]);
+            transform.position = Engine::Math::Vector2f(componentContent["position"]["x"], componentContent["position"]["y"]);
             transform.rotation = componentContent["rotation"];
-            transform.scale = Engine::Math::Vector2d(componentContent["scale"]["x"], componentContent["scale"]["y"]);
+            transform.scale = Engine::Math::Vector2f(componentContent["scale"]["x"], componentContent["scale"]["y"]);
             registry.add_component<Engine::ECS::Components::_2D::Transform>(newEntity, std::move(transform));
             return;
         }
@@ -57,8 +57,8 @@ void Game::loadComponents(Engine::ECS::Registry &registry, const nl_component &c
         if (componentName == "Movable") {
             registry.registerComponent<Engine::ECS::Components::_2D::Movable>();
             Engine::ECS::Components::_2D::Movable movable;
-            movable.velocity = Engine::Math::Vector2d(componentContent["velocity"]["x"], componentContent["velocity"]["y"]);
-            movable.acceleration = Engine::Math::Vector2d(componentContent["acceleration"]["x"], componentContent["acceleration"]["y"]);
+            movable.velocity = Engine::Math::Vector2f(componentContent["velocity"]["x"], componentContent["velocity"]["y"]);
+            movable.acceleration = Engine::Math::Vector2f(componentContent["acceleration"]["x"], componentContent["acceleration"]["y"]);
             registry.add_component<Engine::ECS::Components::_2D::Movable>(newEntity, std::move(movable));
             return;
         }

@@ -16,12 +16,12 @@ namespace Flakkari::Engine::ECS::Components::_2D {
 PACKED_START
 
 struct Transform {
-    Math::Vector2d position;
-    Math::Vector2d scale;
-    double rotation;
+    Math::Vector2f position;
+    Math::Vector2f scale;
+    float rotation;
 
     Transform() : position(0, 0), scale(1, 1), rotation(0) {};
-    Transform(const Math::Vector2d &position, const Math::Vector2d &scale, double rotation) : position(position), scale(scale), rotation(rotation) {};
+    Transform(const Math::Vector2f &position, const Math::Vector2f &scale, float rotation) : position(position), scale(scale), rotation(rotation) {};
     Transform(const Transform &other) : position(other.position), scale(other.scale), rotation(other.rotation) {};
 
     std::size_t size() const {
