@@ -35,10 +35,15 @@ Socket::Socket(std::shared_ptr<Address> address)
         return;
     }
 
+    #if __APPLE__
+        int optval = 1;
+        ::setsockopt(_socket, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval));
+    #elif __linux__
     if (::setsockopt(_socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, "\001", 4)) {
         FLAKKARI_LOG_FATAL("Failed to set socket to reuse address and port, error: " + STD_ERROR);
         return;
     }
+    #endif
 }
 
 Socket::Socket(socket_t socket, std::shared_ptr<Address> address)
@@ -52,10 +57,18 @@ Socket::Socket(socket_t socket, std::shared_ptr<Address> address)
         }
     #endif
 
+    #if _WIN32
+        u_long mode = 1;
+        int result = ::ioctlsocket(_socket, FIONBIO, &mode);
+    #elif __APPLE__
+        int optval = 1;
+        ::setsockopt(_socket, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval));
+    #elif __linux__
     if (::setsockopt(_socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, "\001", 4)) {
         FLAKKARI_LOG_FATAL("Failed to set socket to reuse address and port, error: " + STD_ERROR);
         return;
     }
+    #endif
 }
 
 Socket::Socket(Address address)
@@ -82,10 +95,15 @@ Socket::Socket(Address address)
         return;
     }
 
+    #if __APPLE__
+        int optval = 1;
+        ::setsockopt(_socket, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval));
+    #elif __linux__
     if (::setsockopt(_socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, "\001", 4)) {
         FLAKKARI_LOG_FATAL("Failed to set socket to reuse address and port, error: " + STD_ERROR);
         return;
     }
+    #endif
 }
 
 Socket::Socket(ip_t ip, port_t port, Address::IpType ip_type, Address::SocketType socket_type)
@@ -186,18 +204,32 @@ std::shared_ptr<Socket> Socket::accept()
 
 void Socket::send(const Buffer &data, int flags)
 {
-    if (::send(_socket, data.getData(), data.getSize(), flags) == SOCKET_ERROR) {
-        FLAKKARI_LOG_ERROR("Failed to send \"" + std::string(data.begin(), data.end()) + "\" to socket(" + std::to_string(_socket) + "), error: " + STD_ERROR);
-        return;
-    }
+    #ifdef _WIN32
+        if (::send(_socket, (const char *)data.getData(), data.getSize(), flags) == SOCKET_ERROR) {
+            FLAKKARI_LOG_ERROR("Failed to send \"" + std::string(data.begin(), data.end()) + "\" to socket(" + std::to_string(_socket) + "), error: " + STD_ERROR);
+            return;
+        }
+    #else
+        if (::send(_socket, data.getData(), data.getSize(), flags) == SOCKET_ERROR) {
+            FLAKKARI_LOG_ERROR("Failed to send \"" + std::string(data.begin(), data.end()) + "\" to socket(" + std::to_string(_socket) + "), error: " + STD_ERROR);
+            return;
+        }
+    #endif
 }
 
 void Socket::send(const Buffer &data, size_t size, int flags)
 {
-    if (::send(_socket, data.getData(), size, flags) == SOCKET_ERROR) {
-        FLAKKARI_LOG_ERROR("Failed to send \"" + std::string(data.begin(), data.end()) + "\" to socket(" + std::to_string(_socket) + "), error: " + STD_ERROR);
-        return;
-    }
+    #ifdef _WIN32
+        if (::send(_socket, (const char *)data.getData(), size, flags) == SOCKET_ERROR) {
+            FLAKKARI_LOG_ERROR("Failed to send \"" + std::string(data.begin(), data.end()) + "\" to socket(" + std::to_string(_socket) + "), error: " + STD_ERROR);
+            return;
+        }
+    #else
+        if (::send(_socket, data.getData(), size, flags) == SOCKET_ERROR) {
+            FLAKKARI_LOG_ERROR("Failed to send \"" + std::string(data.begin(), data.end()) + "\" to socket(" + std::to_string(_socket) + "), error: " + STD_ERROR);
+            return;
+        }
+    #endif
 }
 
 void Socket::sendTo(const std::shared_ptr<Address> &address, const Buffer &data, int flags)
@@ -207,10 +239,17 @@ void Socket::sendTo(const std::shared_ptr<Address> &address, const Buffer &data,
     if (addr == nullptr)
         return FLAKKARI_LOG_ERROR("Address is nullptr"), void();
 
-    if (::sendto(_socket, data.getData(), data.getSize(), flags, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
-        FLAKKARI_LOG_ERROR("Failed to send \"" + std::string(data) + "\" to \"" + address->toString().value_or("No address") + "\", error: " + STD_ERROR);
-        return;
-    }
+    #ifdef _WIN32
+        if (::sendto(_socket, (const char *)data.getData(), data.getSize(), flags, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
+            FLAKKARI_LOG_ERROR("Failed to send \"" + std::string(data.begin(), data.end()) + "\" to \"" + address->toString().value_or("No address") + "\", error: " + STD_ERROR);
+            return;
+        }
+    #else
+        if (::sendto(_socket, data.getData(), data.getSize(), flags, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
+            FLAKKARI_LOG_ERROR("Failed to send \"" + std::string(data) + "\" to \"" + address->toString().value_or("No address") + "\", error: " + STD_ERROR);
+            return;
+        }
+    #endif
 }
 
 void Socket::sendTo(const std::shared_ptr<Address> &address, const byte *data, const size_t &size, int flags)
@@ -220,23 +259,25 @@ void Socket::sendTo(const std::shared_ptr<Address> &address, const byte *data, c
     if (addr == nullptr)
         return FLAKKARI_LOG_ERROR("Address is nullptr"), void();
 
-    if (::sendto(_socket, data, size, flags, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
-        FLAKKARI_LOG_ERROR(
-            "Failed to send \""
-            + std::string(data, data + size)
-            + "\" to \""
-            + address->toString().value_or("No address")
-            + "\", error: " + STD_ERROR
-        );
-        return;
-    }
+    #if _WIN32
+        if (::sendto(_socket, (const char *)data, size, flags, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
+            FLAKKARI_LOG_ERROR("Failed to send \""+ std::string(data, data + size) +"\" to \""+ address->toString().value_or("No address") +"\", error: "+ STD_ERROR);
+            return;
+        }
+    #else
+        if (::sendto(_socket, data, size, flags, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
+            FLAKKARI_LOG_ERROR("Failed to send \""+ std::string(data, data + size) +"\" to \""+ address->toString().value_or("No address") +"\", error: "+ STD_ERROR
+            );
+            return;
+        }
+    #endif
 }
 
 std::optional<Buffer> Socket::receive(size_t size, int flags)
 {
     Buffer data(size, 0);
 
-    if (::recv(_socket, &data[0], size, flags) == SOCKET_ERROR) {
+    if (::recv(_socket, (char*)&data[0], size, flags) == SOCKET_ERROR) {
         FLAKKARI_LOG_ERROR("Failed to receive data from socket(" + std::to_string(_socket) + "), error: " + STD_ERROR);
         return {};
     }
@@ -247,7 +288,7 @@ std::optional<Buffer> Socket::receive(int flags)
 {
     Buffer data(4096, 0);
 
-    if (::recv(_socket, &data[0], 4096, flags) == SOCKET_ERROR) {
+    if (::recv(_socket, (char*)&data[0], 4096, flags) == SOCKET_ERROR) {
         FLAKKARI_LOG_ERROR("Failed to receive data from socket(" + std::to_string(_socket) + "), error: " + STD_ERROR);
         return {};
     }
@@ -260,7 +301,7 @@ std::optional<std::pair<std::shared_ptr<Address>, Buffer>> Socket::receiveFrom(s
     sockaddr_storage addr;
     socklen_t addrlen = sizeof(addr);
 
-    if (::recvfrom(_socket, data.data(), size, flags, (sockaddr*)&addr, &addrlen) == SOCKET_ERROR) {
+    if (::recvfrom(_socket, (char*)data.data(), size, flags, (sockaddr*)&addr, &addrlen) == SOCKET_ERROR) {
         if (errno == EAGAIN || errno == EWOULDBLOCK)
             return {};
         FLAKKARI_LOG_ERROR("Failed to receive data from \"" + _address->toString().value_or("No address") + "\", error: " + STD_ERROR);
@@ -280,7 +321,7 @@ std::optional<std::pair<std::shared_ptr<Address>, Buffer>> Socket::receiveFrom(i
     sockaddr_storage addr;
     socklen_t addrlen = sizeof(addr);
 
-    if (::recvfrom(_socket, &data[0], 4096, flags, (sockaddr*)&addr, &addrlen) == SOCKET_ERROR) {
+    if (::recvfrom(_socket, (char*)&data[0], 4096, flags, (sockaddr*)&addr, &addrlen) == SOCKET_ERROR) {
         if (errno == EAGAIN || errno == EWOULDBLOCK)
             return {};
         FLAKKARI_LOG_ERROR("Failed to receive data from \"" + _address->toString().value_or("No address") + "\", error: " + STD_ERROR);
