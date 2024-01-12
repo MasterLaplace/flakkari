@@ -6,46 +6,63 @@ project(R-Type_Server)
 # Add all your source and headers files:
 set(SOURCES
     Flakkari/core.cpp
+
     Flakkari/Logger/Logger.cpp
     Flakkari/Network/Address.cpp
     Flakkari/Network/Buffer.cpp
     Flakkari/Network/Socket.cpp
     Flakkari/Network/IOMultiplexer.cpp
+
     Flakkari/Protocol/Header.cpp
     Flakkari/Protocol/Packet.cpp
+
     Flakkari/Engine/Math/Vector.cpp
+
     Flakkari/Engine/EntityComponentSystem/Systems/Systems.cpp
     Flakkari/Engine/EntityComponentSystem/Registry.cpp
+
     Flakkari/Server/UDPServer.cpp
     Flakkari/Server/Client/Client.cpp
     Flakkari/Server/Client/ClientManager.cpp
+
     Flakkari/Server/Game/Game.cpp
     Flakkari/Server/Game/GameManager.cpp
+    Flakkari/Server/Game/ResourceManager.cpp
+
     Flakkari/Server/Internals/CommandManager.cpp
 )
 
 set(HEADERS
     Flakkari/Logger/Logger.hpp
+
     Flakkari/Network/Packed.hpp
     Flakkari/Network/Address.hpp
     Flakkari/Network/Buffer.hpp
     Flakkari/Network/Socket.hpp
     Flakkari/Network/Serializer.hpp
+    Flakkari/Network/PacketQueue.hpp
     Flakkari/Network/IOMultiplexer.hpp
+
     Flakkari/Protocol/Header.hpp
     Flakkari/Protocol/Packet.hpp
+
     Flakkari/Engine/Math/Vector.hpp
+
     Flakkari/Engine/EntityComponentSystem/Components/Components2D.hpp
     Flakkari/Engine/EntityComponentSystem/Components/ComponentsCommon.hpp
     Flakkari/Engine/EntityComponentSystem/Systems/Systems.hpp
     Flakkari/Engine/EntityComponentSystem/Entity.hpp
     Flakkari/Engine/EntityComponentSystem/SparseArrays.hpp
     Flakkari/Engine/EntityComponentSystem/Registry.hpp
+
     Flakkari/Server/UDPServer.hpp
     Flakkari/Server/Client/Client.hpp
     Flakkari/Server/Client/ClientManager.hpp
+
     Flakkari/Server/Game/Game.hpp
     Flakkari/Server/Game/GameManager.hpp
+    Flakkari/Server/Game/ResourceManager.cpp
+
     Flakkari/Server/Internals/CommandManager.hpp
 )
 
@@ -59,6 +76,7 @@ set(HEADER_LIB_NETWORK
     Flakkari/Network/Buffer.hpp
     Flakkari/Network/Socket.hpp
     Flakkari/Network/Serializer.hpp
+    Flakkari/Network/PacketQueue.hpp
     Flakkari/Network/IOMultiplexer.hpp
 )
 
