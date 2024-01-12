@@ -100,6 +100,23 @@ class Address {
         [[nodiscard]] sockaddr_in *getSockAddrIn() const { return (sockaddr_in *)_addrInfo->ai_addr; }
 
         /**
+         * @brief Get the Ip object (std::string)
+         *
+         * @return std::optional<std::string>  Ip
+         * @example "Flakkari/Network/Address.cpp"
+         * @code
+         * #include "Address.hpp"
+         *
+         * Flakkari::Network::Address address("localhost", 8080, Flakkari::Network::Address::SocketType::TCP, Flakkari::Network::Address::IpType::IPv4);
+         * std::cout << "Ip: " << address.getIp().value_or("Unknown") << std::endl;
+         * @endcode
+         * output:
+         * @code
+         * Ip: localhost
+         */
+        [[nodiscard]] std::optional<std::string> getIp() const;
+
+        /**
          * @brief Get the Port object
          *
          * @return port_t  Port

@@ -116,7 +116,19 @@ std::optional<std::string> Address::toString() const
         return {};
     }
     return std::string(host) + ":" + std::string(service);
-};
+}
+
+std::optional<std::string> Address::getIp() const
+{
+    if (_addrInfo == nullptr)
+        return {};
+    char host[NI_MAXHOST];
+    if (getnameinfo(_addrInfo->ai_addr, _addrInfo->ai_addrlen, host, NI_MAXHOST, nullptr, 0, NI_NUMERICHOST) != 0) {
+        FLAKKARI_LOG_ERROR("getnameinfo() failed");
+        return {};
+    }
+    return std::string(host);
+}
 
 constexpr const char *Address::ipTypeToString(IpType ip_type)
 {
