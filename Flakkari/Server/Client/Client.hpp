@@ -15,11 +15,14 @@
 
 
 #ifndef CLIENT_HPP_
-#define CLIENT_HPP_
+    #define CLIENT_HPP_
 
 #include <chrono>
 
-#include "Network/Address.hpp"
+#include "Network/Socket.hpp"
+#include "Network/PacketQueue.hpp"
+#include "Protocol/Packet.hpp"
+#include "Engine/EntityComponentSystem/Entity.hpp"
 #include "../Game/GameManager.hpp"
 
 namespace Flakkari {
@@ -62,19 +65,60 @@ class Client {
         void keepAlive();
 
         /**
+         * @brief Add a packet to the client's packet history
+         *
+         * @param packet  The packet to add
+         */
+        void addPacketToHistory(Network::Buffer packet);
+
+        /**
+         * @brief Increment the warning count of the client
+         *
+         * @return true  If the client has been disconnected
+         * @return false  If the client has not been disconnected
+         */
+        bool incrementWarningCount();
+
+        /**
          * @brief Get the client's address
          *
          * @return std::shared_ptr<Network::Address>  The client's address
          */
         [[nodiscard]] std::shared_ptr<Network::Address> getAddress() const { return _address; }
 
-        [[nodiscard]] unsigned int getId() const { return _address->getId(); }
+        /**
+         * @brief Get the Entity object
+         *
+         * @return Entity  The entity of the client
+         */
+        [[nodiscard]] Engine::ECS::Entity getEntity() const { return _entity; }
+        void setEntity(Engine::ECS::Entity entity) { _entity = entity; }
+
+        [[nodiscard]] short getId() const { return _address->getId(); }
+
+        [[nodiscard]] std::string getSceneName() const { return _sceneName; }
+        void setSceneName(std::string sceneName) { _sceneName = sceneName; }
+
+        [[nodiscard]] unsigned short getWarningCount() const { return _warningCount; }
+
+        [[nodiscard]] unsigned short getMaxWarningCount() const { return _maxWarningCount; }
+
+        [[nodiscard]] unsigned short getMaxPacketHistory() const { return _maxPacketHistory; }
 
     protected:
     private:
         std::chrono::steady_clock::time_point _lastActivity;
         std::shared_ptr<Network::Address> _address;
+        Engine::ECS::Entity _entity;
+        std::string _sceneName;
         bool _isConnected = true;
+        unsigned short _warningCount = 0;
+        unsigned short _maxWarningCount = 5;
+        unsigned short _maxPacketHistory = 10;
+    public:
+        std::vector<Network::Buffer> _packetHistory;
+        Network::PacketQueue<Protocol::API::Packet<Protocol::API::CommandId>> _sendQueue;
+        Network::PacketQueue<Protocol::API::Packet<Protocol::API::CommandId>> _receiveQueue;
 };
 
 } /* namespace Flakkari */

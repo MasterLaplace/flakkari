@@ -19,6 +19,7 @@ Client::Client(std::shared_ptr<Network::Address> address)
 
 Client::~Client() {
     _isConnected = false;
+    _address->setId(-1);
 }
 
 bool Client::isConnected(float timeout)
@@ -30,6 +31,18 @@ bool Client::isConnected(float timeout)
 
 void Client::keepAlive() {
     _lastActivity = std::chrono::steady_clock::now();
+}
+
+void Client::addPacketToHistory(Network::Buffer packet)
+{
+    if (_packetHistory.size() >= _maxPacketHistory)
+        _packetHistory.erase(_packetHistory.begin());
+    _packetHistory.push_back(packet);
+}
+
+bool Client::incrementWarningCount() {
+    _warningCount++;
+    return _warningCount >= _maxWarningCount;
 }
 
 } /* namespace Flakkari */
