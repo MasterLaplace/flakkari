@@ -16,7 +16,11 @@
 #ifndef COMPONENTSCOMMON_HPP_
 #define COMPONENTSCOMMON_HPP_
 
+#include "Common/Child.hpp"     // Child component (name)
+#include "Common/Evolve.hpp"    // Evolve component (name)
+#include "Common/Id.hpp"        // Id component (id)
 #include "Common/Parent.hpp"    // Parent component (entity)
 #include "Common/Tag.hpp"       // Tag component (tag)
+#include "Common/Template.hpp"  // Template component (name)
 
 #endif /* !COMPONENTSCOMMON_HPP_ */
