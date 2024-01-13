@@ -15,9 +15,17 @@
 #ifndef ADDRESS_HPP_
 #define ADDRESS_HPP_
 
-#include <iostream>
+#ifndef _WIN32 || _WIN64 || MSVC || _MSC_VER
 #include <arpa/inet.h>
 #include <netdb.h>
+#else
+#include <winsock2.h>
+#include <ws2tcpip.h>
+
+#pragma comment(lib, "Ws2_32.lib")
+#endif
+
+#include <iostream>
 #include <memory>
 #include <optional>
 #include <string>
