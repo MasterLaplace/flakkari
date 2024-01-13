@@ -46,7 +46,7 @@ bool CommandManager::handlePasswordCommand(const std::string &input)
     if (!std::regex_match(input, PASSWORD_REGEX))
         return false;
 
-    #ifndef _WIN32 || _WIN64 || MSVC || _MSC_VER
+    #if !defined(_WIN32) && !defined(_WIN64)  || !defined( MSVC) || !defined(_MSC_VER)
         const char *password = std::getenv("FLAKKARI_PASSWORD");
     #else
         char *password;
