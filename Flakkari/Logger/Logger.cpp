@@ -21,10 +21,20 @@ void Logger::setMode(Logger::Mode mode) noexcept {
 
 const std::string Logger::get_current_time() noexcept
 {
-    auto currentTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-
     char buffer[80];
-    std::strftime(buffer, sizeof(buffer), "[ %Y-%m-%d %H:%M:%S ]", std::localtime(&currentTime));
+    struct tm timeInfo;
+
+    #if defined(_WIN32) || defined(_WIN64)
+        auto currentTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+
+        if (localtime_s(&timeInfo, &currentTime) != 0)
+            return "localtime_s failed";
+    #else
+        auto currentTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        timeInfo = *std::localtime(&currentTime);
+    #endif
+
+    std::strftime(buffer, sizeof(buffer), "[ %Y-%m-%d %H:%M:%S ]", &timeInfo);
 
     return std::string(buffer);
 }
