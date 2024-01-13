@@ -19,7 +19,7 @@ Game::Game(const std::string &name, std::shared_ptr<nlohmann::json> config)
     _time = std::chrono::steady_clock::now();
     if ((*_config)["scenes"].empty())
         throw std::runtime_error("Game: no scenes found");
-    loadScene((*_config)["startScene"]);
+    loadScene((*_config)["startGame"]);
 }
 
 Game::~Game()
@@ -51,7 +51,7 @@ void Game::loadComponents(Engine::ECS::Registry &registry, const nl_component &c
             transform.rotation = componentContent["rotation"];
             transform.scale = Engine::Math::Vector2f(componentContent["scale"]["x"], componentContent["scale"]["y"]);
             registry.add_component<Engine::ECS::Components::_2D::Transform>(newEntity, std::move(transform));
-            return;
+            continue;
         }
 
         if (componentName == "Movable") {
@@ -60,7 +60,7 @@ void Game::loadComponents(Engine::ECS::Registry &registry, const nl_component &c
             movable.velocity = Engine::Math::Vector2f(componentContent["velocity"]["x"], componentContent["velocity"]["y"]);
             movable.acceleration = Engine::Math::Vector2f(componentContent["acceleration"]["x"], componentContent["acceleration"]["y"]);
             registry.add_component<Engine::ECS::Components::_2D::Movable>(newEntity, std::move(movable));
-            return;
+            continue;
         }
     }
 }

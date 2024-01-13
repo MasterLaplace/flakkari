@@ -25,19 +25,21 @@
 #include <thread>
 #include <nlohmann/json.hpp>
 
-#include "Engine/EntityComponentSystem/Registry.hpp"
 #include "Engine/EntityComponentSystem/Systems/Systems.hpp"
 
 namespace Flakkari {
 
     class Client;
 
-using nl_entity = nlohmann::json_abi_v3_11_3::detail::iteration_proxy<nlohmann::json_abi_v3_11_3::detail::iter_impl<nlohmann::json_abi_v3_11_3::json>>;
-using nl_template = nlohmann::json_abi_v3_11_3::basic_json<std::map, std::vector, std::string, bool, int64_t, uint64_t, double, std::allocator, nlohmann::json_abi_v3_11_3::adl_serializer, std::vector<uint8_t, std::allocator<uint8_t>>, void>;
-using nl_component = nlohmann::json_abi_v3_11_3::json ;
+using nl_entity = nlohmann::detail::iteration_proxy<nlohmann::detail::iter_impl<nlohmann::json>>;
+using nl_template = nlohmann::basic_json<std::map, std::vector, std::string, bool, int64_t, uint64_t, double, std::allocator, nlohmann::adl_serializer, std::vector<uint8_t, std::allocator<uint8_t>>, void>;
+using nl_component = nlohmann::json;
 
 class Game {
     public:
+        friend class Client;
+
+    public: // Constructors/Destructors
         /**
          * @brief Construct a new Game object and load the config file
          *        of the game.
@@ -48,6 +50,7 @@ class Game {
         Game(const std::string &name, std::shared_ptr<nlohmann::json> config);
         ~Game();
 
+    public: // Loaders
         /**
          * @brief Add all the systems of the game to the registry.
          *
@@ -63,7 +66,9 @@ class Game {
          * @param componentInfo  Info of the components to add.
          * @param newEntity  Entity to add the components to.
          */
-        void loadComponents(Engine::ECS::Registry &registry, const nl_component &componentInfo, Engine::ECS::Entity newEntity);
+        void loadComponents (
+            Engine::ECS::Registry &registry, const nl_component &componentInfo, Engine::ECS::Entity newEntity
+        );
 
         /**
          * @brief Add all the entities of the game to the registry.
@@ -72,7 +77,9 @@ class Game {
          * @param entity  Entity to add to the registry.
          * @param templates  Templates of the game.
          */
-        void loadEntityFromTemplate(Engine::ECS::Registry &registry, const nl_entity &entity, const nl_template &templates);
+        void loadEntityFromTemplate (
+            Engine::ECS::Registry &registry, const nl_entity &entity, const nl_template &templates
+        );
 
         /**
          * @brief Load a scene from the game.
@@ -117,7 +124,7 @@ class Game {
          * @return true  Player removed successfully
          * @return false  Player not removed
          */
-        [[nodiscard]] bool removePlayer(std::shared_ptr<Client> player);
+        bool removePlayer(std::shared_ptr<Client> player);
 
         /**
          * @brief Get if the game is running.
@@ -127,6 +134,7 @@ class Game {
          */
         [[nodiscard]] bool isRunning() const;
 
+    public: // Getters
         /**
          * @brief Get the Name object (name of the game).
          *

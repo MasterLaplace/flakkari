@@ -52,7 +52,7 @@ class ResourceManager {
         static std::shared_ptr<ResourceManager> _instance;
         static std::mutex _mutex;
 
-        using nl_template = nlohmann::json_abi_v3_11_3::json;
+        using nl_template = nlohmann::json;
 
     public:
         std::map<std::string/*game*/, std::map<std::string/*scene*/, std::map<std::string/*template*/, nl_template>>> _templates;
