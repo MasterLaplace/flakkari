@@ -9,7 +9,7 @@ on:
       - '*'
 
 jobs:
-  verify-commit-name:
+  build_checker_ubuntu:
     runs-on: ubuntu-latest
 
     steps:

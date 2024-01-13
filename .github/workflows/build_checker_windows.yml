@@ -1,0 +1,24 @@
+name: Build Checker Windows
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install CMake
+        run: |
+          choco install cmake -y
+
+      - name: Configure and Build
+        run: |
+          mkdir build && cd build
+          cmake .. && cmake --build .
