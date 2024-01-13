@@ -48,8 +48,10 @@ class ClientManager {
     private:
         static std::shared_ptr<ClientManager> _instance;
 
+        using id_t = short;
+
     public:
-        std::unordered_map<std::string /*ip:port*/, std::shared_ptr<Client>> _clients;
+        std::vector<std::string /*ip*/> _bannedClients;
 
     public:
         ClientManager(const ClientManager &) = delete;
