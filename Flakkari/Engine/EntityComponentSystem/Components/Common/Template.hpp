@@ -24,6 +24,7 @@ struct Template {
     Template() : name("") {}
     Template(const std::string &nname) : name(nname.c_str()) {}
     Template(const char *nname) : name(nname) {}
+    Template(const Template &other) : name(other.name) {}
 
     std::size_t size() const {
         return std::strlen(name);

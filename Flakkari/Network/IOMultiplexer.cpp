@@ -67,7 +67,7 @@ int PSELECT::wait()
     #if defined(_WIN32)
         return ::select(_maxFd + 1, &_fds, nullptr, nullptr, (const timeval *)&_timeout);
     #elif defined(__APPLE__)
-        return ::select(_maxFd + 1, &_fds, nullptr, nullptr, &_timeout);
+        return ::select(_maxFd + 1, &_fds, nullptr, nullptr, (struct timeval *)&_timeout);
     #else
         return ::pselect(_maxFd + 1, &_fds, nullptr, nullptr, &_timeout, nullptr);
     #endif

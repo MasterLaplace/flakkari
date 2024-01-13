@@ -21,8 +21,8 @@ struct Id {
     std::size_t id;
 
     Id() : id(0) {}
-    Id(const Id &other) : id(other.id) {}
     Id(std::size_t id) : id(id) {}
+    Id(const Id &other) : id(other.id) {}
 
     std::size_t size() const {
         return sizeof(id);

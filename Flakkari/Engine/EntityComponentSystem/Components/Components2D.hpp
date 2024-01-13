@@ -16,8 +16,10 @@
 #ifndef COMPONENTS2D_HPP_
 #define COMPONENTS2D_HPP_
 
+// #include "2D/Collider.hpp"      // Collider component (shape, position, rotation, scale)
 #include "2D/Control.hpp"       // Control component (up, down, left, right, shoot)
 #include "2D/Movable.hpp"       // Movable component (velocity, angularVelocity, acceleration, angularAcceleration)
+#include "2D/RigidBody.hpp"     // RigidBody component (mass, restitution, friction, linearDamping)
 #include "2D/Transform.hpp"     // Transform component (position, rotation, scale)
 
 #endif /* !COMPONENTS2D_HPP_ */

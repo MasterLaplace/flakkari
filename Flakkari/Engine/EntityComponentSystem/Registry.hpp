@@ -115,6 +115,19 @@ public:
      * @brief Get the component from an entity.
      *
      * @tparam Component  The component to get.
+     * @param to  The entity to get the component from.
+     * @param c  The component to get.
+     * @return SparseArrays<Component>::reference_type  The component.
+     */
+    template <typename Component>
+    typename SparseArrays<Component>::reference_type add_component(const entity_type &to, const Component &c) {
+        return getComponents<Component>().insert_at(to, c);
+    }
+
+    /**
+     * @brief Get the component from an entity.
+     *
+     * @tparam Component  The component to get.
      * @tparam Params  The parameters to construct the component.
      * @param to  The entity to get the component from.
      * @param p  The parameters to construct the component.

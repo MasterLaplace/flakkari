@@ -92,7 +92,9 @@ Address::Address(const sockaddr_storage &clientAddr, SocketType socket_type, IpT
 
     addrinfo *result = nullptr;
     const char *name = inet_ntoa(((sockaddr_in *)&clientAddr)->sin_addr);
-    const char *service = std::to_string(ntohs(((sockaddr_in *)&clientAddr)->sin_port)).c_str();
+
+    const std::string serviceStr = std::to_string(ntohs(((sockaddr_in *)&clientAddr)->sin_port));
+    const char *service = serviceStr.c_str();
 
     if (getaddrinfo(name, service, &hints, &result) != 0) {
         FLAKKARI_LOG_ERROR("getaddrinfo() failed");
