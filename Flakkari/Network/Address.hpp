@@ -15,7 +15,7 @@
 #ifndef ADDRESS_HPP_
     #define ADDRESS_HPP_
 
-#if !defined(_WIN32) && !defined(_WIN64)  || !defined( MSVC) || !defined(_MSC_VER)
+#if !defined(_WIN32) && !defined(_WIN64)  && !defined( MSVC) && !defined(_MSC_VER)
 #include <arpa/inet.h>
 #include <netdb.h>
 #else
