@@ -59,28 +59,8 @@ void UDPServer::handlePacket()
     ClientManager::addClient(packet->first);
     ClientManager::checkInactiveClients();
 
-    // parse packet
-    Protocol::API::Packet<Protocol::API::CommandId> parsedPacket;
-    if (parsedPacket.deserialize(packet->second) == false)
-        FLAKKARI_LOG_WARNING("Invalid packet received");
-
-    std::cout << "RECV Header: " << std::endl;
-    std::cout << "  Priority: " << (int)parsedPacket.header._priority << std::endl;
-    std::cout << "  ApiVersion: " << (int)parsedPacket.header._apiVersion << std::endl;
-    std::cout << "  CommandId: " << (int)parsedPacket.header._commandId << std::endl;
-    std::cout << "  ContentLength: " << (int)parsedPacket.header._contentLength << std::endl;
-
-    // send to all clients
-    Protocol::API::Packet<Protocol::API::CommandId> sendHeader;
-    sendHeader.header._commandId = Protocol::API::CommandId::REP_CONNECT;
-
-    std::cout << "SEND Header: " << std::endl;
-    std::cout << "  Priority: " << (int)sendHeader.header._priority << std::endl;
-    std::cout << "  ApiVersion: " << (int)sendHeader.header._apiVersion << std::endl;
-    std::cout << "  CommandId: " << (int)sendHeader.header._commandId << std::endl;
-    std::cout << "  ContentLength: " << (int)sendHeader.header._contentLength << std::endl;
-
-    _socket->sendTo(packet->first, sendHeader.serialize());
+    ClientManager::receivePacketFromClient(packet->first, packet->second);
+    ClientManager::sendPacketToClient(packet->first, packet->second);
 }
 
 void UDPServer::run()

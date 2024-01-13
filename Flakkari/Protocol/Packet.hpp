@@ -45,14 +45,28 @@ inline namespace V_0 {
             return sizeof(header) + payload.size();
         }
 
+        std::string to_string()
+        {
+            std::string str = "Packet<Id: "
+            + std::to_string(int(header._commandId))
+            + ", ContentLength: "
+            + std::to_string(int(header._contentLength))
+            + ", SequenceNumber: "
+            + std::to_string(int(header._sequenceNumber))
+            + ", Payload: "
+            + std::string(payload)
+            + ">";
+            return str;
+        }
+
         friend std::ostream& operator<<(std::ostream& os, const Packet& packet)
         {
             os << "Packet<Id: "
-            << packet.header._commandId
+            << htons(packet.header._commandId)
             << ", ContentLength: "
-            << packet.header._contentLength
+            << htons(packet.header._contentLength)
             << ", SequenceNumber: "
-            << packet.header._sequenceNumber
+            << htonl(packet.header._sequenceNumber)
             << ", Payload: "
             << packet.payload
             << ">";
@@ -148,6 +162,8 @@ inline namespace V_0 {
          */
         [[nodiscard]] bool deserialize(const Network::Buffer &buffer)
         {
+            if (buffer.size() < sizeof(header))
+                return false;
             std::memcpy(&header, buffer.data(), sizeof(header));
             if (header._priority >= Priority::MAX_PRIORITY)
                 return false;

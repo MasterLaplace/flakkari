@@ -37,8 +37,9 @@ void Game::loadSystems(Engine::ECS::Registry &registry, const std::string &name)
         }), void();
 }
 
-void Game::loadComponents(Engine::ECS::Registry &registry, const nl_component &components, Engine::ECS::Entity newEntity)
-{
+void Game::loadComponents (
+    Engine::ECS::Registry &registry, const nl_component &components, Engine::ECS::Entity newEntity
+) {
     for (auto &component : components.items())
     {
         auto componentName = component.key();
@@ -65,8 +66,9 @@ void Game::loadComponents(Engine::ECS::Registry &registry, const nl_component &c
     }
 }
 
-void Game::loadEntityFromTemplate(Engine::ECS::Registry &registry, const nl_entity &entity, const nl_template &templates)
-{
+void Game::loadEntityFromTemplate (
+    Engine::ECS::Registry &registry, const nl_entity &entity, const nl_template &templates
+) {
     Engine::ECS::Entity newEntity = registry.spawn_entity();
 
     for (auto &componentInfo : entity.begin().value().items()) {
@@ -138,6 +140,7 @@ void Game::updateIncomingPackets(unsigned char maxMessagePerFrame)
         while (!packets.empty() && messageCount > 0) {
             Protocol::API::Packet<Protocol::API::CommandId> p;
             auto packet = packets.pop_front();
+            FLAKKARI_LOG_INFO("packet received: " + packet.to_string());
             messageCount--;
         }
     }
@@ -148,6 +151,10 @@ void Game::update()
     auto now = std::chrono::steady_clock::now();
     _deltaTime = std::chrono::duration_cast<std::chrono::duration<float>>(now - _time).count();
     _time = now;
+
+    checkDisconnect();
+
+    updateIncomingPackets();
 
     for (auto &scene : _scenes)
         scene.second.run_systems();

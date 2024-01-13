@@ -121,9 +121,12 @@ void ClientManager::sendPacketToAllClientsExcept (
     auto instance = getInstance();
     auto clients = instance->_clients;
     auto socket = instance->_socket;
+    auto clientKey = client->toString().value_or("");
 
     for (auto &tmp_client : clients) {
-        if (tmp_client.second->isConnected() && tmp_client.second->getAddress()->toString().value_or("") != client->toString().value_or(""))
+        auto tmp_clientKey = tmp_client.second->getAddress()->toString().value_or("");
+
+        if (tmp_client.second->isConnected() && tmp_clientKey != clientKey)
             socket->sendTo(tmp_client.second->getAddress(), packet);
     }
 }
@@ -134,25 +137,26 @@ void ClientManager::receivePacketFromClient (
     auto &clients = getInstance()->_clients;
     auto &bannedClients = getInstance()->_bannedClients;
     auto clientName = client->toString().value_or("Unknown");
+    auto ip = client->getIp().value_or("");
+    auto clientKey = client->toString().value_or("");
 
-    if (std::find(bannedClients.begin(), bannedClients.end(), client->getIp().value_or("")) != bannedClients.end()) {
+    if (std::find(bannedClients.begin(), bannedClients.end(), ip) != bannedClients.end()) {
         FLAKKARI_LOG_LOG("Client " + clientName + " tried to connect but is banned");
         return;
     }
 
-    if (clients.find(client->toString().value_or("")) == clients.end())
+    if (clients.find(clientKey) == clients.end())
         return;
-    auto &tmp_client = clients[client->toString().value_or("")];
-
-    FLAKKARI_LOG_LOG("Client " + clientName + " sent a packet: " + std::string(buffer));
+    auto &tmp_client = clients[clientKey];
 
     Protocol::API::Packet<Protocol::API::CommandId> packet;
     if (packet.deserialize(buffer)) {
+        FLAKKARI_LOG_LOG("Client " + clientName + " sent a valid packet: " + packet.to_string());
         tmp_client->_receiveQueue.push_back(packet);
         return;
     }
 
-    FLAKKARI_LOG_LOG("Client " + clientName + " sent an invalid packet");
+    FLAKKARI_LOG_WARNING("Client " + clientName + " sent an invalid packet");
 
     if (!tmp_client->incrementWarningCount())
         return;
@@ -162,7 +166,7 @@ void ClientManager::receivePacketFromClient (
     bannedClients.push_back(client->getIp().value());
     FLAKKARI_LOG_LOG("Client " + clientName + " banned");
     GameManager::removeClientFromGame("R-Type", tmp_client);
-    clients.erase(client->toString().value_or(""));
+    clients.erase(clientKey);
 }
 
 std::shared_ptr<Client> ClientManager::getClient(std::shared_ptr<Network::Address> client) {
