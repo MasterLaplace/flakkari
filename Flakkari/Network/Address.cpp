@@ -166,6 +166,8 @@ Address::operator std::string() const
         + socketTypeToString(_socket_type)
         + ", "
         + ipTypeToString(_ip_type)
+        + ", "
+        + std::to_string(getId())
         + ")"
     );
 }
@@ -177,6 +179,8 @@ std::ostream &operator<<(std::ostream &os, const Address &addr)
     os << Address::socketTypeToString(addr.getSocketType());
     os << ", ";
     os << Address::ipTypeToString(addr.getIpType());
+    os << ", ";
+    os << addr.getId();
     os << ")";
     return os;
 }

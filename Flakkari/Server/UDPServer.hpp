@@ -54,7 +54,7 @@ class UDPServer {
          * @param port The port to bind the server to (default: 8080)
          */
         UDPServer(std::string ip = "localhost", std::size_t port = 8080);
-        ~UDPServer() = default;
+        ~UDPServer();
 
         /**
          * @brief Run the server and wait for incoming packets and clients
@@ -90,7 +90,7 @@ class UDPServer {
         void handlePacket();
 
     private:
-        Network::Socket _socket;
+        std::shared_ptr<Network::Socket> _socket;
         std::unique_ptr<Network::PSELECT> _io;
 };
 

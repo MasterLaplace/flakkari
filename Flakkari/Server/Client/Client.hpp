@@ -68,6 +68,8 @@ class Client {
          */
         [[nodiscard]] std::shared_ptr<Network::Address> getAddress() const { return _address; }
 
+        [[nodiscard]] unsigned int getId() const { return _address->getId(); }
+
     protected:
     private:
         std::chrono::steady_clock::time_point _lastActivity;

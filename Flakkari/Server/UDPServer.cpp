@@ -13,20 +13,24 @@ using namespace Flakkari;
 
 
 UDPServer::UDPServer(std::string ip, std::size_t port) :
-    _socket(Network::Socket(
+    _socket(std::make_shared<Network::Socket>(
         ip, port,
         Network::Address::IpType::IPv4,
         Network::Address::SocketType::UDP
     ))
 {
-    FLAKKARI_LOG_INFO(std::string(_socket));
-    _socket.bind();
+    FLAKKARI_LOG_INFO(std::string(*_socket));
+    _socket->bind();
 
     _io = std::make_unique<Network::PSELECT>();
-    _io->addSocket(_socket.getSocket());
+    _io->addSocket(_socket->getSocket());
     _io->addSocket(STDIN_FILENO);
 
     GameManager::getInstance();
+}
+
+UDPServer::~UDPServer() {
+    FLAKKARI_LOG_INFO("UDPServer is now stopped");
 }
 
 bool UDPServer::handleTimeout(int event)
@@ -50,7 +54,7 @@ bool UDPServer::handleInput(int fd)
 
 void UDPServer::handlePacket()
 {
-    auto packet = _socket.receiveFrom();
+    auto packet = _socket->receiveFrom();
     ClientManager::addClient(packet->first);
     ClientManager::checkInactiveClients();
 
@@ -89,7 +93,7 @@ void UDPServer::handlePacket()
     std::cout << "  CommandId: " << (int)sendHeader._commandId << std::endl;
     std::cout << "  ContentLength: " << (int)sendHeader._contentLength << std::endl;
 
-    _socket.sendTo(packet->first, buffer);
+    _socket->sendTo(packet->first, buffer);
 }
 
 void UDPServer::run()
