@@ -18,78 +18,106 @@
  * @date 2023-12-24
  **************************************************************************/
 
+
 #ifndef PACKET_HPP_
-#define PACKET_HPP_
+    #define PACKET_HPP_
 
 #include "Header.hpp"
+#include "Components.hpp"
 
 namespace Flakkari::Protocol::API {
 
-inline namespace V_1 {
-
-    PACKED_START
+inline namespace V_0 {
 
     /**
-     * @brief Flakkari Packet v1 (new packet)
+     * @brief Flakkari Packet v0 (new packet)
      *
+     * @tparam Id: The type of the command id.
      * @param header: The header of the packet.
      * @param payload: The payload of the packet.
      */
+    template<typename Id>
     struct Packet {
-        Header header;
+        Header<Id> header;
         Network::Buffer payload;
 
-        Packet(Network::Buffer data);
-        Packet(Header header, Network::Buffer payload);
-        Packet(Header header);
-        Packet() = default;
+        std::size_t size() const {
+            return sizeof(header) + payload.size();
+        }
+
+        friend std::ostream& operator<<(std::ostream& os, const Packet& packet)
+        {
+            os << "Packet<Id: "
+            << packet.header._commandId
+            << ", ContentLength: "
+            << packet.header._contentLength
+            << ", SequenceNumber: "
+            << packet.header._sequenceNumber
+            << ", Payload: "
+            << packet.payload
+            << ">";
+            return os;
+        }
+
+        template<typename DataType>
+        friend Packet<Id>& operator<<(Packet<Id>& packet, const DataType& data)
+        {
+            static_assert(std::is_trivially_copyable<DataType>::value, "DataType must be trivially copyable to be used in a packet.");
+            static_assert(std::is_standard_layout<DataType>::value, "DataType must be standard layout to be used in a packet.");
+
+            std::size_t size = packet.payload.size();
+            packet.payload.resize(size + sizeof(DataType));
+            std::memcpy(packet.payload.data() + size, &data, sizeof(DataType));
+            packet.header._contentLength = packet.payload.size();
+            return packet;
+        }
+
+        template<typename DataType>
+        friend Packet<Id>& operator>>(Packet<Id>& packet, DataType& data)
+        {
+            static_assert(std::is_trivially_copyable<DataType>::value, "DataType must be trivially copyable to be used in a packet.");
+            static_assert(std::is_standard_layout<DataType>::value, "DataType must be standard layout to be used in a packet.");
+
+            std::size_t size = packet.payload.size() - sizeof(DataType);
+            std::memcpy(&data, packet.payload.data() + size, sizeof(DataType));
+            packet.payload.resize(size);
+            packet.header._contentLength = packet.payload.size();
+            return packet;
+        }
 
         /**
-         * @brief Add payload to the packet.
+         * @brief Serialize the packet into a buffer to be sent over the network.
          *
-         * @tparam T  The type of the payload to add.
-         * @param payload  The payload to add.
+         * @return Network::Buffer  The buffer containing the serialized packet.
          */
-        template<typename T>
-        void addContent(T payload);
+        Network::Buffer serialize() const
+        {
+            Network::Buffer buffer(size());
+            std::memcpy(buffer.data(), &header, sizeof(header));
+            std::memcpy(buffer.data() + sizeof(header), payload.data(), payload.size());
+            return buffer;
+        }
 
         /**
-         * @brief Add a fragment to the packet.
+         * @brief Deserialize the buffer into a packet.
          *
-         * @param fragment  The fragment to add.
+         * @param buffer  The buffer containing the serialized packet.
+         * @return true  The packet has been deserialized successfully.
+         * @return false  The packet has not been deserialized successfully.
          */
-        void addFragment(Network::Buffer fragment);
-
-        /**
-         * @brief Delete payload from the packet.
-         *
-         * @tparam T  The type of the payload to delete.
-         * @param payload  The payload to delete.
-         */
-        template<typename T>
-        void deleteContent(T payload);
-
-        /**
-         * @brief Delete a fragment from the packet.
-         *
-         * @param fragment  The fragment to delete.
-         */
-        void deleteFragment(Network::Buffer fragment);
+        [[nodiscard]] bool deserialize(Network::Buffer buffer)
+        {
+            std::memcpy(&header, buffer.data(), sizeof(header));
+            if (header._priority >= Priority::MAX_PRIORITY)
+                return false;
+            if (header._apiVersion >= ApiVersion::MAX_VERSION)
+                return false;
+            if (header._contentLength > buffer.size() - sizeof(header))
+                return false;
+            payload = buffer.extractData(sizeof(header), header._contentLength);
+            return true;
+        }
     };
-
-    PACKED_END
-
-    void serializeHeader(Header header, Network::Buffer& buffer);
-
-    void serializeBuffer(Network::Buffer buffer, Network::Buffer& buffer2);
-
-    void serializePacket(Packet packet, Network::Buffer& buffer);
-
-    void deserializeHeader(Network::Buffer buffer, Header& header);
-
-    void deserializeBuffer(Network::Buffer buffer, Network::Buffer& buffer2);
-
-    void deserializePacket(Network::Buffer buffer, Packet& packet);
 
 } /* namespace V_1 */
 

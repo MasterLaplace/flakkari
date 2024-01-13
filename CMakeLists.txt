@@ -13,9 +13,6 @@ set(SOURCES
     Flakkari/Network/Socket.cpp
     Flakkari/Network/IOMultiplexer.cpp
 
-    Flakkari/Protocol/Header.cpp
-    Flakkari/Protocol/Packet.cpp
-
     Flakkari/Engine/Math/Vector.cpp
 
     Flakkari/Engine/EntityComponentSystem/Systems/Systems.cpp
@@ -43,6 +40,8 @@ set(HEADERS
     Flakkari/Network/PacketQueue.hpp
     Flakkari/Network/IOMultiplexer.hpp
 
+    Flakkari/Protocol/Commands.hpp
+    Flakkari/Protocol/Components.hpp
     Flakkari/Protocol/Header.hpp
     Flakkari/Protocol/Packet.hpp
 
@@ -81,6 +80,8 @@ set(HEADER_LIB_NETWORK
 )
 
 set(HEADER_LIB_PROTOCOL
+    Flakkari/Protocol/Commands.hpp
+    Flakkari/Protocol/Components.hpp
     Flakkari/Protocol/Header.hpp
     Flakkari/Protocol/Packet.hpp
 )
