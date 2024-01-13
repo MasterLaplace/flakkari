@@ -7,8 +7,8 @@
 ** Child
 */
 
-#ifndef CHILD_HPP_
-#define CHILD_HPP_
+#ifndef FLAKKARI_CHILD_HPP_
+#define FLAKKARI_CHILD_HPP_
 
 #include <string>
 #include <cstring>
@@ -40,4 +40,4 @@ struct Child {
 PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::Common
 
-#endif /* !CHILD_HPP_ */
+#endif /* !FLAKKARI_CHILD_HPP_ */

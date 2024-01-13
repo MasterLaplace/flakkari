@@ -7,8 +7,8 @@
 ** Movable
 */
 
-#ifndef MOVABLE_HPP_
-#define MOVABLE_HPP_
+#ifndef FLAKKARI_MOVABLE_HPP_
+#define FLAKKARI_MOVABLE_HPP_
 
 #include "../../../Math/Vector.hpp"
 
@@ -33,4 +33,4 @@ struct Movable {
 PACKED_END
 } // namespace Game::ECS::Components::_2D
 
-#endif /* !MOVABLE_HPP_ */
+#endif /* !FLAKKARI_MOVABLE_HPP_ */

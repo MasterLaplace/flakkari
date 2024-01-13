@@ -16,8 +16,8 @@
  **************************************************************************/
 
 
-#ifndef VECTOR_HPP_
-    #define VECTOR_HPP_
+#ifndef FLAKKARI_VECTOR_HPP_
+    #define FLAKKARI_VECTOR_HPP_
 
 #include <cmath>
 #include <iostream>
@@ -354,4 +354,4 @@ std::ostream &operator<<(std::ostream &os, const Vector<Type> &vector);
 
 } // namespace Flakkari::Engine::Math
 
-#endif /* !VECTOR_HPP_ */
+#endif /* !FLAKKARI_VECTOR_HPP_ */

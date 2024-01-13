@@ -13,8 +13,8 @@
  **************************************************************************/
 
 
-#ifndef REGISTRY_HPP_
-    #define REGISTRY_HPP_
+#ifndef FLAKKARI_REGISTRY_HPP_
+    #define FLAKKARI_REGISTRY_HPP_
 
 #include "SparseArrays.hpp"
 #include "Entity.hpp"
@@ -227,4 +227,4 @@ private:
 
 } // namespace Flakkari::Engine::ECS
 
-#endif /* !REGISTRY_HPP_ */
+#endif /* !FLAKKARI_REGISTRY_HPP_ */

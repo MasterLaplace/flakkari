@@ -7,8 +7,8 @@
 ** Id
 */
 
-#ifndef ID_HPP_
-#define ID_HPP_
+#ifndef FLAKKARI_ID_HPP_
+#define FLAKKARI_ID_HPP_
 
 #include <cstdint>
 
@@ -32,4 +32,4 @@ struct Id {
 PACKED_END
 } // namespace Engine::ECS::Components::Common
 
-#endif /* !ID_HPP_ */
+#endif /* !FLAKKARI_ID_HPP_ */

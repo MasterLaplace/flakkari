@@ -7,8 +7,8 @@
 ** Transform
 */
 
-#ifndef TRANSFORM_HPP_
-#define TRANSFORM_HPP_
+#ifndef FLAKKARI_TRANSFORM_HPP_
+#define FLAKKARI_TRANSFORM_HPP_
 
 #include "../../../Math/Vector.hpp"
 
@@ -32,4 +32,4 @@ struct Transform {
 PACKED_END
 } // namespace Game::ECS::Components::_2D
 
-#endif /* !TRANSFORM_HPP_ */
+#endif /* !FLAKKARI_TRANSFORM_HPP_ */

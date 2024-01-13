@@ -7,8 +7,8 @@
 ** Control
 */
 
-#ifndef CONTROL_HPP_
-#define CONTROL_HPP_
+#ifndef FLAKKARI_CONTROL_HPP_
+#define FLAKKARI_CONTROL_HPP_
 
 #include "../../../Math/Vector.hpp"
 
@@ -46,4 +46,4 @@ struct Control {
 PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::_2D
 
-#endif /* !CONTROL_HPP_ */
+#endif /* !FLAKKARI_CONTROL_HPP_ */

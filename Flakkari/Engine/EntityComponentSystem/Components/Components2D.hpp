@@ -13,12 +13,12 @@
  * @date 2023-01-06
  **************************************************************************/
 
-#ifndef COMPONENTS2D_HPP_
-#define COMPONENTS2D_HPP_
+#ifndef FLAKKARI_COMPONENTS2D_HPP_
+#define FLAKKARI_COMPONENTS2D_HPP_
 
 // #include "2D/Collider.hpp"      // Collider component (shape, position, rotation, scale)
 #include "2D/Control.hpp"       // Control component (up, down, left, right, shoot)
 #include "2D/Movable.hpp"       // Movable component (velocity, angularVelocity, acceleration, angularAcceleration)
 #include "2D/Transform.hpp"     // Transform component (position, rotation, scale)
 
-#endif /* !COMPONENTS2D_HPP_ */
+#endif /* !FLAKKARI_COMPONENTS2D_HPP_ */

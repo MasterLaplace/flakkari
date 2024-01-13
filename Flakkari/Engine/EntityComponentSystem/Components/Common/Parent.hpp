@@ -7,8 +7,8 @@
 ** Parent
 */
 
-#ifndef PARENT_HPP_
-#define PARENT_HPP_
+#ifndef FLAKKARI_PARENT_HPP_
+#define FLAKKARI_PARENT_HPP_
 
 #include <cstddef>
 
@@ -36,4 +36,4 @@ struct Parent {
 PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::Common
 
-#endif /* !PARENT_HPP_ */
+#endif /* !FLAKKARI_PARENT_HPP_ */

@@ -7,8 +7,8 @@
 ** Tag
 */
 
-#ifndef TAG_HPP_
-#define TAG_HPP_
+#ifndef FLAKKARI_TAG_HPP_
+#define FLAKKARI_TAG_HPP_
 
 #include <string>
 #include <cstring>
@@ -39,4 +39,4 @@ struct Tag {
 PACKED_END
 } // namespace Game::ECS::Components::Common
 
-#endif /* !TAG_HPP_ */
+#endif /* !FLAKKARI_TAG_HPP_ */

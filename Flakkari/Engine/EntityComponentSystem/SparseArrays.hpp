@@ -13,8 +13,8 @@
  **************************************************************************/
 
 
-#ifndef SPARSEARRAYS_HPP_
-    #define SPARSEARRAYS_HPP_
+#ifndef FLAKKARI_SPARSEARRAYS_HPP_
+    #define FLAKKARI_SPARSEARRAYS_HPP_
 
 #include <vector>
 #include <optional>
@@ -194,4 +194,4 @@ private:
 
 } // namespace Flakkari::Engine::ECS
 
-#endif /* !SPARSEARRAYS_HPP_ */
+#endif /* !FLAKKARI_SPARSEARRAYS_HPP_ */

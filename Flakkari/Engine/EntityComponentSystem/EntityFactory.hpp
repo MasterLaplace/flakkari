@@ -15,8 +15,8 @@
  **************************************************************************/
 
 
-#ifndef ENTITYFACTORY_HPP_
-    #define ENTITYFACTORY_HPP_
+#ifndef FLAKKARI_ENTITYFACTORY_HPP_
+    #define FLAKKARI_ENTITYFACTORY_HPP_
 
 #include <nlohmann/json.hpp>
 
@@ -151,4 +151,4 @@ public:
 
 } // namespace Flakkari::Engine::ECS
 
-#endif /* !ENTITYFACTORY_HPP_ */
+#endif /* !FLAKKARI_ENTITYFACTORY_HPP_ */

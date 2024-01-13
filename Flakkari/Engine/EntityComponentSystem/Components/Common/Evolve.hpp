@@ -7,8 +7,8 @@
 ** Evolve
 */
 
-#ifndef EVOLVE_HPP_
-#define EVOLVE_HPP_
+#ifndef FLAKKARI_EVOLVE_HPP_
+#define FLAKKARI_EVOLVE_HPP_
 
 #include <string>
 #include <cstring>
@@ -40,4 +40,4 @@ struct Evolve {
 PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::Common
 
-#endif /* !EVOLVE_HPP_ */
+#endif /* !FLAKKARI_EVOLVE_HPP_ */

@@ -7,8 +7,8 @@
 ** Template
 */
 
-#ifndef TEMPLATE_HPP_
-#define TEMPLATE_HPP_
+#ifndef FLAKKARI_TEMPLATE_HPP_
+#define FLAKKARI_TEMPLATE_HPP_
 
 #include <string>
 #include <cstring>
@@ -34,4 +34,4 @@ struct Template {
 PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::Common
 
-#endif /* !TEMPLATE_HPP_ */
+#endif /* !FLAKKARI_TEMPLATE_HPP_ */
