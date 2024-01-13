@@ -59,41 +59,27 @@ void UDPServer::handlePacket()
     ClientManager::checkInactiveClients();
 
     // parse packet
-    Protocol::API::Header header;
-    std::copy(packet->second.begin(), packet->second.begin() + sizeof(header), reinterpret_cast<char*>(&header));
-
-    std::cout << (*packet->first.get()); // Address
-    std::cout << " : ";
-    std::cout << packet->second << std::endl; // Buffer
+    Protocol::API::Packet<Protocol::API::CommandId> parsedPacket;
+    if (parsedPacket.deserialize(packet->second) == false)
+        FLAKKARI_LOG_WARNING("Invalid packet received");
 
     std::cout << "RECV Header: " << std::endl;
-    std::cout << "  Priority: " << (int)header._priority << std::endl;
-    std::cout << "  ApiVersion: " << (int)header._apiVersion << std::endl;
-    std::cout << "  CommandId: " << (int)header._commandId << std::endl;
-    std::cout << "  ContentLength: " << (int)header._contentLength << std::endl;
+    std::cout << "  Priority: " << (int)parsedPacket.header._priority << std::endl;
+    std::cout << "  ApiVersion: " << (int)parsedPacket.header._apiVersion << std::endl;
+    std::cout << "  CommandId: " << (int)parsedPacket.header._commandId << std::endl;
+    std::cout << "  ContentLength: " << (int)parsedPacket.header._contentLength << std::endl;
 
     // send to all clients
-    Protocol::API::Header sendHeader(
-        Protocol::API::Priority::LOW,
-        Protocol::API::ApiVersion::V_1,
-        Protocol::API::FlakkariEventId::REP_ENTITY_SPAWN,
-        0
-    );
-
-    Protocol::API::PlayerPacket playerPacket;
-
-    sendHeader._contentLength = sizeof(playerPacket);
-
-    Network::Buffer buffer(sizeof(sendHeader) + sizeof(playerPacket));
-    std::copy(reinterpret_cast<const char*>(&sendHeader), reinterpret_cast<const char*>(&sendHeader) + sizeof(sendHeader), buffer.begin());
+    Protocol::API::Packet<Protocol::API::CommandId> sendHeader;
+    sendHeader.header._commandId = Protocol::API::CommandId::REP_CONNECT;
 
     std::cout << "SEND Header: " << std::endl;
-    std::cout << "  Priority: " << (int)sendHeader._priority << std::endl;
-    std::cout << "  ApiVersion: " << (int)sendHeader._apiVersion << std::endl;
-    std::cout << "  CommandId: " << (int)sendHeader._commandId << std::endl;
-    std::cout << "  ContentLength: " << (int)sendHeader._contentLength << std::endl;
+    std::cout << "  Priority: " << (int)sendHeader.header._priority << std::endl;
+    std::cout << "  ApiVersion: " << (int)sendHeader.header._apiVersion << std::endl;
+    std::cout << "  CommandId: " << (int)sendHeader.header._commandId << std::endl;
+    std::cout << "  ContentLength: " << (int)sendHeader.header._contentLength << std::endl;
 
-    _socket->sendTo(packet->first, buffer);
+    _socket->sendTo(packet->first, sendHeader.serialize());
 }
 
 void UDPServer::run()

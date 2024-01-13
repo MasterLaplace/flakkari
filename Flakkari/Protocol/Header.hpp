@@ -65,7 +65,7 @@ inline namespace V_0 {
         Priority _priority : 4 = Priority::LOW;
         ApiVersion _apiVersion : 4 = ApiVersion::V_0;
         Id _commandId;
-        ushort _contentLength;
+        ushort _contentLength = 0;
         uint _sequenceNumber = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::system_clock::now().time_since_epoch()).count();
     };
