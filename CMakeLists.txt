@@ -54,8 +54,10 @@ set(HEADERS
     Flakkari/Engine/EntityComponentSystem/Entity.hpp
     Flakkari/Engine/EntityComponentSystem/SparseArrays.hpp
     Flakkari/Engine/EntityComponentSystem/Registry.hpp
+    Flakkari/Engine/EntityComponentSystem/EntityFactory.hpp
 
     Flakkari/Server/UDPServer.hpp
+
     Flakkari/Server/Client/Client.hpp
     Flakkari/Server/Client/ClientManager.hpp
 
