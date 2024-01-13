@@ -41,7 +41,7 @@ do {                            \
 
 #else
 
-#define PACKED(name, body)  \
+#define __PACKED(name, body)\
 do {                        \
     PACKED_START            \
     struct name             \

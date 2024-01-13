@@ -30,7 +30,7 @@ const std::string Logger::get_current_time() noexcept
 }
 
 #ifdef _WIN32
-void setColor(int color) {
+void setColor(WORD color) noexcept {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, color);
 }
