@@ -27,7 +27,7 @@ inline namespace V_0 {
 
     enum class ComponentId : uint8_t {
         // 0 - 9: 2D components
-        CONTOL = 0,
+        CONTROL = 0,
         MOVABLE = 1,
         TRANSFORM = 2,
         // 10 - 19: Common components

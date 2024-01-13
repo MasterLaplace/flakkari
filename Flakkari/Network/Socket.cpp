@@ -266,8 +266,7 @@ void Socket::sendTo(const std::shared_ptr<Address> &address, const byte *data, c
         }
     #else
         if (::sendto(_socket, data, size, flags, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
-            FLAKKARI_LOG_ERROR("Failed to send \""+ std::string(data, data + size) +"\" to \""+ address->toString().value_or("No address") +"\", error: "+ STD_ERROR
-            );
+            FLAKKARI_LOG_ERROR("Failed to send \""+ std::string(data, data + size) +"\" to \""+ address->toString().value_or("No address") +"\", error: "+ STD_ERROR);
             return;
         }
     #endif
