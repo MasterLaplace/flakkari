@@ -44,6 +44,7 @@ set(HEADERS
     Flakkari/Protocol/Components.hpp
     Flakkari/Protocol/Header.hpp
     Flakkari/Protocol/Packet.hpp
+    Flakkari/Protocol/PacketFactory.hpp
 
     Flakkari/Engine/Math/Vector.hpp
 
@@ -60,7 +61,7 @@ set(HEADERS
 
     Flakkari/Server/Game/Game.hpp
     Flakkari/Server/Game/GameManager.hpp
-    Flakkari/Server/Game/ResourceManager.cpp
+    Flakkari/Server/Game/ResourceManager.hpp
 
     Flakkari/Server/Internals/CommandManager.hpp
 )
@@ -84,6 +85,7 @@ set(HEADER_LIB_PROTOCOL
     Flakkari/Protocol/Components.hpp
     Flakkari/Protocol/Header.hpp
     Flakkari/Protocol/Packet.hpp
+    Flakkari/Protocol/PacketFactory.hpp
 )
 
 # CMake Modules:
