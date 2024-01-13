@@ -26,6 +26,7 @@ UDPServer::UDPServer(std::string ip, std::size_t port) :
     _io->addSocket(_socket->getSocket());
     _io->addSocket(STDIN_FILENO);
 
+    ClientManager::setSocket(_socket);
     GameManager::getInstance();
 }
 

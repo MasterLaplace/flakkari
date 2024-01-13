@@ -26,6 +26,11 @@
 #include <nlohmann/json.hpp>
 
 #include "Engine/EntityComponentSystem/Systems/Systems.hpp"
+#include "Engine/EntityComponentSystem/EntityFactory.hpp"
+
+#include "Protocol/PacketFactory.hpp"
+
+#include "ResourceManager.hpp"
 
 namespace Flakkari {
 
@@ -87,6 +92,22 @@ class Game {
          * @param name  Name of the scene to load.
          */
         void loadScene(const std::string &name);
+
+    public: // Actions
+        void sendOnSameScene(const std::string &sceneName, const Network::Buffer &message);
+
+        /**
+         * @brief Check if a player is disconnected.
+         *
+         */
+        void checkDisconnect();
+
+        /**
+         * @brief Empty the incoming packets of the players and update the
+         *        game with the new packets.
+         *
+         */
+        void updateIncomingPackets(unsigned char maxMessagePerFrame = 10);
 
         /**
          * @brief Update the game. This function is called every frame.

@@ -98,6 +98,51 @@ void Game::loadScene(const std::string &sceneName)
     }
 }
 
+void Game::sendOnSameScene(const std::string &sceneName, const Network::Buffer &message)
+{
+    for (auto &player : _players) {
+        if (!player || !player->isConnected())
+            continue;
+        if (player->getSceneName() != sceneName)
+            continue;
+        ClientManager::sendPacketToClient(player->getAddress(), message);
+    }
+}
+
+void Game::checkDisconnect()
+{
+    for (auto &player : _players) {
+        if (!player || player->isConnected())
+            continue;
+        Protocol::API::Packet<Protocol::API::CommandId> packet;
+        packet.header._commandId = Protocol::API::CommandId::REQ_ENTITY_DESTROY;
+        packet << player->getSceneName().size();
+        packet << player->getSceneName().c_str();
+        packet << player->getEntity();
+
+        sendOnSameScene(player->getSceneName(), packet.serialize());
+
+        _scenes[player->getSceneName()].kill_entity(player->getEntity());
+        removePlayer(player);
+    }
+}
+
+void Game::updateIncomingPackets(unsigned char maxMessagePerFrame)
+{
+    for (auto &player : _players) {
+        if (!player->isConnected())
+            continue;
+        auto &packets = player->_receiveQueue;
+        auto messageCount = maxMessagePerFrame;
+
+        while (!packets.empty() && messageCount > 0) {
+            Protocol::API::Packet<Protocol::API::CommandId> p;
+            auto packet = packets.pop_front();
+            messageCount--;
+        }
+    }
+}
+
 void Game::update()
 {
     auto now = std::chrono::steady_clock::now();
@@ -111,6 +156,7 @@ void Game::update()
 void Game::start()
 {
     _running = true;
+    _time = std::chrono::steady_clock::now();
     _thread = std::thread(&Game::run, this);
     FLAKKARI_LOG_INFO("game \"" + _name + "\" is now running");
 }
@@ -127,6 +173,15 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
         return false;
     if (_players.size() >= (*_config)["maxPlayers"] || !player->isConnected())
         return false;
+
+    auto sceneGame = (*_config)["startGame"];
+    auto &registry = _scenes[sceneGame];
+
+    player->setSceneName(sceneGame);
+
+    Engine::ECS::Entity newEntity = registry.spawn_entity();
+    player->setEntity(newEntity);
+
     _players.push_back(player);
     FLAKKARI_LOG_INFO("client \""+ std::string(*player->getAddress()) +"\" added to game \""+ _name +"\"");
     return true;

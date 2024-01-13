@@ -16,7 +16,7 @@
 #ifndef CLIENTMANAGER_HPP_
 #define CLIENTMANAGER_HPP_
 
-#include "Network/Address.hpp"
+#include "Network/Socket.hpp"
 #include "Client.hpp"
 
 #include <unordered_map>
@@ -51,7 +51,9 @@ class ClientManager {
         using id_t = short;
 
     public:
+        std::unordered_map<std::string /*ip*/, std::shared_ptr<Client>> _clients;
         std::vector<std::string /*ip*/> _bannedClients;
+        std::shared_ptr<Network::Socket> _socket;
 
     public:
         ClientManager(const ClientManager &) = delete;
@@ -70,6 +72,8 @@ class ClientManager {
          *
          */
         ~ClientManager() = default;
+
+        static void setSocket(std::shared_ptr<Network::Socket> socket);
 
         /**
          * @brief Get the instance of the client manager
@@ -93,6 +97,15 @@ class ClientManager {
         static void removeClient(std::shared_ptr<Network::Address> client);
 
         /**
+         * @brief Ban a client from the server
+         *
+         * @param client  The client's address
+         */
+        static void banClient(std::shared_ptr<Network::Address> client);
+
+        [[nodiscard]] static bool isBanned(std::shared_ptr<Network::Address> client);
+
+        /**
          * @brief Check if the clients are still connected to the server
          * and remove the inactive clients from the client manager
          * (inactive clients are clients that didn't send any packet to the server
@@ -102,6 +115,37 @@ class ClientManager {
          * @see Client::keepAlive()
          */
         static void checkInactiveClients();
+
+        /**
+         * @brief Send a packet to a client
+         *
+         * @param client  The client's address
+         * @param packet  The packet to send
+         */
+        static void sendPacketToClient(std::shared_ptr<Network::Address> client, const Network::Buffer &packet);
+
+        /**
+         * @brief Send a packet to all clients
+         *
+         * @param packet  The packet to send
+         */
+        static void sendPacketToAllClients(const Network::Buffer &packet);
+
+        /**
+         * @brief Send a packet to all clients except one
+         *
+         * @param client  The client's address
+         * @param packet  The packet to send
+         */
+        static void sendPacketToAllClientsExcept(std::shared_ptr<Network::Address> client, const Network::Buffer &packet);
+
+        /**
+         * @brief Receive a packet from a client
+         *
+         * @param client  The client's address
+         * @param packet  The packet received
+         */
+        static void receivePacketFromClient(std::shared_ptr<Network::Address> client, const Network::Buffer &packet);
 
         /**
          * @brief Get the Client object
@@ -114,26 +158,26 @@ class ClientManager {
         /**
          * @brief Get the Client object
          *
-         * @param ip  The client's ip address and port
+         * @param id  The client's id
          * @return std::shared_ptr<Client>  The client object
          */
-        static std::shared_ptr<Client> getClient(std::string ip);
+        static std::shared_ptr<Client> getClient(std::string id);
 
         /**
          * @brief Get the Address object
          *
-         * @param ip  The client's ip address and port
+         * @param id The client's id
          * @return std::shared_ptr<Network::Address>  The client's address
          */
-        static std::shared_ptr<Network::Address> getAddress(std::string ip);
+        static std::shared_ptr<Network::Address> getAddress(std::string id);
 
         /**
          * @brief Get the client object from the client manager
          *
-         * @param ip  The client's ip address and port
+         * @param id  The client's id
          * @return std::shared_ptr<Client>  The client object
          */
-        std::shared_ptr<Client> operator[](std::string ip);
+        std::shared_ptr<Client> operator[](std::string id);
 };
 
 } /* namespace Flakkari */

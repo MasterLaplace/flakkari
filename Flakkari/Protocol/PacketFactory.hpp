@@ -44,26 +44,26 @@ public:
         if (childEntity.has_value()) {
             packet << Protocol::API::ComponentId::CHILD;
             packet << childEntity->size();
-            packet << childEntity->name.c_str();
+            packet << childEntity->name;
         }
 
-        auto evolve = registry.getComponents<Engine::ECS::Components::Common::Evolve>();
-        auto evolveEntity = evolve[entity];
+        // auto evolve = registry.getComponents<Engine::ECS::Components::Common::Evolve>();
+        // auto evolveEntity = evolve[entity];
 
-        if (evolveEntity.has_value()) {
-            packet << Protocol::API::ComponentId::EVOLVE;
-            packet << evolveEntity->size();
-            packet << evolveEntity->name.c_str();
-        }
+        // if (evolveEntity.has_value()) {
+        //     packet << Protocol::API::ComponentId::EVOLVE;
+        //     packet << evolveEntity->size();
+        //     packet << evolveEntity->name;
+        // }
 
-        auto id = registry.getComponents<Engine::ECS::Components::Common::Id>();
-        auto idEntity = id[entity];
+        // auto id = registry.getComponents<Engine::ECS::Components::Common::Id>();
+        // auto idEntity = id[entity];
 
-        if (idEntity.has_value()) {
-            packet << Protocol::API::ComponentId::ID;
-            packet << idEntity->size();
-            packet << idEntity->id;
-        }
+        // if (idEntity.has_value()) {
+        //     packet << Protocol::API::ComponentId::ID;
+        //     packet << idEntity->size();
+        //     packet << idEntity->id;
+        // }
 
         auto parent = registry.getComponents<Engine::ECS::Components::Common::Parent>();
         auto parentEntity = parent[entity];
@@ -71,7 +71,7 @@ public:
         if (parentEntity.has_value()) {
             packet << Protocol::API::ComponentId::PARENT;
             packet << parentEntity->size();
-            packet << parentEntity->name.c_str();
+            packet << parentEntity->entity;
         }
 
         auto tag = registry.getComponents<Engine::ECS::Components::Common::Tag>();
@@ -80,7 +80,7 @@ public:
         if (tagEntity.has_value()) {
             packet << Protocol::API::ComponentId::TAG;
             packet << tagEntity->size();
-            packet << tagEntity->tag.c_str();
+            packet << tagEntity->tag;
         }
 
         auto name = registry.getComponents<Engine::ECS::Components::Common::Template>();
@@ -89,7 +89,7 @@ public:
         if (nameEntity.has_value()) {
             packet << Protocol::API::ComponentId::TEMPLATE;
             packet << nameEntity->size();
-            packet << nameEntity->name.c_str();
+            packet << nameEntity->name;
         }
     }
 
@@ -105,7 +105,7 @@ public:
     static void add2dToPacketByEntity (
         Protocol::API::Packet<Id> &packet, Engine::ECS::Registry &registry, Engine::ECS::Entity entity
     ) {
-        auto transform = r.getComponents<ECS::Components::_2D::Transform>();
+        auto transform = registry.getComponents<Engine::ECS::Components::_2D::Transform>();
         auto pos = transform[entity];
 
         if (pos.has_value()) {
@@ -118,7 +118,7 @@ public:
             packet << pos->scale.y;
         }
 
-        auto movable = r.getComponents<ECS::Components::_2D::Movable>();
+        auto movable = registry.getComponents<Engine::ECS::Components::_2D::Movable>();
         auto vel = movable[entity];
 
         if (vel.has_value()) {
@@ -130,7 +130,7 @@ public:
             packet << vel->acceleration.y;
         }
 
-        auto control = r.getComponents<ECS::Components::_2D::Control>();
+        auto control = registry.getComponents<Engine::ECS::Components::_2D::Control>();
         auto ctrl = control[entity];
 
         if (ctrl.has_value()) {
