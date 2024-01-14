@@ -46,7 +46,15 @@ bool CommandManager::handlePasswordCommand(const std::string &input)
     if (!std::regex_match(input, PASSWORD_REGEX))
         return false;
 
-    const char *password = std::getenv("FLAKKARI_PASSWORD");
+    #if !defined(_WIN32) && !defined(_WIN64)  && !defined( MSVC) && !defined(_MSC_VER)
+        const char *password = std::getenv("FLAKKARI_PASSWORD");
+    #else
+        char *password;
+        size_t len;
+        errno_t err = _dupenv_s(&password, &len, "FLAKKARI_PASSWORD");
+        if (err)
+            password = nullptr;
+    #endif
 
     if (password == nullptr || !*password) {
         FLAKKARI_LOG_WARNING("No password set: please set FLAKKARI_PASSWORD environment variable");

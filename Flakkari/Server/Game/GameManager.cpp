@@ -10,6 +10,8 @@
 #include "GameManager.hpp"
 #include "../Client/Client.hpp"
 
+#include <future>
+
 namespace Flakkari {
 
 std::shared_ptr<GameManager> GameManager::_instance = nullptr;
@@ -156,9 +158,9 @@ void GameManager::addClientToGame(std::string gameName, std::shared_ptr<Client> 
 
     if (gameInstance.back()->addPlayer(client)) {
         if (lobby == "Matchmaking" && gameInstance.back()->getPlayers().size() >= minPlayers && !gameInstance.back()->isRunning())
-            gameInstance.back()->start();
+            (void)std::async(std::launch::async, &Game::start, gameInstance.back());
         if (lobby == "OpenWorld" && !gameInstance.back()->isRunning())
-            gameInstance.back()->start();
+            (void)std::async(std::launch::async, &Game::start, gameInstance.back());
         return;
     }
     FLAKKARI_LOG_ERROR("could not add client \""+ STR_ADDRESS +"\" to game \"" + gameName + "\"");

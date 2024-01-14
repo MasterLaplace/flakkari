@@ -35,7 +35,10 @@ const byte *Buffer::getData() const {
     return data();
 }
 
-Buffer Buffer::extractData(std::size_t offset, std::size_t length) const {
+Buffer Buffer::extractData(std::size_t offset, std::size_t length) const
+{
+    if (offset + length > size())
+        throw std::out_of_range("Buffer::extractData: offset + length > size()");
     return Buffer(begin() + offset, begin() + offset + length);
 }
 

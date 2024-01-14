@@ -220,7 +220,7 @@ Table of Contents
 
 3.1 Header Structure
 
-   The header structure is defined by the Flakkari::Protocol::API::Header struct
+   The header structure is defined by the Flakkari::Protocol::Header struct
    and consists of the following fields:
 
       _priority: 4 bits - Represents the priority of the message in the queue
@@ -272,9 +272,9 @@ Table of Contents
 
    '''cpp
 
-   Flakkari::Protocol::API::Header header(
-      Flakkari::Protocol::API::Priority::LOW,
-      Flakkari::Protocol::API::ApiVersion::V_1,
+   Flakkari::Protocol::Header header(
+      Flakkari::Protocol::Priority::LOW,
+      Flakkari::Protocol::ApiVersion::V_1,
       1, 0
    );
 

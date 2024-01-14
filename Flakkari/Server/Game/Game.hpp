@@ -25,19 +25,26 @@
 #include <thread>
 #include <nlohmann/json.hpp>
 
-#include "Engine/EntityComponentSystem/Registry.hpp"
 #include "Engine/EntityComponentSystem/Systems/Systems.hpp"
+#include "Engine/EntityComponentSystem/EntityFactory.hpp"
+
+#include "Protocol/PacketFactory.hpp"
+
+#include "ResourceManager.hpp"
 
 namespace Flakkari {
 
     class Client;
 
-using nl_entity = nlohmann::json_abi_v3_11_3::detail::iteration_proxy<nlohmann::json_abi_v3_11_3::detail::iter_impl<nlohmann::json_abi_v3_11_3::json>>;
-using nl_template = nlohmann::json_abi_v3_11_3::basic_json<std::map, std::vector, std::string, bool, int64_t, uint64_t, double, std::allocator, nlohmann::json_abi_v3_11_3::adl_serializer, std::vector<uint8_t, std::allocator<uint8_t>>, void>;
-using nl_component = nlohmann::json_abi_v3_11_3::json ;
+using nl_entity = nlohmann::detail::iteration_proxy<nlohmann::detail::iter_impl<nlohmann::json>>;
+using nl_template = nlohmann::basic_json<std::map, std::vector, std::string, bool, int64_t, uint64_t, double, std::allocator, nlohmann::adl_serializer, std::vector<uint8_t, std::allocator<uint8_t>>, void>;
+using nl_component = nlohmann::json;
 
 class Game {
     public:
+        friend class Client;
+
+    public: // Constructors/Destructors
         /**
          * @brief Construct a new Game object and load the config file
          *        of the game.
@@ -48,6 +55,7 @@ class Game {
         Game(const std::string &name, std::shared_ptr<nlohmann::json> config);
         ~Game();
 
+    public: // Loaders
         /**
          * @brief Add all the systems of the game to the registry.
          *
@@ -63,7 +71,9 @@ class Game {
          * @param componentInfo  Info of the components to add.
          * @param newEntity  Entity to add the components to.
          */
-        void loadComponents(Engine::ECS::Registry &registry, const nl_component &componentInfo, Engine::ECS::Entity newEntity);
+        void loadComponents (
+            Engine::ECS::Registry &registry, const nl_component &componentInfo, Engine::ECS::Entity newEntity
+        );
 
         /**
          * @brief Add all the entities of the game to the registry.
@@ -72,7 +82,9 @@ class Game {
          * @param entity  Entity to add to the registry.
          * @param templates  Templates of the game.
          */
-        void loadEntityFromTemplate(Engine::ECS::Registry &registry, const nl_entity &entity, const nl_template &templates);
+        void loadEntityFromTemplate (
+            Engine::ECS::Registry &registry, const nl_entity &entity, const nl_template &templates
+        );
 
         /**
          * @brief Load a scene from the game.
@@ -80,6 +92,43 @@ class Game {
          * @param name  Name of the scene to load.
          */
         void loadScene(const std::string &name);
+
+    public: // Actions
+        void sendOnSameScene(const std::string &sceneName, const Network::Buffer &message);
+
+        /**
+         * @brief Check if a player is disconnected.
+         *
+         */
+        void checkDisconnect();
+
+        /**
+         * @brief Send a packet to a player.
+         *
+         * @param player  Player to send the packet to.
+         * @param pos  Position of the player.
+         * @param vel  Velocity of the player.
+         */
+        void sendUpdatePosition (
+            std::shared_ptr<Client> player,
+            Engine::ECS::Components::_2D::Transform pos,
+            Engine::ECS::Components::_2D::Movable vel
+        );
+
+        /**
+         * @brief Handle an event from a player.
+         *
+         * @param player  Player that sent the event.
+         * @param packet  Packet containing the event.
+         */
+        void handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol::CommandId> packet);
+
+        /**
+         * @brief Empty the incoming packets of the players and update the
+         *        game with the new packets.
+         *
+         */
+        void updateIncomingPackets(unsigned char maxMessagePerFrame = 10);
 
         /**
          * @brief Update the game. This function is called every frame.
@@ -117,7 +166,7 @@ class Game {
          * @return true  Player removed successfully
          * @return false  Player not removed
          */
-        [[nodiscard]] bool removePlayer(std::shared_ptr<Client> player);
+        bool removePlayer(std::shared_ptr<Client> player);
 
         /**
          * @brief Get if the game is running.
@@ -127,6 +176,7 @@ class Game {
          */
         [[nodiscard]] bool isRunning() const;
 
+    public: // Getters
         /**
          * @brief Get the Name object (name of the game).
          *

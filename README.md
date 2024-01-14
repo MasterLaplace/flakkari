@@ -13,10 +13,19 @@
 </p>
 <h3 align="center">🌐 Supported Platforms</h3>
 <p align="center">
-    <img src="https://img.shields.io/badge/Linux-blue?style=for-the-badge" alt="Linux"> &#xa0; | &#xa0;
-    <img src="https://img.shields.io/badge/Windows-blue?style=for-the-badge" alt="Windows"> &#xa0; | &#xa0;
-    <img src="https://img.shields.io/badge/MacOS-blue?style=for-the-badge" alt="MacOS"> &#xa0; | &#xa0;
-    <img src="https://img.shields.io/badge/FreeBSD-blue?style=for-the-badge" alt="FreeBSD">
+    <img
+        src="https://img.shields.io/badge/Linux-blue?style=for-the-badge"
+        alt="Linux"
+        href="https://github.com/MasterLaplace/Flakkari/releases/download/v0.2.0/r-type_server"
+    > &#xa0; | &#xa0;
+    <img
+        src="https://img.shields.io/badge/Windows-blue?style=for-the-badge"
+        alt="Windows"
+    > &#xa0; | &#xa0;
+    <img
+        src="https://img.shields.io/badge/MacOS-blue?style=for-the-badge"
+        alt="MacOS"
+    > &#xa0; | &#xa0;
 </p>
 <h3 align="center">📡 Supported Protocol</h3>
 <p align="center">
@@ -111,7 +120,7 @@ $ docker --version
 > Docker version 24.0.7, build afdd53b
 
 # build docker image
-$ docker build -t Flakkari .
+$ docker build -t flakkari .
 
 # run docker image
 $ docker run Flakkari -p 4242:4242

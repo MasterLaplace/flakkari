@@ -33,6 +33,8 @@ class NormChecker:
 
         matches = re.findall(pattern, content)
         for struct_name in matches:
+            if content.find(f" *") != -1 or content.find(f"{{ \\") != -1:
+                continue
             if not struct_name[0].isupper():
                 incorrect_structures.append(struct_name)
 

@@ -13,8 +13,8 @@
  * @date 2023-01-06
  **************************************************************************/
 
-#ifndef SYSTEMS_HPP_
-#define SYSTEMS_HPP_
+#ifndef FLAKKARI_SYSTEMS_HPP_
+#define FLAKKARI_SYSTEMS_HPP_
 
 #include "../Registry.hpp"
 #include "../Components/Components2D.hpp"
@@ -37,4 +37,4 @@ void position(Registry &r, float deltaTime);
 
 } // namespace Flakkari::Engine::ECS::Systems
 
-#endif /* !SYSTEMS_HPP_ */
+#endif /* !FLAKKARI_SYSTEMS_HPP_ */

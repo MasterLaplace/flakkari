@@ -13,8 +13,8 @@
  **************************************************************************/
 
 
-#ifndef REGISTRY_HPP_
-    #define REGISTRY_HPP_
+#ifndef FLAKKARI_REGISTRY_HPP_
+    #define FLAKKARI_REGISTRY_HPP_
 
 #include "SparseArrays.hpp"
 #include "Entity.hpp"
@@ -109,6 +109,19 @@ public:
     template <typename Component>
     typename SparseArrays<Component>::reference_type add_component(const entity_type &to, Component &&c) {
         return getComponents<Component>().insert_at(to, std::forward<Component>(c));
+    }
+
+    /**
+     * @brief Get the component from an entity.
+     *
+     * @tparam Component  The component to get.
+     * @param to  The entity to get the component from.
+     * @param c  The component to get.
+     * @return SparseArrays<Component>::reference_type  The component.
+     */
+    template <typename Component>
+    typename SparseArrays<Component>::reference_type add_component(const entity_type &to, const Component &c) {
+        return getComponents<Component>().insert_at(to, c);
     }
 
     /**
@@ -214,4 +227,4 @@ private:
 
 } // namespace Flakkari::Engine::ECS
 
-#endif /* !REGISTRY_HPP_ */
+#endif /* !FLAKKARI_REGISTRY_HPP_ */

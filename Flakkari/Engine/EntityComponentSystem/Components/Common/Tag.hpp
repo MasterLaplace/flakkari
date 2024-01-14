@@ -7,12 +7,16 @@
 ** Tag
 */
 
-#ifndef TAG_HPP_
-#define TAG_HPP_
+#ifndef FLAKKARI_TAG_HPP_
+#define FLAKKARI_TAG_HPP_
 
 #include <string>
+#include <cstring>
+
+#include "Network/Packed.hpp"
 
 namespace Flakkari::Engine::ECS::Components::Common {
+PACKED_START
 
 /**
  * @brief  Tag component for ECS entities that have a script attached to them
@@ -20,13 +24,19 @@ namespace Flakkari::Engine::ECS::Components::Common {
  * @details This component is used to store the path to the script that will be executed
  */
 struct Tag {
-    std::string tag;
+    const char *tag;
 
     Tag() : tag("") {}
-    Tag(const std::string &tag) : tag(tag) {}
+    Tag(const std::string &ntag) : tag(ntag.c_str()) {}
+    Tag(const char *ntag) : tag(ntag) {}
     Tag(const Tag &other) : tag(other.tag) {}
+
+    std::size_t size() const {
+        return std::strlen(tag);
+    }
 };
 
+PACKED_END
 } // namespace Game::ECS::Components::Common
 
-#endif /* !TAG_HPP_ */
+#endif /* !FLAKKARI_TAG_HPP_ */

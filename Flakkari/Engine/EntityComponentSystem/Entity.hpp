@@ -13,10 +13,11 @@
  **************************************************************************/
 
 
-#ifndef ENTITY_HPP_
-    #define ENTITY_HPP_
+#ifndef FLAKKARI_ENTITY_HPP_
+    #define FLAKKARI_ENTITY_HPP_
 
 #include <cstddef>
+#include <cstdint>
 
 namespace Flakkari::Engine::ECS {
 
@@ -41,4 +42,4 @@ private:
 
 } // namespace Flakkari::Engine::ECS
 
-#endif /* !ENTITY_HPP_ */
+#endif /* !FLAKKARI_ENTITY_HPP_ */

@@ -92,7 +92,9 @@ Address::Address(const sockaddr_storage &clientAddr, SocketType socket_type, IpT
 
     addrinfo *result = nullptr;
     const char *name = inet_ntoa(((sockaddr_in *)&clientAddr)->sin_addr);
-    const char *service = std::to_string(ntohs(((sockaddr_in *)&clientAddr)->sin_port)).c_str();
+
+    const std::string serviceStr = std::to_string(ntohs(((sockaddr_in *)&clientAddr)->sin_port));
+    const char *service = serviceStr.c_str();
 
     if (getaddrinfo(name, service, &hints, &result) != 0) {
         FLAKKARI_LOG_ERROR("getaddrinfo() failed");
@@ -116,7 +118,19 @@ std::optional<std::string> Address::toString() const
         return {};
     }
     return std::string(host) + ":" + std::string(service);
-};
+}
+
+std::optional<std::string> Address::getIp() const
+{
+    if (_addrInfo == nullptr)
+        return {};
+    char host[NI_MAXHOST];
+    if (getnameinfo(_addrInfo->ai_addr, _addrInfo->ai_addrlen, host, NI_MAXHOST, nullptr, 0, NI_NUMERICHOST) != 0) {
+        FLAKKARI_LOG_ERROR("getnameinfo() failed");
+        return {};
+    }
+    return std::string(host);
+}
 
 constexpr const char *Address::ipTypeToString(IpType ip_type)
 {
@@ -154,6 +168,8 @@ Address::operator std::string() const
         + socketTypeToString(_socket_type)
         + ", "
         + ipTypeToString(_ip_type)
+        + ", "
+        + std::to_string(getId())
         + ")"
     );
 }
@@ -165,6 +181,8 @@ std::ostream &operator<<(std::ostream &os, const Address &addr)
     os << Address::socketTypeToString(addr.getSocketType());
     os << ", ";
     os << Address::ipTypeToString(addr.getIpType());
+    os << ", ";
+    os << addr.getId();
     os << ")";
     return os;
 }

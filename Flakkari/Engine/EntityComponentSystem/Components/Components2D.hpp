@@ -4,7 +4,7 @@
  * Flakkari Library is a C++ Library for Network.
  * @file Components2D.hpp
  * @brief Components2D header. Contains all 2D components.
- *        (Collider, Movable, RigidBody, Transform)
+ *        (Collider, Control, Movable, RigidBody, Transform)
  *
  * Flakkari Library is under MIT License.
  * https://opensource.org/licenses/MIT
@@ -13,10 +13,13 @@
  * @date 2023-01-06
  **************************************************************************/
 
-#ifndef COMPONENTS2D_HPP_
-#define COMPONENTS2D_HPP_
+#ifndef FLAKKARI_COMPONENTS2D_HPP_
+#define FLAKKARI_COMPONENTS2D_HPP_
 
+#include "2D/Collider.hpp"      // Collider component (size)
+#include "2D/Control.hpp"       // Control component (up, down, left, right, shoot)
 #include "2D/Movable.hpp"       // Movable component (velocity, angularVelocity, acceleration, angularAcceleration)
+#include "2D/RigidBody.hpp"     // RigidBody component (mass, inertia, restitution, friction)
 #include "2D/Transform.hpp"     // Transform component (position, rotation, scale)
 
-#endif /* !COMPONENTS2D_HPP_ */
+#endif /* !FLAKKARI_COMPONENTS2D_HPP_ */

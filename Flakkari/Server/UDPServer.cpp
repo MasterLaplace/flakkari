@@ -13,20 +13,25 @@ using namespace Flakkari;
 
 
 UDPServer::UDPServer(std::string ip, std::size_t port) :
-    _socket(Network::Socket(
+    _socket(std::make_shared<Network::Socket>(
         ip, port,
         Network::Address::IpType::IPv4,
         Network::Address::SocketType::UDP
     ))
 {
-    FLAKKARI_LOG_INFO(std::string(_socket));
-    _socket.bind();
+    FLAKKARI_LOG_INFO(std::string(*_socket));
+    _socket->bind();
 
     _io = std::make_unique<Network::PSELECT>();
-    _io->addSocket(_socket.getSocket());
+    _io->addSocket(_socket->getSocket());
     _io->addSocket(STDIN_FILENO);
 
+    ClientManager::setSocket(_socket);
     GameManager::getInstance();
+}
+
+UDPServer::~UDPServer() {
+    FLAKKARI_LOG_INFO("UDPServer is now stopped");
 }
 
 bool UDPServer::handleTimeout(int event)
@@ -50,46 +55,11 @@ bool UDPServer::handleInput(int fd)
 
 void UDPServer::handlePacket()
 {
-    auto packet = _socket.receiveFrom();
-    ClientManager::addClient(packet->first);
+    auto packet = _socket->receiveFrom();
+    ClientManager::addClient(packet->first, packet->second);
     ClientManager::checkInactiveClients();
 
-    // parse packet
-    Protocol::API::Header header;
-    std::copy(packet->second.begin(), packet->second.begin() + sizeof(header), reinterpret_cast<char*>(&header));
-
-    std::cout << (*packet->first.get()); // Address
-    std::cout << " : ";
-    std::cout << packet->second << std::endl; // Buffer
-
-    std::cout << "RECV Header: " << std::endl;
-    std::cout << "  Priority: " << (int)header._priority << std::endl;
-    std::cout << "  ApiVersion: " << (int)header._apiVersion << std::endl;
-    std::cout << "  CommandId: " << (int)header._commandId << std::endl;
-    std::cout << "  ContentLength: " << (int)header._contentLength << std::endl;
-
-    // send to all clients
-    Protocol::API::Header sendHeader(
-        Protocol::API::Priority::LOW,
-        Protocol::API::ApiVersion::V_1,
-        int(Protocol::API::FlakkariEventId::REP_ENTITY_SPAWN),
-        0
-    );
-
-    Protocol::API::PlayerPacket playerPacket;
-
-    sendHeader._contentLength = sizeof(playerPacket);
-
-    Network::Buffer buffer(sizeof(sendHeader) + sizeof(playerPacket));
-    std::copy(reinterpret_cast<const char*>(&sendHeader), reinterpret_cast<const char*>(&sendHeader) + sizeof(sendHeader), buffer.begin());
-
-    std::cout << "SEND Header: " << std::endl;
-    std::cout << "  Priority: " << (int)sendHeader._priority << std::endl;
-    std::cout << "  ApiVersion: " << (int)sendHeader._apiVersion << std::endl;
-    std::cout << "  CommandId: " << (int)sendHeader._commandId << std::endl;
-    std::cout << "  ContentLength: " << (int)sendHeader._contentLength << std::endl;
-
-    _socket.sendTo(packet->first, buffer);
+    ClientManager::receivePacketFromClient(packet->first, packet->second);
 }
 
 void UDPServer::run()

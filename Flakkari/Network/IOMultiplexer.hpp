@@ -19,7 +19,6 @@
 // if im on windows, define all compatible IOMultiplexer
 #ifdef _WIN32
     #define _PSELECT_
-    #define _PPOLL_
     #define _EPOLL_
     #define _KQUEUE_
     #define _IO_URING_
@@ -34,29 +33,23 @@
 
 namespace Flakkari::Network {
 
-/**
- * @brief IOMultiplexer is an interface for the different I/O multiplexing
- * @interface IOMultiplexer
- */
-class IOMultiplexer {
-    public:
-        using FileDescriptor = int;
-
-    public:
-        virtual ~IOMultiplexer() = default;
-
-        virtual void addSocket(FileDescriptor socket) = 0;
-        virtual void removeSocket(FileDescriptor socket) = 0;
-        virtual int wait() = 0;
-        virtual bool isReady(FileDescriptor socket) = 0;
-
-};
-
 #if defined(_PSELECT_)
-#include <sys/select.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <signal.h>
+#if defined(_WIN32)
+    #include <winsock2.h>
+    #include <ws2tcpip.h>
+    #include <windows.h>
+    #include <winsock.h>
+
+    #pragma comment(lib, "Ws2_32.lib")
+#elif defined(__APPLE__)
+    #include <sys/select.h>
+    #include <sys/time.h>
+    #include <sys/types.h>
+#else
+    #include <sys/select.h>
+    #include <sys/time.h>
+    #include <sys/types.h>
+#endif
 
 /**
  * @brief PSELECT is a class that represents a PSELECT
@@ -85,7 +78,10 @@ class IOMultiplexer {
  * }
  * @endcode
  */
-class PSELECT : public IOMultiplexer {
+class PSELECT {
+    public:
+        using FileDescriptor = int;
+
     public:
         PSELECT(int fileDescriptor);
         PSELECT();
@@ -96,14 +92,14 @@ class PSELECT : public IOMultiplexer {
          *
          * @param socket  The socket to add to the list
          */
-        void addSocket(FileDescriptor socket) override;
+        void addSocket(FileDescriptor socket);
 
         /**
          * @brief Remove a socket from the PSELECT list
          *
          * @param socket  The socket to remove from the list
          */
-        void removeSocket(FileDescriptor socket) override;
+        void removeSocket(FileDescriptor socket);
 
         /**
          * @brief Wait for an event to happen on a socket or timeout
@@ -112,7 +108,7 @@ class PSELECT : public IOMultiplexer {
          * @see pselect
          * @see errno
          */
-        int wait() override;
+        int wait();
 
         std::vector<FileDescriptor>::iterator begin() { return _sockets.begin(); }
         std::vector<FileDescriptor>::iterator end() { return _sockets.end(); }
@@ -124,7 +120,7 @@ class PSELECT : public IOMultiplexer {
          * @return true  If the socket is ready
          * @return false  If the socket is not ready
          */
-        [[nodiscard]] bool isReady(FileDescriptor socket) override;
+        [[nodiscard]] bool isReady(FileDescriptor socket);
 
     protected:
     private:
@@ -132,13 +128,21 @@ class PSELECT : public IOMultiplexer {
         std::vector<FileDescriptor> _sockets;
         FileDescriptor _maxFd = 0;
         struct timespec _timeout = {0, 0};
-        sigset_t _sigmask;
 };
 #endif
 
 #if defined(_PPOLL_)
-#include <sys/poll.h>
-#include <signal.h>
+#if defined(_WIN32)
+    #include <winsock2.h>
+    #include <ws2tcpip.h>
+    #include <windows.h>
+    #include <poll.h>
+    #pragma comment(lib, "Ws2_32.lib")
+#elif defined(__APPLE__)
+    #include <sys/poll.h>
+#else
+    #include <sys/poll.h>
+#endif
 
 /**
  * @brief PPOLL is a class that represents a PPOLL
@@ -167,8 +171,9 @@ class PSELECT : public IOMultiplexer {
  * }
  * @endcode
  */
-class PPOLL : public IOMultiplexer {
+class PPOLL {
     public:
+        using FileDescriptor = int;
         using pollfd = struct pollfd;
         using event_t = short int;
         using revents_t = short int;
@@ -184,7 +189,7 @@ class PPOLL : public IOMultiplexer {
          *
          * @param socket  The socket to add to the list
          */
-        void addSocket(FileDescriptor socket) override;
+        void addSocket(FileDescriptor socket);
 
         /**
          * @brief Add a socket to the PPOLL list with specific events
@@ -199,7 +204,7 @@ class PPOLL : public IOMultiplexer {
          *
          * @param socket  The socket to remove from the list
          */
-        void removeSocket(FileDescriptor socket) override;
+        void removeSocket(FileDescriptor socket);
 
         /**
          * @brief Wait for an event to happen on a socket or timeout
@@ -208,7 +213,7 @@ class PPOLL : public IOMultiplexer {
          * @see ppoll
          * @see errno
          */
-        int wait() override;
+        int wait();
 
         pollfd &operator[](std::size_t index);
         pollfd &operator[](FileDescriptor socket);
@@ -232,30 +237,13 @@ class PPOLL : public IOMultiplexer {
          * @return true  If the socket is ready
          * @return false  If the socket is not ready
          */
-        [[nodiscard]] bool isReady(FileDescriptor socket) override;
+        [[nodiscard]] bool isReady(FileDescriptor socket);
 
     protected:
     private:
         std::vector<pollfd> _pollfds;
         struct timespec _timeout = {0, 0};
-        sigset_t _sigmask;
 };
-#endif
-
-#if defined(_EPOLL_)
-    #if __APPLE__
-        #include <sys/event.h>
-    #else
-        #include <sys/epoll.h>
-    #endif
-#endif
-
-#if defined(_KQUEUE_)
-#include <sys/event.h>
-#endif
-
-#if defined(_IO_URING_)
-#include <liburing.h>
 #endif
 
 } // namespace Flakkari::Network

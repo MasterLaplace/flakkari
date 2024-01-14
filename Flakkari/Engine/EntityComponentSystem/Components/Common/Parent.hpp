@@ -7,12 +7,15 @@
 ** Parent
 */
 
-#ifndef PARENT_HPP_
-#define PARENT_HPP_
+#ifndef FLAKKARI_PARENT_HPP_
+#define FLAKKARI_PARENT_HPP_
 
-#include <string>
+#include <cstddef>
+
+#include "Network/Packed.hpp"
 
 namespace Flakkari::Engine::ECS::Components::Common {
+PACKED_START
 
 /**
  * @brief Parent component for ECS entities that have a parent entity attached to them
@@ -25,8 +28,12 @@ struct Parent {
     Parent() : entity(0) {}
     Parent(const std::size_t &entity) : entity(entity) {}
     Parent(const Parent &other) : entity(other.entity) {}
+    std::size_t size() const {
+        return sizeof(*this);
+    }
 };
 
+PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::Common
 
-#endif /* !PARENT_HPP_ */
+#endif /* !FLAKKARI_PARENT_HPP_ */
