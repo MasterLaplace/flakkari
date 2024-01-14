@@ -117,8 +117,8 @@ class Client {
         unsigned short _maxPacketHistory = 10;
     public:
         std::vector<Network::Buffer> _packetHistory;
-        Network::PacketQueue<Protocol::API::Packet<Protocol::API::CommandId>> _sendQueue;
-        Network::PacketQueue<Protocol::API::Packet<Protocol::API::CommandId>> _receiveQueue;
+        Network::PacketQueue<Protocol::Packet<Protocol::CommandId>> _sendQueue;
+        Network::PacketQueue<Protocol::Packet<Protocol::CommandId>> _receiveQueue;
 };
 
 } /* namespace Flakkari */

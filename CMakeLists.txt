@@ -43,6 +43,7 @@ set(HEADERS
 
     Flakkari/Protocol/Commands.hpp
     Flakkari/Protocol/Components.hpp
+    Flakkari/Protocol/Events.hpp
     Flakkari/Protocol/Header.hpp
     Flakkari/Protocol/Packet.hpp
     Flakkari/Protocol/PacketFactory.hpp
@@ -86,6 +87,7 @@ set(HEADER_LIB_NETWORK
 set(HEADER_LIB_PROTOCOL
     Flakkari/Protocol/Commands.hpp
     Flakkari/Protocol/Components.hpp
+    Flakkari/Protocol/Events.hpp
     Flakkari/Protocol/Header.hpp
     Flakkari/Protocol/Packet.hpp
     Flakkari/Protocol/PacketFactory.hpp

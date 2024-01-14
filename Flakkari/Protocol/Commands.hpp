@@ -21,7 +21,7 @@
 
 #include <cstdint>
 
-namespace Flakkari::Protocol::API {
+namespace Flakkari::Protocol {
 
 inline namespace V_0 {
 
@@ -56,6 +56,8 @@ inline namespace V_0 {
         REQ_ENTITY_SHOOT = 28, // Server -> Client [Shoot entity]: (id)(component (position, rotation, velocity, etc))
         REP_ENTITY_SHOOT = 29, // Client -> Server [Entity shot]: ()
         // 30 - 39: User
+        REQ_USER_UPDATE = 30, // Client -> Server [Update user]: (event_id, state)
+        REP_USER_UPDATE = 31, // Server -> Client [User updated]: ()
         // 40 - 49: Chat
         // 50 - 59: Matchmaking
         REQ_CREATE_ROOM = 50, // Client -> Server [Create room]: (user_id)
@@ -109,10 +111,11 @@ inline namespace V_0 {
         // 440 - 449: Virtual Currency
         // 450 - 459: Player Data Management
         // 460 - 469: Player Item Management
+        MAX_COMMAND_ID
     };
 
 } /* namespace V_0 */
 
-} // namespace Flakkari::Protocol::API
+} // namespace Flakkari::Protocol
 
 #endif /* !COMMANDS_HPP_ */

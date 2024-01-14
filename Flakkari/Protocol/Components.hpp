@@ -21,7 +21,7 @@
 
 #include <cstdint>
 
-namespace Flakkari::Protocol::API {
+namespace Flakkari::Protocol {
 
 inline namespace V_0 {
 
@@ -35,11 +35,12 @@ inline namespace V_0 {
         PARENT = 11,
         TAG = 12,
         ID = 13,
-        TEMPLATE = 14
+        TEMPLATE = 14,
+        MAX_COMPONENT
     };
 
 } /* namespace V_0 */
 
-} // namespace Flakkari::Protocol::API
+} // namespace Flakkari::Protocol
 
 #endif /* !COMPONENTS_HPP_ */

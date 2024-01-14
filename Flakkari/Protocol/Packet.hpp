@@ -3,12 +3,12 @@
  *
  * Flakkari Library is a C++ Library for Network.
  * @file Packet.hpp
- * @brief Flakkari::Protocol::API::Packet class header. This class is used to
+ * @brief Flakkari::Protocol::Packet class header. This class is used to
  * represent a packet. A packet is a header and a payload.
- *  - The header is a Flakkari::Protocol::API::Header object.
+ *  - The header is a Flakkari::Protocol::Header object.
  *  - The payload is a Flakkari::Network::Buffer object.
  *
- * @see Flakkari::Protocol::API::Header
+ * @see Flakkari::Protocol::Header
  * @see Flakkari::Network::Buffer
  *
  * Flakkari Library is under MIT License.
@@ -25,7 +25,7 @@
 #include "Header.hpp"
 #include "Components.hpp"
 
-namespace Flakkari::Protocol::API {
+namespace Flakkari::Protocol {
 
 inline namespace V_0 {
 
@@ -176,8 +176,8 @@ inline namespace V_0 {
         }
     };
 
-} /* namespace V_1 */
+} /* namespace V_0 */
 
-} // namespace Flakkari::Protocol::API
+} // namespace Flakkari::Protocol
 
 #endif /* !PACKET_HPP_ */

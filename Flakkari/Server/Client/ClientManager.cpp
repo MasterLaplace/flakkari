@@ -149,7 +149,7 @@ void ClientManager::receivePacketFromClient (
         return;
     auto &tmp_client = clients[clientKey];
 
-    Protocol::API::Packet<Protocol::API::CommandId> packet;
+    Protocol::Packet<Protocol::CommandId> packet;
     if (packet.deserialize(buffer)) {
         FLAKKARI_LOG_LOG("Client " + clientName + " sent a valid packet: " + packet.to_string());
         tmp_client->_receiveQueue.push_back(packet);

@@ -36,13 +36,13 @@ public:
      */
     template<typename Id>
     static void addCommonsToPacketByEntity (
-        Protocol::API::Packet<Id> &packet, Engine::ECS::Registry &registry, Engine::ECS::Entity entity
+        Protocol::Packet<Id> &packet, Engine::ECS::Registry &registry, Engine::ECS::Entity entity
     ) {
         auto child = registry.getComponents<Engine::ECS::Components::Common::Child>();
         auto childEntity = child[entity];
 
         if (childEntity.has_value()) {
-            packet << Protocol::API::ComponentId::CHILD;
+            packet << Protocol::ComponentId::CHILD;
             packet << childEntity->size();
             packet << childEntity->name;
         }
@@ -51,7 +51,7 @@ public:
         // auto evolveEntity = evolve[entity];
 
         // if (evolveEntity.has_value()) {
-        //     packet << Protocol::API::ComponentId::EVOLVE;
+        //     packet << Protocol::ComponentId::EVOLVE;
         //     packet << evolveEntity->size();
         //     packet << evolveEntity->name;
         // }
@@ -60,7 +60,7 @@ public:
         // auto idEntity = id[entity];
 
         // if (idEntity.has_value()) {
-        //     packet << Protocol::API::ComponentId::ID;
+        //     packet << Protocol::ComponentId::ID;
         //     packet << idEntity->size();
         //     packet << idEntity->id;
         // }
@@ -69,7 +69,7 @@ public:
         auto parentEntity = parent[entity];
 
         if (parentEntity.has_value()) {
-            packet << Protocol::API::ComponentId::PARENT;
+            packet << Protocol::ComponentId::PARENT;
             packet << parentEntity->size();
             packet << parentEntity->entity;
         }
@@ -78,7 +78,7 @@ public:
         auto tagEntity = tag[entity];
 
         if (tagEntity.has_value()) {
-            packet << Protocol::API::ComponentId::TAG;
+            packet << Protocol::ComponentId::TAG;
             packet << tagEntity->size();
             packet << tagEntity->tag;
         }
@@ -87,7 +87,7 @@ public:
         auto nameEntity = name[entity];
 
         if (nameEntity.has_value()) {
-            packet << Protocol::API::ComponentId::TEMPLATE;
+            packet << Protocol::ComponentId::TEMPLATE;
             packet << nameEntity->size();
             packet << nameEntity->name;
         }
@@ -103,13 +103,13 @@ public:
      */
     template<typename Id>
     static void add2dToPacketByEntity (
-        Protocol::API::Packet<Id> &packet, Engine::ECS::Registry &registry, Engine::ECS::Entity entity
+        Protocol::Packet<Id> &packet, Engine::ECS::Registry &registry, Engine::ECS::Entity entity
     ) {
         auto transform = registry.getComponents<Engine::ECS::Components::_2D::Transform>();
         auto pos = transform[entity];
 
         if (pos.has_value()) {
-            packet << Protocol::API::ComponentId::TRANSFORM;
+            packet << Protocol::ComponentId::TRANSFORM;
             packet << pos->size();
             packet << pos->position.x;
             packet << pos->position.y;
@@ -122,7 +122,7 @@ public:
         auto vel = movable[entity];
 
         if (vel.has_value()) {
-            packet << Protocol::API::ComponentId::MOVABLE;
+            packet << Protocol::ComponentId::MOVABLE;
             packet << vel->size();
             packet << vel->velocity.x;
             packet << vel->velocity.y;
@@ -134,7 +134,7 @@ public:
         auto ctrl = control[entity];
 
         if (ctrl.has_value()) {
-            packet << Protocol::API::ComponentId::CONTROL;
+            packet << Protocol::ComponentId::CONTROL;
             packet << ctrl->size();
             packet << ctrl->up;
             packet << ctrl->down;
@@ -154,7 +154,7 @@ public:
      */
     template<typename Id>
     static void addComponentsToPacketByEntity (
-        Protocol::API::Packet<Id> &packet, Engine::ECS::Registry &registry, Engine::ECS::Entity entity
+        Protocol::Packet<Id> &packet, Engine::ECS::Registry &registry, Engine::ECS::Entity entity
     ) {
         /*_ Common Components _*/
 
@@ -175,7 +175,7 @@ public:
      */
     template<typename Id>
     static void addInfoToPacket (
-        Protocol::API::Packet<Id> &packet, std::size_t size,
+        Protocol::Packet<Id> &packet, std::size_t size,
         const std::string &sceneName, Engine::ECS::Entity entity
     ) {
         packet << size;

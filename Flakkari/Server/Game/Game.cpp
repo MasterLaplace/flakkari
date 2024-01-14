@@ -116,8 +116,8 @@ void Game::checkDisconnect()
     for (auto &player : _players) {
         if (!player || player->isConnected())
             continue;
-        Protocol::API::Packet<Protocol::API::CommandId> packet;
-        packet.header._commandId = Protocol::API::CommandId::REQ_ENTITY_DESTROY;
+        Protocol::Packet<Protocol::CommandId> packet;
+        packet.header._commandId = Protocol::CommandId::REQ_ENTITY_DESTROY;
         packet << player->getSceneName().size();
         packet << player->getSceneName().c_str();
         packet << player->getEntity();
@@ -138,7 +138,7 @@ void Game::updateIncomingPackets(unsigned char maxMessagePerFrame)
         auto messageCount = maxMessagePerFrame;
 
         while (!packets.empty() && messageCount > 0) {
-            Protocol::API::Packet<Protocol::API::CommandId> p;
+            Protocol::Packet<Protocol::CommandId> p;
             auto packet = packets.pop_front();
             FLAKKARI_LOG_INFO("packet received: " + packet.to_string());
             messageCount--;

@@ -26,7 +26,7 @@
 #include "Commands.hpp"
 #include <chrono>
 
-namespace Flakkari::Protocol::API {
+namespace Flakkari::Protocol {
 
 using byte = byte_t;            // 8 bits  (max: 255)
 using ushort = unsigned short;  // 16 bits (max: 65535)
@@ -74,6 +74,6 @@ inline namespace V_0 {
 
 } /* namespace V_1 */
 
-} // namespace Flakkari::Protocol::API
+} // namespace Flakkari::Protocol
 
 #endif /* !HEADER_HPP_ */
