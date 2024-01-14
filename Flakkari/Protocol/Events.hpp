@@ -47,16 +47,6 @@ inline namespace V_0 {
     struct Event {
         EventId id;
         EventState state;
-
-        friend std::ostream& operator<<(std::ostream& os, const Event& event) {
-            os << "Event<id: " << int(event.id) << ", state: " << int(event.state) << ">";
-            return os;
-        }
-
-        std::string to_string() {
-            std::string str = "Event<id: " + std::to_string(int(id)) + ", state: " + std::to_string(int(state)) + ">";
-            return str;
-        }
     };
 
     PACKED_END
