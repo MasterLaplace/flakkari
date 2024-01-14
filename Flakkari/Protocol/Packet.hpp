@@ -24,6 +24,7 @@
 
 #include "Header.hpp"
 #include "Components.hpp"
+#include "Events.hpp"
 
 namespace Flakkari::Protocol {
 
