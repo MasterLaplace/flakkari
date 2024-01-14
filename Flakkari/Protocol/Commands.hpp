@@ -114,6 +114,53 @@ inline namespace V_0 {
         MAX_COMMAND_ID
     };
 
+    static_assert(static_cast<uint8_t>(CommandId::MAX_COMMAND_ID) <= 0xFF, "CommandId is too big");
+
+    static std::string to_string(CommandId id)
+    {
+        switch (id) {
+            case CommandId::REQ_CONNECT: return "REQ_CONNECT";
+            case CommandId::REP_CONNECT: return "REP_CONNECT";
+            case CommandId::REQ_DISCONNECT: return "REQ_DISCONNECT";
+            case CommandId::REP_DISCONNECT: return "REP_DISCONNECT";
+            case CommandId::REQ_PING: return "REQ_PING";
+            case CommandId::REP_PING: return "REP_PING";
+            case CommandId::REQ_PONG: return "REQ_PONG";
+            case CommandId::REP_PONG: return "REP_PONG";
+            case CommandId::REQ_HEARTBEAT: return "REQ_HEARTBEAT";
+            case CommandId::REP_HEARTBEAT: return "REP_HEARTBEAT";
+            case CommandId::REQ_LOGIN: return "REQ_LOGIN";
+            case CommandId::REP_LOGIN: return "REP_LOGIN";
+            case CommandId::REQ_LOGOUT: return "REQ_LOGOUT";
+            case CommandId::REP_LOGOUT: return "REP_LOGOUT";
+            case CommandId::REQ_REGISTER: return "REQ_REGISTER";
+            case CommandId::REP_REGISTER: return "REP_REGISTER";
+            case CommandId::REQ_ENTITY_SPAWN: return "REQ_ENTITY_SPAWN";
+            case CommandId::REP_ENTITY_SPAWN: return "REP_ENTITY_SPAWN";
+            case CommandId::REQ_ENTITY_UPDATE: return "REQ_ENTITY_UPDATE";
+            case CommandId::REP_ENTITY_UPDATE: return "REP_ENTITY_UPDATE";
+            case CommandId::REQ_ENTITY_DESTROY: return "REQ_ENTITY_DESTROY";
+            case CommandId::REP_ENTITY_DESTROY: return "REP_ENTITY_DESTROY";
+            case CommandId::REQ_ENTITY_MOVED: return "REQ_ENTITY_MOVED";
+            case CommandId::REP_ENTITY_MOVED: return "REP_ENTITY_MOVED";
+            case CommandId::REQ_ENTITY_SHOOT: return "REQ_ENTITY_SHOOT";
+            case CommandId::REP_ENTITY_SHOOT: return "REP_ENTITY_SHOOT";
+            case CommandId::REQ_USER_UPDATE: return "REQ_USER_UPDATE";
+            case CommandId::REP_USER_UPDATE: return "REP_USER_UPDATE";
+            case CommandId::REQ_CREATE_ROOM: return "REQ_CREATE_ROOM";
+            case CommandId::REP_CREATE_ROOM: return "REP_CREATE_ROOM";
+            case CommandId::REQ_JOIN_ROOM: return "REQ_JOIN_ROOM";
+            case CommandId::REP_JOIN_ROOM: return "REP_JOIN_ROOM";
+            case CommandId::REQ_LEAVE_ROOM: return "REQ_LEAVE_ROOM";
+            case CommandId::REP_LEAVE_ROOM: return "REP_LEAVE_ROOM";
+            case CommandId::REQ_START_GAME: return "REQ_START_GAME";
+            case CommandId::REP_START_GAME: return "REP_START_GAME";
+            case CommandId::REQ_END_GAME: return "REQ_END_GAME";
+            case CommandId::REP_END_GAME: return "REP_END_GAME";
+            default: return "Unknown";
+        }
+    }
+
 } /* namespace V_0 */
 
 } // namespace Flakkari::Protocol

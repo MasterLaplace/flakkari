@@ -410,14 +410,13 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
 
     Protocol::Packet<Protocol::CommandId> packet;
     packet.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;
+    std::cout << "entity: " << newEntity << std::endl;
+    std::cout << "scene: " << sceneGame << std::endl;
+    std::cout << "address: " << player->getAddress()->toString().value() << std::endl;
+    std::cout << "template: " << p_Template << std::endl;
     packet.injectString(sceneGame);
-    packet << newEntity;
-    packet.injectString(std::string(*player->getAddress()));
+    packet.injectString(player->getAddress()->toString().value());
     packet.injectString(p_Template);
-
-    Protocol::PacketFactory::addComponentsToPacketByEntity<Protocol::CommandId> (
-        packet, registry, newEntity
-    );
 
     sendOnSameScene(player->getSceneName(), packet.serialize());
     return true;

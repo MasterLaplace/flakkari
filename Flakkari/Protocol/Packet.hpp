@@ -74,6 +74,16 @@ inline namespace V_0 {
             return os;
         }
 
+        template<typename T>
+        void injectComponent(T component)
+        {
+            int intValue = (int)component.size();
+            const byte* dataBytes = reinterpret_cast<const byte*>(&intValue);
+            payload.insert(payload.end(), dataBytes, dataBytes + sizeof(intValue));
+            payload += component;
+            header._contentLength += payload.size() + sizeof(intValue);
+        }
+
         /**
          * @brief Add data to the packet.
          *
