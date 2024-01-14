@@ -77,6 +77,14 @@ public:
 
             //*_ 2D Components _*//
 
+            if (componentName == "Collider") {
+                registry.registerComponent<Engine::ECS::Components::_2D::Collider>();
+                Engine::ECS::Components::_2D::Collider collider;
+                collider._size = Engine::Math::Vector2f(componentContent["size"]["x"], componentContent["size"]["y"]);
+                registry.add_component<Engine::ECS::Components::_2D::Collider>(entity, std::move(collider));
+                continue;
+            }
+
             if (componentName == "Control") {
                 registry.registerComponent<Engine::ECS::Components::_2D::Control>();
                 Engine::ECS::Components::_2D::Control control;
@@ -95,6 +103,19 @@ public:
                 movable.velocity = Engine::Math::Vector2f(componentContent["velocity"]["x"], componentContent["velocity"]["y"]);
                 movable.acceleration = Engine::Math::Vector2f(componentContent["acceleration"]["x"], componentContent["acceleration"]["y"]);
                 registry.add_component<Engine::ECS::Components::_2D::Movable>(entity, std::move(movable));
+                continue;
+            }
+
+            if (componentName == "RigidBody") {
+                registry.registerComponent<Engine::ECS::Components::_2D::RigidBody>();
+                Engine::ECS::Components::_2D::RigidBody rigidBody;
+                rigidBody.mass = componentContent["mass"];
+                rigidBody.restitution = componentContent["restitution"];
+                rigidBody.friction = componentContent["friction"];
+                rigidBody.gravityScale = componentContent["gravityScale"];
+                rigidBody.isGravityAffected = componentContent["isGravityAffected"];
+                rigidBody.isKinematic = componentContent["isKinematic"];
+                registry.add_component<Engine::ECS::Components::_2D::RigidBody>(entity, std::move(rigidBody));
                 continue;
             }
 
@@ -124,6 +145,17 @@ public:
                 continue;
             }
 
+            if (componentName == "Health") {
+                registry.registerComponent<Engine::ECS::Components::Common::Health>();
+                Engine::ECS::Components::Common::Health health;
+                health.maxHealth = componentContent["maxHealth"];
+                health.currentHealth = componentContent["currentHealth"];
+                health.maxShield = componentContent["maxShield"];
+                health.shield = componentContent["shield"];
+                registry.add_component<Engine::ECS::Components::Common::Health>(entity, std::move(health));
+                continue;
+            }
+
             if (componentName == "Parent") {
                 registry.registerComponent<Engine::ECS::Components::Common::Parent>();
                 Engine::ECS::Components::Common::Parent parent(componentContent["entity"]);
@@ -131,6 +163,23 @@ public:
                 continue;
             }
 
+            if (componentName == "Level") {
+                registry.registerComponent<Engine::ECS::Components::Common::Level>();
+                Engine::ECS::Components::Common::Level level;
+                level.level = componentContent["level"];
+                level.currentExp = componentContent["currentExp"];
+                level.requiredExp = componentContent["requiredExp"];
+                level.currentWeapon = componentContent["currentWeapon"].get<std::string>().c_str();
+                registry.add_component<Engine::ECS::Components::Common::Level>(entity, std::move(level));
+                continue;
+            }
+
+            if (componentName == "Spawned") {
+                registry.registerComponent<Engine::ECS::Components::Common::Spawned>();
+                Engine::ECS::Components::Common::Spawned spawned(componentContent["has_spawned"]);
+                registry.add_component<Engine::ECS::Components::Common::Spawned>(entity, std::move(spawned));
+                continue;
+            }
 
             if (componentName == "Tag") {
                 registry.registerComponent<Engine::ECS::Components::Common::Tag>();
@@ -143,6 +192,16 @@ public:
                 registry.registerComponent<Engine::ECS::Components::Common::Template>();
                 Engine::ECS::Components::Common::Template template_(componentContent["name"]);
                 registry.add_component<Engine::ECS::Components::Common::Template>(entity, std::move(template_));
+                continue;
+            }
+
+            if (componentName == "Weapon") {
+                registry.registerComponent<Engine::ECS::Components::Common::Weapon>();
+                Engine::ECS::Components::Common::Weapon weapon;
+                weapon.damage = componentContent["damage"];
+                weapon.fireRate = componentContent["fireRate"];
+                weapon.level = componentContent["level"];
+                registry.add_component<Engine::ECS::Components::Common::Weapon>(entity, std::move(weapon));
                 continue;
             }
         }
