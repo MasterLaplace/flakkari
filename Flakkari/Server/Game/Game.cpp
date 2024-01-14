@@ -23,6 +23,7 @@ Game::Game(const std::string &name, std::shared_ptr<nlohmann::json> config)
     if ((*_config)["scenes"].empty())
         throw std::runtime_error("Game: no scenes found");
     loadScene((*_config)["startGame"]);
+    ResourceManager::addScene(_name, (*_config)["startGame"]);
 }
 
 Game::~Game()
@@ -385,12 +386,34 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
     auto p_Template = (*_config)["playerTemplate"];
     auto player_info = ResourceManager::getTemplateById(_name, sceneGame, p_Template);
 
+    loadComponents(registry, player_info.value_or(""), newEntity);
+
+    registry.registerComponent<Engine::ECS::Components::Common::NetworkIp>();
+    registry.add_component<Engine::ECS::Components::Common::NetworkIp> (
+        newEntity,
+        Engine::ECS::Components::Common::NetworkIp(
+            std::string(*player->getAddress())
+        )
+    );
+
+    registry.registerComponent<Engine::ECS::Components::Common::Template>();
+    registry.add_component<Engine::ECS::Components::Common::Template> (
+        newEntity,
+        Engine::ECS::Components::Common::Template(
+            std::string(p_Template)
+        )
+    );
+
     player->setEntity(newEntity);
     _players.push_back(player);
     FLAKKARI_LOG_INFO("client \""+ std::string(*player->getAddress()) +"\" added to game \""+ _name +"\"");
 
     Protocol::Packet<Protocol::CommandId> packet;
     packet.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;
+    packet.injectString(sceneGame);
+    packet << newEntity;
+    packet.injectString(std::string(*player->getAddress()));
+    packet.injectString(p_Template);
 
     Protocol::PacketFactory::addComponentsToPacketByEntity<Protocol::CommandId> (
         packet, registry, newEntity

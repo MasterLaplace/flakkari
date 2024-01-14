@@ -57,7 +57,7 @@ class Client {
          * @return true  If the client is still connected
          * @return false  If the client is not connected anymore
          */
-        [[nodiscard]] bool isConnected(float timeout = 5);
+        [[nodiscard]] bool isConnected(float timeout = 10);
 
         /**
          * @brief Update the last activity of the client

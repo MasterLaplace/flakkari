@@ -213,8 +213,6 @@ public:
     ) {
         /*_ Common Components _*/
 
-        addCommonsToPacketByEntity<Id>(packet, registry, entity);
-
         /*_ 2D Components _*/
 
         add2dToPacketByEntity<Id>(packet, registry, entity);
