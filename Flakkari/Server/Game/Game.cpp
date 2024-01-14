@@ -9,6 +9,9 @@
 
 #include "Game.hpp"
 #include "../Client/ClientManager.hpp"
+#include "ResourceManager.hpp"
+#include "Protocol/PacketFactory.hpp"
+#include "Engine/EntityComponentSystem/Components/ComponentsCommon.hpp"
 
 namespace Flakkari {
 
@@ -61,6 +64,79 @@ void Game::loadComponents (
             movable.velocity = Engine::Math::Vector2f(componentContent["velocity"]["x"], componentContent["velocity"]["y"]);
             movable.acceleration = Engine::Math::Vector2f(componentContent["acceleration"]["x"], componentContent["acceleration"]["y"]);
             registry.add_component<Engine::ECS::Components::_2D::Movable>(newEntity, std::move(movable));
+            continue;
+        }
+
+        if (componentName == "Control") {
+            registry.registerComponent<Engine::ECS::Components::_2D::Control>();
+            Engine::ECS::Components::_2D::Control control;
+            control.up = componentContent["up"];
+            control.down = componentContent["down"];
+            control.left = componentContent["left"];
+            control.right = componentContent["right"];
+            control.shoot = componentContent["shoot"];
+            registry.add_component<Engine::ECS::Components::_2D::Control>(newEntity, std::move(control));
+            continue;
+        }
+
+        if (componentName == "Collider") {
+            registry.registerComponent<Engine::ECS::Components::_2D::Collider>();
+            Engine::ECS::Components::_2D::Collider collider;
+            collider._size = Engine::Math::Vector2f(componentContent["size"]["x"], componentContent["size"]["y"]);
+            registry.add_component<Engine::ECS::Components::_2D::Collider>(newEntity, std::move(collider));
+            continue;
+        }
+
+        if (componentName == "Evolve") {
+            registry.registerComponent<Engine::ECS::Components::Common::Evolve>();
+            Engine::ECS::Components::Common::Evolve evolve;
+            evolve.name = componentContent["name"].get<std::string>().c_str();
+            registry.add_component<Engine::ECS::Components::Common::Evolve>(newEntity, std::move(evolve));
+            continue;
+        }
+
+        if (componentName == "Spawned") {
+            registry.registerComponent<Engine::ECS::Components::Common::Spawned>();
+            Engine::ECS::Components::Common::Spawned spawned;
+            spawned.has_spawned = componentContent["has_spawned"];
+            registry.add_component<Engine::ECS::Components::Common::Spawned>(newEntity, std::move(spawned));
+            continue;
+        }
+
+        if (componentName == "Tag") {
+            registry.registerComponent<Engine::ECS::Components::Common::Tag>();
+            Engine::ECS::Components::Common::Tag tag;
+            tag.tag = componentContent["tag"].get<std::string>().c_str();
+            registry.add_component<Engine::ECS::Components::Common::Tag>(newEntity, std::move(tag));
+            continue;
+        }
+
+        if (componentName == "Template") {
+            registry.registerComponent<Engine::ECS::Components::Common::Template>();
+            Engine::ECS::Components::Common::Template template_;
+            template_.name = componentContent["name"].get<std::string>().c_str();
+            registry.add_component<Engine::ECS::Components::Common::Template>(newEntity, std::move(template_));
+            continue;
+        }
+
+        if (componentName == "Weapon") {
+            registry.registerComponent<Engine::ECS::Components::Common::Weapon>();
+            Engine::ECS::Components::Common::Weapon weapon;
+            weapon.fireRate = componentContent["fireRate"];
+            weapon.damage = componentContent["damage"];
+            weapon.level = componentContent["level"];
+            registry.add_component<Engine::ECS::Components::Common::Weapon>(newEntity, std::move(weapon));
+            continue;
+        }
+
+        if (componentName == "Health") {
+            registry.registerComponent<Engine::ECS::Components::Common::Health>();
+            Engine::ECS::Components::Common::Health health;
+            health.maxHealth = componentContent["maxHealth"];
+            health.currentHealth = componentContent["currentHealth"];
+            health.maxShield = componentContent["maxShield"];
+            health.shield = componentContent["shield"];
+            registry.add_component<Engine::ECS::Components::Common::Health>(newEntity, std::move(health));
             continue;
         }
     }
@@ -306,10 +382,21 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
     player->setSceneName(sceneGame);
 
     Engine::ECS::Entity newEntity = registry.spawn_entity();
-    player->setEntity(newEntity);
+    auto p_Template = (*_config)["playerTemplate"];
+    auto player_info = ResourceManager::getTemplateById(_name, sceneGame, p_Template);
 
+    player->setEntity(newEntity);
     _players.push_back(player);
     FLAKKARI_LOG_INFO("client \""+ std::string(*player->getAddress()) +"\" added to game \""+ _name +"\"");
+
+    Protocol::Packet<Protocol::CommandId> packet;
+    packet.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;
+
+    Protocol::PacketFactory::addComponentsToPacketByEntity<Protocol::CommandId> (
+        packet, registry, newEntity
+    );
+
+    sendOnSameScene(player->getSceneName(), packet.serialize());
     return true;
 }
 

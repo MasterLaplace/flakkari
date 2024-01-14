@@ -34,15 +34,12 @@ void position(Registry &r, float deltaTime)
 
 void update_control(Registry &r)
 {
-    if (!r.isRegistered<ECS::Components::_2D::Movable>() || !r.isRegistered<ECS::Components::Common::NetworkEvent>()
-        || !r.isRegistered<ECS::Components::_2D::Transform>())
+    if (!r.isRegistered<ECS::Components::_2D::Movable>() || !r.isRegistered<ECS::Components::Common::NetworkEvent>())
         return;
-    auto& positions = r.getComponents<ECS::Components::_2D::Transform>();
     auto& velocities = r.getComponents<ECS::Components::_2D::Movable>();
     auto& networkEvent = r.getComponents<Engine::ECS::Components::Common::NetworkEvent>();
 
-    for (Entity i(0); i < velocities.size() && i < positions.size(); ++i) {
-        auto& pos = positions[i];
+    for (Entity i(0); i < velocities.size(); ++i) {
         auto& vel = velocities[i];
         auto& net = networkEvent[i];
 

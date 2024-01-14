@@ -30,12 +30,21 @@ inline namespace V_0 {
         CONTROL = 0,
         MOVABLE = 1,
         TRANSFORM = 2,
+        COLLIDER = 3,
+        RIGIDBODY = 4,
         // 10 - 19: Common components
         CHILD = 10,
         PARENT = 11,
         TAG = 12,
-        ID = 13,
+        SPAWNED = 13,
         TEMPLATE = 14,
+        WEAPON = 15,
+        LEVEL = 16,
+        EVOLVE = 17,
+        HEALTH = 18,
+        // 20 - 29: Network components
+        NETWORK_EVENT = 20,
+        NETWORK_IP = 21,
         MAX_COMPONENT
     };
 
