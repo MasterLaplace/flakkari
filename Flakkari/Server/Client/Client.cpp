@@ -11,8 +11,8 @@
 
 namespace Flakkari {
 
-Client::Client(std::shared_ptr<Network::Address> address)
-    : _address(address)
+Client::Client(std::shared_ptr<Network::Address> address, std::string name)
+    : _address(address), _gameName(name)
 {
     _lastActivity = std::chrono::steady_clock::now();
 }

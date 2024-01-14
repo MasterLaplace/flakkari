@@ -56,11 +56,10 @@ bool UDPServer::handleInput(int fd)
 void UDPServer::handlePacket()
 {
     auto packet = _socket->receiveFrom();
-    ClientManager::addClient(packet->first);
+    ClientManager::addClient(packet->first, packet->second);
     ClientManager::checkInactiveClients();
 
     ClientManager::receivePacketFromClient(packet->first, packet->second);
-    ClientManager::sendPacketToClient(packet->first, packet->second);
 }
 
 void UDPServer::run()

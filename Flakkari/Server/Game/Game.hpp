@@ -103,6 +103,27 @@ class Game {
         void checkDisconnect();
 
         /**
+         * @brief Send a packet to a player.
+         *
+         * @param player  Player to send the packet to.
+         * @param pos  Position of the player.
+         * @param vel  Velocity of the player.
+         */
+        void sendUpdatePosition (
+            std::shared_ptr<Client> player,
+            Engine::ECS::Components::_2D::Transform pos,
+            Engine::ECS::Components::_2D::Movable vel
+        );
+
+        /**
+         * @brief Handle an event from a player.
+         *
+         * @param player  Player that sent the event.
+         * @param packet  Packet containing the event.
+         */
+        void handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol::CommandId> packet);
+
+        /**
          * @brief Empty the incoming packets of the players and update the
          *        game with the new packets.
          *

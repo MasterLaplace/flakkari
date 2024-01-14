@@ -55,7 +55,7 @@ inline namespace V_0 {
             + ", SequenceNumber: "
             + std::to_string(int(header._sequenceNumber))
             + ", Payload: "
-            + std::string(payload)
+            + std::string((const char*)payload.data(), payload.size())
             + ">";
             return str;
         }
@@ -119,26 +119,25 @@ inline namespace V_0 {
             return packet;
         }
 
-        /**
-         * @brief Add data to the packet.
-         *
-         * @tparam DataType  Type of the data to add.
-         * @param packet  The packet to add the data to.
-         * @param data  The data to add.
-         * @return Packet<Id>&  The packet with the data added.
-         */
-        template<typename DataType>
-        friend Packet<Id>& operator>>(Packet<Id>& packet, std::vector<DataType>& data)
+        void injectString(std::string str)
         {
-            static_assert(std::is_trivially_copyable<DataType>::value, "DataType must be trivially copyable to be used in a packet.");
-            static_assert(std::is_standard_layout<DataType>::value, "DataType must be standard layout to be used in a packet.");
+            int intValue = (int)str.size();
+            const byte* dataBytes = reinterpret_cast<const byte*>(&intValue);
+            payload.insert(payload.end(), dataBytes, dataBytes + sizeof(intValue));
+            payload += str;
+            header._contentLength += payload.size() + sizeof(intValue);
+        }
 
-            std::size_t size = packet.payload.size() - sizeof(DataType) * data.size();
-            data.resize(packet.payload.size() / sizeof(DataType));
-            std::memcpy(data.data(), packet.payload.data() + size, sizeof(DataType) * data.size());
-            packet.payload.resize(size);
-            packet.header._contentLength = packet.payload.size();
-            return packet;
+        std::string extractString()
+        {
+            std::string str;
+            int intValue;
+            std::memcpy(&intValue, payload.data(), sizeof(intValue));
+            payload.erase(payload.begin(), payload.begin() + sizeof(intValue));
+            str = std::string((const char*)payload.data(), intValue);
+            payload.erase(payload.begin(), payload.begin() + intValue);
+            header._contentLength -= sizeof(intValue) + intValue;
+            return str;
         }
 
         /**

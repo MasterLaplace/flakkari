@@ -28,7 +28,7 @@ void ClientManager::setSocket(std::shared_ptr<Network::Socket> socket) {
     getInstance()->_socket = socket;
 }
 
-void ClientManager::addClient(std::shared_ptr<Network::Address> client)
+void ClientManager::addClient(std::shared_ptr<Network::Address> client, Network::Buffer &buffer)
 {
     auto &clients = getInstance()->_clients;
 
@@ -40,9 +40,22 @@ void ClientManager::addClient(std::shared_ptr<Network::Address> client)
     if (clients.find(client->toString().value_or("")) != clients.end())
         return clients[client->toString().value_or("")]->keepAlive(), void();
 
-        clients[client->toString().value_or("")] = std::make_shared<Client>(client);
-        FLAKKARI_LOG_LOG("Client " + client->toString().value_or("Unknown") + " connected");
-        GameManager::addClientToGame("R-Type", clients[client->toString().value_or("")]);
+    Protocol::Packet<Protocol::CommandId> packet;
+    if (!packet.deserialize(buffer)) {
+        FLAKKARI_LOG_WARNING("Client " + client->toString().value_or("Unknown") + " sent an invalid packet");
+        return;
+    }
+
+    if (packet.header._commandId != Protocol::CommandId::REQ_CONNECT) {
+        FLAKKARI_LOG_WARNING("Client " + client->toString().value_or("Unknown") + " sent an invalid packet");
+        return;
+    }
+
+    std::string name = packet.extractString();
+    clients[client->toString().value_or("")] = std::make_shared<Client>(client, name);
+
+    FLAKKARI_LOG_LOG("Client " + client->toString().value_or("Unknown") + " connected");
+    GameManager::addClientToGame(name, clients[client->toString().value_or("")]);
 }
 
 void ClientManager::removeClient(std::shared_ptr<Network::Address> client)
@@ -52,7 +65,9 @@ void ClientManager::removeClient(std::shared_ptr<Network::Address> client)
     if (clients.find(client->toString().value_or("")) == clients.end())
         return;
 
-    GameManager::removeClientFromGame("R-Type", clients[client->toString().value_or("")]);
+    auto _client = clients[client->toString().value_or("")];
+
+    GameManager::removeClientFromGame(_client->getGameName(), _client);
     clients.erase(client->toString().value_or(""));
 }
 
@@ -67,9 +82,10 @@ void ClientManager::banClient(std::shared_ptr<Network::Address> client)
     bannedClients.push_back(client->getIp().value());
 
     FLAKKARI_LOG_LOG("Client " + client->toString().value_or("Unknown") + " banned");
-        GameManager::removeClientFromGame("R-Type", clients[client->toString().value_or("")]);
-        clients.erase(client->toString().value_or(""));
-    }
+    auto _client = clients[client->toString().value_or("")];
+    GameManager::removeClientFromGame(_client->getGameName(), _client);
+    clients.erase(client->toString().value_or(""));
+}
 
 bool ClientManager::isBanned(std::shared_ptr<Network::Address> client)
 {
@@ -85,7 +101,7 @@ void ClientManager::checkInactiveClients()
     for (auto it = clients.begin(); it != clients.end();) {
         if (!it->second->isConnected()) {
             FLAKKARI_LOG_LOG("Client " + it->first + " disconnected");
-            GameManager::removeClientFromGame("R-Type", it->second);
+            GameManager::removeClientFromGame(it->second->getGameName(), it->second);
             it = clients.erase(it);
         } else {
             ++it;
@@ -165,7 +181,7 @@ void ClientManager::receivePacketFromClient (
 
     bannedClients.push_back(client->getIp().value());
     FLAKKARI_LOG_LOG("Client " + clientName + " banned");
-    GameManager::removeClientFromGame("R-Type", tmp_client);
+    GameManager::removeClientFromGame(tmp_client->getGameName(), tmp_client);
     clients.erase(clientKey);
 }
 

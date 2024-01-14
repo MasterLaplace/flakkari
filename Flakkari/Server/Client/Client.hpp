@@ -45,8 +45,9 @@ class Client {
          * @brief Construct a new Client object
          *
          * @param address The client's address
+         * @param name The Game's name
          */
-        Client(std::shared_ptr<Network::Address> address);
+        Client(std::shared_ptr<Network::Address> address, std::string name);
         ~Client();
 
         /**
@@ -99,6 +100,9 @@ class Client {
         [[nodiscard]] std::string getSceneName() const { return _sceneName; }
         void setSceneName(std::string sceneName) { _sceneName = sceneName; }
 
+        [[nodiscard]] std::string getGameName() const { return _gameName; }
+        void setGameName(std::string gameName) { _gameName = gameName; }
+
         [[nodiscard]] unsigned short getWarningCount() const { return _warningCount; }
 
         [[nodiscard]] unsigned short getMaxWarningCount() const { return _maxWarningCount; }
@@ -111,6 +115,7 @@ class Client {
         std::shared_ptr<Network::Address> _address;
         Engine::ECS::Entity _entity;
         std::string _sceneName;
+        std::string _gameName;
         bool _isConnected = true;
         unsigned short _warningCount = 0;
         unsigned short _maxWarningCount = 5;

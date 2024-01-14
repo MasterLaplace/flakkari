@@ -17,6 +17,7 @@
 #define CLIENTMANAGER_HPP_
 
 #include "Network/Socket.hpp"
+#include "Network/Serializer.hpp"
 #include "Client.hpp"
 
 #include <unordered_map>
@@ -88,7 +89,7 @@ class ClientManager {
          *
          * @param client  The client's address
          */
-        static void addClient(std::shared_ptr<Network::Address> client);
+        static void addClient(std::shared_ptr<Network::Address> client, Network::Buffer &buffer);
 
         /**
          * @brief Remove a client from the client manager

@@ -20,6 +20,8 @@
 
 #include <cstdint>
 
+#include "../Network/Packed.hpp"
+
 namespace Flakkari::Protocol {
 
 inline namespace V_0 {
@@ -39,6 +41,25 @@ inline namespace V_0 {
         RELEASED = 2,
         MAX_STATE
     };
+
+    PACKED_START
+
+    struct Event {
+        EventId id;
+        EventState state;
+
+        friend std::ostream& operator<<(std::ostream& os, const Event& event) {
+            os << "Event<id: " << int(event.id) << ", state: " << int(event.state) << ">";
+            return os;
+        }
+
+        std::string to_string() {
+            std::string str = "Event<id: " + std::to_string(int(id)) + ", state: " + std::to_string(int(state)) + ">";
+            return str;
+        }
+    };
+
+    PACKED_END
 
 } /* namespace V_0 */
 

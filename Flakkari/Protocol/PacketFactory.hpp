@@ -20,7 +20,7 @@
 
 #include "Packet.hpp"
 
-#include "Systems/Systems.hpp"
+#include "Engine/EntityComponentSystem/Systems/Systems.hpp"
 
 namespace Flakkari::Protocol {
 
@@ -181,6 +181,30 @@ public:
         packet << size;
         packet << sceneName.c_str();
         packet << entity;
+    }
+
+    struct UpdateMovement {
+        Engine::ECS::Entity entity;
+        Engine::ECS::Components::_2D::Transform pos;
+        Engine::ECS::Components::_2D::Movable vel;
+    };
+
+    template<typename Id>
+    static void addUpdateMovementToPacket (
+        Protocol::Packet<Id> &packet, Engine::ECS::Entity entity,
+        Engine::ECS::Components::_2D::Transform pos,
+        Engine::ECS::Components::_2D::Movable vel
+    ) {
+        packet << entity;
+        packet << pos.position.x;
+        packet << pos.position.y;
+        packet << pos.rotation;
+        packet << pos.scale.x;
+        packet << pos.scale.y;
+        packet << vel.velocity.x;
+        packet << vel.velocity.y;
+        packet << vel.acceleration.x;
+        packet << vel.acceleration.y;
     }
 };
 
