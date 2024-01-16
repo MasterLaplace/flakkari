@@ -16,9 +16,11 @@ namespace Flakkari {
 
 
 std::shared_ptr<ClientManager> ClientManager::_instance = nullptr;
+std::mutex ClientManager::_mutex;
 
 std::shared_ptr<ClientManager> ClientManager::getInstance()
 {
+    std::lock_guard<std::mutex> lock(_mutex);
     if (!_instance)
         _instance = std::make_shared<ClientManager>();
     return _instance;
@@ -101,7 +103,6 @@ void ClientManager::checkInactiveClients()
     for (auto it = clients.begin(); it != clients.end();) {
         if (!it->second->isConnected()) {
             FLAKKARI_LOG_LOG("Client " + it->first + " disconnected");
-            GameManager::removeClientFromGame(it->second->getGameName(), it->second);
             it = clients.erase(it);
         } else {
             ++it;
@@ -114,9 +115,9 @@ void ClientManager::sendPacketToClient (
 ) {
     auto socket = getInstance()->_socket;
 
-    (void)std::async(std::launch::async, [socket, client, packet] {
+    std::thread([socket, client, packet] {
         socket->sendTo(client, packet);
-    });
+    }).detach();
 }
 
 void ClientManager::sendPacketToAllClients(const Network::Buffer &packet)
@@ -140,7 +141,7 @@ void ClientManager::sendPacketToAllClientsExcept (
     auto clientKey = client->toString().value_or("");
 
     for (auto &tmp_client : clients) {
-        auto tmp_clientKey = tmp_client.second->getAddress()->toString().value_or("");
+        auto tmp_clientKey = tmp_client.second->getName().value_or("");
 
         if (tmp_client.second->isConnected() && tmp_clientKey != clientKey)
             socket->sendTo(tmp_client.second->getAddress(), packet);
@@ -152,18 +153,17 @@ void ClientManager::receivePacketFromClient (
 ) {
     auto &clients = getInstance()->_clients;
     auto &bannedClients = getInstance()->_bannedClients;
-    auto clientName = client->toString().value_or("Unknown");
+    auto clientName = client->toString().value_or("");
     auto ip = client->getIp().value_or("");
-    auto clientKey = client->toString().value_or("");
 
     if (std::find(bannedClients.begin(), bannedClients.end(), ip) != bannedClients.end()) {
         FLAKKARI_LOG_LOG("Client " + clientName + " tried to connect but is banned");
         return;
     }
 
-    if (clients.find(clientKey) == clients.end())
+    if (clients.find(clientName) == clients.end())
         return;
-    auto &tmp_client = clients[clientKey];
+    auto &tmp_client = clients[clientName];
 
     Protocol::Packet<Protocol::CommandId> packet;
     if (packet.deserialize(buffer)) {
@@ -179,10 +179,10 @@ void ClientManager::receivePacketFromClient (
 
     FLAKKARI_LOG_LOG("Client " + clientName + " has been banned");
 
-    bannedClients.push_back(client->getIp().value());
+    bannedClients.push_back(ip);
     FLAKKARI_LOG_LOG("Client " + clientName + " banned");
     GameManager::removeClientFromGame(tmp_client->getGameName(), tmp_client);
-    clients.erase(clientKey);
+    clients.erase(clientName);
 }
 
 std::shared_ptr<Client> ClientManager::getClient(std::shared_ptr<Network::Address> client) {

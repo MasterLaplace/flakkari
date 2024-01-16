@@ -26,18 +26,6 @@ struct NetworkEvent {
     }
 };
 
-struct NetworkIp {
-    const char *ip;
-
-    NetworkIp() : ip(0) {}
-    NetworkIp(std::string ip) : ip(ip.c_str()) {}
-    NetworkIp(const NetworkIp &other) : ip(other.ip) {}
-
-    std::size_t size() const {
-        return std::strlen(ip);
-    }
-};
-
 } /* namespace Flakkari::Engine::ECS::Components::Common */
 
 #endif /* !NETWORKEVENT_HPP_ */

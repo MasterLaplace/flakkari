@@ -14,7 +14,7 @@
 
 #include "Network/Packed.hpp"
 
-namespace Engine::ECS::Components::Common {
+namespace Flakkari::Engine::ECS::Components::Common {
 PACKED_START
 
 struct Id {
@@ -30,6 +30,6 @@ struct Id {
 };
 
 PACKED_END
-} // namespace Engine::ECS::Components::Common
+} // namespace Flakkari::Engine::ECS::Components::Common
 
 #endif /* !FLAKKARI_ID_HPP_ */

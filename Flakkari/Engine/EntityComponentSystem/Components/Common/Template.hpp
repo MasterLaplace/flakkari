@@ -11,27 +11,21 @@
 #define FLAKKARI_TEMPLATE_HPP_
 
 #include <string>
-#include <cstring>
-
-#include "Network/Packed.hpp"
 
 namespace Flakkari::Engine::ECS::Components::Common {
-PACKED_START
 
 struct Template {
-    const char *name;
+    std::string name;
 
     Template() : name("") {}
-    Template(const std::string &nname) : name(nname.c_str()) {}
-    Template(const char *nname) : name(nname) {}
+    Template(const std::string &nname) : name(nname) {}
     Template(const Template &other) : name(other.name) {}
 
     std::size_t size() const {
-        return std::strlen(name);
+        return name.size();
     }
 };
 
-PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::Common
 
 #endif /* !FLAKKARI_TEMPLATE_HPP_ */

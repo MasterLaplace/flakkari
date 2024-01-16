@@ -15,15 +15,39 @@
 
 namespace Flakkari {
 
+void Game::sendAllEntities(const std::string &sceneName, std::shared_ptr<Client> player)
+{
+    auto &registry = _scenes[sceneName];
+
+    auto &transforms = registry.getComponents<Engine::ECS::Components::_2D::Transform>();
+
+    for (Engine::ECS::Entity i(0); i < transforms.size(); ++i) {
+        auto &transform = transforms[i];
+
+        if (!transform.has_value())
+            continue;
+
+        Protocol::Packet<Protocol::CommandId> packet;
+        packet.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;
+        packet << i;
+        packet.injectString(sceneName);
+        Protocol::PacketFactory::addComponentsToPacketByEntity<Protocol::CommandId>(packet, registry, i);
+
+        ClientManager::sendPacketToClient(player->getAddress(), packet.serialize());
+    }
+}
+
 Game::Game(const std::string &name, std::shared_ptr<nlohmann::json> config)
 {
     _name = name;
     _config = config;
     _time = std::chrono::steady_clock::now();
+
     if ((*_config)["scenes"].empty())
         throw std::runtime_error("Game: no scenes found");
+
     loadScene((*_config)["startGame"]);
-    ResourceManager::addScene(_name, (*_config)["startGame"]);
+    ResourceManager::addScene(config, (*_config)["startGame"]);
 }
 
 Game::~Game()
@@ -44,6 +68,8 @@ void Game::loadSystems(Engine::ECS::Registry &registry, const std::string &name)
 void Game::loadComponents (
     Engine::ECS::Registry &registry, const nl_component &components, Engine::ECS::Entity newEntity
 ) {
+    if (!components.is_object())
+        return;
     for (auto &component : components.items())
     {
         auto componentName = component.key();
@@ -107,16 +133,8 @@ void Game::loadComponents (
         if (componentName == "Tag") {
             registry.registerComponent<Engine::ECS::Components::Common::Tag>();
             Engine::ECS::Components::Common::Tag tag;
-            tag.tag = componentContent["tag"].get<std::string>().c_str();
+            tag.tag = componentContent.get<std::string>().c_str();
             registry.add_component<Engine::ECS::Components::Common::Tag>(newEntity, std::move(tag));
-            continue;
-        }
-
-        if (componentName == "Template") {
-            registry.registerComponent<Engine::ECS::Components::Common::Template>();
-            Engine::ECS::Components::Common::Template template_;
-            template_.name = componentContent["name"].get<std::string>().c_str();
-            registry.add_component<Engine::ECS::Components::Common::Template>(newEntity, std::move(template_));
             continue;
         }
 
@@ -153,6 +171,8 @@ void Game::loadEntityFromTemplate (
             if (templateInfo.value().begin().key() != componentInfo.value())
                 continue;
             loadComponents(registry, templateInfo.value().begin().value(), newEntity);
+            registry.registerComponent<Engine::ECS::Components::Common::Template>();
+            registry.add_component<Engine::ECS::Components::Common::Template>(newEntity, templateInfo.value().begin().key());
         }
     }
 }
@@ -180,10 +200,31 @@ void Game::loadScene(const std::string &sceneName)
 void Game::sendOnSameScene(const std::string &sceneName, const Network::Buffer &message)
 {
     for (auto &player : _players) {
-        if (!player || !player->isConnected())
+        if (!player)
+            continue;
+        if (!player->isConnected())
             continue;
         if (player->getSceneName() != sceneName)
             continue;
+
+        ClientManager::sendPacketToClient(player->getAddress(), message);
+    }
+}
+
+void Game::sendOnSameSceneExcept(
+    const std::string &sceneName, const Network::Buffer &message,
+    std::shared_ptr<Client> except
+) {
+    for (auto &player : _players) {
+        if (!player)
+            continue;
+        if (!player->isConnected())
+            continue;
+        if (player->getSceneName() != sceneName)
+            continue;
+        if (player == except)
+            continue;
+
         ClientManager::sendPacketToClient(player->getAddress(), message);
     }
 }
@@ -194,13 +235,9 @@ void Game::checkDisconnect()
         if (!player || player->isConnected())
             continue;
         Protocol::Packet<Protocol::CommandId> packet;
-        packet.header._commandId = Protocol::CommandId::REQ_ENTITY_DESTROY;
-        packet << player->getSceneName().size();
-        packet << player->getSceneName().c_str();
+        packet.header._commandId = Protocol::CommandId::REQ_DISCONNECT;
         packet << player->getEntity();
-
         sendOnSameScene(player->getSceneName(), packet.serialize());
-
         _scenes[player->getSceneName()].kill_entity(player->getEntity());
         removePlayer(player);
     }
@@ -221,11 +258,17 @@ void Game::sendUpdatePosition (
     packet << pos.scale.y;
     packet << vel.velocity.x;
     packet << vel.velocity.y;
+    packet << vel.acceleration.x;
+    packet << vel.acceleration.y;
+
     FLAKKARI_LOG_LOG(
+        "packet size: " + std::to_string(packet.size()) + " bytes\n"
         "packet sent: <Id: "
         + std::to_string(player->getEntity())
         + ", Pos: (" + std::to_string(pos.position.x) + ", " + std::to_string(pos.position.y) + ")"
-        + ", Vel: (" + std::to_string(vel.velocity.x) + ", " + std::to_string(vel.velocity.y) + ")>"
+        + ", Vel: (" + std::to_string(vel.velocity.x) + ", " + std::to_string(vel.velocity.y) + ")"
+        + ", Acc: (" + std::to_string(vel.acceleration.x) + ", " + std::to_string(vel.acceleration.y) + ")"
+        + ">"
     );
     sendOnSameScene(player->getSceneName(), packet.serialize());
 }
@@ -235,18 +278,15 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     auto sceneName = player->getSceneName();
     auto entity = player->getEntity();
     auto &registry = _scenes[sceneName];
-    auto &control = registry.getComponents<Engine::ECS::Components::_2D::Control>();
-    auto &velocity = registry.getComponents<Engine::ECS::Components::_2D::Movable>();
-    auto &position = registry.getComponents<Engine::ECS::Components::_2D::Transform>();
-    auto &networkEvent = registry.getComponents<Engine::ECS::Components::Common::NetworkEvent>();
-    auto &ctrl = control[entity];
-    auto &vel = velocity[entity];
-    auto pos = position[entity];
-    auto &netEvent = networkEvent[entity];
+    auto &ctrl = registry.getComponents<Engine::ECS::Components::_2D::Control>()[entity];
+    auto &vel = registry.getComponents<Engine::ECS::Components::_2D::Movable>()[entity];
+    auto &pos = registry.getComponents<Engine::ECS::Components::_2D::Transform>()[entity];
+    auto &netEvent = registry.getComponents<Engine::ECS::Components::Common::NetworkEvent>()[entity];
 
     if (!ctrl.has_value() || !vel.has_value() || !pos.has_value())
         return;
-    Protocol::Event event = Network::Serializer::deserialize<Protocol::Event>(packet.payload);
+
+    Protocol::Event event = *(Protocol::Event *)packet.payload.data();
     if (event.id == Protocol::EventId::MOVE_UP && ctrl->up) {
         if (netEvent->events.size() < int(event.id))
             netEvent->events.resize(int(event.id) + 1);
@@ -313,8 +353,7 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
         if (event.state == Protocol::EventState::RELEASED) {
             Protocol::Packet<Protocol::CommandId> packet;
             packet.header._commandId = Protocol::CommandId::REQ_ENTITY_SHOOT;
-            packet << player->getSceneName().size();
-            packet << player->getSceneName().c_str();
+            packet.injectString(player->getSceneName());
             packet << player->getEntity();
             // create a bullet with player as parent
             sendOnSameScene(player->getSceneName(), packet.serialize());
@@ -377,8 +416,9 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
     if (_players.size() >= (*_config)["maxPlayers"] || !player->isConnected())
         return false;
 
-    auto sceneGame = (*_config)["startGame"];
+    auto sceneGame = (*_config)["startGame"].get<std::string>();
     auto &registry = _scenes[sceneGame];
+    auto address = player->getAddress();
 
     player->setSceneName(sceneGame);
 
@@ -386,13 +426,13 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
     auto p_Template = (*_config)["playerTemplate"];
     auto player_info = ResourceManager::getTemplateById(_name, sceneGame, p_Template);
 
-    loadComponents(registry, player_info.value_or(""), newEntity);
+    loadComponents(registry, player_info.value_or(nullptr), newEntity);
 
     registry.registerComponent<Engine::ECS::Components::Common::NetworkIp>();
     registry.add_component<Engine::ECS::Components::Common::NetworkIp> (
         newEntity,
         Engine::ECS::Components::Common::NetworkIp(
-            std::string(*player->getAddress())
+            std::string(*address)
         )
     );
 
@@ -406,19 +446,25 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
 
     player->setEntity(newEntity);
     _players.push_back(player);
-    FLAKKARI_LOG_INFO("client \""+ std::string(*player->getAddress()) +"\" added to game \""+ _name +"\"");
+    FLAKKARI_LOG_INFO("client \""+ std::string(*address) +"\" added to game \""+ _name +"\"");
+
+    // this->sendAllEntities(sceneGame, player);    // send all entities to the new player
 
     Protocol::Packet<Protocol::CommandId> packet;
-    packet.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;
-    std::cout << "entity: " << newEntity << std::endl;
-    std::cout << "scene: " << sceneGame << std::endl;
-    std::cout << "address: " << player->getAddress()->toString().value() << std::endl;
-    std::cout << "template: " << p_Template << std::endl;
+    packet.header._commandId = Protocol::CommandId::REP_CONNECT;
+    packet << newEntity;
     packet.injectString(sceneGame);
-    packet.injectString(player->getAddress()->toString().value());
+    packet.injectString(player->getName().value_or(""));
     packet.injectString(p_Template);
+    ClientManager::sendPacketToClient(address, packet.serialize());
 
-    sendOnSameScene(player->getSceneName(), packet.serialize());
+    Protocol::Packet<Protocol::CommandId> packet2;
+    packet2.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;
+    packet2 << newEntity;
+    packet2.injectString(sceneGame);
+    packet2.injectString(p_Template);
+
+    sendOnSameSceneExcept(sceneGame, packet2.serialize(), player);
     return true;
 }
 
@@ -427,6 +473,19 @@ bool Game::removePlayer(std::shared_ptr<Client> player)
     auto it = std::find(_players.begin(), _players.end(), player);
     if (it == _players.end())
         return false;
+
+    auto sceneGame = player->getSceneName();
+    auto &registry = _scenes[sceneGame];
+
+    Engine::ECS::Entity entity = player->getEntity();
+
+    Protocol::Packet<Protocol::CommandId> packet;
+    packet.header._commandId = Protocol::CommandId::REQ_ENTITY_DESTROY;
+    packet << entity;
+
+    sendOnSameScene(sceneGame, packet.serialize());
+
+    registry.kill_entity(entity);
     _players.erase(it);
     FLAKKARI_LOG_INFO("client \""+ std::string(*player->getAddress()) +"\" removed from game \""+ _name +"\"");
     return true;

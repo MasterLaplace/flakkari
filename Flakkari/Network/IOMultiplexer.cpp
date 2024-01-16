@@ -13,7 +13,7 @@ namespace Flakkari::Network {
 
 #if defined(_PSELECT_)
 
-PSELECT::PSELECT(int fileDescriptor)
+PSELECT::PSELECT(FileDescriptor fileDescriptor, long int seconds, long int microseconds)
 {
     if (fileDescriptor == -1) {
         FLAKKARI_LOG_ERROR("Socket is -1");
@@ -24,16 +24,16 @@ PSELECT::PSELECT(int fileDescriptor)
     _maxFd = fileDescriptor;
     _sockets.push_back(fileDescriptor);
 
-    _timeout.tv_sec = 1;
-    _timeout.tv_nsec = 0; // 100ms
+    _timeout.tv_sec = seconds;
+    _timeout.tv_nsec = microseconds;
 }
 
-PSELECT::PSELECT()
+PSELECT::PSELECT(long int seconds, long int microseconds)
 {
     FD_ZERO(&_fds);
 
-    _timeout.tv_sec = 1;
-    _timeout.tv_nsec = 0; // 100ms
+    _timeout.tv_sec = seconds;
+    _timeout.tv_nsec = microseconds;
 }
 
 void PSELECT::addSocket(FileDescriptor socket)
@@ -86,7 +86,7 @@ bool PSELECT::isReady(FileDescriptor socket)
 
 #if defined(_PPOLL_)
 
-PPOLL::PPOLL(int fileDescriptor, event_t events)
+PPOLL::PPOLL(FileDescriptor fileDescriptor, event_t events, long int seconds, long int microseconds)
 {
     if (fileDescriptor == -1) {
         FLAKKARI_LOG_ERROR("Socket is -1");
@@ -97,13 +97,13 @@ PPOLL::PPOLL(int fileDescriptor, event_t events)
         _pollfds.resize(fileDescriptor + 1);
     _pollfds[fileDescriptor] = pollfd{fileDescriptor, events, 0};
 
-    _timeout.tv_sec = 1;
-    _timeout.tv_nsec = 0;// 100000000;  // 100ms
+    _timeout.tv_sec = seconds;
+    _timeout.tv_nsec = microseconds;
 }
 
-PPOLL::PPOLL() {
-    _timeout.tv_sec = 1;
-    _timeout.tv_nsec = 0;// 100000000;  // 100ms
+PPOLL::PPOLL(long int seconds, long int microseconds) {
+    _timeout.tv_sec = seconds;
+    _timeout.tv_nsec = microseconds;
 }
 
 void PPOLL::addSocket(FileDescriptor socket)

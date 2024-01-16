@@ -116,7 +116,9 @@ inline namespace V_0 {
 
     static_assert(static_cast<uint8_t>(CommandId::MAX_COMMAND_ID) <= 0xFF, "CommandId is too big");
 
-    static std::string to_string(CommandId id)
+    class Commands {
+    public:
+    static std::string command_to_string(CommandId id)
     {
         switch (id) {
             case CommandId::REQ_CONNECT: return "REQ_CONNECT";
@@ -160,6 +162,7 @@ inline namespace V_0 {
             default: return "Unknown";
         }
     }
+    };
 
 } /* namespace V_0 */
 

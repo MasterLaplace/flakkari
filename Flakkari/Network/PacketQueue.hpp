@@ -82,8 +82,8 @@ class PacketQueue {
 
     protected:
     private:
-    std::mutex _mutex;
-    std::deque<T> _queue;
+        std::mutex _mutex;
+        std::deque<T> _queue;
 };
 
 } // namespace Flakkari::Network

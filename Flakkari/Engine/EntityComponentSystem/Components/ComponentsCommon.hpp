@@ -29,5 +29,6 @@
 #include "Common/Weapon.hpp"    // Weapon component (name)
 
 #include "Common/NetworkEvent.hpp"  // NetworkEvent component (event)
+#include "Common/NetworkIp.hpp"     // NetworkIp component (ip)
 
 #endif /* !FLAKKARI_COMPONENTSCOMMON_HPP_ */

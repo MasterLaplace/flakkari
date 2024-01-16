@@ -179,6 +179,13 @@ class Socket {
          */
         void connect();
 
+
+        /**
+         * @brief Disconnect from the server.
+         *
+         */
+        void disconnect();
+
         /**
          * @brief Accept an incoming connection.
          * This function is only used by TCP sockets.
@@ -287,6 +294,7 @@ class Socket {
 
     protected:
     private:
+        std::mutex _mutex;
         socket_t _socket;
         std::shared_ptr<Address> _address = nullptr;
 };

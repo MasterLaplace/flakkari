@@ -94,7 +94,13 @@ class Game {
         void loadScene(const std::string &name);
 
     public: // Actions
+        void sendAllEntities(const std::string &sceneName, std::shared_ptr<Client> player);
         void sendOnSameScene(const std::string &sceneName, const Network::Buffer &message);
+
+        void sendOnSameSceneExcept (
+            const std::string &sceneName, const Network::Buffer &message,
+            std::shared_ptr<Client> except
+        );
 
         /**
          * @brief Check if a player is disconnected.

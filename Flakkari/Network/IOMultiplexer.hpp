@@ -83,8 +83,8 @@ class PSELECT {
         using FileDescriptor = int;
 
     public:
-        PSELECT(int fileDescriptor);
-        PSELECT();
+        PSELECT(FileDescriptor fileDescriptorn, long int seconds = 1, long int microseconds = 0);
+        PSELECT(long int seconds = 1, long int microseconds = 0);
         ~PSELECT() = default;
 
         /**
@@ -180,8 +180,8 @@ class PPOLL {
         using nfds_t = unsigned long int;
 
     public:
-        PPOLL(int fileDescriptor, event_t events);
-        PPOLL();
+        PPOLL(FileDescriptor fileDescriptor, event_t events, long int seconds = 1, long int microseconds = 0);
+        PPOLL(long int seconds = 1, long int microseconds = 0);
         ~PPOLL() = default;
 
         /**

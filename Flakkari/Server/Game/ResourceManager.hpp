@@ -80,7 +80,7 @@ class ResourceManager {
          * @param configPath  The path to the config file of the game to add
          * @param scene  The scene to add to the ResourceManager instance
          */
-        static void addScene(const std::string &configPath, const std::string &scene);
+        static void addScene(std::shared_ptr<nlohmann::json> config, const std::string &scene);
 
         /**
          * @brief Delete a scene from the ResourceManager instance
@@ -103,7 +103,7 @@ class ResourceManager {
         );
 
     private:
-        void loadConfig(const std::string &configPath, const std::string &scene);
+        void loadConfig(std::shared_ptr<nlohmann::json> config, const std::string &scene);
 };
 
 } /* namespace Flakkari */

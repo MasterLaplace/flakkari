@@ -16,7 +16,6 @@
 #include "Network/Packed.hpp"
 
 namespace Flakkari::Engine::ECS::Components::Common {
-PACKED_START
 
 /**
  * @brief FontInfo is a structure that holds information about a Font
@@ -24,7 +23,7 @@ PACKED_START
  */
 struct Level {
     unsigned int level;
-    const char *currentWeapon;
+    std::string currentWeapon;
     unsigned int currentExp;
     unsigned int requiredExp;
 
@@ -41,11 +40,10 @@ struct Level {
         requiredExp(other.requiredExp) {}
 
     std::size_t size() const {
-        return sizeof(level) + std::strlen(currentWeapon) + sizeof(currentExp) + sizeof(requiredExp);
+        return sizeof(level) + currentWeapon.size() + sizeof(currentExp) + sizeof(requiredExp);
     }
 };
 
-PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::Common
 
 #endif //LEVEL_HPP

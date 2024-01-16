@@ -30,7 +30,7 @@ Status of This Memo
 
 Copyright Notice
 
-   Copyright (c) [year] IETF Trust and the persons identified as the
+   Copyright (c) 2023 IETF Trust and the persons identified as the
    document authors. All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -288,26 +288,6 @@ Table of Contents
    This section defines the fundamental structure of Flakkari Protocol messages,
    providing a clear understanding of how headers are composed and the meaning
    behind specific fields and enums.
-
-4. Message Semantics
-
-   [Describe the semantics of different types of messages in the protocol.]
-
-   4.1. System Messages
-
-      [Explain the purpose and semantics of system messages.]
-
-   4.2. Network Messages
-
-      [Describe the meaning and use of network-related messages.]
-
-   4.3. Game Messages
-
-      [Provide information about messages related to the game layer.]
-
-   4.4. User Messages
-
-      [Explain the semantics of user-related messages.]
 
 4. Message Semantics
 

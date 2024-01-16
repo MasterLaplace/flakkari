@@ -12,7 +12,7 @@
 namespace Flakkari {
 
 Client::Client(std::shared_ptr<Network::Address> address, std::string name)
-    : _address(address), _gameName(name)
+    : _address(address), _gameName(name), _name(address->toString().value_or(""))
 {
     _lastActivity = std::chrono::steady_clock::now();
 }
@@ -24,6 +24,8 @@ Client::~Client() {
 
 bool Client::isConnected(float timeout)
 {
+    if (!this)
+        return false;
     if (!_isConnected)
         return false;
     return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - _lastActivity).count() < timeout;

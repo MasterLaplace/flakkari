@@ -31,6 +31,7 @@ namespace Flakkari {
 class GameManager {
     private:
         static std::shared_ptr<GameManager> _instance;
+        static std::mutex _mutex;
 
     public:
         std::unordered_map<std::string /*gameName*/, std::queue<std::shared_ptr<Client>> /*waitingClients*/> _waitingClients;

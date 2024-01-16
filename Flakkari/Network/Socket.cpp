@@ -183,6 +183,39 @@ void Socket::connect()
     }
 }
 
+void Socket::disconnect()
+{
+    #if _WIN32 || __APPLE__
+        if (::shutdown(_socket, SD_BOTH) == SOCKET_ERROR) {
+            FLAKKARI_LOG_FATAL("Failed to disconnect socket, error: " + STD_ERROR);
+            return;
+        }
+    #else
+        if (::shutdown(_socket, SHUT_RDWR) == SOCKET_ERROR) {
+            FLAKKARI_LOG_FATAL("Failed to disconnect socket, error: " + STD_ERROR);
+            return;
+        }
+    #endif
+
+    #ifdef _WIN32
+        if (::closesocket(_socket) == SOCKET_ERROR) {
+            FLAKKARI_LOG_FATAL("Failed to close socket, error: " + STD_ERROR);
+            return;
+        }
+    #else
+        if (::close(_socket) == SOCKET_ERROR) {
+            FLAKKARI_LOG_FATAL("Failed to close socket, error: " + STD_ERROR);
+            return;
+        }
+    #endif
+
+    #ifdef _WIN32
+        WSACleanup();
+    #endif
+
+    _socket = INVALID_SOCKET;
+}
+
 std::shared_ptr<Socket> Socket::accept()
 {
     sockaddr_storage clientAddr;
@@ -234,6 +267,7 @@ void Socket::send(const Buffer &data, size_t size, int flags)
 
 void Socket::sendTo(const std::shared_ptr<Address> &address, const Buffer &data, int flags)
 {
+    std::lock_guard<std::mutex> lock(_mutex);
     auto &addr = address->getAddrInfo();
 
     if (addr == nullptr)

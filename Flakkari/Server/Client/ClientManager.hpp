@@ -49,6 +49,7 @@ namespace Flakkari {
 class ClientManager {
     private:
         static std::shared_ptr<ClientManager> _instance;
+        static std::mutex _mutex;
 
         using id_t = short;
 

@@ -24,10 +24,13 @@ void position(Registry &r, float deltaTime)
         auto& vel = velocities[i];
 
         if (pos.has_value() && vel.has_value()) {
-            pos->position.x += vel->velocity.dx * deltaTime * 0.5f * vel->acceleration.x * deltaTime * deltaTime;
-            pos->position.y += vel->velocity.dy * deltaTime * 0.5f * vel->acceleration.y * deltaTime * deltaTime;
-            vel->velocity.dx += vel->acceleration.x * deltaTime;
-            vel->velocity.dy += vel->acceleration.y * deltaTime;
+            float magnitude = std::sqrt(vel->velocity.dx * vel->velocity.dx + vel->velocity.dy * vel->velocity.dy);
+            if (magnitude > 0.0f) {
+                vel->velocity.dx /= magnitude;
+                vel->velocity.dy /= magnitude;
+            }
+            pos->position.x += vel->velocity.dx * vel->acceleration.x * deltaTime;
+            pos->position.y += vel->velocity.dy * vel->acceleration.y * deltaTime;
         }
     }
 }

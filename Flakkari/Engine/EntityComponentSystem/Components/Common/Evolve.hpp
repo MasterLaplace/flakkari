@@ -11,12 +11,8 @@
 #define FLAKKARI_EVOLVE_HPP_
 
 #include <string>
-#include <cstring>
-
-#include "Network/Packed.hpp"
 
 namespace Flakkari::Engine::ECS::Components::Common {
-PACKED_START
 
 /**
  * @brief Evolve component for ECS entities that can evolve in to another Component
@@ -25,19 +21,17 @@ PACKED_START
  *          based on a template
  */
 struct Evolve {
-    const char *name;
+    std::string name;
 
     Evolve() : name("") {}
-    Evolve(const std::string &nname) : name(nname.c_str()) {}
-    Evolve(const char *nname) : name(nname) {}
+    Evolve(const std::string &nname) : name(nname) {}
     Evolve(const Evolve &other) : name(other.name) {}
 
     std::size_t size() const {
-        return std::strlen(name);
+        return name.size();
     }
 };
 
-PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::Common
 
 #endif /* !FLAKKARI_EVOLVE_HPP_ */

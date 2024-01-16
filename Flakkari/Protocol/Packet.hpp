@@ -49,7 +49,7 @@ inline namespace V_0 {
         std::string to_string()
         {
             std::string str = "Packet<Id: "
-            + std::to_string(int(header._commandId))
+            + Commands::command_to_string(header._commandId)
             + ", ContentLength: "
             + std::to_string(int(header._contentLength))
             + ", SequenceNumber: "
@@ -98,10 +98,9 @@ inline namespace V_0 {
             static_assert(std::is_trivially_copyable<DataType>::value, "DataType must be trivially copyable to be used in a packet.");
             static_assert(std::is_standard_layout<DataType>::value, "DataType must be standard layout to be used in a packet.");
 
-            std::size_t size = packet.payload.size();
-            packet.payload.resize(size + sizeof(DataType));
-            std::memcpy(packet.payload.data() + size, &data, sizeof(DataType));
-            packet.header._contentLength = packet.payload.size();
+            const byte* dataBytes = reinterpret_cast<const byte*>(&data);
+            packet.payload.insert(packet.payload.end(), dataBytes, dataBytes + sizeof(data));
+            packet.header._contentLength += packet.payload.size() + sizeof(data);
             return packet;
         }
 
@@ -122,10 +121,12 @@ inline namespace V_0 {
             static_assert(std::is_trivially_copyable<DataType>::value, "DataType must be trivially copyable to be used in a packet.");
             static_assert(std::is_standard_layout<DataType>::value, "DataType must be standard layout to be used in a packet.");
 
-            std::size_t size = packet.payload.size() - sizeof(DataType);
-            std::memcpy(&data, packet.payload.data() + size, sizeof(DataType));
-            packet.payload.resize(size);
-            packet.header._contentLength = packet.payload.size();
+            if (packet.payload.size() < sizeof(data))
+                throw std::runtime_error("Packet payload is too small to extract data.");
+
+            std::memcpy(&data, packet.payload.data(), sizeof(data));
+            packet.payload.erase(packet.payload.begin(), packet.payload.begin() + sizeof(data));
+            packet.header._contentLength -= sizeof(data);
             return packet;
         }
 

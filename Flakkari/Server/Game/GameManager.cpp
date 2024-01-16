@@ -15,6 +15,7 @@
 namespace Flakkari {
 
 std::shared_ptr<GameManager> GameManager::_instance = nullptr;
+std::mutex GameManager::_mutex;
 
 #define STR_ADDRESS std::string(*client->getAddress())
 
@@ -47,6 +48,7 @@ GameManager::GameManager()
 
 std::shared_ptr<GameManager> GameManager::getInstance()
 {
+    std::lock_guard<std::mutex> lock(_mutex);
     if (!_instance)
         _instance = std::make_shared<GameManager>();
     return _instance;
@@ -135,8 +137,12 @@ void GameManager::addClientToGame(std::string gameName, std::shared_ptr<Client> 
     auto &gamesStore = current->_gamesStore;
     auto &gamesInstances = current->_gamesInstances;
     auto &waitingClients = current->_waitingClients;
-    if (gamesStore.find(gameName) == gamesStore.end())
-        return FLAKKARI_LOG_ERROR("game not found"), void();
+
+    if (gamesStore.find(gameName) == gamesStore.end()) {
+        FLAKKARI_LOG_ERROR("game not found");
+        client.reset();
+        return;
+    }
 
     auto &gameStore = gamesStore[gameName];
     auto &gameInstance = gamesInstances[gameName];
@@ -145,6 +151,13 @@ void GameManager::addClientToGame(std::string gameName, std::shared_ptr<Client> 
     auto maxPlayers = gameStore->at("maxPlayers").get<size_t>();
     auto maxInstances = gameStore->at("maxInstances").get<size_t>();
     auto lobby = gameStore->at("lobby").get<std::string>();
+
+    FLAKKARI_LOG_INFO("<Game>: " + gameName +
+        ", minPlayers: " + std::to_string(minPlayers) +
+        ",  maxPlayers: " + std::to_string(maxPlayers) +
+        ", maxInstances: " + std::to_string(maxInstances) +
+        ", lobby: " + lobby
+    );
 
     if (gameInstance.empty() || gameInstance.back()->getPlayers().size() >= maxPlayers) {
         if (gameInstance.size() >= maxInstances) {
@@ -158,9 +171,9 @@ void GameManager::addClientToGame(std::string gameName, std::shared_ptr<Client> 
 
     if (gameInstance.back()->addPlayer(client)) {
         if (lobby == "Matchmaking" && gameInstance.back()->getPlayers().size() >= minPlayers && !gameInstance.back()->isRunning())
-            (void)std::async(std::launch::async, &Game::start, gameInstance.back());
+            gameInstance.back()->start();
         if (lobby == "OpenWorld" && !gameInstance.back()->isRunning())
-            (void)std::async(std::launch::async, &Game::start, gameInstance.back());
+            gameInstance.back()->start();
         return;
     }
     FLAKKARI_LOG_ERROR("could not add client \""+ STR_ADDRESS +"\" to game \"" + gameName + "\"");

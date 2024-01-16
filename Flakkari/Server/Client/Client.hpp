@@ -18,6 +18,7 @@
     #define CLIENT_HPP_
 
 #include <chrono>
+#include <mutex>
 
 #include "Network/Socket.hpp"
 #include "Network/PacketQueue.hpp"
@@ -57,7 +58,7 @@ class Client {
          * @return true  If the client is still connected
          * @return false  If the client is not connected anymore
          */
-        [[nodiscard]] bool isConnected(float timeout = 10);
+        [[nodiscard]] bool isConnected(float timeout = 5);
 
         /**
          * @brief Update the last activity of the client
@@ -103,6 +104,9 @@ class Client {
         [[nodiscard]] std::string getGameName() const { return _gameName; }
         void setGameName(std::string gameName) { _gameName = gameName; }
 
+        [[nodiscard]] std::optional<std::string> getName() const { return _name; }
+        void setName(std::string name) { _name = name; }
+
         [[nodiscard]] unsigned short getWarningCount() const { return _warningCount; }
 
         [[nodiscard]] unsigned short getMaxWarningCount() const { return _maxWarningCount; }
@@ -117,6 +121,7 @@ class Client {
         std::string _sceneName;
         std::string _gameName;
         bool _isConnected = true;
+        std::string _name;
         unsigned short _warningCount = 0;
         unsigned short _maxWarningCount = 5;
         unsigned short _maxPacketHistory = 10;
