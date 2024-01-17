@@ -185,7 +185,7 @@ void Socket::connect()
 
 void Socket::disconnect()
 {
-    #if _WIN32 || __APPLE__
+    #if _WIN32
         if (::shutdown(_socket, SD_BOTH) == SOCKET_ERROR) {
             FLAKKARI_LOG_FATAL("Failed to disconnect socket, error: " + STD_ERROR);
             return;

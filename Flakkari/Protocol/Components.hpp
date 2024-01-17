@@ -48,6 +48,32 @@ inline namespace V_0 {
         MAX_COMPONENT
     };
 
+    static_assert(static_cast<uint8_t>(ComponentId::MAX_COMPONENT) <= 30, "ComponentId::MAX_COMPONENT is too big");
+
+    class Components final {
+    public:
+    static std::string component_to_string(ComponentId id) {
+        switch (id) {
+            case ComponentId::CONTROL: return "CONTROL";
+            case ComponentId::MOVABLE: return "MOVABLE";
+            case ComponentId::TRANSFORM: return "TRANSFORM";
+            case ComponentId::COLLIDER: return "COLLIDER";
+            case ComponentId::RIGIDBODY: return "RIGIDBODY";
+            case ComponentId::CHILD: return "CHILD";
+            case ComponentId::PARENT: return "PARENT";
+            case ComponentId::TAG: return "TAG";
+            case ComponentId::SPAWNED: return "SPAWNED";
+            case ComponentId::TEMPLATE : return "TEMPLATE";
+            case ComponentId::WEAPON: return "WEAPON";
+            case ComponentId::LEVEL: return "LEVEL";
+            case ComponentId::EVOLVE: return "EVOLVE";
+            case ComponentId::HEALTH: return "HEALTH";
+            case ComponentId::NETWORK_EVENT: return "NETWORK_EVENT";
+            case ComponentId::NETWORK_IP: return "NETWORK_IP";
+            default: return "UNKNOWN";
+        }
+    }};
+
 } /* namespace V_0 */
 
 } // namespace Flakkari::Protocol

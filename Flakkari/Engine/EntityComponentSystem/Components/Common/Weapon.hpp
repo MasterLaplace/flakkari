@@ -35,16 +35,16 @@ PACKED_START
  * maxAmmo: Maximum ammunition the weapon can hold.
  */
 struct Weapon {
-    unsigned int damage;
+    std::size_t damage;
     float fireRate;
-    unsigned int level;
+    std::size_t level;
 
     Weapon() = default;
     Weapon(const Weapon &other) = default;
-    Weapon(unsigned int dmg, float rate, unsigned int lvl)
+    Weapon(std::size_t dmg, float rate, std::size_t lvl)
         : damage(dmg), fireRate(rate), level(lvl){};
 
-    unsigned int size() const {
+    std::size_t size() const {
         return sizeof(*this);
     };
 };

@@ -91,7 +91,7 @@ class UDPServer {
 
     private:
         std::shared_ptr<Network::Socket> _socket;
-        std::unique_ptr<Network::PPOLL> _io;
+        std::unique_ptr<Network::PSELECT> _io;
 };
 
 } /* namespace Flakkari */

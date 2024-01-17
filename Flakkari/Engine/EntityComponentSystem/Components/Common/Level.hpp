@@ -22,13 +22,13 @@ namespace Flakkari::Engine::ECS::Components::Common {
  *
  */
 struct Level {
-    unsigned int level;
+    std::size_t level;
     std::string currentWeapon;
-    unsigned int currentExp;
-    unsigned int requiredExp;
+    std::size_t currentExp;
+    std::size_t requiredExp;
 
     Level() : level(1), currentWeapon(""), currentExp(0), requiredExp(100) {}
-    Level(unsigned int level, std::string currentWeapon, unsigned int currentExp, unsigned int requiredExp)
+    Level(std::size_t level, std::string currentWeapon, std::size_t currentExp, std::size_t requiredExp)
         : level(level),
         currentWeapon(currentWeapon.c_str()),
         currentExp(currentExp),

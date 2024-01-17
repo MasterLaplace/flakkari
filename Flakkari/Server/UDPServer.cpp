@@ -22,7 +22,7 @@ UDPServer::UDPServer(std::string ip, std::size_t port) :
     FLAKKARI_LOG_INFO(std::string(*_socket));
     _socket->bind();
 
-    _io = std::make_unique<Network::PPOLL>(1);
+    _io = std::make_unique<Network::PSELECT>(1);
     _io->addSocket(_socket->getSocket());
     _io->addSocket(STDIN_FILENO);
 
@@ -79,7 +79,7 @@ void UDPServer::run()
     for (auto &fd : *_io) {
         if (!_io->isReady(fd))
             continue;
-        if (handleInput(fd.fd))
+        if (handleInput(fd))
             continue;
         handlePacket();
     }

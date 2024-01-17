@@ -109,7 +109,6 @@ public:
 
         if (transform.has_value()) {
             packet << Protocol::ComponentId::TRANSFORM;
-            packet << transform->size();
             packet << transform->position.x;
             packet << transform->position.y;
             packet << transform->rotation;
@@ -121,7 +120,6 @@ public:
 
         if (movable.has_value()) {
             packet << Protocol::ComponentId::MOVABLE;
-            packet << movable->size();
             packet << movable->velocity.x;
             packet << movable->velocity.y;
             packet << movable->acceleration.x;
@@ -132,7 +130,6 @@ public:
 
         if (control.has_value()) {
             packet << Protocol::ComponentId::CONTROL;
-            packet << control->size();
             packet << control->up;
             packet << control->down;
             packet << control->left;
@@ -144,7 +141,6 @@ public:
 
         if (collider.has_value()) {
             packet << Protocol::ComponentId::COLLIDER;
-            packet << collider->size();
             packet << collider->_size.x;
             packet << collider->_size.y;
         }
@@ -153,7 +149,6 @@ public:
 
         if (rigidbody.has_value()) {
             packet << Protocol::ComponentId::RIGIDBODY;
-            packet << rigidbody->size();
             packet << rigidbody->mass;
             packet << rigidbody->restitution;
             packet << rigidbody->friction;
@@ -165,7 +160,6 @@ public:
 
         if (health.has_value()) {
             packet << Protocol::ComponentId::HEALTH;
-            packet << health->size();
             packet << health->currentHealth;
             packet << health->maxHealth;
             packet << health->shield;
@@ -176,7 +170,6 @@ public:
 
         if (weapon.has_value()) {
             packet << Protocol::ComponentId::WEAPON;
-            packet << weapon->size();
             packet << weapon->damage;
             packet << weapon->fireRate;
             packet << weapon->level;
@@ -186,7 +179,6 @@ public:
 
         if (level.has_value()) {
             packet << Protocol::ComponentId::LEVEL;
-            packet << level->size();
             packet << level->level;
             packet.injectString(level->currentWeapon);
             packet << level->currentExp;
@@ -197,7 +189,6 @@ public:
 
         if (spawned.has_value()) {
             packet << Protocol::ComponentId::SPAWNED;
-            packet << spawned->size();
             packet << spawned->has_spawned;
         }
 
@@ -205,7 +196,6 @@ public:
 
         if (networkEvent.has_value()) {
             packet << Protocol::ComponentId::NETWORK_EVENT;
-            packet << networkEvent->size();
             packet << networkEvent->events.size();
             for (auto &event : networkEvent->events) {
                 packet << event;
@@ -223,7 +213,6 @@ public:
 
         if (parent.has_value()) {
             packet << Protocol::ComponentId::PARENT;
-            packet << parent->size();
             packet << parent->entity;
         }
 
@@ -231,7 +220,6 @@ public:
 
         if (child.has_value()) {
             packet << Protocol::ComponentId::CHILD;
-            packet << child->size();
             packet.injectString(child->name);
         }
 
@@ -239,7 +227,6 @@ public:
 
         if (tag.has_value()) {
             packet << Protocol::ComponentId::TAG;
-            packet << tag->size();
             packet.injectString(tag->tag);
         }
     }

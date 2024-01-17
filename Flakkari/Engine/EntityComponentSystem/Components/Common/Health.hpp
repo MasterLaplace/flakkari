@@ -22,17 +22,17 @@ PACKED_START
  *
  */
 struct Health {
-    unsigned int currentHealth;
-    unsigned int maxHealth = 100;
-    unsigned int shield = 0;
-    unsigned int maxShield = 100;
+    std::size_t currentHealth;
+    std::size_t maxHealth = 100;
+    std::size_t shield = 0;
+    std::size_t maxShield = 100;
 
     Health() : currentHealth(100), maxHealth(100), shield(0), maxShield(100) {};
-    Health(unsigned int currentHealth, unsigned int maxHealth, unsigned int shield, unsigned int maxShield) :
+    Health(std::size_t currentHealth, std::size_t maxHealth, std::size_t shield, std::size_t maxShield) :
         currentHealth(currentHealth), maxHealth(maxHealth), shield(shield), maxShield(maxShield) {};
     Health(const Health &other) : currentHealth(other.currentHealth), maxHealth(other.maxHealth), shield(other.shield), maxShield(other.maxShield) {};
 
-    unsigned int size() const {
+    std::size_t size() const {
         return sizeof(*this);
     }
 };
