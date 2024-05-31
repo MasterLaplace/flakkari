@@ -20,7 +20,7 @@
 #include <chrono>
 #include <ctime>
 
-#define FLAKKARI_LOG(level, message) Flakkari::Logger::log(level, message, __FILE__, __LINE__)
+#define FLAKKARI_LOG(level, message) Flakkari::Logger::log(level, message, __LINE__, __FILE__)
 #define FLAKKARI_LOG_INFO(message) FLAKKARI_LOG(LOG_INFO, message)
 #define FLAKKARI_LOG_LOG(message) FLAKKARI_LOG(LOG_LOG, message)
 #define FLAKKARI_LOG_DEBUG(message) FLAKKARI_LOG(LOG_DEBUG, message)
@@ -83,10 +83,8 @@ namespace Flakkari {
             static void setMode(Mode mode) noexcept;
             static const std::string get_current_time() noexcept;
             static const std::string fatal_error_message() noexcept;
-            static void log(int level, std::string message, std::string file, int line);
-            static void log(int level, std::string message);
-            static void log(int level, std::string message, std::string file);
-            static void log(int level, std::string message, int line);
+            static void log(int level, std::string message, int line, std::string file = "") noexcept;
+            static void log(int level, std::string message) noexcept;
     };
 } /* namespace Flakkari */
 

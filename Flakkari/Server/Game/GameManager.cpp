@@ -21,13 +21,25 @@ std::mutex GameManager::_mutex;
 
 GameManager::GameManager()
 {
-    for (const auto & entry : std::filesystem::directory_iterator("../Games")) {
-        std::string gameName = entry.path().string().substr(9);
+#if !defined(_WIN32) && !defined(_WIN64)  && !defined( MSVC) && !defined(_MSC_VER)
+    _game_dir = std::getenv("FLAKKARI_GAME_DIR");
+#else
+    errno_t err = _dupenv_s(&_game_dir.data(), &_game_dir.size(), "FLAKKARI_GAME_DIR");
+#endif
+    if (_game_dir.empty())
+        FLAKKARI_LOG_FATAL("No game directory set: please set \"FLAKKARI_GAME_DIR\" environment variable");
+
+    for (const auto & entry : std::filesystem::directory_iterator(_game_dir))
+    {
+        std::string gameName = entry.path().string();
+        gameName = gameName.substr(std::max(gameName.find_last_of("/") + 1, gameName.find_last_of("\\") + 1));
+
         if (_gamesStore.find(gameName) != _gamesStore.end()) {
             FLAKKARI_LOG_ERROR("game already loaded");
             continue;
         }
-        std::ifstream configFile("../Games/" + gameName + "/config.cfg");
+
+        std::ifstream configFile(_game_dir + "/" + gameName + "/config.cfg");
         nlohmann::json config;
 
         if (!configFile.is_open()) {
@@ -57,9 +69,11 @@ std::shared_ptr<GameManager> GameManager::getInstance()
 int GameManager::addGame(std::string gameName)
 {
     auto &_gamesStore = getInstance()->_gamesStore;
+    auto _game_dir = getInstance()->_game_dir;
+
     if (_gamesStore.find(gameName) != _gamesStore.end())
         return FLAKKARI_LOG_ERROR("game already loaded"), 1;
-    std::ifstream configFile("../Games/" + gameName + "/config.cfg");
+    std::ifstream configFile(_game_dir + "/" + gameName + "/config.cfg");
     nlohmann::json config;
 
     if (!configFile.is_open())
@@ -95,9 +109,11 @@ std::vector<std::shared_ptr<Game>> GameManager::getGamesInstances()
 int GameManager::updateGame(std::string gameName)
 {
     auto &_gamesStore = getInstance()->_gamesStore;
+    auto _game_dir = getInstance()->_game_dir;
+
     if (_gamesStore.find(gameName) == _gamesStore.end())
         return FLAKKARI_LOG_ERROR("game not found"), 1;
-    std::ifstream configFile("../Games/" + gameName + "/config.cfg");
+    std::ifstream configFile(_game_dir + "/" + gameName + "/config.cfg");
     nlohmann::json config;
 
     if (!configFile.is_open())

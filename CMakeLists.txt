@@ -1,5 +1,5 @@
 # Flakkari/CMakeLists.txt
-cmake_minimum_required(VERSION 3.26.4)
+cmake_minimum_required(VERSION 3.22.0)
 
 project(R-Type_Server)
 
@@ -117,9 +117,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if(MSVC)
     add_compile_options(/W4)
 elseif(WIN32)
-    add_compile_options(-Wall -Wextra -pedantic)
+    add_compile_options(-Wall -Wextra)
 else()
-    add_compile_options(-Wall -Wextra -pedantic)
+    add_compile_options(-Wall -Wextra)
 endif()
 
 # Create the executable

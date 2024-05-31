@@ -9,7 +9,7 @@
 
 using namespace Flakkari;
 
-#if defined(DEBUG) || defined(_DEBUG)
+#if defined(DEBUG) || defined(_DEBUG) || !defined(DEBUG)
 static Logger::Mode _mode = Logger::Mode::DEBUG;
 #else
 static Logger::Mode _mode = Logger::Mode::NORMAL;
@@ -57,7 +57,7 @@ const std::string Logger::fatal_error_message() noexcept
         COLOR_RESET
         "\nPlease report this error to the developers by opening an issue on GitHub:\n"
         COLOR_BRIGHT_CYAN
-        "\thttps://github.com/MasterLaplace/Flakkari/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml&title=[Bug :: "
+        "\thttps://github.com/MasterLaplace/Flakkari/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml&title=[Bug%20::%20"
         #ifdef __APPLE__
         "macOS]"
         #elif __linux__
@@ -92,7 +92,7 @@ const std::string Logger::fatal_error_message() noexcept
     #endif
 }
 
-void Logger::log(int level, std::string message, std::string file, int line)
+void Logger::log(int level, std::string message, int line, std::string file) noexcept
 {
     if (_mode == Logger::Mode::SILENT && level != LOG_FATAL)
         return;
@@ -174,7 +174,7 @@ void Logger::log(int level, std::string message, std::string file, int line)
         std::cout << fatal_error_message() << std::endl;
 }
 
-void Logger::log(int level, std::string message)
+void Logger::log(int level, std::string message) noexcept
 {
     if (_mode == Logger::Mode::SILENT && level != LOG_FATAL)
         return;
@@ -249,170 +249,6 @@ void Logger::log(int level, std::string message)
     }
 
     std::cout << " [" << levelStr << "] " << message << std::endl;
-    setColor(COLOR_RESET);
-    #endif
-
-    if (level == LOG_FATAL)
-        std::cout << fatal_error_message() << std::endl;
-}
-
-void Logger::log(int level, std::string message, std::string file)
-{
-    if (_mode == Logger::Mode::SILENT && level != LOG_FATAL)
-        return;
-
-    if (_mode == Logger::Mode::NORMAL && level == LOG_DEBUG)
-        return;
-
-    #if !defined(_WIN32) || !defined(_WIN64)
-    std::string color = COLOR_RESET;
-    std::string levelStr = "INFO";
-
-    switch (level) {
-        case LOG_INFO:
-            color = COLOR_CYAN;
-            levelStr = "INFO";
-            break;
-        case LOG_LOG:
-            color = COLOR_GREEN;
-            levelStr = "LOG";
-            break;
-        case LOG_DEBUG:
-            color = COLOR_MAGENTA;
-            levelStr = "DEBUG";
-            break;
-        case LOG_WARNING:
-            color = COLOR_YELLOW;
-            levelStr = "WARNING";
-            break;
-        case LOG_ERROR:
-            color = COLOR_ORANGE;
-            levelStr = "ERROR";
-            break;
-        case LOG_FATAL:
-            color = COLOR_BRIGHT_RED;
-            levelStr = "FATAL";
-            break;
-    }
-
-    std::cout << get_current_time();
-    std::cout << color << " [" << levelStr << "] " << message << " (" << file << ")" << COLOR_RESET << std::endl;
-
-    #else
-
-    std::string levelStr = "INFO";
-    std::cout << get_current_time();
-
-    switch (level) {
-        case LOG_INFO:
-            levelStr = "INFO";
-            setColor(COLOR_CYAN);
-            break;
-        case LOG_LOG:
-            levelStr = "LOG";
-            setColor(COLOR_GREEN);
-            break;
-        case LOG_DEBUG:
-            levelStr = "DEBUG";
-            setColor(COLOR_MAGENTA);
-            break;
-        case LOG_WARNING:
-            levelStr = "WARNING";
-            setColor(COLOR_YELLOW);
-            break;
-        case LOG_ERROR:
-            levelStr = "ERROR";
-            setColor(COLOR_ORANGE);
-            break;
-        case LOG_FATAL:
-            levelStr = "FATAL";
-            setColor(COLOR_BRIGHT_RED);
-            break;
-    }
-
-    std::cout << " [" << levelStr << "] " << message << " (" << file << ")" << std::endl;
-    setColor(COLOR_RESET);
-    #endif
-
-    if (level == LOG_FATAL)
-        std::cout << fatal_error_message() << std::endl;
-}
-
-void Logger::log(int level, std::string message, int line)
-{
-    if (_mode == Logger::Mode::SILENT && level != LOG_FATAL)
-        return;
-
-    if (_mode == Logger::Mode::NORMAL && level == LOG_DEBUG)
-        return;
-
-    #if !defined(_WIN32) || !defined(_WIN64)
-    std::string color = COLOR_RESET;
-    std::string levelStr = "INFO";
-
-    switch (level) {
-        case LOG_INFO:
-            color = COLOR_CYAN;
-            levelStr = "INFO";
-            break;
-        case LOG_LOG:
-            color = COLOR_GREEN;
-            levelStr = "LOG";
-            break;
-        case LOG_DEBUG:
-            color = COLOR_MAGENTA;
-            levelStr = "DEBUG";
-            break;
-        case LOG_WARNING:
-            color = COLOR_YELLOW;
-            levelStr = "WARNING";
-            break;
-        case LOG_ERROR:
-            color = COLOR_ORANGE;
-            levelStr = "ERROR";
-            break;
-        case LOG_FATAL:
-            color = COLOR_BRIGHT_RED;
-            levelStr = "FATAL";
-            break;
-    }
-
-    std::cout << get_current_time();
-    std::cout << color << " [" << levelStr << "] " << message << " (" << line << ")" << COLOR_RESET << std::endl;
-
-    #else
-
-    std::string levelStr = "INFO";
-    std::cout << get_current_time();
-
-    switch (level) {
-        case LOG_INFO:
-            levelStr = "INFO";
-            setColor(COLOR_CYAN);
-            break;
-        case LOG_LOG:
-            levelStr = "LOG";
-            setColor(COLOR_GREEN);
-            break;
-        case LOG_DEBUG:
-            levelStr = "DEBUG";
-            setColor(COLOR_MAGENTA);
-            break;
-        case LOG_WARNING:
-            levelStr = "WARNING";
-            setColor(COLOR_YELLOW);
-            break;
-        case LOG_ERROR:
-            levelStr = "ERROR";
-            setColor(COLOR_ORANGE);
-            break;
-        case LOG_FATAL:
-            levelStr = "FATAL";
-            setColor(COLOR_BRIGHT_RED);
-            break;
-    }
-
-    std::cout << " [" << levelStr << "] " << message << " (" << line << ")" << std::endl;
     setColor(COLOR_RESET);
     #endif
 

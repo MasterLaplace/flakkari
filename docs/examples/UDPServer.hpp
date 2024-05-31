@@ -26,13 +26,14 @@ namespace Flakkari {
 class UDPServer {
     public:
         UDPServer(std::string ip = "localhost", std::size_t port = 8080) :
-            _socket(Flakkari::Network::Socket(ip, port, Flakkari::Network::Address::IpType::IPv4, Flakkari::Network::Address::SocketType::UDP))
+            _socket(Network::Socket(ip, port, Network::Address::IpType::IPv4, Network::Address::SocketType::UDP))
         {
             std::cout << _socket << std::endl;
             _socket.bind();
 
-            _io = std::make_unique<Flakkari::Network::PPOLL>();
+            _io = std::make_unique<Network::PPOLL>();
             _io->addSocket(_socket.getSocket());
+            _io->addSocket(STDIN_FILENO);
         }
         ~UDPServer() = default;
 

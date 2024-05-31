@@ -10,7 +10,7 @@
 int main(int ac, const char *av[])
 {
     if (ac != 2)
-        return FLAKKARI_LOG_FATAL("Usage: ./r-type_server <ip>"), 84;
+        return FLAKKARI_LOG_ERROR("Usage: ./r-type_server <ip>"), 84;
     try {
         Flakkari::UDPServer server(av[1], 8080);
         server.run();

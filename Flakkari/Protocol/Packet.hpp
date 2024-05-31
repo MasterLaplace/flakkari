@@ -60,7 +60,7 @@ inline namespace V_0 {
             return str;
         }
 
-        friend std::ostream& operator<<(std::ostream& os, const Packet& packet)
+        friend std::ostream &operator<<(std::ostream &os, const Packet &packet)
         {
             os << "Packet<Id: "
             << htons(packet.header._commandId)
@@ -78,7 +78,7 @@ inline namespace V_0 {
         void injectComponent(T component)
         {
             int intValue = (int)component.size();
-            const byte* dataBytes = reinterpret_cast<const byte*>(&intValue);
+            const byte *dataBytes = reinterpret_cast<const byte*>(&intValue);
             payload.insert(payload.end(), dataBytes, dataBytes + sizeof(intValue));
             payload += component;
             header._contentLength += payload.size() + sizeof(intValue);
@@ -90,15 +90,15 @@ inline namespace V_0 {
          * @tparam DataType  Type of the data to add.
          * @param packet  The packet to add the data to.
          * @param data  The data to add.
-         * @return Packet<Id>&  The packet with the data added.
+         * @return Packet<Id> & The packet with the data added.
          */
         template<typename DataType>
-        friend Packet<Id>& operator<<(Packet<Id>& packet, const DataType& data)
+        friend Packet<Id> &operator<<(Packet<Id> &packet, const DataType &data)
         {
             static_assert(std::is_trivially_copyable<DataType>::value, "DataType must be trivially copyable to be used in a packet.");
             static_assert(std::is_standard_layout<DataType>::value, "DataType must be standard layout to be used in a packet.");
 
-            const byte* dataBytes = reinterpret_cast<const byte*>(&data);
+            const byte *dataBytes = reinterpret_cast<const byte*>(&data);
             packet.payload.insert(packet.payload.end(), dataBytes, dataBytes + sizeof(data));
             packet.header._contentLength += packet.payload.size() + sizeof(data);
             return packet;
@@ -110,13 +110,13 @@ inline namespace V_0 {
          * @tparam DataType  Type of the data to extract.
          * @param packet  The packet to extract the data from.
          * @param data  The data to extract.
-         * @return Packet<Id>&  The packet with the data extracted.
+         * @return Packet<Id> & The packet with the data extracted.
          *
          * @deprecated  This function is deprecated. Don't work with std::string.
          *              Use the other operator>> instead.
          */
         template<typename DataType>
-        friend Packet<Id>& operator>>(Packet<Id>& packet, DataType& data)
+        friend Packet<Id> &operator>>(Packet<Id> &packet, DataType &data)
         {
             static_assert(std::is_trivially_copyable<DataType>::value, "DataType must be trivially copyable to be used in a packet.");
             static_assert(std::is_standard_layout<DataType>::value, "DataType must be standard layout to be used in a packet.");
@@ -133,7 +133,7 @@ inline namespace V_0 {
         void injectString(std::string str)
         {
             int intValue = (int)str.size();
-            const byte* dataBytes = reinterpret_cast<const byte*>(&intValue);
+            const byte *dataBytes = reinterpret_cast<const byte*>(&intValue);
             payload.insert(payload.end(), dataBytes, dataBytes + sizeof(intValue));
             payload += str;
             header._contentLength += payload.size() + sizeof(intValue);
