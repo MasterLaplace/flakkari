@@ -28,7 +28,6 @@
 
 namespace Flakkari::Protocol {
 
-using byte = byte_t;            // 8 bits  (max: 255)
 using ushort = unsigned short;  // 16 bits (max: 65535)
 using uint = unsigned int;      // 32 bits (max: 4294967295)
 using ulong = unsigned long;    // 64 bits (max: 18446744073709551615)
