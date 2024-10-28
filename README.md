@@ -72,13 +72,19 @@ $> cd build
 # Or configure the project with Ninja
 (build)$> cmake -G Ninja .. && cmake --build .
 
+# Set the FLAKKARI_GAME_DIR environment variable
+(build)$> export FLAKKARI_GAME_DIR=<path_to_game_dir>
+
+# for windows
+(build)$> set FLAKKARI_GAME_DIR=<path_to_game_dir>
+
 # Run the server executable
 (build)$> ./r-type_server
 ```
 
 > [!NOTE]
-> - the server load Games from the `./Games` directory, so if you want to add a game,
->  you have to put it in this directory before running.
+> - the server load Games from the `FLAKKARI_GAME_DIR` environment variable,
+>  so if you want to add a game, you have to put it in this directory before running.
 >  If the server is already running, use the `addGame <gameName>` command to load it.
 
 > [!NOTE]

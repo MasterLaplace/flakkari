@@ -9,10 +9,10 @@
 
 int main(int ac, const char *av[])
 {
-    if (ac != 2)
-        return FLAKKARI_LOG_ERROR("Usage: ./r-type_server <ip>"), 84;
+    if (ac != 3)
+        return FLAKKARI_LOG_ERROR("Usage: ./r-type_server <ip> <port>"), 84;
     try {
-        Flakkari::UDPServer server(av[1], 8080);
+        Flakkari::UDPServer server(av[1], static_cast<unsigned short>(std::stoi(av[2])));
         server.run();
     } catch (const std::exception &e) {
         if (std::string(e.what()) != "exit")

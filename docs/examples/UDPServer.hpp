@@ -20,22 +20,37 @@
 #define UDPSERVER_HPP_
 
 #include "Network/IOMultiplexer.hpp"
+#include "Network/Network.hpp"
+
+#ifndef STDIN_FILENO
+    #define STDIN_FILENO 0
+#endif
+
+#ifdef _PSELECT_
+    #define IO_SELECTED Network::PSELECT
+#elif defined(_WSA_)
+    #define IO_SELECTED Network::WSA
+#endif
 
 namespace Flakkari {
 
 class UDPServer {
     public:
-        UDPServer(std::string ip = "localhost", std::size_t port = 8080) :
-            _socket(Network::Socket(ip, port, Network::Address::IpType::IPv4, Network::Address::SocketType::UDP))
+        UDPServer(std::string ip, unsigned short port) :
+            _io(std::make_unique<IO_SELECTED>())
         {
+            Network::initNetwork();
+
+            _socket.create(ip, port, Network::Address::IpType::IPv4, Network::Address::SocketType::UDP);
             std::cout << _socket << std::endl;
             _socket.bind();
 
-            _io = std::make_unique<Network::PPOLL>();
             _io->addSocket(_socket.getSocket());
             _io->addSocket(STDIN_FILENO);
         }
-        ~UDPServer() = default;
+        ~UDPServer() {
+            Network::cleanupNetwork();
+        }
 
         int run() {
             while (true)
@@ -65,7 +80,7 @@ class UDPServer {
     protected:
     private:
         Network::Socket _socket;
-        std::unique_ptr<Network::PPOLL> _io;
+        std::unique_ptr<IO_SELECTED> _io;
 };
 
 } /* namespace Flakkari */

@@ -54,7 +54,7 @@ inline namespace V_0 {
         MEDIUM = 1,
         HIGH = 2,
         CRITICAL = 3,
-        MAX_PRIORITY
+        MAX_PRIORITY = 4
     };
 
     PACKED_START
@@ -65,8 +65,8 @@ inline namespace V_0 {
         ApiVersion _apiVersion : 4 = ApiVersion::V_0;
         Id _commandId;
         ushort _contentLength = 0;
-        uint _sequenceNumber = std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::system_clock::now().time_since_epoch()).count();
+        uint _sequenceNumber = static_cast<uint>(std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::system_clock::now().time_since_epoch()).count());
     };
 
     PACKED_END

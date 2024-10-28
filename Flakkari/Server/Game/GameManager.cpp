@@ -24,10 +24,16 @@ GameManager::GameManager()
 #if !defined(_WIN32) && !defined(_WIN64)  && !defined( MSVC) && !defined(_MSC_VER)
     _game_dir = std::getenv("FLAKKARI_GAME_DIR");
 #else
-    errno_t err = _dupenv_s(&_game_dir.data(), &_game_dir.size(), "FLAKKARI_GAME_DIR");
+    char *gameDir = nullptr;
+    size_t len = 0;
+    errno_t err = _dupenv_s(&gameDir, &len, "FLAKKARI_GAME_DIR");
+    if (err == 0 && gameDir != nullptr) {
+        _game_dir = gameDir;
+        free(gameDir);
+    }
 #endif
-    if (_game_dir.empty())
-        FLAKKARI_LOG_FATAL("No game directory set: please set \"FLAKKARI_GAME_DIR\" environment variable");
+if (_game_dir.empty())
+    FLAKKARI_LOG_FATAL("No game directory set: please set \"FLAKKARI_GAME_DIR\" environment variable");
 
     for (const auto & entry : std::filesystem::directory_iterator(_game_dir))
     {
@@ -222,13 +228,13 @@ void GameManager::removeClientFromGame(std::string gameName, std::shared_ptr<Cli
             FLAKKARI_LOG_INFO("game \"" + gameName + "\" is not full anymore");
             if (waitingQueue.empty())
                 return;
-            auto client = waitingQueue.front();
-            if (instance->addPlayer(client)) {
+            auto waitingClient = waitingQueue.front();
+            if (instance->addPlayer(waitingClient)) {
                 waitingQueue.pop();
                 return;
             }
             FLAKKARI_LOG_WARNING("could not add client \""+ STR_ADDRESS +"\" to game \"" + gameName + "\"");
-            if (client->isConnected())
+            if (waitingClient->isConnected())
                 waitingQueue.pop();
         }
         return;

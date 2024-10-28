@@ -14,12 +14,26 @@ namespace Flakkari::Network {
 Address::Address(address_t &address, port_t port, SocketType socket_type, IpType ip_type)
     : _socket_type(socket_type), _ip_type(ip_type)
 {
-    struct hostent *host = nullptr;
-    addrinfo hints;
+    addrinfo hints{};
+
     hints.ai_family = (ip_type == IpType::IPv4) ? AF_INET : AF_INET6;
     hints.ai_socktype = (socket_type == SocketType::TCP) ? SOCK_STREAM : SOCK_DGRAM;
     hints.ai_protocol = (socket_type == SocketType::TCP) ? IPPROTO_TCP : IPPROTO_UDP;
     hints.ai_flags = (AI_PASSIVE | AI_V4MAPPED | AI_ALL);
+
+#ifdef _WIN32
+    addrinfo *result = nullptr;
+    if (getaddrinfo(address.c_str(), std::to_string(port).c_str(), &hints, &result) != 0) {
+        FLAKKARI_LOG_ERROR("getaddrinfo() failed for " + address);
+        return;
+    }
+
+    _addrInfo = std::shared_ptr<addrinfo>(result, [](addrinfo *addrInfo) {
+        if (addrInfo != nullptr)
+            freeaddrinfo(addrInfo);
+    });
+#else
+    struct hostent *host = nullptr;
 
     if ((host = gethostbyname(address.c_str())) == nullptr) {
         FLAKKARI_LOG_ERROR("gethostbyname() failed for " + address);
@@ -36,6 +50,7 @@ Address::Address(address_t &address, port_t port, SocketType socket_type, IpType
         if (addrInfo != nullptr)
             freeaddrinfo(addrInfo);
     });
+#endif
 }
 
 Address::Address(port_t port, SocketType socket_type, IpType ip_type)
@@ -91,7 +106,16 @@ Address::Address(const sockaddr_storage &clientAddr, SocketType socket_type, IpT
     hints.ai_flags = (AI_PASSIVE | AI_V4MAPPED | AI_ALL);
 
     addrinfo *result = nullptr;
+#if defined(_WIN32)
+    char name[INET6_ADDRSTRLEN];
+
+    if (clientAddr.ss_family == AF_INET)
+        inet_ntop(AF_INET, &(((sockaddr_in *)&clientAddr)->sin_addr), name, INET_ADDRSTRLEN);
+    else
+        inet_ntop(AF_INET6, &(((sockaddr_in6 *)&clientAddr)->sin6_addr), name, INET6_ADDRSTRLEN);
+#else
     const char *name = inet_ntoa(((sockaddr_in *)&clientAddr)->sin_addr);
+#endif
 
     const std::string serviceStr = std::to_string(ntohs(((sockaddr_in *)&clientAddr)->sin_port));
     const char *service = serviceStr.c_str();
@@ -113,7 +137,7 @@ std::optional<std::string> Address::toString() const
         return {};
     char host[NI_MAXHOST];
     char service[NI_MAXSERV];
-    if (getnameinfo(_addrInfo->ai_addr, _addrInfo->ai_addrlen, host, NI_MAXHOST, service, NI_MAXSERV, NI_NUMERICSERV) != 0) {
+    if (getnameinfo(_addrInfo->ai_addr, (int)_addrInfo->ai_addrlen, host, NI_MAXHOST, service, NI_MAXSERV, NI_NUMERICSERV) != 0) {
         FLAKKARI_LOG_ERROR("getnameinfo() failed");
         return {};
     }
@@ -125,7 +149,7 @@ std::optional<std::string> Address::getIp() const
     if (_addrInfo == nullptr)
         return {};
     char host[NI_MAXHOST];
-    if (getnameinfo(_addrInfo->ai_addr, _addrInfo->ai_addrlen, host, NI_MAXHOST, nullptr, 0, NI_NUMERICHOST) != 0) {
+    if (getnameinfo(_addrInfo->ai_addr, (int)_addrInfo->ai_addrlen, host, NI_MAXHOST, nullptr, 0, NI_NUMERICHOST) != 0) {
         FLAKKARI_LOG_ERROR("getnameinfo() failed");
         return {};
     }

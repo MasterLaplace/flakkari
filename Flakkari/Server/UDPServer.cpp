@@ -12,18 +12,18 @@
 using namespace Flakkari;
 
 
-UDPServer::UDPServer(std::string ip, std::size_t port) :
-    _socket(std::make_shared<Network::Socket>(
-        ip, port,
-        Network::Address::IpType::IPv4,
-        Network::Address::SocketType::UDP
-    ))
+UDPServer::UDPServer(std::string ip, unsigned short port)
 {
+    Network::initNetwork();
+
+    _socket = std::make_shared<Network::Socket>();
+    _socket->create(ip, port, Network::Address::IpType::IPv4, Network::Address::SocketType::UDP);
+
     FLAKKARI_LOG_INFO(std::string(*_socket));
     _socket->bind();
 
-    _io = std::make_unique<Network::PSELECT>(1);
-    _io->addSocket(_socket->getSocket());
+    _io = std::make_unique<IO_SELECTED>(1);
+    _io->addSocket((int)_socket->getSocket());
     _io->addSocket(STDIN_FILENO);
 
     ClientManager::setSocket(_socket);
@@ -31,6 +31,7 @@ UDPServer::UDPServer(std::string ip, std::size_t port) :
 }
 
 UDPServer::~UDPServer() {
+    Network::cleanupNetwork();
     FLAKKARI_LOG_INFO("UDPServer is now stopped");
 }
 
@@ -38,7 +39,7 @@ bool UDPServer::handleTimeout(int event)
 {
     if (event != 0)
         return false;
-    FLAKKARI_LOG_DEBUG("ppoll timed out");
+    FLAKKARI_LOG_DEBUG(XSTR(IO_SELECTED)" timed out");
     ClientManager::checkInactiveClients();
     return true;
 }
@@ -68,9 +69,9 @@ void UDPServer::run()
     int result = _io->wait();
 
     if (result == -1) {
-        if (errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK)
+        if (_io->skipableError())
             GOTO_LOOP;
-        throw std::runtime_error("Failed to poll sockets, error: " + STD_ERROR);
+        throw std::runtime_error("Failed to poll sockets, error: " + SPECIAL_ERROR);
     }
 
     if (handleTimeout(result))
@@ -79,7 +80,7 @@ void UDPServer::run()
     for (auto &fd : *_io) {
         if (!_io->isReady(fd))
             continue;
-        if (handleInput(fd))
+        if (handleInput((int)fd))
             continue;
         handlePacket();
     }

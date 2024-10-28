@@ -18,10 +18,10 @@
 
 // if im on windows, define all compatible IOMultiplexer
 #ifdef _WIN32
-    #define _PSELECT_
     #define _EPOLL_
     #define _KQUEUE_
     #define _IO_URING_
+    #define _WSA_
 #else
     #define _PSELECT_
     #define _PPOLL_
@@ -30,26 +30,14 @@
 
 #include "Socket.hpp"
 #include <vector>
+#include <unordered_map>
 
 namespace Flakkari::Network {
 
 #if defined(_PSELECT_)
-#if defined(_WIN32)
-    #include <winsock2.h>
-    #include <ws2tcpip.h>
-    #include <windows.h>
-    #include <winsock.h>
-
-    #pragma comment(lib, "Ws2_32.lib")
-#elif defined(__APPLE__)
-    #include <sys/select.h>
-    #include <sys/time.h>
-    #include <sys/types.h>
-#else
-    #include <sys/select.h>
-    #include <sys/time.h>
-    #include <sys/types.h>
-#endif
+#include <sys/select.h>
+#include <sys/time.h>
+#include <sys/types.h>
 
 /**
  * @brief PSELECT is a class that represents a PSELECT
@@ -122,6 +110,14 @@ class PSELECT {
          */
         [[nodiscard]] bool isReady(FileDescriptor socket);
 
+        /**
+         * @brief Check if the error is skipable
+         *
+         * @return true  If the error is skipable
+         * @return false  If the error is not skipable
+         */
+        [[nodiscard]] bool skipableError();
+
     protected:
     private:
         fd_set _fds;
@@ -133,11 +129,7 @@ class PSELECT {
 
 #if defined(_PPOLL_)
 #if defined(_WIN32)
-    #include <winsock2.h>
-    #include <ws2tcpip.h>
-    #include <windows.h>
     #include <poll.h>
-    #pragma comment(lib, "Ws2_32.lib")
 #elif defined(__APPLE__)
     #include <sys/poll.h>
 #else
@@ -243,6 +235,94 @@ class PPOLL {
     private:
         std::vector<pollfd> _pollfds;
         struct timespec _timeout = {0, 0};
+};
+#endif
+
+#if defined(_WSA_)
+
+/**
+ * @brief WSA is a class that represents a WSA
+ *
+ * @class WSA
+ * @implements IOMultiplexer
+ * @see IOMultiplexer
+ *
+ * @example "WSA example":
+ * @code
+ * auto socket = std::make_shared<Socket>(12345, Address::IpType::IPv4, Address::SocketType::UDP);
+ * socket->bind();
+ *
+ * auto io = std::make_unique<WSA>();
+ * io->addSocket(socket->getSocket());
+ *
+ * while (true) {
+ *    int result = io->wait();
+ *    if (result > 0) {
+ *       for (auto &fd : *io) {
+ *         if (io->isReady(fd)) {
+ *          // do something
+ *         }
+ *       }
+ *    }
+ * }
+ * @endcode
+ */
+class WSA {
+    public:
+        using FileDescriptor = SOCKET;
+
+    public:
+        WSA(long int seconds = 1, long int microseconds = 0);
+        ~WSA();
+
+        /**
+         * @brief Add a socket to the WSA list
+         *
+         * @param socket  The socket to add to the list
+         */
+        void addSocket(FileDescriptor socket);
+
+        /**
+         * @brief Remove a socket from the WSA list
+         *
+         * @param socket  The socket to remove from the list
+         */
+        void removeSocket(FileDescriptor socket);
+
+        /**
+         * @brief Wait for an event to happen on a socket or timeout
+         *
+         * @return int  The number of events that happened or -1 if an error occured or 0 if the timeout expired (EINTR)
+         * @see WSAWaitForMultipleEvents
+         */
+        int wait();
+
+        std::vector<FileDescriptor>::iterator begin() { return _sockets.begin(); }
+        std::vector<FileDescriptor>::iterator end() { return _sockets.end(); }
+
+        /**
+         * @brief Check if a socket is ready to read from
+         *
+         * @param socket  The socket to check
+         * @return true  If the socket is ready
+         * @return false  If the socket is not ready
+         */
+        [[nodiscard]] bool isReady(FileDescriptor socket);
+
+        /**
+         * @brief Check if the error is skipable
+         *
+         * @return true  If the error is skipable
+         * @return false  If the error is not skipable
+         */
+        [[nodiscard]] bool skipableError();
+
+    protected:
+    private:
+        std::vector<FileDescriptor> _sockets;
+        std::unordered_map<FileDescriptor, HANDLE> _events;
+        HANDLE _hEvent;
+        long int _timeoutInMs;
 };
 #endif
 

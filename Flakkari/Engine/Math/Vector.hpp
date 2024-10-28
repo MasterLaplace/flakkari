@@ -36,25 +36,19 @@ PACKED_START
             Type y;
             Type z;
             Type w;
-        };
+        } vec;
         struct {
             Type r;
             Type g;
             Type b;
             Type a;
-        };
+        } color;
         struct {
             Type width;
             Type height;
             Type depth;
             Type time;
-        };
-        struct {
-            Type dx;
-            Type dy;
-            Type dz;
-            Type _;
-        };
+        } dimension;
         Type v[4];
     };
 

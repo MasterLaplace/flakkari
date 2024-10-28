@@ -9,6 +9,7 @@ set(SOURCES
 
     Flakkari/Logger/Logger.cpp
 
+    Flakkari/Network/Network.cpp
     Flakkari/Network/Address.cpp
     Flakkari/Network/Buffer.cpp
     Flakkari/Network/Socket.cpp
@@ -33,6 +34,7 @@ set(SOURCES
 set(HEADERS
     Flakkari/Logger/Logger.hpp
 
+    Flakkari/Network/Network.hpp
     Flakkari/Network/Packed.hpp
     Flakkari/Network/Address.hpp
     Flakkari/Network/Buffer.hpp
@@ -75,6 +77,7 @@ set(HEADER_LIB_LOGGER
 )
 
 set(HEADER_LIB_NETWORK
+    Flakkari/Network/Network.hpp
     Flakkari/Network/Packed.hpp
     Flakkari/Network/Address.hpp
     Flakkari/Network/Buffer.hpp
@@ -108,6 +111,7 @@ FetchContent_MakeAvailable(nlohmann_json)
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+set(FLAKKARI_GAME_DIR ${CMAKE_SOURCE_DIR}/Games)
 
 # Compiler Standards:
 set(CMAKE_CXX_STANDARD 20)

@@ -20,23 +20,38 @@
 #define TCPSERVER_HPP_
 
 #include "Network/IOMultiplexer.hpp"
+#include "Network/Network.hpp"
+
+#ifndef STDIN_FILENO
+    #define STDIN_FILENO 0
+#endif
+
+#ifdef _PSELECT_
+    #define IO_SELECTED Network::PSELECT
+#elif defined(_WSA_)
+    #define IO_SELECTED Network::WSA
+#endif
 
 namespace Flakkari {
 
 class TCPServer {
     public:
         TCPServer(std::string ip = "localhost", std::size_t port = 8080) :
-            _socket(Network::Socket(ip, port, Network::Address::IpType::IPv6, Network::Address::SocketType::TCP))
+            _io(std::make_unique<IO_SELECTED>())
         {
+            Network::initNetwork();
+
+            _socket.create(ip, port, Network::Address::IpType::IPv6, Network::Address::SocketType::TCP);
             std::cout << _socket << std::endl;
             _socket.bind();
             _socket.listen();
 
-            _io = std::make_unique<Network::PPOLL>();
             _io->addSocket(_socket.getSocket());
             _io->addSocket(STDIN_FILENO);
         }
-        ~TCPServer() = default;
+        ~TCPServer() {
+            Network::cleanupNetwork();
+        }
 
         int run() {
             while (true)
@@ -53,10 +68,10 @@ class TCPServer {
                 for (auto &fd : *_io) {
                     if (_io->isReady(fd)) {
                         auto packet = _socket.receive();
-                        std::cout << (*packet.value().first.get());
+                        std::cout << packet.value().data();
                         std::cout << " : ";
-                        std::cout << packet.value().second << std::endl;
-                        _socket.send(packet.value().first, packet.value().second);
+                        std::cout << packet.value().size() << std::endl;
+                        _socket.send(packet.value());
                     }
                 }
             }
@@ -66,7 +81,7 @@ class TCPServer {
     protected:
     private:
         Network::Socket _socket;
-        std::unique_ptr<Network::PPOLL> _io;
+        std::unique_ptr<IO_SELECTED> _io;
 };
 
 } /* namespace Flakkari */

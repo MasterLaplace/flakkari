@@ -567,7 +567,6 @@ _deps
 *.exe
 *.out
 *.app
-flakkari
 r-type_server
 
 docs/Flakkari/

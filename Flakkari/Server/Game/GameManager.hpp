@@ -26,6 +26,10 @@
 #include "Game.hpp"
 #include "Logger/Logger.hpp"
 
+#ifdef _WIN32
+    #undef max
+#endif
+
 namespace Flakkari {
 
 class GameManager {

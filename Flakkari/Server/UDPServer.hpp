@@ -27,6 +27,18 @@ namespace Flakkari {
 #define INIT_LOOP loop:
 #define GOTO_LOOP goto loop;
 
+#ifndef STDIN_FILENO
+    #define STDIN_FILENO 0
+#endif
+
+#ifdef _PSELECT_
+    #define IO_SELECTED Network::PSELECT
+#elif defined(_WSA_)
+    #define IO_SELECTED Network::WSA
+#endif
+
+#define STR(x) #x
+#define XSTR(x) STR(x)
 
 /**
  * @brief UDP Server class that handles incoming packets and clients
@@ -53,7 +65,7 @@ class UDPServer {
          * @param ip The ip to bind the server to (default: localhost)
          * @param port The port to bind the server to (default: 8080)
          */
-        UDPServer(std::string ip = "localhost", std::size_t port = 8080);
+        UDPServer(std::string ip = "localhost", unsigned short port = 8080);
         ~UDPServer();
 
         /**
@@ -91,7 +103,7 @@ class UDPServer {
 
     private:
         std::shared_ptr<Network::Socket> _socket;
-        std::unique_ptr<Network::PSELECT> _io;
+        std::unique_ptr<IO_SELECTED> _io;
 };
 
 } /* namespace Flakkari */
