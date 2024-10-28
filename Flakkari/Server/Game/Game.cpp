@@ -168,11 +168,11 @@ void Game::loadEntityFromTemplate (
 
     for (auto &componentInfo : entity.begin().value().items()) {
         for (auto &templateInfo : templates.items()) {
-            if (templateInfo.value().begin().key() != componentInfo.value())
+            if (templateInfo.key() != componentInfo.key())
                 continue;
-            loadComponents(registry, templateInfo.value().begin().value(), newEntity);
+            loadComponents(registry, templateInfo.value(), newEntity);
             registry.registerComponent<Engine::ECS::Components::Common::Template>();
-            registry.add_component<Engine::ECS::Components::Common::Template>(newEntity, templateInfo.value().begin().key());
+            registry.add_component<Engine::ECS::Components::Common::Template>(newEntity, templateInfo.key());
         }
     }
 }
