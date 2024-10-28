@@ -28,9 +28,24 @@
 #define FLAKKARI_LOG_ERROR(message) FLAKKARI_LOG(LOG_ERROR, message)
 #define FLAKKARI_LOG_FATAL(message) FLAKKARI_LOG(LOG_FATAL, message)
 
-#define STD_ERROR std::string(::strerror(errno))
+#ifdef _WIN32
+    #define STD_ERROR \
+        []() -> std::string { \
+            char buffer[256]; \
+            strerror_s(buffer, sizeof(buffer), errno); \
+            return std::string(buffer); \
+        }()
+
+    #define SPECIAL_ERROR std::to_string(WSAGetLastError())
+#else
+    #define STD_ERROR std::string(::strerror(errno))
+    #define SPECIAL_ERROR STD_ERROR
+#endif
 
 #if _WIN32
+#define WIN32_LEAN_AND_MEAN
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include <windows.h>
 
 #define COLOR_RESET 7

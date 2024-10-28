@@ -65,17 +65,10 @@ bool CommandManager::handlePasswordCommand(const std::string &input)
         _unlocked = true;
         FLAKKARI_LOG_INFO("Command manager unlocked");
         return true;
-    } else {
-        FLAKKARI_LOG_WARNING("Wrong password");
-        return true;
     }
 
-    if (input == "lock" && _unlocked) {
-        _unlocked = false;
-        FLAKKARI_LOG_INFO("Command manager locked");
-        return true;
-    }
-    return false;
+    FLAKKARI_LOG_WARNING("Wrong password");
+    return true;
 }
 
 bool CommandManager::handleAdminCommand(const std::string &input)
@@ -108,6 +101,12 @@ bool CommandManager::handleAdminCommand(const std::string &input)
     if (input == "exit") {
         FLAKKARI_LOG_INFO("Exiting...");
         throw std::runtime_error("exit");
+    }
+
+    if (input == "lock" && _unlocked) {
+        _unlocked = false;
+        FLAKKARI_LOG_INFO("Command manager locked");
+        return true;
     }
 
     return false;

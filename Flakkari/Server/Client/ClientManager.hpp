@@ -16,7 +16,7 @@
 #ifndef CLIENTMANAGER_HPP_
 #define CLIENTMANAGER_HPP_
 
-#include "Network/Socket.hpp"
+#include "Network/Network.hpp"
 #include "Network/Serializer.hpp"
 #include "Client.hpp"
 

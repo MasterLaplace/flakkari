@@ -19,7 +19,9 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #else
-#include <winsock2.h>
+#define WIN32_LEAN_AND_MEAN
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include <ws2tcpip.h>
 
 #pragma comment(lib, "Ws2_32.lib")

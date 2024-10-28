@@ -109,21 +109,21 @@ public:
 
         if (transform.has_value()) {
             packet << Protocol::ComponentId::TRANSFORM;
-            packet << transform->position.x;
-            packet << transform->position.y;
+            packet << transform->position.vec.x;
+            packet << transform->position.vec.y;
             packet << transform->rotation;
-            packet << transform->scale.x;
-            packet << transform->scale.y;
+            packet << transform->scale.vec.x;
+            packet << transform->scale.vec.y;
         }
 
         auto movable = registry.getComponents<Engine::ECS::Components::_2D::Movable>()[entity];
 
         if (movable.has_value()) {
             packet << Protocol::ComponentId::MOVABLE;
-            packet << movable->velocity.x;
-            packet << movable->velocity.y;
-            packet << movable->acceleration.x;
-            packet << movable->acceleration.y;
+            packet << movable->velocity.vec.x;
+            packet << movable->velocity.vec.y;
+            packet << movable->acceleration.vec.x;
+            packet << movable->acceleration.vec.y;
         }
 
         auto control = registry.getComponents<Engine::ECS::Components::_2D::Control>()[entity];
@@ -141,8 +141,8 @@ public:
 
         if (collider.has_value()) {
             packet << Protocol::ComponentId::COLLIDER;
-            packet << collider->_size.x;
-            packet << collider->_size.y;
+            packet << collider->_size.vec.x;
+            packet << collider->_size.vec.y;
         }
 
         auto rigidbody = registry.getComponents<Engine::ECS::Components::_2D::RigidBody>()[entity];
@@ -282,15 +282,15 @@ public:
         Engine::ECS::Components::_2D::Movable vel
     ) {
         packet << entity;
-        packet << pos.position.x;
-        packet << pos.position.y;
+        packet << pos.position.vec.x;
+        packet << pos.position.vec.y;
         packet << pos.rotation;
-        packet << pos.scale.x;
-        packet << pos.scale.y;
-        packet << vel.velocity.x;
-        packet << vel.velocity.y;
-        packet << vel.acceleration.x;
-        packet << vel.acceleration.y;
+        packet << pos.scale.vec.x;
+        packet << pos.scale.vec.y;
+        packet << vel.velocity.vec.x;
+        packet << vel.velocity.vec.y;
+        packet << vel.acceleration.vec.x;
+        packet << vel.acceleration.vec.y;
     }
 };
 

@@ -168,11 +168,11 @@ void Game::loadEntityFromTemplate (
 
     for (auto &componentInfo : entity.begin().value().items()) {
         for (auto &templateInfo : templates.items()) {
-            if (templateInfo.value().begin().key() != componentInfo.value())
+            if (templateInfo.key() != componentInfo.key())
                 continue;
-            loadComponents(registry, templateInfo.value().begin().value(), newEntity);
+            loadComponents(registry, templateInfo.value(), newEntity);
             registry.registerComponent<Engine::ECS::Components::Common::Template>();
-            registry.add_component<Engine::ECS::Components::Common::Template>(newEntity, templateInfo.value().begin().key());
+            registry.add_component<Engine::ECS::Components::Common::Template>(newEntity, templateInfo.key());
         }
     }
 }
@@ -251,23 +251,23 @@ void Game::sendUpdatePosition (
     Protocol::Packet<Protocol::CommandId> packet;
     packet.header._commandId = Protocol::CommandId::REQ_ENTITY_MOVED;
     packet << player->getEntity();
-    packet << pos.position.x;
-    packet << pos.position.y;
+    packet << pos.position.vec.x;
+    packet << pos.position.vec.y;
     packet << pos.rotation;
-    packet << pos.scale.x;
-    packet << pos.scale.y;
-    packet << vel.velocity.x;
-    packet << vel.velocity.y;
-    packet << vel.acceleration.x;
-    packet << vel.acceleration.y;
+    packet << pos.scale.vec.x;
+    packet << pos.scale.vec.y;
+    packet << vel.velocity.vec.x;
+    packet << vel.velocity.vec.y;
+    packet << vel.acceleration.vec.x;
+    packet << vel.acceleration.vec.y;
 
     FLAKKARI_LOG_LOG(
         "packet size: " + std::to_string(packet.size()) + " bytes\n"
         "packet sent: <Id: "
         + std::to_string(player->getEntity())
-        + ", Pos: (" + std::to_string(pos.position.x) + ", " + std::to_string(pos.position.y) + ")"
-        + ", Vel: (" + std::to_string(vel.velocity.x) + ", " + std::to_string(vel.velocity.y) + ")"
-        + ", Acc: (" + std::to_string(vel.acceleration.x) + ", " + std::to_string(vel.acceleration.y) + ")"
+        + ", Pos: (" + std::to_string(pos.position.vec.x) + ", " + std::to_string(pos.position.vec.y) + ")"
+        + ", Vel: (" + std::to_string(vel.velocity.vec.x) + ", " + std::to_string(vel.velocity.vec.y) + ")"
+        + ", Acc: (" + std::to_string(vel.acceleration.vec.x) + ", " + std::to_string(vel.acceleration.vec.y) + ")"
         + ">"
     );
     sendOnSameScene(player->getSceneName(), packet.serialize());
@@ -295,9 +295,9 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
         if (event.state == Protocol::EventState::PRESSED)
-            vel->velocity.dy = -1;
+            vel->velocity.vec.y = -1;
         if (event.state == Protocol::EventState::RELEASED)
-            vel->velocity.dy = 0;
+            vel->velocity.vec.y = 0;
         sendUpdatePosition(player, pos.value(), vel.value());
         return;
     }
@@ -309,9 +309,9 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
         if (event.state == Protocol::EventState::PRESSED)
-            vel->velocity.dy = 1;
+            vel->velocity.vec.y = 1;
         if (event.state == Protocol::EventState::RELEASED)
-            vel->velocity.dy = 0;
+            vel->velocity.vec.y = 0;
         sendUpdatePosition(player, pos.value(), vel.value());
         return;
     }
@@ -323,9 +323,9 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
         if (event.state == Protocol::EventState::PRESSED)
-            vel->velocity.dx = -1;
+            vel->velocity.vec.x = -1;
         if (event.state == Protocol::EventState::RELEASED)
-            vel->velocity.dx = 0;
+            vel->velocity.vec.x = 0;
         sendUpdatePosition(player, pos.value(), vel.value());
         return;
     }
@@ -337,9 +337,9 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
         if (event.state == Protocol::EventState::PRESSED)
-            vel->velocity.dx = 1;
+            vel->velocity.vec.x = 1;
         if (event.state == Protocol::EventState::RELEASED)
-            vel->velocity.dx = 0;
+            vel->velocity.vec.x = 0;
         sendUpdatePosition(player, pos.value(), vel.value());
         return;
     }
@@ -351,12 +351,12 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
         if (event.state == Protocol::EventState::RELEASED) {
-            Protocol::Packet<Protocol::CommandId> packet;
-            packet.header._commandId = Protocol::CommandId::REQ_ENTITY_SHOOT;
-            packet.injectString(player->getSceneName());
-            packet << player->getEntity();
+            Protocol::Packet<Protocol::CommandId> shootPacket;
+            shootPacket.header._commandId = Protocol::CommandId::REQ_ENTITY_SHOOT;
+            shootPacket.injectString(player->getSceneName());
+            shootPacket << player->getEntity();
             // create a bullet with player as parent
-            sendOnSameScene(player->getSceneName(), packet.serialize());
+            sendOnSameScene(player->getSceneName(), shootPacket.serialize());
         }
         return;
     }

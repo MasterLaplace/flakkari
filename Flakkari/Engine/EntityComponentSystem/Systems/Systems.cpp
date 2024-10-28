@@ -24,13 +24,13 @@ void position(Registry &r, float deltaTime)
         auto& vel = velocities[i];
 
         if (pos.has_value() && vel.has_value()) {
-            float magnitude = std::sqrt(vel->velocity.dx * vel->velocity.dx + vel->velocity.dy * vel->velocity.dy);
+            float magnitude = std::sqrt(vel->velocity.vec.x * vel->velocity.vec.x + vel->velocity.vec.y * vel->velocity.vec.y);
             if (magnitude > 0.0f) {
-                vel->velocity.dx /= magnitude;
-                vel->velocity.dy /= magnitude;
+                vel->velocity.vec.x /= magnitude;
+                vel->velocity.vec.y /= magnitude;
             }
-            pos->position.x += vel->velocity.dx * vel->acceleration.x * deltaTime;
-            pos->position.y += vel->velocity.dy * vel->acceleration.y * deltaTime;
+            pos->position.vec.x += vel->velocity.vec.x * vel->acceleration.vec.x * deltaTime;
+            pos->position.vec.y += vel->velocity.vec.y * vel->acceleration.vec.y * deltaTime;
         }
     }
 }
@@ -51,22 +51,22 @@ void update_control(Registry &r)
         if (net->events.size() < int(Protocol::EventId::MOVE_UP))
             continue;
         if (net->events[int(Protocol::EventId::MOVE_UP)] == int(Protocol::EventState::PRESSED))
-            vel->velocity.dy = -1;
+            vel->velocity.vec.y = -1;
 
         if (net->events.size() < int(Protocol::EventId::MOVE_DOWN))
             continue;
         if (net->events[int(Protocol::EventId::MOVE_DOWN)] == int(Protocol::EventState::PRESSED))
-            vel->velocity.dy = 1;
+            vel->velocity.vec.y = 1;
 
         if (net->events.size() < int(Protocol::EventId::MOVE_LEFT))
             continue;
         if (net->events[int(Protocol::EventId::MOVE_LEFT)] == int(Protocol::EventState::PRESSED))
-            vel->velocity.dx = -1;
+            vel->velocity.vec.x = -1;
 
         if (net->events.size() < int(Protocol::EventId::MOVE_RIGHT))
             continue;
         if (net->events[int(Protocol::EventId::MOVE_RIGHT)] == int(Protocol::EventState::PRESSED))
-            vel->velocity.dx = 1;
+            vel->velocity.vec.x = 1;
     }
 }
 

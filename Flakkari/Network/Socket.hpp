@@ -25,13 +25,6 @@
 #include <utility>
 
 #ifdef _WIN32
-    #include <winsock2.h>
-    #include <ws2tcpip.h>
-    #include <windows.h>
-
-    #pragma comment(lib, "ws2_32.lib")
-    #pragma comment(lib, "Mswsock.lib")
-
     typedef SOCKET SOCKET;
     #define INVALID_SOCKET (SOCKET)(~0)
     #define SOCKET_ERROR (-1)
@@ -75,7 +68,8 @@ namespace Flakkari::Network {
  * @example "Socket class for a UDP server":
  * @code
  * // Create a socket
- * auto socket = std::make_shared<Socket>(12345, Address::IpType::IPv4, Address::SocketType::UDP);
+ * auto socket = std::make_shared<Socket>();
+ * socket->create(12345, Address::IpType::IPv4, Address::SocketType::UDP);
  * // Bind the socket
  * socket->bind();
  * // Send data to a client
@@ -88,7 +82,8 @@ namespace Flakkari::Network {
  * @example "Socket class for a TCP server":
  * @code
  * // Create a socket
- * auto socket = std::make_shared<Socket>(12345, Address::IpType::IPv4, Address::SocketType::TCP);
+ * auto socket = std::make_shared<Socket>();
+ * socket->create(12345, Address::IpType::IPv4, Address::SocketType::TCP);
  * // Bind the socket
  * socket->bind();
  * // Listen for incoming connections
@@ -104,7 +99,8 @@ namespace Flakkari::Network {
  * @example "Socket class for a UDP client":
  * @code
  * // Create a socket
- * auto socket = std::make_shared<Socket>(12345, Address::IpType::IPv4, Address::SocketType::UDP);
+ * auto socket = std::make_shared<Socket>();
+ * socket->create(12345, Address::IpType::IPv4, Address::SocketType::UDP);
  * // Send data to the server
  * socket->sendTo("Hello World!", socket->getAddress());
  * // Receive data from the server
@@ -115,7 +111,8 @@ namespace Flakkari::Network {
  * @example "Socket class for a TCP client":
  * @code
  * // Create a socket
- * auto socket = std::make_shared<Socket>(12345, Address::IpType::IPv4, Address::SocketType::TCP);
+ * auto socket = std::make_shared<Socket>();
+ * socket->create(12345, Address::IpType::IPv4, Address::SocketType::TCP);
  * // Connect to a server
  * socket->connect();
  * // Send data to the server
@@ -131,13 +128,15 @@ class Socket {
         using socket_t = SOCKET;
 
     public:
-        Socket(std::shared_ptr<Address> address);
-        Socket(socket_t socket, std::shared_ptr<Address> address);
-        Socket(Address address);
-        Socket(ip_t address, port_t port, Address::IpType ip_type, Address::SocketType socket_type);
+        Socket() = default;
         Socket(const Socket &) = default;
         Socket(Socket &&) = default;
         ~Socket();
+
+        void create(std::shared_ptr<Address> address);
+        void create(socket_t socket, std::shared_ptr<Address> address);
+        void create(Address address);
+        void create(ip_t address, port_t port, Address::IpType ip_type, Address::SocketType socket_type);
 
         bool operator==(const Socket &other) const { return _socket == other._socket; }
         bool operator==(const int &socket) const { return _socket == socket; }
