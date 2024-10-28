@@ -25,14 +25,14 @@ namespace Flakkari::Network {
  * This function is only used by Windows.
  *
  */
-void initNetwork();
+void init();
 
 /**
  * @brief Cleanup the network.
  * This function is only used by Windows.
  *
  */
-void cleanupNetwork();
+void cleanup();
 
 } // namespace Flakkari::Network
 

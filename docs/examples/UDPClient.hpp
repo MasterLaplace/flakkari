@@ -21,12 +21,6 @@
 #include "Network/IOMultiplexer.hpp"
 #include "Network/Network.hpp"
 
-#ifdef _PSELECT_
-    #define IO_SELECTED Network::PSELECT
-#elif defined(_WSA_)
-    #define IO_SELECTED Network::WSA
-#endif
-
 namespace Flakkari {
 
 class UDPClient {
@@ -34,14 +28,14 @@ class UDPClient {
         UDPClient(std::string ip = "localhost", unsigned short port = 8080) :
             _io(std::make_unique<IO_SELECTED>())
         {
-            Network::initNetwork();
+            Network::init();
 
             _socket.create(ip, port, Network::Address::IpType::IPv4, Network::Address::SocketType::UDP);
             std::cout << _socket << std::endl;
             _io->addSocket(_socket.getSocket());
         }
         ~UDPClient() {
-            Network::cleanupNetwork();
+            Network::cleanup();
         }
 
         int run() {

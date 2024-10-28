@@ -31,12 +31,6 @@ namespace Flakkari {
     #define STDIN_FILENO 0
 #endif
 
-#ifdef _PSELECT_
-    #define IO_SELECTED Network::PSELECT
-#elif defined(_WSA_)
-    #define IO_SELECTED Network::WSA
-#endif
-
 #define STR(x) #x
 #define XSTR(x) STR(x)
 

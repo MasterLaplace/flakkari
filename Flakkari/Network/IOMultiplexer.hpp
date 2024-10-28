@@ -326,6 +326,12 @@ class WSA {
 };
 #endif
 
+#ifdef _PSELECT_
+    #define IO_SELECTED Network::PSELECT
+#elif defined(_WSA_)
+    #define IO_SELECTED Network::WSA
+#endif
+
 } // namespace Flakkari::Network
 
 #endif /* !IOMULTIPLEXER_HPP_ */

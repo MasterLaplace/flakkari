@@ -14,7 +14,7 @@ using namespace Flakkari;
 
 UDPServer::UDPServer(std::string ip, unsigned short port)
 {
-    Network::initNetwork();
+    Network::init();
 
     _socket = std::make_shared<Network::Socket>();
     _socket->create(ip, port, Network::Address::IpType::IPv4, Network::Address::SocketType::UDP);
@@ -31,7 +31,7 @@ UDPServer::UDPServer(std::string ip, unsigned short port)
 }
 
 UDPServer::~UDPServer() {
-    Network::cleanupNetwork();
+    Network::cleanup();
     FLAKKARI_LOG_INFO("UDPServer is now stopped");
 }
 

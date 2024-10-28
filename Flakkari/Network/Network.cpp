@@ -11,7 +11,7 @@
 
 namespace Flakkari::Network {
 
-void initNetwork()
+void init()
 {
 #ifdef _WIN32
     WSADATA WSAData;
@@ -21,7 +21,7 @@ void initNetwork()
 #endif
 }
 
-void cleanupNetwork()
+void cleanup()
 {
 #ifdef _WIN32
     ::WSACleanup();

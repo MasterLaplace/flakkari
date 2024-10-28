@@ -26,12 +26,6 @@
     #define STDIN_FILENO 0
 #endif
 
-#ifdef _PSELECT_
-    #define IO_SELECTED Network::PSELECT
-#elif defined(_WSA_)
-    #define IO_SELECTED Network::WSA
-#endif
-
 namespace Flakkari {
 
 class UDPServer {
@@ -39,7 +33,7 @@ class UDPServer {
         UDPServer(std::string ip, unsigned short port) :
             _io(std::make_unique<IO_SELECTED>())
         {
-            Network::initNetwork();
+            Network::init();
 
             _socket.create(ip, port, Network::Address::IpType::IPv4, Network::Address::SocketType::UDP);
             std::cout << _socket << std::endl;
@@ -49,7 +43,7 @@ class UDPServer {
             _io->addSocket(STDIN_FILENO);
         }
         ~UDPServer() {
-            Network::cleanupNetwork();
+            Network::cleanup();
         }
 
         int run() {

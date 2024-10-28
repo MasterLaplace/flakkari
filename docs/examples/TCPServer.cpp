@@ -26,12 +26,6 @@
     #define STDIN_FILENO 0
 #endif
 
-#ifdef _PSELECT_
-    #define IO_SELECTED Network::PSELECT
-#elif defined(_WSA_)
-    #define IO_SELECTED Network::WSA
-#endif
-
 namespace Flakkari {
 
 class TCPServer {
@@ -39,7 +33,7 @@ class TCPServer {
         TCPServer(std::string ip = "localhost", std::size_t port = 8080) :
             _io(std::make_unique<IO_SELECTED>())
         {
-            Network::initNetwork();
+            Network::init();
 
             _socket.create(ip, port, Network::Address::IpType::IPv6, Network::Address::SocketType::TCP);
             std::cout << _socket << std::endl;
@@ -50,7 +44,7 @@ class TCPServer {
             _io->addSocket(STDIN_FILENO);
         }
         ~TCPServer() {
-            Network::cleanupNetwork();
+            Network::cleanup();
         }
 
         int run() {

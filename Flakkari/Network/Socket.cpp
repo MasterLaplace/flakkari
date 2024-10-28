@@ -252,7 +252,7 @@ void Socket::sendTo(const std::shared_ptr<Address> &address, const Buffer &data,
         return FLAKKARI_LOG_ERROR("Address is nullptr"), void();
 
     #ifdef _WIN32
-        if (::sendto(_socket, (const char *)data.getData(), (int)data.getSize(), flags, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
+        if (::sendto(_socket, (const char *)data.getData(), (int)data.getSize(), flags, addr->ai_addr, (int)addr->ai_addrlen) == SOCKET_ERROR) {
             FLAKKARI_LOG_ERROR("Failed to send \"" + std::string(data.begin(), data.end()) + "\" to \"" + address->toString().value_or("No address") + "\", error: " + STD_ERROR);
             return;
         }
@@ -272,7 +272,7 @@ void Socket::sendTo(const std::shared_ptr<Address> &address, const byte *data, c
         return FLAKKARI_LOG_ERROR("Address is nullptr"), void();
 
     #if _WIN32
-        if (::sendto(_socket, (const char *)data, (int)size, flags, addr->ai_addr, addr->ai_addrlen) == SOCKET_ERROR) {
+        if (::sendto(_socket, (const char *)data, (int)size, flags, addr->ai_addr, (int)addr->ai_addrlen) == SOCKET_ERROR) {
             FLAKKARI_LOG_ERROR("Failed to send \""+ std::string(data, data + size) +"\" to \""+ address->toString().value_or("No address") +"\", error: "+ STD_ERROR);
             return;
         }
