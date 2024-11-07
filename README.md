@@ -11,12 +11,13 @@
     </a>
     </h3>
 </p>
-<h3 align="center">🌐 Supported Platforms</h3>
 <p align="center">
+    <h3 align="center">🌐 Supported Platforms
+    &#xa0; : &#xa0;
     <img
         src="https://img.shields.io/badge/Linux-blue?style=for-the-badge"
         alt="Linux"
-        href="https://github.com/MasterLaplace/Flakkari/releases/download/v0.2.0/r-type_server"
+        href="https://github.com/MasterLaplace/Flakkari/releases/latest"
     > &#xa0; | &#xa0;
     <img
         src="https://img.shields.io/badge/Windows-blue?style=for-the-badge"
@@ -25,12 +26,16 @@
     <img
         src="https://img.shields.io/badge/MacOS-blue?style=for-the-badge"
         alt="MacOS"
-    > &#xa0; | &#xa0;
+    >
+    </h3>
 </p>
-<h3 align="center">📡 Supported Protocol</h3>
 <p align="center">
-    <img src="https://img.shields.io/badge/UDP-blue?style=for-the-badge" alt="UDP">
-    <img src="https://img.shields.io/badge/TCP-blue?style=for-the-badge" alt="TCP">
+    <h3 align="center">📡 Supported Protocol
+        &#xa0; : &#xa0;
+        <img src="https://img.shields.io/badge/UDP-blue?style=for-the-badge" alt="UDP">
+        &#xa0; | &#xa0;
+        <img src="https://img.shields.io/badge/TCP-blue?style=for-the-badge" alt="TCP">
+    </h3>
 </p>
 
 
@@ -49,7 +54,7 @@
 
 Flakkari is a UDP server created for the R-Type Epitech project.<br>
 
-> **Note**:
+> [!NOTE]
 > The project is still under development and may not be stable.
 
 
@@ -72,16 +77,22 @@ $> cd build
 # Or configure the project with Ninja
 (build)$> cmake -G Ninja .. && cmake --build .
 
+# Set the FLAKKARI_GAME_DIR environment variable
+(build)$> export FLAKKARI_GAME_DIR=<path_to_game_dir>
+
+# for windows
+(build)$> set FLAKKARI_GAME_DIR=<path_to_game_dir>
+
 # Run the server executable
 (build)$> ./r-type_server
 ```
 
-> **Note**:
-> - the server load Games from the `./Games` directory, so if you want to add a game,
->  you have to put it in this directory before running.
+> [!NOTE]
+> - the server load Games from the `FLAKKARI_GAME_DIR` environment variable,
+>  so if you want to add a game, you have to put it in this directory before running.
 >  If the server is already running, use the `addGame <gameName>` command to load it.
 
-> **Note**:
+> [!NOTE]
 > - some input commands need administrator privileges to execute.
 > `export FLAKKARI_PASSWORD=<password>` to set the password for the server
 > to run with administrator privileges.
@@ -99,7 +110,7 @@ other build commands:
 (build)$> sudo dpkg -i r-type_server-<version>-Linux.deb
 ```
 
-> **Note**:
+> [!NOTE]
 > - the install target will install the server executable in the /usr/local/bin directory,
 >   the network library in the /usr/local/lib directory and
 >   the header files in the /usr/local/include directory.

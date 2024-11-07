@@ -64,9 +64,7 @@ int PSELECT::wait()
     FD_ZERO(&_fds);
     for (auto &fd : _sockets)
         FD_SET(fd, &_fds);
-    #if defined(_WIN32)
-        return ::select(_maxFd + 1, &_fds, nullptr, nullptr, (const timeval *)&_timeout);
-    #elif defined(__APPLE__)
+    #if defined(__APPLE__)
         return ::select(_maxFd + 1, &_fds, nullptr, nullptr, (struct timeval *)&_timeout);
     #else
         return ::pselect(_maxFd + 1, &_fds, nullptr, nullptr, &_timeout, nullptr);
@@ -80,6 +78,11 @@ bool PSELECT::isReady(FileDescriptor socket)
     if (socket > _maxFd)
         throw std::runtime_error("Index out of range");
     return FD_ISSET(socket, &_fds);
+}
+
+bool PSELECT::skipableError()
+{
+    return errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK;
 }
 
 #endif
@@ -177,6 +180,80 @@ bool PPOLL::isReady(FileDescriptor socket)
     if (_pollfds[socket].revents & (POLLIN | POLLPRI))
         return true;
     return false;
+}
+
+#endif
+
+#if defined(_WSA_)
+
+WSA::WSA(long int seconds, long int microseconds)
+{
+    _timeoutInMs = seconds * 1000 + microseconds / 1000; // Convert to milliseconds
+    _hEvent = CreateEvent(NULL, FALSE, FALSE, NULL); // Create a manual-reset event
+    if (_hEvent == NULL)
+        throw std::runtime_error("Failed to create event.");
+}
+
+WSA::~WSA()
+{
+    for (auto& socket : _sockets)
+        WSAEventSelect(socket, NULL, 0);
+
+    CloseHandle(_hEvent);
+}
+
+void WSA::addSocket(FileDescriptor socket)
+{
+    if (socket == -1)
+        throw std::runtime_error("Socket is -1");
+
+    if (_events.find(socket) != _events.end())
+        throw std::runtime_error("Socket already added.");
+
+    _events[socket] = _hEvent;
+    WSAEventSelect(socket, _hEvent, FD_READ | FD_ACCEPT);
+    _sockets.push_back(socket);
+}
+
+void WSA::removeSocket(FileDescriptor socket)
+{
+    if (socket == -1)
+        throw std::runtime_error("Socket is -1");
+
+    auto it = std::remove(_sockets.begin(), _sockets.end(), socket);
+    if (it != _sockets.end()) {
+        WSAEventSelect(socket, NULL, 0);
+        _sockets.erase(it, _sockets.end());
+        _events.erase(socket);
+    }
+}
+
+int WSA::wait()
+{
+    DWORD waitResult = WSAWaitForMultipleEvents(1, &_hEvent, FALSE, _timeoutInMs, FALSE);
+    if (waitResult == WAIT_FAILED)
+        return -1;
+    else if (waitResult == WAIT_TIMEOUT)
+        return 0;
+
+    WSAResetEvent(_hEvent);
+
+    return static_cast<int>(_sockets.size());
+}
+
+bool WSA::isReady(FileDescriptor socket)
+{
+    if (socket == -1)
+        throw std::runtime_error("Socket is -1");
+
+    DWORD result = WSAEnumNetworkEvents(socket, _events[socket], nullptr);
+    return (result == 0);
+}
+
+bool WSA::skipableError()
+{
+    int error = WSAGetLastError();
+    return error == WSAEINTR || error == WSAEWOULDBLOCK || error == WSAEINPROGRESS;
 }
 
 #endif

@@ -39,7 +39,9 @@ See the [Table of Contents](#table-of-contents) for different ways to help and d
 
 Here, you can provide a brief overview of what the Flakkari project is about and why contributions are important.
 
-v0.2.0 of the project is currently under development. You can find the latest release [here](https://github.com/MasterLaplace/Flakkari/releases/latest/) and the changelog [here](CHANGELOG.md).
+Flakkari is a Epitech/Laval Student project. It is a simple game server written in C++. The project is designed to be a lightweight and easy-to-use server that can be used for various purposes. The server is also part of the Laplace-Project, a collection of libraries that provide a set of tools for developing games, os, applications, and more.
+The project is open-source and welcomes contributions from the community. If you're interested in helping out, you can find more information on how to contribute below.
+Flakkari is currently under development. You can find the latest release [here](https://github.com/MasterLaplace/Flakkari/releases/latest/) and the changelog [here](CHANGELOG.md).
 
 ----
 

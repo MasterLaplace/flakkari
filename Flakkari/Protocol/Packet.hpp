@@ -26,6 +26,8 @@
 #include "Components.hpp"
 #include "Events.hpp"
 
+#include <cstring>
+
 namespace Flakkari::Protocol {
 
 inline namespace V_0 {
@@ -100,7 +102,7 @@ inline namespace V_0 {
 
             const byte *dataBytes = reinterpret_cast<const byte*>(&data);
             packet.payload.insert(packet.payload.end(), dataBytes, dataBytes + sizeof(data));
-            packet.header._contentLength += packet.payload.size() + sizeof(data);
+            packet.header._contentLength += (ushort)packet.payload.size() + (ushort)sizeof(data);
             return packet;
         }
 
@@ -136,7 +138,7 @@ inline namespace V_0 {
             const byte *dataBytes = reinterpret_cast<const byte*>(&intValue);
             payload.insert(payload.end(), dataBytes, dataBytes + sizeof(intValue));
             payload += str;
-            header._contentLength += payload.size() + sizeof(intValue);
+            header._contentLength += (ushort)payload.size() + (ushort)sizeof(intValue);
         }
 
         std::string extractString()
@@ -147,7 +149,7 @@ inline namespace V_0 {
             payload.erase(payload.begin(), payload.begin() + sizeof(intValue));
             str = std::string((const char*)payload.data(), intValue);
             payload.erase(payload.begin(), payload.begin() + intValue);
-            header._contentLength -= sizeof(intValue) + intValue;
+            header._contentLength -= (ushort)sizeof(intValue) + (ushort)intValue;
             return str;
         }
 
