@@ -38,6 +38,19 @@ struct Level {
     {
     }
 
+    Level &operator=(const Level &other)
+    {
+        if (this != &other)
+        {
+            level = other.level;
+            currentWeapon = other.currentWeapon;
+            currentExp = other.currentExp;
+            requiredExp = other.requiredExp;
+        }
+
+        return *this;
+    }
+
     std::size_t size() const { return sizeof(level) + currentWeapon.size() + sizeof(currentExp) + sizeof(requiredExp); }
 };
 

@@ -28,6 +28,13 @@ struct Collider {
     Collider(Math::Vector2f nsize) : _size(nsize) {}
     Collider(const Collider &other) : _size(other._size) {}
 
+    Collider& operator=(const Collider& other) {
+        if (this != &other)
+            _size = other._size;
+
+        return *this;
+    }
+
     std::size_t size() const { return sizeof(_size); }
 };
 

@@ -38,6 +38,19 @@ struct Control {
     Control(const Control &other)
         : up(other.up), down(other.down), left(other.left), right(other.right), shoot(other.shoot){};
 
+    Control& operator=(const Control& other) {
+        if (this != &other)
+        {
+            up = other.up;
+            down = other.down;
+            left = other.left;
+            right = other.right;
+            shoot = other.shoot;
+        }
+
+        return *this;
+    }
+
     std::size_t size() const { return sizeof(*this); }
 };
 

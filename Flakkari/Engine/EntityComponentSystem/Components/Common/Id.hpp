@@ -24,6 +24,13 @@ struct Id {
     Id(std::size_t id) : id(id) {}
     Id(const Id &other) : id(other.id) {}
 
+    Id &operator=(const Id &other) {
+        if (this != &other)
+            id = other.id;
+
+        return *this;
+    }
+
     std::size_t size() const { return sizeof(id); }
 };
 

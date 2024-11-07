@@ -30,6 +30,13 @@ struct Spawned {
     Spawned(bool spawed) : has_spawned(spawed) {}
     Spawned(const Spawned &other) : has_spawned(other.has_spawned) {}
 
+    Spawned& operator=(const Spawned& other) {
+        if (this != &other)
+            has_spawned = other.has_spawned;
+
+        return *this;
+    }
+
     std::size_t size() const { return sizeof(has_spawned); }
 };
 

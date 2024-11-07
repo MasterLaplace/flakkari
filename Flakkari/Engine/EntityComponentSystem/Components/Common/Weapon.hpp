@@ -43,6 +43,17 @@ struct Weapon {
     Weapon(const Weapon &other) = default;
     Weapon(std::size_t dmg, float rate, std::size_t lvl) : damage(dmg), fireRate(rate), level(lvl){};
 
+    Weapon &operator=(const Weapon &other) {
+        if (this != &other)
+        {
+            damage = other.damage;
+            fireRate = other.fireRate;
+            level = other.level;
+        }
+
+        return *this;
+    }
+
     std::size_t size() const { return sizeof(*this); };
 };
 

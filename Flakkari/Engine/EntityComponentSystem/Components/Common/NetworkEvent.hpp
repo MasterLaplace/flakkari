@@ -21,6 +21,13 @@ struct NetworkEvent {
     NetworkEvent(const NetworkEvent &other) : events(other.events){};
     NetworkEvent(const std::vector<unsigned short> &events) : events(events){};
 
+    NetworkEvent &operator=(const NetworkEvent &other) {
+        if (this != &other)
+            events = other.events;
+
+        return *this;
+    }
+
     std::size_t size() const { return events.size() * sizeof(unsigned short); }
 };
 

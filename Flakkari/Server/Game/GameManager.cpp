@@ -72,22 +72,6 @@ int GameManager::addGame(const std::string &gameName)
     return 0;
 }
 
-const std::shared_ptr<Game> &GameManager::getGame(const std::string &gameName)
-{
-    if (_gamesStore.find(gameName) == _gamesStore.end())
-        return FLAKKARI_LOG_ERROR("game not found"), nullptr;
-    return std::make_shared<Game>(gameName, _gamesStore[gameName]);
-}
-
-const std::vector<std::shared_ptr<Game>> &GameManager::getGamesInstances()
-{
-    std::vector<std::shared_ptr<Game>> gamesInstances(_gamesInstances.size());
-
-    for (auto &game : _gamesInstances)
-        gamesInstances.insert(gamesInstances.end(), game.second.begin(), game.second.end());
-    return gamesInstances;
-}
-
 int GameManager::updateGame(const std::string &gameName)
 {
     if (_gamesStore.find(gameName) == _gamesStore.end())

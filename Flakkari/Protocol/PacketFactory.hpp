@@ -266,22 +266,6 @@ class PacketFactory {
         add2dToPacketByEntity<Id>(packet, registry, entity);
     }
 
-    /**
-     * @brief Add requirement information for Command that use components.
-     * @tparam Id  Type of the entity id.
-     * @param packet  Packet to add the components to.
-     * @param size  Size of the packet.
-     * @param sceneName  Name of the scene.
-     * @param entity  Entity to get the components from.
-     */
-    template <typename Id>
-    static void addInfoToPacket(Packet<Id> &packet, std::size_t size, const std::string &sceneName,
-                                Engine::ECS::Entity entity)
-    {
-        packet.injectString(sceneName);
-        packet << entity;
-    }
-
     struct UpdateMovement {
         Engine::ECS::Entity entity;
         Engine::ECS::Components::_2D::Transform pos;

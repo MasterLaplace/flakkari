@@ -28,6 +28,14 @@ struct Parent {
     Parent() : entity(0) {}
     Parent(const std::size_t &entity) : entity(entity) {}
     Parent(const Parent &other) : entity(other.entity) {}
+
+    Parent &operator=(const Parent &other) {
+        if (this != &other)
+            entity = other.entity;
+
+        return *this;
+    }
+
     std::size_t size() const { return sizeof(*this); }
 };
 

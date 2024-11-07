@@ -66,23 +66,6 @@ class GameManager : public Singleton<GameManager> {
     int addGame(const std::string &gameName);
 
     /**
-     * @brief Get the Game object
-     *
-     * @param gameName Game to get
-     * @return std::shared_ptr<Game> Game
-     *
-     * @deprecated Use getGameInstance instead
-     */
-    const std::shared_ptr<Game> &getGame(const std::string &gameName);
-
-    /**
-     * @brief Get the Games Instances object (all games loaded)
-     *
-     * @return std::vector<std::shared_ptr<Game>> Games Instances
-     */
-    const std::vector<std::shared_ptr<Game>> &getGamesInstances();
-
-    /**
      * @brief Update a game from the GameManager
      *
      * @param gameName Game to update

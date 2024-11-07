@@ -27,6 +27,13 @@ struct Child {
     Child(const std::string &nname) : name(nname) {}
     Child(const Child &other) : name(other.name) {}
 
+    Child &operator=(const Child &other) {
+        if (this != &other)
+            name = other.name;
+
+        return *this;
+    }
+
     std::size_t size() const { return name.size(); }
 };
 

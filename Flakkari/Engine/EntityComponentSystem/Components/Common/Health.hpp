@@ -34,6 +34,18 @@ struct Health {
         : currentHealth(other.currentHealth), maxHealth(other.maxHealth), shield(other.shield),
           maxShield(other.maxShield){};
 
+    Health& operator=(const Health& other) {
+        if (this != &other)
+        {
+            currentHealth = other.currentHealth;
+            maxHealth = other.maxHealth;
+            shield = other.shield;
+            maxShield = other.maxShield;
+        }
+
+        return *this;
+    }
+
     std::size_t size() const { return sizeof(*this); }
 };
 
