@@ -105,7 +105,14 @@ FetchContent_Declare(
     GIT_TAG v3.11.3
 )
 
+FetchContent_Declare(
+    Singleton
+    GIT_REPOSITORY https://github.com/MasterLaplace/Singleton.git
+    GIT_TAG v1.0.2
+)
+
 FetchContent_MakeAvailable(nlohmann_json)
+FetchContent_MakeAvailable(Singleton)
 
 # Separate Build Artifacts:
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
@@ -122,9 +129,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if (MSVC)
     add_compile_options(/W4)
 elseif (WIN32)
-    add_compile_options(-Wall -Wextra)
+    add_compile_options(-Wall -Wextra -ggdb -O0 -g3)
 else()
-    add_compile_options(-Wall -Wextra)
+    add_compile_options(-Wall -Wextra -ggdb -O0 -g3)
 endif()
 
 # Create the executable
@@ -132,6 +139,7 @@ add_executable(flakkari ${SOURCES} ${HEADERS})
 
 # Include Directories:
 target_include_directories(flakkari PRIVATE ${CMAKE_SOURCE_DIR}/Flakkari)
+target_include_directories(flakkari PRIVATE ${singleton_SOURCE_DIR})
 
 # Link Libraries:
 target_link_libraries(flakkari PRIVATE nlohmann_json::nlohmann_json)
