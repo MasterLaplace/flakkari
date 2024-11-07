@@ -43,7 +43,8 @@ struct Weapon {
     Weapon(const Weapon &other) = default;
     Weapon(std::size_t dmg, float rate, std::size_t lvl) : damage(dmg), fireRate(rate), level(lvl){};
 
-    Weapon &operator=(const Weapon &other) {
+    Weapon &operator=(const Weapon &other)
+    {
         if (this != &other)
         {
             damage = other.damage;

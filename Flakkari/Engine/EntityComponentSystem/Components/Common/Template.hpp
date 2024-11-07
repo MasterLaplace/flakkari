@@ -21,7 +21,8 @@ struct Template {
     Template(const std::string &nname) : name(nname) {}
     Template(const Template &other) : name(other.name) {}
 
-    Template &operator=(const Template &other) {
+    Template &operator=(const Template &other)
+    {
         if (this != &other)
             name = other.name;
 

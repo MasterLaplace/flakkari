@@ -26,7 +26,8 @@ struct Tag {
     Tag(const std::string &ntag) : tag(ntag) {}
     Tag(const Tag &other) : tag(other.tag) {}
 
-    Tag &operator=(const Tag &other) {
+    Tag &operator=(const Tag &other)
+    {
         if (this != &other)
             tag = other.tag;
 

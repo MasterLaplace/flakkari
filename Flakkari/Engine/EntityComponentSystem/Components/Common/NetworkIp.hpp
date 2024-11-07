@@ -21,7 +21,8 @@ struct NetworkIp {
     NetworkIp(std::string ip) : ip(ip) {}
     NetworkIp(const NetworkIp &other) : ip(other.ip) {}
 
-    NetworkIp &operator=(const NetworkIp &other) {
+    NetworkIp &operator=(const NetworkIp &other)
+    {
         if (this != &other)
             ip = other.ip;
 

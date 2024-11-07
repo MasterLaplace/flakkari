@@ -25,7 +25,8 @@ struct Transform {
         : position(position), scale(scale), rotation(rotation){};
     Transform(const Transform &other) : position(other.position), scale(other.scale), rotation(other.rotation){};
 
-    Transform& operator=(const Transform& other) {
+    Transform &operator=(const Transform &other)
+    {
         if (this != &other)
         {
             position = other.position;

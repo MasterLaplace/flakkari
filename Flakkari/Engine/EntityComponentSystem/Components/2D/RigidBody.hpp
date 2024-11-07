@@ -35,7 +35,8 @@ struct RigidBody {
         : mass(mass), restitution(restitution), friction(friction), gravityScale(gravityScale), isGravityAffected(true),
           isKinematic(false){};
 
-    RigidBody& operator=(const RigidBody& other) {
+    RigidBody &operator=(const RigidBody &other)
+    {
         if (this != &other)
         {
             mass = other.mass;

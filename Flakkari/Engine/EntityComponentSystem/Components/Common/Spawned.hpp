@@ -30,7 +30,8 @@ struct Spawned {
     Spawned(bool spawed) : has_spawned(spawed) {}
     Spawned(const Spawned &other) : has_spawned(other.has_spawned) {}
 
-    Spawned& operator=(const Spawned& other) {
+    Spawned &operator=(const Spawned &other)
+    {
         if (this != &other)
             has_spawned = other.has_spawned;
 

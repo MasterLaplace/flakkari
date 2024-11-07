@@ -27,7 +27,8 @@ struct Evolve {
     Evolve(const std::string &nname) : name(nname) {}
     Evolve(const Evolve &other) : name(other.name) {}
 
-    Evolve &operator=(const Evolve &other) {
+    Evolve &operator=(const Evolve &other)
+    {
         if (this != &other)
             name = other.name;
 

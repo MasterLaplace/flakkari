@@ -24,7 +24,8 @@ struct Movable {
         : velocity(velocity), acceleration(acceleration){};
     Movable(const Movable &other) : velocity(other.velocity), acceleration(other.acceleration){};
 
-    Movable& operator=(const Movable& other) {
+    Movable &operator=(const Movable &other)
+    {
         if (this != &other)
         {
             velocity = other.velocity;

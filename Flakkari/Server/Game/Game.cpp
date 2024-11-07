@@ -309,7 +309,7 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     {
         if (netEvent->events.size() < size_t(event.id))
             netEvent->events.resize(size_t(event.id) + 1);
-        netEvent->events[size_t(event.id)] = (unsigned short)event.state;
+        netEvent->events[size_t(event.id)] = (unsigned short) event.state;
 
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
@@ -324,7 +324,7 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     {
         if (netEvent->events.size() < size_t(event.id))
             netEvent->events.resize(size_t(event.id) + 1);
-        netEvent->events[size_t(event.id)] = (unsigned short)event.state;
+        netEvent->events[size_t(event.id)] = (unsigned short) event.state;
 
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
@@ -339,7 +339,7 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     {
         if (netEvent->events.size() < size_t(event.id))
             netEvent->events.resize(size_t(event.id) + 1);
-        netEvent->events[size_t(event.id)] = (unsigned short)event.state;
+        netEvent->events[size_t(event.id)] = (unsigned short) event.state;
 
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
@@ -354,7 +354,7 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     {
         if (netEvent->events.size() < size_t(event.id))
             netEvent->events.resize(size_t(event.id) + 1);
-        netEvent->events[size_t(event.id)] = (unsigned short)event.state;
+        netEvent->events[size_t(event.id)] = (unsigned short) event.state;
 
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
@@ -369,7 +369,7 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     {
         if (netEvent->events.size() < size_t(event.id))
             netEvent->events.resize(size_t(event.id) + 1);
-        netEvent->events[size_t(event.id)] = (unsigned short)event.state;
+        netEvent->events[size_t(event.id)] = (unsigned short) event.state;
 
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
