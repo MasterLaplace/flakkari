@@ -14,9 +14,8 @@
  * @date 2024-01-13
  **************************************************************************/
 
-
 #ifndef FLAKKARI_ENTITYFACTORY_HPP_
-    #define FLAKKARI_ENTITYFACTORY_HPP_
+#define FLAKKARI_ENTITYFACTORY_HPP_
 
 #include <nlohmann/json.hpp>
 
@@ -28,11 +27,10 @@
 namespace Flakkari::Engine::ECS {
 
 class EntityFactory {
-public:
+    public:
     using nl_template = nlohmann::json;
 
-public:
-
+    public:
     /**
      * @brief Create a Entity From Template object based on a template JSON
      *
@@ -45,9 +43,8 @@ public:
      * @param templateJson  The template JSON
      * @return Entity  The created entity
      */
-    static Entity createEntityFromTemplate (
-        Registry &registry, const nl_template &templateJson
-    ) {
+    static Entity createEntityFromTemplate(Registry &registry, const nl_template &templateJson)
+    {
         Entity entity = registry.spawn_entity();
 
         addEntityToRegistryByTemplate(registry, entity, templateJson);
@@ -67,9 +64,8 @@ public:
      * @param entity  The entity to add the components to
      * @param templateJson  The template JSON
      */
-    static void addEntityToRegistryByTemplate (
-        Registry &registry, Entity entity, const nl_template &templateJson
-    ) {
+    static void addEntityToRegistryByTemplate(Registry &registry, Entity entity, const nl_template &templateJson)
+    {
         for (auto &component : templateJson.items())
         {
             auto componentName = component.key();
@@ -77,7 +73,8 @@ public:
 
             //*_ 2D Components _*//
 
-            if (componentName == "Collider") {
+            if (componentName == "Collider")
+            {
                 registry.registerComponent<Engine::ECS::Components::_2D::Collider>();
                 Engine::ECS::Components::_2D::Collider collider;
                 collider._size = Engine::Math::Vector2f(componentContent["size"]["x"], componentContent["size"]["y"]);
@@ -85,7 +82,8 @@ public:
                 continue;
             }
 
-            if (componentName == "Control") {
+            if (componentName == "Control")
+            {
                 registry.registerComponent<Engine::ECS::Components::_2D::Control>();
                 Engine::ECS::Components::_2D::Control control;
                 control.up = componentContent["up"];
@@ -97,16 +95,20 @@ public:
                 continue;
             }
 
-            if (componentName == "Movable") {
+            if (componentName == "Movable")
+            {
                 registry.registerComponent<Engine::ECS::Components::_2D::Movable>();
                 Engine::ECS::Components::_2D::Movable movable;
-                movable.velocity = Engine::Math::Vector2f(componentContent["velocity"]["x"], componentContent["velocity"]["y"]);
-                movable.acceleration = Engine::Math::Vector2f(componentContent["acceleration"]["x"], componentContent["acceleration"]["y"]);
+                movable.velocity =
+                    Engine::Math::Vector2f(componentContent["velocity"]["x"], componentContent["velocity"]["y"]);
+                movable.acceleration = Engine::Math::Vector2f(componentContent["acceleration"]["x"],
+                                                              componentContent["acceleration"]["y"]);
                 registry.add_component<Engine::ECS::Components::_2D::Movable>(entity, std::move(movable));
                 continue;
             }
 
-            if (componentName == "RigidBody") {
+            if (componentName == "RigidBody")
+            {
                 registry.registerComponent<Engine::ECS::Components::_2D::RigidBody>();
                 Engine::ECS::Components::_2D::RigidBody rigidBody;
                 rigidBody.mass = componentContent["mass"];
@@ -119,33 +121,39 @@ public:
                 continue;
             }
 
-            if (componentName == "Transform") {
+            if (componentName == "Transform")
+            {
                 registry.registerComponent<Engine::ECS::Components::_2D::Transform>();
                 Engine::ECS::Components::_2D::Transform transform;
-                transform.position = Engine::Math::Vector2f(componentContent["position"]["x"], componentContent["position"]["y"]);
+                transform.position =
+                    Engine::Math::Vector2f(componentContent["position"]["x"], componentContent["position"]["y"]);
                 transform.rotation = componentContent["rotation"];
-                transform.scale = Engine::Math::Vector2f(componentContent["scale"]["x"], componentContent["scale"]["y"]);
+                transform.scale =
+                    Engine::Math::Vector2f(componentContent["scale"]["x"], componentContent["scale"]["y"]);
                 registry.add_component<Engine::ECS::Components::_2D::Transform>(entity, std::move(transform));
                 continue;
             }
 
             //*_ Common Components _*//
 
-            if (componentName == "Child") {
+            if (componentName == "Child")
+            {
                 registry.registerComponent<Engine::ECS::Components::Common::Child>();
                 Engine::ECS::Components::Common::Child child(componentContent["name"]);
                 registry.add_component<Engine::ECS::Components::Common::Child>(entity, std::move(child));
                 continue;
             }
 
-            if (componentName == "Evolve") {
+            if (componentName == "Evolve")
+            {
                 registry.registerComponent<Engine::ECS::Components::Common::Evolve>();
                 Engine::ECS::Components::Common::Evolve evolve(componentContent["name"]);
                 registry.add_component<Engine::ECS::Components::Common::Evolve>(entity, std::move(evolve));
                 continue;
             }
 
-            if (componentName == "Health") {
+            if (componentName == "Health")
+            {
                 registry.registerComponent<Engine::ECS::Components::Common::Health>();
                 Engine::ECS::Components::Common::Health health;
                 health.maxHealth = componentContent["maxHealth"];
@@ -156,14 +164,16 @@ public:
                 continue;
             }
 
-            if (componentName == "Parent") {
+            if (componentName == "Parent")
+            {
                 registry.registerComponent<Engine::ECS::Components::Common::Parent>();
                 Engine::ECS::Components::Common::Parent parent(componentContent["entity"]);
                 registry.add_component<Engine::ECS::Components::Common::Parent>(entity, std::move(parent));
                 continue;
             }
 
-            if (componentName == "Level") {
+            if (componentName == "Level")
+            {
                 registry.registerComponent<Engine::ECS::Components::Common::Level>();
                 Engine::ECS::Components::Common::Level level;
                 level.level = componentContent["level"];
@@ -174,28 +184,32 @@ public:
                 continue;
             }
 
-            if (componentName == "Spawned") {
+            if (componentName == "Spawned")
+            {
                 registry.registerComponent<Engine::ECS::Components::Common::Spawned>();
                 Engine::ECS::Components::Common::Spawned spawned(componentContent["has_spawned"]);
                 registry.add_component<Engine::ECS::Components::Common::Spawned>(entity, std::move(spawned));
                 continue;
             }
 
-            if (componentName == "Tag") {
+            if (componentName == "Tag")
+            {
                 registry.registerComponent<Engine::ECS::Components::Common::Tag>();
                 Engine::ECS::Components::Common::Tag tag(componentContent["tag"]);
                 registry.add_component<Engine::ECS::Components::Common::Tag>(entity, std::move(tag));
                 continue;
             }
 
-            if (componentName == "Template") {
+            if (componentName == "Template")
+            {
                 registry.registerComponent<Engine::ECS::Components::Common::Template>();
                 Engine::ECS::Components::Common::Template template_(componentContent["name"]);
                 registry.add_component<Engine::ECS::Components::Common::Template>(entity, std::move(template_));
                 continue;
             }
 
-            if (componentName == "Weapon") {
+            if (componentName == "Weapon")
+            {
                 registry.registerComponent<Engine::ECS::Components::Common::Weapon>();
                 Engine::ECS::Components::Common::Weapon weapon;
                 weapon.damage = componentContent["damage"];

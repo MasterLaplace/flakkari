@@ -12,29 +12,28 @@
  * @date 2023-01-05
  **************************************************************************/
 
-
 #ifndef FLAKKARI_REGISTRY_HPP_
-    #define FLAKKARI_REGISTRY_HPP_
+#define FLAKKARI_REGISTRY_HPP_
 
-#include "SparseArrays.hpp"
 #include "Entity.hpp"
+#include "SparseArrays.hpp"
 
-#include <unordered_map>
-#include <typeindex>
 #include <any>
+#include <climits>
 #include <functional>
+#include <iostream>
 #include <queue>
 #include <stdexcept>
-#include <climits>
-#include <iostream>
+#include <typeindex>
+#include <unordered_map>
 
 namespace Flakkari::Engine::ECS {
 
 class Registry {
-public:
+    public:
     using entity_type = Entity;
-    using EraseFn = std::function<void(Registry&, const entity_type&)>;
-    using SystemFn = std::function<void(Registry&)>;
+    using EraseFn = std::function<void(Registry &, const entity_type &)>;
+    using SystemFn = std::function<void(Registry &)>;
 
     /**
      * @brief Spawn a new entity in the registry.
@@ -66,13 +65,13 @@ public:
      * @return true  If the entity is registered.
      * @return false  If the entity is not registered.
      */
-    template <typename Component>
-    [[nodiscard]] bool isRegistered(entity_type const &entity)
+    template <typename Component> [[nodiscard]] bool isRegistered(entity_type const &entity)
     {
         auto componentIt = _components.find(std::type_index(typeid(Component)));
 
-        if (componentIt != _components.end()) {
-            auto &component = std::any_cast<SparseArrays<Component>&>(componentIt->second);
+        if (componentIt != _components.end())
+        {
+            auto &component = std::any_cast<SparseArrays<Component> &>(componentIt->second);
             if (entity < component.size())
                 return component[entity].has_value();
         }
@@ -86,13 +85,13 @@ public:
      * @return true  If the component is registered.
      * @return false  If the component is not registered.
      */
-    template <typename Component>
-    [[nodiscard]] bool isRegistered()
+    template <typename Component> [[nodiscard]] bool isRegistered()
     {
         auto componentIt = _components.find(std::type_index(typeid(Component)));
 
-        if (componentIt != _components.end()) {
-            auto &component = std::any_cast<SparseArrays<Component>&>(componentIt->second);
+        if (componentIt != _components.end())
+        {
+            auto &component = std::any_cast<SparseArrays<Component> &>(componentIt->second);
             return component.size() > 0;
         }
         return false;
@@ -107,7 +106,8 @@ public:
      * @return SparseArrays<Component>::reference_type  The component.
      */
     template <typename Component>
-    typename SparseArrays<Component>::reference_type add_component(const entity_type &to, Component &&c) {
+    typename SparseArrays<Component>::reference_type add_component(const entity_type &to, Component &&c)
+    {
         return getComponents<Component>().insert_at(to, std::forward<Component>(c));
     }
 
@@ -120,7 +120,8 @@ public:
      * @return SparseArrays<Component>::reference_type  The component.
      */
     template <typename Component>
-    typename SparseArrays<Component>::reference_type add_component(const entity_type &to, const Component &c) {
+    typename SparseArrays<Component>::reference_type add_component(const entity_type &to, const Component &c)
+    {
         return getComponents<Component>().insert_at(to, c);
     }
 
@@ -134,7 +135,8 @@ public:
      * @return SparseArrays<Component>::reference_type  The component.
      */
     template <typename Component, typename... Params>
-    typename SparseArrays<Component>::reference_type emplace_component(const entity_type &to, Params&&... p) {
+    typename SparseArrays<Component>::reference_type emplace_component(const entity_type &to, Params &&...p)
+    {
         return getComponents<Component>().emplace_at(to, std::forward<Params>(p)...);
     }
 
@@ -144,8 +146,8 @@ public:
      * @tparam Component  The component to remove.
      * @param from  The entity to remove the component from.
      */
-    template <typename Component>
-    void remove_component(const entity_type &from) {
+    template <typename Component> void remove_component(const entity_type &from)
+    {
         getComponents<Component>().erase(from);
     }
 
@@ -155,18 +157,15 @@ public:
      * @tparam Component  The component to get.
      * @return SparseArrays<Component>&  The component.
      */
-    template <typename Component>
-    SparseArrays<Component> &registerComponent()
+    template <typename Component> SparseArrays<Component> &registerComponent()
     {
         if (isRegistered<Component>())
             return getComponents<Component>();
 
         auto ti = std::type_index(typeid(Component));
         _components[ti] = std::make_any<SparseArrays<Component>>();
-        _eraseFunctions[ti] =  [](Registry &r, const entity_type &e) {
-            r.remove_component<Component>(e);
-        };
-        return std::any_cast<SparseArrays<Component>&>(_components[ti]);
+        _eraseFunctions[ti] = [](Registry &r, const entity_type &e) { r.remove_component<Component>(e); };
+        return std::any_cast<SparseArrays<Component> &>(_components[ti]);
     }
 
     /**
@@ -175,14 +174,13 @@ public:
      * @tparam Component  The component to get.
      * @return SparseArrays<Component>&  The component array.
      */
-    template <typename Component>
-    SparseArrays<Component> &getComponents()
+    template <typename Component> SparseArrays<Component> &getComponents()
     {
         if (!isRegistered<Component>())
             return registerComponent<Component>();
 
         auto ti = std::type_index(typeid(Component));
-        return std::any_cast<SparseArrays<Component>&>(_components[ti]);
+        return std::any_cast<SparseArrays<Component> &>(_components[ti]);
     }
 
     /**
@@ -191,10 +189,10 @@ public:
      * @tparam Component  The component to get.
      * @return const SparseArrays<Component>&  The component array.
      */
-    template <typename Component>
-    const SparseArrays<Component> &getComponents() const {
+    template <typename Component> const SparseArrays<Component> &getComponents() const
+    {
         auto ti = std::type_index(typeid(Component));
-        return std::any_cast<const SparseArrays<Component>&>(_components.at(ti));
+        return std::any_cast<const SparseArrays<Component> &>(_components.at(ti));
     }
 
     /**
@@ -204,11 +202,10 @@ public:
      * @tparam Function  The function to add to the system.
      * @param f  The function to add to the system.
      */
-    template <typename... Components, typename Function>
-    void add_system(Function &&f) {
-        _systems.emplace_back([sys{std::forward<Function>(f)}](Registry &r) {
-            sys(r, r.getComponents<Components>()...);
-        });
+    template <typename... Components, typename Function> void add_system(Function &&f)
+    {
+        _systems.emplace_back(
+            [sys{std::forward<Function>(f)}](Registry &r) { sys(r, r.getComponents<Components>()...); });
     }
 
     /**
@@ -217,7 +214,7 @@ public:
      */
     void run_systems();
 
-private:
+    private:
     std::unordered_map<std::type_index, std::any> _components;
     std::unordered_map<std::type_index, EraseFn> _eraseFunctions;
     std::vector<SystemFn> _systems;

@@ -16,12 +16,12 @@
 #ifndef FLAKKARI_SYSTEMS_HPP_
 #define FLAKKARI_SYSTEMS_HPP_
 
-#include "../Registry.hpp"
 #include "../Components/Components2D.hpp"
 #include "../Components/ComponentsCommon.hpp"
+#include "../Registry.hpp"
 
-#include <cmath>
 #include <chrono>
+#include <cmath>
 
 namespace Flakkari::Engine::ECS::Systems {
 

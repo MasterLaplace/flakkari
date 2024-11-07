@@ -14,9 +14,8 @@
  * @date 2024-01-14
  **************************************************************************/
 
-
 #ifndef EVENTS_HPP_
-    #define EVENTS_HPP_
+#define EVENTS_HPP_
 
 #include <cstdint>
 
@@ -26,30 +25,30 @@ namespace Flakkari::Protocol {
 
 inline namespace V_0 {
 
-    enum class EventId : uint8_t {
-        MOVE_LEFT = 10,
-        MOVE_RIGHT = 11,
-        MOVE_UP = 12,
-        MOVE_DOWN = 13,
-        SHOOT = 14,
-        MAX_EVENT
-    };
+enum class EventId : uint8_t {
+    MOVE_LEFT = 10,
+    MOVE_RIGHT = 11,
+    MOVE_UP = 12,
+    MOVE_DOWN = 13,
+    SHOOT = 14,
+    MAX_EVENT
+};
 
-    enum class EventState : uint8_t {
-        NONE = 0,
-        PRESSED = 1,
-        RELEASED = 2,
-        MAX_STATE
-    };
+enum class EventState : uint8_t {
+    NONE = 0,
+    PRESSED = 1,
+    RELEASED = 2,
+    MAX_STATE
+};
 
-    PACKED_START
+PACKED_START
 
-    struct Event {
-        EventId id;
-        EventState state;
-    };
+struct Event {
+    EventId id;
+    EventState state;
+};
 
-    PACKED_END
+PACKED_END
 
 } /* namespace V_0 */
 

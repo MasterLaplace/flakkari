@@ -32,15 +32,13 @@ struct Control {
     bool right;
     bool shoot;
 
-    Control() : up(false), down(false), left(false), right(false), shoot(false) {};
+    Control() : up(false), down(false), left(false), right(false), shoot(false){};
     Control(bool up, bool down, bool left, bool right, bool shoot)
-        : up(up), down(down), left(left), right(right), shoot(shoot) {};
+        : up(up), down(down), left(left), right(right), shoot(shoot){};
     Control(const Control &other)
-        : up(other.up), down(other.down), left(other.left), right(other.right), shoot(other.shoot) {};
+        : up(other.up), down(other.down), left(other.left), right(other.right), shoot(other.shoot){};
 
-    std::size_t size() const {
-        return sizeof(*this);
-    }
+    std::size_t size() const { return sizeof(*this); }
 };
 
 PACKED_END

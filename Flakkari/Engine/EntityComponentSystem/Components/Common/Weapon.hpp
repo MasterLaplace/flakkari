@@ -10,8 +10,8 @@
 #ifndef WEAPON_HPP_
 #define WEAPON_HPP_
 
-#include <string>
 #include <cstring>
+#include <string>
 
 #include "Network/Packed.hpp"
 
@@ -41,12 +41,9 @@ struct Weapon {
 
     Weapon() = default;
     Weapon(const Weapon &other) = default;
-    Weapon(std::size_t dmg, float rate, std::size_t lvl)
-        : damage(dmg), fireRate(rate), level(lvl){};
+    Weapon(std::size_t dmg, float rate, std::size_t lvl) : damage(dmg), fireRate(rate), level(lvl){};
 
-    std::size_t size() const {
-        return sizeof(*this);
-    };
+    std::size_t size() const { return sizeof(*this); };
 };
 
 PACKED_END

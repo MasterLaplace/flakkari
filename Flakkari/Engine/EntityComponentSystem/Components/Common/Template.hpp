@@ -21,9 +21,7 @@ struct Template {
     Template(const std::string &nname) : name(nname) {}
     Template(const Template &other) : name(other.name) {}
 
-    std::size_t size() const {
-        return name.size();
-    }
+    std::size_t size() const { return name.size(); }
 };
 
 } // namespace Flakkari::Engine::ECS::Components::Common

@@ -10,8 +10,8 @@
 #ifndef SPAWNED_HPP_
 #define SPAWNED_HPP_
 
-#include <string>
 #include <cstring>
+#include <string>
 
 #include "Network/Packed.hpp"
 
@@ -30,9 +30,7 @@ struct Spawned {
     Spawned(bool spawed) : has_spawned(spawed) {}
     Spawned(const Spawned &other) : has_spawned(other.has_spawned) {}
 
-    std::size_t size() const {
-        return sizeof(has_spawned);
-    }
+    std::size_t size() const { return sizeof(has_spawned); }
 };
 
 PACKED_END

@@ -12,9 +12,8 @@
  * @date 2023-01-05
  **************************************************************************/
 
-
 #ifndef FLAKKARI_ENTITY_HPP_
-    #define FLAKKARI_ENTITY_HPP_
+#define FLAKKARI_ENTITY_HPP_
 
 #include <cstddef>
 #include <cstdint>
@@ -24,19 +23,27 @@ namespace Flakkari::Engine::ECS {
 class Registry;
 
 class Entity {
-public:
+    public:
     friend class Registry;
 
     explicit Entity(std::size_t id) : _id(id) {}
     Entity() : _id(0) {}
 
-    operator std::size_t() const { return _id;}
+    operator std::size_t() const { return _id; }
 
     std::size_t operator++() { return ++_id; }
-    Entity &operator=(std::size_t id) { _id = id; return *this; }
-    Entity &operator=(int id) { _id = (id < 0) ? 0 : id; return *this; }
+    Entity &operator=(std::size_t id)
+    {
+        _id = id;
+        return *this;
+    }
+    Entity &operator=(int id)
+    {
+        _id = (id < 0) ? 0 : id;
+        return *this;
+    }
 
-private:
+    private:
     std::size_t _id;
 };
 

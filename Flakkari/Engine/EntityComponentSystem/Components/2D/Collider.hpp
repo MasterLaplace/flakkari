@@ -10,8 +10,8 @@
 #ifndef COLLIDER_HPP_
 #define COLLIDER_HPP_
 
-#include <string>
 #include "../../../Math/Vector.hpp"
+#include <string>
 
 #include "Network/Packed.hpp"
 
@@ -30,9 +30,7 @@ struct Collider {
     Collider(Math::Vector2f nsize) : _size(nsize) {}
     Collider(const Collider &other) : _size(other._size) {}
 
-    std::size_t size() const {
-        return sizeof(_size);
-    }
+    std::size_t size() const { return sizeof(_size); }
 };
 
 PACKED_END

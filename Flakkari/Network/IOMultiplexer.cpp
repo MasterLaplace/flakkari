@@ -15,7 +15,8 @@ namespace Flakkari::Network {
 
 PSELECT::PSELECT(FileDescriptor fileDescriptor, long int seconds, long int microseconds)
 {
-    if (fileDescriptor == -1) {
+    if (fileDescriptor == -1)
+    {
         FLAKKARI_LOG_ERROR("Socket is -1");
         throw std::runtime_error("Socket is -1");
     }
@@ -64,11 +65,11 @@ int PSELECT::wait()
     FD_ZERO(&_fds);
     for (auto &fd : _sockets)
         FD_SET(fd, &_fds);
-    #if defined(__APPLE__)
-        return ::select(_maxFd + 1, &_fds, nullptr, nullptr, (struct timeval *)&_timeout);
-    #else
-        return ::pselect(_maxFd + 1, &_fds, nullptr, nullptr, &_timeout, nullptr);
-    #endif
+#    if defined(__APPLE__)
+    return ::select(_maxFd + 1, &_fds, nullptr, nullptr, (struct timeval *) &_timeout);
+#    else
+    return ::pselect(_maxFd + 1, &_fds, nullptr, nullptr, &_timeout, nullptr);
+#    endif
 }
 
 bool PSELECT::isReady(FileDescriptor socket)
@@ -80,10 +81,7 @@ bool PSELECT::isReady(FileDescriptor socket)
     return FD_ISSET(socket, &_fds);
 }
 
-bool PSELECT::skipableError()
-{
-    return errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK;
-}
+bool PSELECT::skipableError() { return errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK; }
 
 #endif
 
@@ -91,7 +89,8 @@ bool PSELECT::skipableError()
 
 PPOLL::PPOLL(FileDescriptor fileDescriptor, event_t events, long int seconds, long int microseconds)
 {
-    if (fileDescriptor == -1) {
+    if (fileDescriptor == -1)
+    {
         FLAKKARI_LOG_ERROR("Socket is -1");
         throw std::runtime_error("Socket is -1");
     }
@@ -104,7 +103,8 @@ PPOLL::PPOLL(FileDescriptor fileDescriptor, event_t events, long int seconds, lo
     _timeout.tv_nsec = microseconds;
 }
 
-PPOLL::PPOLL(long int seconds, long int microseconds) {
+PPOLL::PPOLL(long int seconds, long int microseconds)
+{
     _timeout.tv_sec = seconds;
     _timeout.tv_nsec = microseconds;
 }
@@ -141,11 +141,11 @@ void PPOLL::removeSocket(FileDescriptor socket)
 
 int PPOLL::wait()
 {
-    #ifdef __linux__
-        return ppoll(_pollfds.data(), _pollfds.size(), &_timeout, nullptr);
-    #elif defined(__APPLE__)
-        return poll(_pollfds.data(), _pollfds.size(), 100);
-    #endif
+#    ifdef __linux__
+    return ppoll(_pollfds.data(), _pollfds.size(), &_timeout, nullptr);
+#    elif defined(__APPLE__)
+    return poll(_pollfds.data(), _pollfds.size(), 100);
+#    endif
 }
 
 pollfd &PPOLL::operator[](std::size_t index)
@@ -189,14 +189,14 @@ bool PPOLL::isReady(FileDescriptor socket)
 WSA::WSA(long int seconds, long int microseconds)
 {
     _timeoutInMs = seconds * 1000 + microseconds / 1000; // Convert to milliseconds
-    _hEvent = CreateEvent(NULL, FALSE, FALSE, NULL); // Create a manual-reset event
+    _hEvent = CreateEvent(NULL, FALSE, FALSE, NULL);     // Create a manual-reset event
     if (_hEvent == NULL)
         throw std::runtime_error("Failed to create event.");
 }
 
 WSA::~WSA()
 {
-    for (auto& socket : _sockets)
+    for (auto &socket : _sockets)
         WSAEventSelect(socket, NULL, 0);
 
     CloseHandle(_hEvent);
@@ -221,7 +221,8 @@ void WSA::removeSocket(FileDescriptor socket)
         throw std::runtime_error("Socket is -1");
 
     auto it = std::remove(_sockets.begin(), _sockets.end(), socket);
-    if (it != _sockets.end()) {
+    if (it != _sockets.end())
+    {
         WSAEventSelect(socket, NULL, 0);
         _sockets.erase(it, _sockets.end());
         _events.erase(socket);

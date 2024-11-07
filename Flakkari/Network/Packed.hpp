@@ -19,35 +19,35 @@
  * @date 2023-01-10
  **************************************************************************/
 
-
 #ifndef PACKED_HPP_
-    #define PACKED_HPP_
+#define PACKED_HPP_
 
 #ifdef _MSC_VER
-#define PACKED_START __pragma(pack(push, 1))
-#define PACKED_END __pragma(pack(pop))
+#    define PACKED_START __pragma(pack(push, 1))
+#    define PACKED_END   __pragma(pack(pop))
 #else
-#define PACKED_START _Pragma("pack(1)")
-#define PACKED_END _Pragma("pack()")
+#    define PACKED_START _Pragma("pack(1)")
+#    define PACKED_END   _Pragma("pack()")
 #endif
 
 #if __GNUC__
-#define __PACKED __attribute__((packed))
+#    define __PACKED __attribute__((packed))
 
-#define PACKED(name, body)      \
-do {                            \
-    struct name body __PACKED;  \
-} while (0)
+#    define PACKED(name, body)                                                                                         \
+        do                                                                                                             \
+        {                                                                                                              \
+            struct name body __PACKED;                                                                                 \
+        } while (0)
 
 #else
 
-#define __PACKED(name, body)\
-do {                        \
-    PACKED_START            \
-    struct name             \
-    body;                   \
-    PACKED_END              \
-} while (0)
+#    define __PACKED(name, body)                                                                                       \
+        do                                                                                                             \
+        {                                                                                                              \
+            PACKED_START                                                                                               \
+            struct name body;                                                                                          \
+            PACKED_END                                                                                                 \
+        } while (0)
 
 #endif
 

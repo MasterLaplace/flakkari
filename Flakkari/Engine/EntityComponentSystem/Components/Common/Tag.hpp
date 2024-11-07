@@ -26,11 +26,9 @@ struct Tag {
     Tag(const std::string &ntag) : tag(ntag) {}
     Tag(const Tag &other) : tag(other.tag) {}
 
-    std::size_t size() const {
-        return tag.size();
-    }
+    std::size_t size() const { return tag.size(); }
 };
 
-} // namespace Game::ECS::Components::Common
+} // namespace Flakkari::Engine::ECS::Components::Common
 
 #endif /* !FLAKKARI_TAG_HPP_ */

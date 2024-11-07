@@ -27,9 +27,7 @@ struct Child {
     Child(const std::string &nname) : name(nname) {}
     Child(const Child &other) : name(other.name) {}
 
-    std::size_t size() const {
-        return name.size();
-    }
+    std::size_t size() const { return name.size(); }
 };
 
 } // namespace Flakkari::Engine::ECS::Components::Common

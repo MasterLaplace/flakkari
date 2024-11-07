@@ -10,8 +10,8 @@
 #ifndef LEVEL_HPP
 #define LEVEL_HPP
 
-#include <string>
 #include <cstring>
+#include <string>
 
 #include "Network/Packed.hpp"
 
@@ -29,21 +29,18 @@ struct Level {
 
     Level() : level(1), currentWeapon(""), currentExp(0), requiredExp(100) {}
     Level(std::size_t level, std::string currentWeapon, std::size_t currentExp, std::size_t requiredExp)
-        : level(level),
-        currentWeapon(currentWeapon.c_str()),
-        currentExp(currentExp),
-        requiredExp(requiredExp) {}
-    Level(const Level &other)
-        : level(other.level),
-        currentWeapon(other.currentWeapon),
-        currentExp(other.currentExp),
-        requiredExp(other.requiredExp) {}
-
-    std::size_t size() const {
-        return sizeof(level) + currentWeapon.size() + sizeof(currentExp) + sizeof(requiredExp);
+        : level(level), currentWeapon(currentWeapon.c_str()), currentExp(currentExp), requiredExp(requiredExp)
+    {
     }
+    Level(const Level &other)
+        : level(other.level), currentWeapon(other.currentWeapon), currentExp(other.currentExp),
+          requiredExp(other.requiredExp)
+    {
+    }
+
+    std::size_t size() const { return sizeof(level) + currentWeapon.size() + sizeof(currentExp) + sizeof(requiredExp); }
 };
 
 } // namespace Flakkari::Engine::ECS::Components::Common
 
-#endif //LEVEL_HPP
+#endif // LEVEL_HPP

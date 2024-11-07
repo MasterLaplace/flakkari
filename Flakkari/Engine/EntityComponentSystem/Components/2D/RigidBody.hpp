@@ -29,13 +29,15 @@ struct RigidBody {
     bool isGravityAffected = true;
     bool isKinematic = false;
 
-    RigidBody() : mass(0), restitution(0), friction(0), gravityScale(0), isGravityAffected(false), isKinematic(false) {};
-    RigidBody(const RigidBody &other) : mass(other.mass), restitution(other.restitution), friction(other.friction), gravityScale(other.gravityScale), isGravityAffected(other.isGravityAffected), isKinematic(other.isKinematic) {};
-    RigidBody(float mass, float restitution, float friction, float gravityScale) : mass(mass), restitution(restitution), friction(friction), gravityScale(gravityScale), isGravityAffected(true), isKinematic(false) {};
+    RigidBody() : mass(0), restitution(0), friction(0), gravityScale(0), isGravityAffected(false), isKinematic(false){};
+    RigidBody(const RigidBody &other)
+        : mass(other.mass), restitution(other.restitution), friction(other.friction), gravityScale(other.gravityScale),
+          isGravityAffected(other.isGravityAffected), isKinematic(other.isKinematic){};
+    RigidBody(float mass, float restitution, float friction, float gravityScale)
+        : mass(mass), restitution(restitution), friction(friction), gravityScale(gravityScale), isGravityAffected(true),
+          isKinematic(false){};
 
-    std::size_t size() const {
-        return sizeof(*this);
-    }
+    std::size_t size() const { return sizeof(*this); }
 };
 
 PACKED_END

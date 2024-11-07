@@ -11,29 +11,17 @@
 
 namespace Flakkari::Network {
 
-Buffer::Buffer(std::string data) {
-    std::copy(data.begin(), data.end(), std::back_inserter(*this));
-}
+Buffer::Buffer(std::string data) { std::copy(data.begin(), data.end(), std::back_inserter(*this)); }
 
-std::size_t Buffer::getSize() const {
-    return size();
-}
+std::size_t Buffer::getSize() const { return size(); }
 
-std::size_t Buffer::getCapacity() const {
-    return capacity();
-}
+std::size_t Buffer::getCapacity() const { return capacity(); }
 
-std::size_t Buffer::getRemainingSpace() const {
-    return capacity() - size();
-}
+std::size_t Buffer::getRemainingSpace() const { return capacity() - size(); }
 
-byte *Buffer::getData() {
-    return data();
-}
+byte *Buffer::getData() { return data(); }
 
-const byte *Buffer::getData() const {
-    return data();
-}
+const byte *Buffer::getData() const { return data(); }
 
 Buffer Buffer::extractData(std::size_t offset, std::size_t length) const
 {
@@ -42,9 +30,7 @@ Buffer Buffer::extractData(std::size_t offset, std::size_t length) const
     return Buffer(begin() + offset, begin() + offset + length);
 }
 
-void Buffer::concat(const Buffer& otherBuffer) {
-    insert(end(), otherBuffer.begin(), otherBuffer.end());
-}
+void Buffer::concat(const Buffer &otherBuffer) { insert(end(), otherBuffer.begin(), otherBuffer.end()); }
 
 uint16_t Buffer::calculateChecksum() const
 {
@@ -56,7 +42,7 @@ uint16_t Buffer::calculateChecksum() const
     return checksum;
 }
 
-void Buffer::bitwiseXOR(const Buffer& otherBuffer)
+void Buffer::bitwiseXOR(const Buffer &otherBuffer)
 {
     std::size_t minSize = std::min(size(), otherBuffer.size());
 
@@ -70,10 +56,14 @@ void Buffer::runLengthEncode()
     byte currentByte = (*this)[0];
     byte currentCount = 1;
 
-    for (std::size_t i = 1; i < size(); ++i) {
-        if ((*this)[i] == currentByte) {
+    for (std::size_t i = 1; i < size(); ++i)
+    {
+        if ((*this)[i] == currentByte)
+        {
             ++currentCount;
-        } else {
+        }
+        else
+        {
             encodedBuffer.push_back(currentCount);
             encodedBuffer.push_back(currentByte);
             currentByte = (*this)[i];
@@ -89,7 +79,8 @@ void Buffer::runLengthDecode()
 {
     Buffer decodedBuffer;
 
-    for (std::size_t i = 0; i < size(); i += 2) {
+    for (std::size_t i = 0; i < size(); i += 2)
+    {
         byte currentCount = (*this)[i];
         byte currentByte = (*this)[i + 1];
         for (std::size_t j = 0; j < currentCount; ++j)
@@ -102,7 +93,8 @@ void Buffer::convertToHex()
 {
     Buffer hexBuffer;
 
-    for (const auto &byte : *this) {
+    for (const auto &byte : *this)
+    {
         hexBuffer.push_back(byte / 16);
         hexBuffer.push_back(byte % 16);
     }
@@ -113,56 +105,51 @@ void Buffer::convertFromHex()
 {
     Buffer hexBuffer;
 
-    for (std::size_t i = 0; i < size(); i += 2) {
+    for (std::size_t i = 0; i < size(); i += 2)
+    {
         byte currentByte = (*this)[i] * 16 + (*this)[i + 1];
         hexBuffer.push_back(currentByte);
     }
     std::copy(hexBuffer.begin(), hexBuffer.end(), begin());
 }
 
-Buffer::operator byte *() {
-    return data();
-}
+Buffer::operator byte *() { return data(); }
 
-Buffer::operator const byte *() const {
-    return data();
-}
+Buffer::operator const byte *() const { return data(); }
 
-Buffer::operator std::string() {
-    return std::string((char *)data(), size());
-}
+Buffer::operator std::string() { return std::string((char *) data(), size()); }
 
-Buffer::operator const std::string() const {
-    return std::string((char *)data(), size());
-}
+Buffer::operator const std::string() const { return std::string((char *) data(), size()); }
 
-Buffer Buffer::operator+(const Buffer& otherBuffer) const
+Buffer Buffer::operator+(const Buffer &otherBuffer) const
 {
     Buffer newBuffer = *this;
     newBuffer += otherBuffer;
     return newBuffer;
 }
 
-Buffer Buffer::operator+=(const Buffer& otherBuffer) {
+Buffer Buffer::operator+=(const Buffer &otherBuffer)
+{
     concat(otherBuffer);
     return *this;
 }
 
-Buffer Buffer::operator-(const Buffer& otherBuffer) const
+Buffer Buffer::operator-(const Buffer &otherBuffer) const
 {
     Buffer newBuffer = *this;
     newBuffer -= otherBuffer;
     return newBuffer;
 }
 
-Buffer Buffer::operator-=(const Buffer& otherBuffer)
+Buffer Buffer::operator-=(const Buffer &otherBuffer)
 {
     for (const auto &byte : otherBuffer)
         erase(std::find(begin(), end(), byte));
     return *this;
 }
 
-std::ostream &operator<<(std::ostream &os, const Buffer &buffer) {
+std::ostream &operator<<(std::ostream &os, const Buffer &buffer)
+{
     os << buffer.getData();
     return os;
 }

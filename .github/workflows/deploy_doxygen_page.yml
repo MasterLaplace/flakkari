@@ -1,7 +1,7 @@
 name: Doxygen GitHub Pages Deploy Action
 on:
   release:
-    types: [published]
+    types: [released]
 
 jobs:
   generate:

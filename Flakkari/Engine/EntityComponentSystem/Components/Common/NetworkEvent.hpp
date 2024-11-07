@@ -18,12 +18,10 @@ struct NetworkEvent {
     std::vector<unsigned short> events;
 
     NetworkEvent() = default;
-    NetworkEvent(const NetworkEvent &other) : events(other.events) {};
-    NetworkEvent(const std::vector<unsigned short> &events) : events(events) {};
+    NetworkEvent(const NetworkEvent &other) : events(other.events){};
+    NetworkEvent(const std::vector<unsigned short> &events) : events(events){};
 
-    std::size_t size() const {
-        return events.size() * sizeof(unsigned short);
-    }
+    std::size_t size() const { return events.size() * sizeof(unsigned short); }
 };
 
 } /* namespace Flakkari::Engine::ECS::Components::Common */

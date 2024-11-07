@@ -21,9 +21,7 @@ struct NetworkIp {
     NetworkIp(std::string ip) : ip(ip) {}
     NetworkIp(const NetworkIp &other) : ip(other.ip) {}
 
-    std::size_t size() const {
-        return ip.size();
-    }
+    std::size_t size() const { return ip.size(); }
 };
 
 } // namespace Flakkari::Engine::ECS::Components::Common

@@ -25,51 +25,54 @@ namespace Flakkari {
 
 class UDPClient {
     public:
-        UDPClient(std::string ip = "localhost", unsigned short port = 8080) :
-            _io(std::make_unique<IO_SELECTED>())
+    UDPClient(std::string ip = "localhost", unsigned short port = 8080) : _io(std::make_unique<IO_SELECTED>())
+    {
+        Network::init();
+
+        _socket.create(ip, port, Network::Address::IpType::IPv4, Network::Address::SocketType::UDP);
+        std::cout << _socket << std::endl;
+        _io->addSocket(_socket.getSocket());
+    }
+    ~UDPClient() { Network::cleanup(); }
+
+    int run()
+    {
+        while (true)
         {
-            Network::init();
+            int result = _io->wait();
 
-            _socket.create(ip, port, Network::Address::IpType::IPv4, Network::Address::SocketType::UDP);
-            std::cout << _socket << std::endl;
-            _io->addSocket(_socket.getSocket());
-        }
-        ~UDPClient() {
-            Network::cleanup();
-        }
-
-        int run() {
-            while (true)
+            if (result == -1)
             {
-                int result = _io->wait();
-
-                if (result == -1) {
-                    FLAKKARI_LOG_FATAL("Failed to poll sockets, error: " + std::string(::strerror(errno)));
-                    return 84;
-                } else if (result == 0) {
-                    FLAKKARI_LOG_DEBUG("ppoll timed out");
-                    Network::Buffer buffer(1024);
-                    std::cin >> buffer;
-                    _socket.sendTo( _socket.getAddress(), buffer);
-                    continue;
-                }
-                for (auto &fd : *_io) {
-                    if (_io->isReady(fd)) {
-                        auto packet = _socket.receiveFrom();
-                        std::cout << (*packet.value().first.get());
-                        std::cout << " : ";
-                        std::cout << packet.value().second << std::endl;
-                        _socket.sendTo(packet.value().first, packet.value().second);
-                    }
+                FLAKKARI_LOG_FATAL("Failed to poll sockets, error: " + std::string(::strerror(errno)));
+                return 84;
+            }
+            else if (result == 0)
+            {
+                FLAKKARI_LOG_DEBUG("ppoll timed out");
+                Network::Buffer buffer(1024);
+                std::cin >> buffer;
+                _socket.sendTo(_socket.getAddress(), buffer);
+                continue;
+            }
+            for (auto &fd : *_io)
+            {
+                if (_io->isReady(fd))
+                {
+                    auto packet = _socket.receiveFrom();
+                    std::cout << (*packet.value().first.get());
+                    std::cout << " : ";
+                    std::cout << packet.value().second << std::endl;
+                    _socket.sendTo(packet.value().first, packet.value().second);
                 }
             }
-            return 0;
         }
+        return 0;
+    }
 
     protected:
     private:
-        Network::Socket _socket;
-        std::unique_ptr<IO_SELECTED> _io;
+    Network::Socket _socket;
+    std::unique_ptr<IO_SELECTED> _io;
 };
 
 } /* namespace Flakkari */
