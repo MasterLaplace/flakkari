@@ -1,17 +1,14 @@
-name: Bump Patch Version
+name: Bump Minor Version and Create Release
 
 on:
-  pull_request:
-    types: [closed]
-    branches:
-      - master
-      - main
+  milestone:
+    types: closed
 
 permissions:
   contents: write
 
 jobs:
-  create_patch_release:
+  create_minor_release:
     name: Bump version and create release
     runs-on: ubuntu-latest
     steps:
@@ -24,7 +21,7 @@ jobs:
 
       - name: Run Version Bump Script
         run: |
-          python3 Scripts/increment_version.py patch
+          python3 Scripts/increment_version.py minor
 
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.9.0
@@ -39,7 +36,7 @@ jobs:
       - name: Push changes
         run: |
           git add .
-          git commit -m "chore: bump the Flakkari patch version" || true
+          git commit -m "chore: bump the Flakkari minor version" || true
           git push || true
 
       - name: Bump version and push tag
@@ -47,7 +44,7 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          default_bump: patch
+          default_bump: minor
 
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1.14.0
