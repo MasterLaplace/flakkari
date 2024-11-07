@@ -9,38 +9,26 @@ import re
 import os
 import sys
 
-def increment_version(current_version: str) -> str:
-    """
-    Increment the given version string based on the command line argument.
-
-    The function expects the version string to be in the format 'v<major>.<minor>.<patch>'.
-    It increments the version based on the first command line argument, which can be "major", "minor", or "patch".
-
-    Args:
-        current_version (str): The current version string in the format 'v<major>.<minor>.<patch>'.
-
-    Returns:
-        str: The incremented version string.
-
-    Raises:
-        ValueError: If the version format is invalid or if the increment type is invalid.
-    """
-    match = re.search(r'v(\d+\.\d+\.\d+)', current_version)
+def get_new_version(calculated_version: str) -> str:
+    match = re.search(r'v(\d+\.\d+\.\d+)', calculated_version)
     if match:
-        current_version_number = match.group(1)
-        major, minor, patch = map(int, current_version_number.split('.'))
-        if sys.argv[1] == "major":
-            return f"{major + 1}.0.0"
-        elif sys.argv[1] == "minor":
-            return f"{major}.{minor + 1}.0"
-        elif sys.argv[1] == "patch":
-            return f"{major}.{minor}.{patch + 1}"
-        else:
-            raise ValueError(f"Invalid version increment: {sys.argv[1]}")
+        version_number = match.group(1)
+        major, minor, patch = map(int, version_number.split('.'))
+        return f'{major}.{minor}.{patch}'
 
-    raise ValueError(f"Invalid version format: {current_version}")
+    raise ValueError(f"Invalid version format: {calculated_version}")
 
-def increment_doxyfile_version(new_version: str) -> None:
+
+def get_current_version() -> str:
+    with open("VERSION", "r") as version_file:
+        current_version = version_file.read().strip()
+        match = re.search(r'v(\d+\.\d+\.\d+)', current_version)
+        if match:
+            return match.group(1)
+
+        raise ValueError(f"Invalid version format: {current_version}")
+
+def update_doxyfile_version(new_version: str) -> None:
     """
     Updates the version number in the Doxyfile.cfg file for the Flakkari-Server project.
 
@@ -58,7 +46,7 @@ def increment_doxyfile_version(new_version: str) -> None:
     with open("Doxyfile.cfg", "w", newline='\n') as f:
         f.write(content)
 
-def increment_cmakelists_version(new_version: str) -> None:
+def update_cmakelists_version(new_version: str) -> None:
     """
     Updates the version number in the CMakeLists.txt file for the Flakkari-Server project.
 
@@ -76,7 +64,7 @@ def increment_cmakelists_version(new_version: str) -> None:
     with open("CMakeLists.txt", "w", newline='\n') as f:
         f.write(content)
 
-def increment_config_in_version(path: str, new_version: str) -> None:
+def update_config_in_version(path: str, new_version: str) -> None:
     """
     Updates the version information in the specified configuration file.
 
@@ -133,40 +121,46 @@ def loop_in_files(path: str, current_version: str, new_version: str) -> None:
 
             if file.endswith(".h.in"):
                 print(f"Updating version {current_version} -> {new_version} in {file}")
-                increment_config_in_version(os.path.join(root, file), new_version)
+                update_config_in_version(os.path.join(root, file), new_version)
 
-def main():
+def apply_new_version(current_version: str, new_version: str):
     """
-    Main function to increment the version of the project.
+    Updates the version information in various project files.
 
-    This function performs the following steps:
-    1. Reads the current version from the VERSION file.
-    2. Increments the version using the `increment_version` function.
-    3. Updates the VERSION file with the new version.
-    4. Updates the version in the Doxyfile.cfg file.
-    5. Updates the version in the CMakeLists.txt file.
-    6. Recursively updates the version in all relevant files within the ./Flakkari/ directory.
+    This function updates the version number in the following files:
+    - VERSION
+    - Doxyfile.cfg
+    - CMakeLists.txt
 
-    Raises:
-        FileNotFoundError: If the VERSION file does not exist.
-        IOError: If there is an error reading or writing to the VERSION file.
+    It also updates the version number in all relevant files within the ./Flakkari/ directory.
+
+    Args:
+        current_version (str): The current version of the project.
+        new_version (str): The new version to be applied.
+
+    Returns:
+        None
     """
-    with open("VERSION", "r") as version_file:
-        current_version = version_file.read().strip()
-
-    new_version = increment_version(current_version)
-
     print(f"Updating version {current_version} -> {new_version} in VERSION")
     with open("VERSION", "w", newline='\n') as version_file:
         version_file.write(f"Flakkari v{new_version}\n")
 
     print(f"Updating version {current_version} -> {new_version} in Doxyfile.cfg")
-    increment_doxyfile_version(new_version)
+    update_doxyfile_version(new_version)
 
     print(f"Updating version {current_version} -> {new_version} in CMakeLists.txt")
-    increment_cmakelists_version(new_version)
+    update_cmakelists_version(new_version)
 
     loop_in_files("./Flakkari/", current_version, new_version)
 
+def main(calculated_version: str):
+    """
+    Main function to apply a new version based on the calculated version.
+
+    Args:
+        calculated_version (str): The version string that has been calculated and needs to be applied.
+    """
+    apply_new_version(get_current_version(), get_new_version(calculated_version))
+
 if __name__ == "__main__" and len(sys.argv) == 2:
-    main()
+    main(sys.argv[1])
