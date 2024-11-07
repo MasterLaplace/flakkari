@@ -14,76 +14,83 @@
  * @date 2024-01-12
  **************************************************************************/
 
-
 #ifndef PACKETQUEUE_HPP_
-    #define PACKETQUEUE_HPP_
+#define PACKETQUEUE_HPP_
 
 #include <deque>
 #include <mutex>
 
 namespace Flakkari::Network {
 
-template<typename T>
-class PacketQueue {
+template <typename T> class PacketQueue {
     public:
-        PacketQueue() = default;
-        PacketQueue(const PacketQueue<T> &) = delete;
-        virtual ~PacketQueue() { clear(); }
+    PacketQueue() = default;
+    PacketQueue(const PacketQueue<T> &) = delete;
+    virtual ~PacketQueue() { clear(); }
 
     public:
-        const T &front() {
-            std::scoped_lock lock(_mutex);
-            return _queue.front();
-        }
+    const T &front()
+    {
+        std::scoped_lock lock(_mutex);
+        return _queue.front();
+    }
 
-        const T &back() {
-            std::scoped_lock lock(_mutex);
-            return _queue.back();
-        }
+    const T &back()
+    {
+        std::scoped_lock lock(_mutex);
+        return _queue.back();
+    }
 
-        void push_back(const T &value) {
-            std::scoped_lock lock(_mutex);
-            _queue.push_back(value);
-        }
+    void push_back(const T &value)
+    {
+        std::scoped_lock lock(_mutex);
+        _queue.push_back(value);
+    }
 
-        void push_front(const T &value) {
-            std::scoped_lock lock(_mutex);
-            _queue.push_front(value);
-        }
+    void push_front(const T &value)
+    {
+        std::scoped_lock lock(_mutex);
+        _queue.push_front(value);
+    }
 
-        T pop_front() {
-            std::scoped_lock lock(_mutex);
-            auto value = std::move(_queue.front());
-            _queue.pop_front();
-            return value;
-        }
+    T pop_front()
+    {
+        std::scoped_lock lock(_mutex);
+        auto value = std::move(_queue.front());
+        _queue.pop_front();
+        return value;
+    }
 
-        T pop_back() {
-            std::scoped_lock lock(_mutex);
-            auto value = std::move(_queue.back());
-            _queue.pop_back();
-            return value;
-        }
+    T pop_back()
+    {
+        std::scoped_lock lock(_mutex);
+        auto value = std::move(_queue.back());
+        _queue.pop_back();
+        return value;
+    }
 
-        bool empty() {
-            std::scoped_lock lock(_mutex);
-            return _queue.empty();
-        }
+    bool empty()
+    {
+        std::scoped_lock lock(_mutex);
+        return _queue.empty();
+    }
 
-        size_t size() {
-            std::scoped_lock lock(_mutex);
-            return _queue.size();
-        }
+    size_t size()
+    {
+        std::scoped_lock lock(_mutex);
+        return _queue.size();
+    }
 
-        void clear() {
-            std::scoped_lock lock(_mutex);
-            _queue.clear();
-        }
+    void clear()
+    {
+        std::scoped_lock lock(_mutex);
+        _queue.clear();
+    }
 
     protected:
     private:
-        std::mutex _mutex;
-        std::deque<T> _queue;
+    std::mutex _mutex;
+    std::deque<T> _queue;
 };
 
 } // namespace Flakkari::Network

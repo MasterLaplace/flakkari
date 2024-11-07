@@ -17,7 +17,8 @@ Client::Client(std::shared_ptr<Network::Address> address, std::string name)
     _lastActivity = std::chrono::steady_clock::now();
 }
 
-Client::~Client() {
+Client::~Client()
+{
     _isConnected = false;
     _address->setId(-1);
 }
@@ -26,12 +27,11 @@ bool Client::isConnected(float timeout)
 {
     if (!_isConnected)
         return false;
-    return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - _lastActivity).count() < timeout;
+    return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - _lastActivity).count() <
+           timeout;
 }
 
-void Client::keepAlive() {
-    _lastActivity = std::chrono::steady_clock::now();
-}
+void Client::keepAlive() { _lastActivity = std::chrono::steady_clock::now(); }
 
 void Client::addPacketToHistory(Network::Buffer packet)
 {
@@ -40,7 +40,8 @@ void Client::addPacketToHistory(Network::Buffer packet)
     _packetHistory.push_back(packet);
 }
 
-bool Client::incrementWarningCount() {
+bool Client::incrementWarningCount()
+{
     _warningCount++;
     return _warningCount >= _maxWarningCount;
 }

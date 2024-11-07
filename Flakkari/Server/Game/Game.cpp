@@ -9,9 +9,9 @@
 
 #include "Game.hpp"
 #include "../Client/ClientManager.hpp"
-#include "ResourceManager.hpp"
-#include "Protocol/PacketFactory.hpp"
 #include "Engine/EntityComponentSystem/Components/ComponentsCommon.hpp"
+#include "Protocol/PacketFactory.hpp"
+#include "ResourceManager.hpp"
 
 namespace Flakkari {
 
@@ -21,7 +21,8 @@ void Game::sendAllEntities(const std::string &sceneName, std::shared_ptr<Client>
 
     auto &transforms = registry.getComponents<Engine::ECS::Components::_2D::Transform>();
 
-    for (Engine::ECS::Entity i(0); i < transforms.size(); ++i) {
+    for (Engine::ECS::Entity i(0); i < transforms.size(); ++i)
+    {
         auto &transform = transforms[i];
 
         if (!transform.has_value())
@@ -60,14 +61,13 @@ Game::~Game()
 void Game::loadSystems(Engine::ECS::Registry &registry, const std::string &name)
 {
     if (name == "position")
-        return registry.add_system([ this ](Engine::ECS::Registry &r) {
-            Engine::ECS::Systems::position(r, _deltaTime);
-        }), void();
+        return registry.add_system([this](Engine::ECS::Registry &r) { Engine::ECS::Systems::position(r, _deltaTime); }),
+               void();
 }
 
-void Game::loadComponents (
-    Engine::ECS::Registry &registry, const nl_component &components, Engine::ECS::Entity newEntity
-) {
+void Game::loadComponents(Engine::ECS::Registry &registry, const nl_component &components,
+                          Engine::ECS::Entity newEntity)
+{
     if (!components.is_object())
         return;
     for (auto &component : components.items())
@@ -75,26 +75,32 @@ void Game::loadComponents (
         auto componentName = component.key();
         auto componentContent = component.value();
 
-        if (componentName == "Transform") {
+        if (componentName == "Transform")
+        {
             registry.registerComponent<Engine::ECS::Components::_2D::Transform>();
             Engine::ECS::Components::_2D::Transform transform;
-            transform.position = Engine::Math::Vector2f(componentContent["position"]["x"], componentContent["position"]["y"]);
+            transform.position =
+                Engine::Math::Vector2f(componentContent["position"]["x"], componentContent["position"]["y"]);
             transform.rotation = componentContent["rotation"];
             transform.scale = Engine::Math::Vector2f(componentContent["scale"]["x"], componentContent["scale"]["y"]);
             registry.add_component<Engine::ECS::Components::_2D::Transform>(newEntity, std::move(transform));
             continue;
         }
 
-        if (componentName == "Movable") {
+        if (componentName == "Movable")
+        {
             registry.registerComponent<Engine::ECS::Components::_2D::Movable>();
             Engine::ECS::Components::_2D::Movable movable;
-            movable.velocity = Engine::Math::Vector2f(componentContent["velocity"]["x"], componentContent["velocity"]["y"]);
-            movable.acceleration = Engine::Math::Vector2f(componentContent["acceleration"]["x"], componentContent["acceleration"]["y"]);
+            movable.velocity =
+                Engine::Math::Vector2f(componentContent["velocity"]["x"], componentContent["velocity"]["y"]);
+            movable.acceleration =
+                Engine::Math::Vector2f(componentContent["acceleration"]["x"], componentContent["acceleration"]["y"]);
             registry.add_component<Engine::ECS::Components::_2D::Movable>(newEntity, std::move(movable));
             continue;
         }
 
-        if (componentName == "Control") {
+        if (componentName == "Control")
+        {
             registry.registerComponent<Engine::ECS::Components::_2D::Control>();
             Engine::ECS::Components::_2D::Control control;
             control.up = componentContent["up"];
@@ -106,7 +112,8 @@ void Game::loadComponents (
             continue;
         }
 
-        if (componentName == "Collider") {
+        if (componentName == "Collider")
+        {
             registry.registerComponent<Engine::ECS::Components::_2D::Collider>();
             Engine::ECS::Components::_2D::Collider collider;
             collider._size = Engine::Math::Vector2f(componentContent["size"]["x"], componentContent["size"]["y"]);
@@ -114,7 +121,8 @@ void Game::loadComponents (
             continue;
         }
 
-        if (componentName == "Evolve") {
+        if (componentName == "Evolve")
+        {
             registry.registerComponent<Engine::ECS::Components::Common::Evolve>();
             Engine::ECS::Components::Common::Evolve evolve;
             evolve.name = componentContent["name"].get<std::string>().c_str();
@@ -122,7 +130,8 @@ void Game::loadComponents (
             continue;
         }
 
-        if (componentName == "Spawned") {
+        if (componentName == "Spawned")
+        {
             registry.registerComponent<Engine::ECS::Components::Common::Spawned>();
             Engine::ECS::Components::Common::Spawned spawned;
             spawned.has_spawned = componentContent["has_spawned"];
@@ -130,7 +139,8 @@ void Game::loadComponents (
             continue;
         }
 
-        if (componentName == "Tag") {
+        if (componentName == "Tag")
+        {
             registry.registerComponent<Engine::ECS::Components::Common::Tag>();
             Engine::ECS::Components::Common::Tag tag;
             tag.tag = componentContent.get<std::string>().c_str();
@@ -138,7 +148,8 @@ void Game::loadComponents (
             continue;
         }
 
-        if (componentName == "Weapon") {
+        if (componentName == "Weapon")
+        {
             registry.registerComponent<Engine::ECS::Components::Common::Weapon>();
             Engine::ECS::Components::Common::Weapon weapon;
             weapon.fireRate = componentContent["fireRate"];
@@ -148,7 +159,8 @@ void Game::loadComponents (
             continue;
         }
 
-        if (componentName == "Health") {
+        if (componentName == "Health")
+        {
             registry.registerComponent<Engine::ECS::Components::Common::Health>();
             Engine::ECS::Components::Common::Health health;
             health.maxHealth = componentContent["maxHealth"];
@@ -161,13 +173,15 @@ void Game::loadComponents (
     }
 }
 
-void Game::loadEntityFromTemplate (
-    Engine::ECS::Registry &registry, const nl_entity &entity, const nl_template &templates
-) {
+void Game::loadEntityFromTemplate(Engine::ECS::Registry &registry, const nl_entity &entity,
+                                  const nl_template &templates)
+{
     Engine::ECS::Entity newEntity = registry.spawn_entity();
 
-    for (auto &componentInfo : entity.begin().value().items()) {
-        for (auto &templateInfo : templates.items()) {
+    for (auto &componentInfo : entity.begin().value().items())
+    {
+        for (auto &templateInfo : templates.items())
+        {
             if (templateInfo.key() != componentInfo.key())
                 continue;
             loadComponents(registry, templateInfo.value(), newEntity);
@@ -179,8 +193,10 @@ void Game::loadEntityFromTemplate (
 
 void Game::loadScene(const std::string &sceneName)
 {
-    for (auto &scene : (*_config)["scenes"].items()) {
-        for (auto sceneInfo : scene.value().items()) {
+    for (auto &scene : (*_config)["scenes"].items())
+    {
+        for (auto sceneInfo : scene.value().items())
+        {
             if (sceneInfo.key() != sceneName)
                 continue;
             Engine::ECS::Registry registry;
@@ -199,7 +215,8 @@ void Game::loadScene(const std::string &sceneName)
 
 void Game::sendOnSameScene(const std::string &sceneName, const Network::Buffer &message)
 {
-    for (auto &player : _players) {
+    for (auto &player : _players)
+    {
         if (!player)
             continue;
         if (!player->isConnected())
@@ -211,11 +228,11 @@ void Game::sendOnSameScene(const std::string &sceneName, const Network::Buffer &
     }
 }
 
-void Game::sendOnSameSceneExcept(
-    const std::string &sceneName, const Network::Buffer &message,
-    std::shared_ptr<Client> except
-) {
-    for (auto &player : _players) {
+void Game::sendOnSameSceneExcept(const std::string &sceneName, const Network::Buffer &message,
+                                 std::shared_ptr<Client> except)
+{
+    for (auto &player : _players)
+    {
         if (!player)
             continue;
         if (!player->isConnected())
@@ -231,7 +248,8 @@ void Game::sendOnSameSceneExcept(
 
 void Game::checkDisconnect()
 {
-    for (auto &player : _players) {
+    for (auto &player : _players)
+    {
         if (!player || player->isConnected())
             continue;
         Protocol::Packet<Protocol::CommandId> packet;
@@ -243,11 +261,9 @@ void Game::checkDisconnect()
     }
 }
 
-void Game::sendUpdatePosition (
-    std::shared_ptr<Client> player,
-    Engine::ECS::Components::_2D::Transform pos,
-    Engine::ECS::Components::_2D::Movable vel
-) {
+void Game::sendUpdatePosition(std::shared_ptr<Client> player, Engine::ECS::Components::_2D::Transform pos,
+                              Engine::ECS::Components::_2D::Movable vel)
+{
     Protocol::Packet<Protocol::CommandId> packet;
     packet.header._commandId = Protocol::CommandId::REQ_ENTITY_MOVED;
     packet << player->getEntity();
@@ -261,15 +277,13 @@ void Game::sendUpdatePosition (
     packet << vel.acceleration.vec.x;
     packet << vel.acceleration.vec.y;
 
-    FLAKKARI_LOG_LOG(
-        "packet size: " + std::to_string(packet.size()) + " bytes\n"
-        "packet sent: <Id: "
-        + std::to_string(player->getEntity())
-        + ", Pos: (" + std::to_string(pos.position.vec.x) + ", " + std::to_string(pos.position.vec.y) + ")"
-        + ", Vel: (" + std::to_string(vel.velocity.vec.x) + ", " + std::to_string(vel.velocity.vec.y) + ")"
-        + ", Acc: (" + std::to_string(vel.acceleration.vec.x) + ", " + std::to_string(vel.acceleration.vec.y) + ")"
-        + ">"
-    );
+    FLAKKARI_LOG_LOG("packet size: " + std::to_string(packet.size()) +
+                     " bytes\n"
+                     "packet sent: <Id: " +
+                     std::to_string(player->getEntity()) + ", Pos: (" + std::to_string(pos.position.vec.x) + ", " +
+                     std::to_string(pos.position.vec.y) + ")" + ", Vel: (" + std::to_string(vel.velocity.vec.x) + ", " +
+                     std::to_string(vel.velocity.vec.y) + ")" + ", Acc: (" + std::to_string(vel.acceleration.vec.x) +
+                     ", " + std::to_string(vel.acceleration.vec.y) + ")" + ">");
     sendOnSameScene(player->getSceneName(), packet.serialize());
 }
 
@@ -286,8 +300,9 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     if (!ctrl.has_value() || !vel.has_value() || !pos.has_value())
         return;
 
-    Protocol::Event event = *(Protocol::Event *)packet.payload.data();
-    if (event.id == Protocol::EventId::MOVE_UP && ctrl->up) {
+    Protocol::Event event = *(Protocol::Event *) packet.payload.data();
+    if (event.id == Protocol::EventId::MOVE_UP && ctrl->up)
+    {
         if (netEvent->events.size() < int(event.id))
             netEvent->events.resize(int(event.id) + 1);
         netEvent->events[int(event.id)] = int(event.state);
@@ -301,7 +316,8 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
         sendUpdatePosition(player, pos.value(), vel.value());
         return;
     }
-    if (event.id == Protocol::EventId::MOVE_DOWN && ctrl->down) {
+    if (event.id == Protocol::EventId::MOVE_DOWN && ctrl->down)
+    {
         if (netEvent->events.size() < int(event.id))
             netEvent->events.resize(int(event.id) + 1);
         netEvent->events[int(event.id)] = int(event.state);
@@ -315,7 +331,8 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
         sendUpdatePosition(player, pos.value(), vel.value());
         return;
     }
-    if (event.id == Protocol::EventId::MOVE_LEFT && ctrl->left) {
+    if (event.id == Protocol::EventId::MOVE_LEFT && ctrl->left)
+    {
         if (netEvent->events.size() < int(event.id))
             netEvent->events.resize(int(event.id) + 1);
         netEvent->events[int(event.id)] = int(event.state);
@@ -329,7 +346,8 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
         sendUpdatePosition(player, pos.value(), vel.value());
         return;
     }
-    if (event.id == Protocol::EventId::MOVE_RIGHT && ctrl->right) {
+    if (event.id == Protocol::EventId::MOVE_RIGHT && ctrl->right)
+    {
         if (netEvent->events.size() < int(event.id))
             netEvent->events.resize(int(event.id) + 1);
         netEvent->events[int(event.id)] = int(event.state);
@@ -343,14 +361,16 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
         sendUpdatePosition(player, pos.value(), vel.value());
         return;
     }
-    if (event.id == Protocol::EventId::SHOOT && ctrl->shoot) {
+    if (event.id == Protocol::EventId::SHOOT && ctrl->shoot)
+    {
         if (netEvent->events.size() < int(event.id))
             netEvent->events.resize(int(event.id) + 1);
         netEvent->events[int(event.id)] = int(event.state);
 
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
-        if (event.state == Protocol::EventState::RELEASED) {
+        if (event.state == Protocol::EventState::RELEASED)
+        {
             Protocol::Packet<Protocol::CommandId> shootPacket;
             shootPacket.header._commandId = Protocol::CommandId::REQ_ENTITY_SHOOT;
             shootPacket.injectString(player->getSceneName());
@@ -364,13 +384,15 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
 
 void Game::updateIncomingPackets(unsigned char maxMessagePerFrame)
 {
-    for (auto &player : _players) {
+    for (auto &player : _players)
+    {
         if (!player->isConnected())
             continue;
         auto &packets = player->_receiveQueue;
         auto messageCount = maxMessagePerFrame;
 
-        while (!packets.empty() && messageCount > 0) {
+        while (!packets.empty() && messageCount > 0)
+        {
             auto packet = packets.pop_front();
             FLAKKARI_LOG_INFO("packet received: " + packet.to_string());
             messageCount--;
@@ -429,24 +451,16 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
     loadComponents(registry, player_info.value_or(nullptr), newEntity);
 
     registry.registerComponent<Engine::ECS::Components::Common::NetworkIp>();
-    registry.add_component<Engine::ECS::Components::Common::NetworkIp> (
-        newEntity,
-        Engine::ECS::Components::Common::NetworkIp(
-            std::string(*address)
-        )
-    );
+    registry.add_component<Engine::ECS::Components::Common::NetworkIp>(
+        newEntity, Engine::ECS::Components::Common::NetworkIp(std::string(*address)));
 
     registry.registerComponent<Engine::ECS::Components::Common::Template>();
-    registry.add_component<Engine::ECS::Components::Common::Template> (
-        newEntity,
-        Engine::ECS::Components::Common::Template(
-            std::string(p_Template)
-        )
-    );
+    registry.add_component<Engine::ECS::Components::Common::Template>(
+        newEntity, Engine::ECS::Components::Common::Template(std::string(p_Template)));
 
     player->setEntity(newEntity);
     _players.push_back(player);
-    FLAKKARI_LOG_INFO("client \""+ std::string(*address) +"\" added to game \""+ _name +"\"");
+    FLAKKARI_LOG_INFO("client \"" + std::string(*address) + "\" added to game \"" + _name + "\"");
 
     // this->sendAllEntities(sceneGame, player);    // send all entities to the new player
 
@@ -487,20 +501,14 @@ bool Game::removePlayer(std::shared_ptr<Client> player)
 
     registry.kill_entity(entity);
     _players.erase(it);
-    FLAKKARI_LOG_INFO("client \""+ std::string(*player->getAddress()) +"\" removed from game \""+ _name +"\"");
+    FLAKKARI_LOG_INFO("client \"" + std::string(*player->getAddress()) + "\" removed from game \"" + _name + "\"");
     return true;
 }
 
-bool Game::isRunning() const {
-    return _running;
-}
+bool Game::isRunning() const { return _running; }
 
-std::string Game::getName() const {
-    return _name;
-}
+std::string Game::getName() const { return _name; }
 
-std::vector<std::shared_ptr<Client>> Game::getPlayers() const {
-    return _players;
-}
+std::vector<std::shared_ptr<Client>> Game::getPlayers() const { return _players; }
 
 } /* namespace Flakkari */

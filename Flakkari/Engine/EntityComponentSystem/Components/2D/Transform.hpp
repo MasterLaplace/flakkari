@@ -20,16 +20,15 @@ struct Transform {
     Math::Vector2f scale;
     float rotation;
 
-    Transform() : position(0, 0), scale(1, 1), rotation(0) {};
-    Transform(const Math::Vector2f &position, const Math::Vector2f &scale, float rotation) : position(position), scale(scale), rotation(rotation) {};
-    Transform(const Transform &other) : position(other.position), scale(other.scale), rotation(other.rotation) {};
+    Transform() : position(0, 0), scale(1, 1), rotation(0){};
+    Transform(const Math::Vector2f &position, const Math::Vector2f &scale, float rotation)
+        : position(position), scale(scale), rotation(rotation){};
+    Transform(const Transform &other) : position(other.position), scale(other.scale), rotation(other.rotation){};
 
-    std::size_t size() const {
-        return sizeof(*this);
-    }
+    std::size_t size() const { return sizeof(*this); }
 };
 
 PACKED_END
-} // namespace Game::ECS::Components::_2D
+} // namespace Flakkari::Engine::ECS::Components::_2D
 
 #endif /* !FLAKKARI_TRANSFORM_HPP_ */

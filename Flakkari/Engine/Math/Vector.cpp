@@ -11,8 +11,7 @@
 
 namespace Flakkari::Engine::Math {
 
-template <typename Type>
-std::ostream &operator<<(std::ostream &os, const Vector<Type> &vector)
+template <typename Type> std::ostream &operator<<(std::ostream &os, const Vector<Type> &vector)
 {
     os << "Vector(x: " << vector.x << ", y: " << vector.y << ", z: " << vector.z << ", w: " << vector.w << ")";
     return os;

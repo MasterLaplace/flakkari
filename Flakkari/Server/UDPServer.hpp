@@ -16,22 +16,23 @@
 #ifndef UDPSERVER_HPP_
 #define UDPSERVER_HPP_
 
-#include "Network/IOMultiplexer.hpp"
 #include "Client/ClientManager.hpp"
-#include "Protocol/Packet.hpp"
 #include "Game/GameManager.hpp"
 #include "Internals/CommandManager.hpp"
+#include "Network/IOMultiplexer.hpp"
+#include "Protocol/Packet.hpp"
 
 namespace Flakkari {
 
-#define INIT_LOOP loop:
+#define INIT_LOOP                                                                                                      \
+loop:
 #define GOTO_LOOP goto loop;
 
 #ifndef STDIN_FILENO
-    #define STDIN_FILENO 0
+#    define STDIN_FILENO 0
 #endif
 
-#define STR(x) #x
+#define STR(x)  #x
 #define XSTR(x) STR(x)
 
 /**
@@ -53,51 +54,51 @@ namespace Flakkari {
  */
 class UDPServer {
     public:
-        /**
-         * @brief Construct a new UDPServer object
-         *
-         * @param ip The ip to bind the server to (default: localhost)
-         * @param port The port to bind the server to (default: 8080)
-         */
-        UDPServer(std::string ip = "localhost", unsigned short port = 8080);
-        ~UDPServer();
+    /**
+     * @brief Construct a new UDPServer object
+     *
+     * @param ip The ip to bind the server to (default: localhost)
+     * @param port The port to bind the server to (default: 8080)
+     */
+    UDPServer(std::string ip = "localhost", unsigned short port = 8080);
+    ~UDPServer();
 
-        /**
-         * @brief Run the server and wait for incoming packets and clients
-         *
-         * @details This function is blocking, it will wait for incoming packets
-         *
-         */
-        void run();
-
-    private:
-        /**
-         * @brief Handle the timeout of the server (check for inactive clients)
-         *
-         * @param event  The event that triggered the timeout (0 if timeout)
-         * @return true  If the timeout was handled
-         * @return false  If the timeout was not handled
-         */
-        [[nodiscard]] bool handleTimeout(int event);
-
-        /**
-         * @brief Handle the input from the user (stdin)
-         *
-         * @param fd  The file descriptor to read from (stdin)
-         * @return true  If the input was handled
-         * @return false  If the input was not handled
-         */
-        [[nodiscard]] bool handleInput(int fd);
-
-        /**
-         * @brief Handle the incoming packets from the clients (UDP)
-         *
-         */
-        void handlePacket();
+    /**
+     * @brief Run the server and wait for incoming packets and clients
+     *
+     * @details This function is blocking, it will wait for incoming packets
+     *
+     */
+    void run();
 
     private:
-        std::shared_ptr<Network::Socket> _socket;
-        std::unique_ptr<IO_SELECTED> _io;
+    /**
+     * @brief Handle the timeout of the server (check for inactive clients)
+     *
+     * @param event  The event that triggered the timeout (0 if timeout)
+     * @return true  If the timeout was handled
+     * @return false  If the timeout was not handled
+     */
+    [[nodiscard]] bool handleTimeout(int event);
+
+    /**
+     * @brief Handle the input from the user (stdin)
+     *
+     * @param fd  The file descriptor to read from (stdin)
+     * @return true  If the input was handled
+     * @return false  If the input was not handled
+     */
+    [[nodiscard]] bool handleInput(int fd);
+
+    /**
+     * @brief Handle the incoming packets from the clients (UDP)
+     *
+     */
+    void handlePacket();
+
+    private:
+    std::shared_ptr<Network::Socket> _socket;
+    std::unique_ptr<IO_SELECTED> _io;
 };
 
 } /* namespace Flakkari */

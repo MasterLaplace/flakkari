@@ -12,9 +12,8 @@
  * @date 2023-12-2
  **************************************************************************/
 
-
 #ifndef SERIALIZER_HPP_
-    #define SERIALIZER_HPP_
+#define SERIALIZER_HPP_
 
 #include "Buffer.hpp"
 
@@ -28,8 +27,7 @@ namespace Flakkari::Network {
  *          in the Flakkari/Protocol/Component.hpp file.
  */
 class Serializer {
-public:
-
+    public:
     /**
      * @brief Serialize an object into a buffer.
      *
@@ -37,10 +35,10 @@ public:
      * @param obj  The object to serialize. Must be a POD type. (Plain Old Data)
      * @return Network::Buffer  The serialized object.
      */
-    template<typename T>
-    static Network::Buffer serialize(const T &obj) {
+    template <typename T> static Network::Buffer serialize(const T &obj)
+    {
         Network::Buffer buffer(sizeof(obj));
-        std::copy((byte *)&obj, (byte *)&obj + sizeof(obj), buffer.begin());
+        std::copy((byte *) &obj, (byte *) &obj + sizeof(obj), buffer.begin());
         return buffer;
     }
 
@@ -51,10 +49,10 @@ public:
      * @param buffer  The buffer to deserialize the object from.
      * @return T  The deserialized object. Must be a POD type. (Plain Old Data)
      */
-    template<typename T>
-    static T deserialize(const Network::Buffer &buffer) {
+    template <typename T> static T deserialize(const Network::Buffer &buffer)
+    {
         T obj;
-        std::copy(buffer.begin(), buffer.begin() + sizeof(T), (byte *)&obj);
+        std::copy(buffer.begin(), buffer.begin() + sizeof(T), (byte *) &obj);
         return obj;
     }
 };

@@ -15,7 +15,8 @@ using entity_type = Registry::entity_type;
 
 entity_type Registry::spawn_entity()
 {
-    if (!_deadEntities.empty()) {
+    if (!_deadEntities.empty())
+    {
         entity_type e = _deadEntities.front();
         _deadEntities.pop();
         return e;
@@ -25,9 +26,7 @@ entity_type Registry::spawn_entity()
     throw std::runtime_error("No more available entities to spawn.");
 }
 
-entity_type Registry::entity_from_index(std::size_t idx) {
-    return Entity(idx);
-}
+entity_type Registry::entity_from_index(std::size_t idx) { return Entity(idx); }
 
 void Registry::kill_entity(const entity_type &e)
 {

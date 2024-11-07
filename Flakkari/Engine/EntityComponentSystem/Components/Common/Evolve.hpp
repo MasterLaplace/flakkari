@@ -27,9 +27,7 @@ struct Evolve {
     Evolve(const std::string &nname) : name(nname) {}
     Evolve(const Evolve &other) : name(other.name) {}
 
-    std::size_t size() const {
-        return name.size();
-    }
+    std::size_t size() const { return name.size(); }
 };
 
 } // namespace Flakkari::Engine::ECS::Components::Common

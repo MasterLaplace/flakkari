@@ -38,9 +38,9 @@ void ResourceManager::deleteScene(const std::string &game, const std::string &sc
     _instance->_templates[game].erase(scene);
 }
 
-std::optional<ResourceManager::nl_template> ResourceManager::getTemplateById (
-    const std::string &game, const std::string &scene, const std::string &templateId
-) {
+std::optional<ResourceManager::nl_template>
+ResourceManager::getTemplateById(const std::string &game, const std::string &scene, const std::string &templateId)
+{
     std::lock_guard<std::mutex> lock(_mutex);
     if (_instance == nullptr)
         return std::nullopt;
@@ -49,13 +49,17 @@ std::optional<ResourceManager::nl_template> ResourceManager::getTemplateById (
 
 void ResourceManager::loadConfig(std::shared_ptr<nlohmann::json> config, const std::string &scene)
 {
-    for (auto &_scene : (*config)["scenes"].items()) {
-        for (auto sceneInfo : _scene.value().items()) {
+    for (auto &_scene : (*config)["scenes"].items())
+    {
+        for (auto sceneInfo : _scene.value().items())
+        {
             if (sceneInfo.key() != scene)
                 continue;
 
-            for (auto &template_ : sceneInfo.value()["templates"].items()) {
-                for (auto &templateInfo : template_.value().items()) {
+            for (auto &template_ : sceneInfo.value()["templates"].items())
+            {
+                for (auto &templateInfo : template_.value().items())
+                {
                     _templates[(*config)["title"]][sceneInfo.key()][templateInfo.key()] = templateInfo.value();
                 }
             }
@@ -63,4 +67,4 @@ void ResourceManager::loadConfig(std::shared_ptr<nlohmann::json> config, const s
     }
 }
 
-} // namespace Engine::Resource
+} // namespace Flakkari

@@ -15,9 +15,8 @@
  * @date 2023-01-05
  **************************************************************************/
 
-
 #ifndef FLAKKARI_VECTOR_HPP_
-    #define FLAKKARI_VECTOR_HPP_
+#define FLAKKARI_VECTOR_HPP_
 
 #include <cmath>
 #include <iostream>
@@ -26,10 +25,9 @@
 
 namespace Flakkari::Engine::Math {
 
-template<typename Type>
-struct Vector {
+template <typename Type> struct Vector {
 
-PACKED_START
+    PACKED_START
     union {
         struct {
             Type x;
@@ -58,7 +56,7 @@ PACKED_START
     Vector(Type x, Type y) : v{x, y, 0, 1} {};
     Vector(Type x) : v{x, 0, 0, 1} {};
     Vector(const Vector<Type> &other) : v{other.v[0], other.v[1], other.v[2], other.v[3]} {};
-PACKED_END
+    PACKED_END
 
     Vector<Type> &operator=(const Vector<Type> &other)
     {
@@ -191,25 +189,13 @@ PACKED_END
         return v[0] != other.v[0] || v[1] != other.v[1] || v[2] != other.v[2] || v[3] != other.v[3];
     }
 
-    Type &operator[](const int &index)
-    {
-        return v[index];
-    }
+    Type &operator[](const int &index) { return v[index]; }
 
-    Type operator[](const int &index) const
-    {
-        return v[index];
-    }
+    Type operator[](const int &index) const { return v[index]; }
 
-    Type length() const
-    {
-        return sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]);
-    }
+    Type length() const { return sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]); }
 
-    Type lengthSquared() const
-    {
-        return v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
-    }
+    Type lengthSquared() const { return v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]; }
 
     Vector<Type> &normalize()
     {
@@ -238,7 +224,8 @@ PACKED_END
 
     Vector<Type> cross(const Vector<Type> &other) const
     {
-        return Vector<Type>(v[1] * other.v[2] - v[2] * other.v[1], v[2] * other.v[0] - v[0] * other.v[2], v[0] * other.v[1] - v[1] * other.v[0], 0);
+        return Vector<Type>(v[1] * other.v[2] - v[2] * other.v[1], v[2] * other.v[0] - v[0] * other.v[2],
+                            v[0] * other.v[1] - v[1] * other.v[0], 0);
     }
 
     Vector<Type> &lerp(const Vector<Type> &other, const Type &t)
@@ -252,7 +239,8 @@ PACKED_END
 
     Vector<Type> lerped(const Vector<Type> &other, const Type &t) const
     {
-        return Vector<Type>(v[0] + (other.v[0] - v[0]) * t, v[1] + (other.v[1] - v[1]) * t, v[2] + (other.v[2] - v[2]) * t, v[3] + (other.v[3] - v[3]) * t);
+        return Vector<Type>(v[0] + (other.v[0] - v[0]) * t, v[1] + (other.v[1] - v[1]) * t,
+                            v[2] + (other.v[2] - v[2]) * t, v[3] + (other.v[3] - v[3]) * t);
     }
 
     Vector<Type> &lerp(const Vector<Type> &other, const Vector<Type> &t)
@@ -266,7 +254,8 @@ PACKED_END
 
     Vector<Type> lerped(const Vector<Type> &other, const Vector<Type> &t) const
     {
-        return Vector<Type>(v[0] + (other.v[0] - v[0]) * t.v[0], v[1] + (other.v[1] - v[1]) * t.v[1], v[2] + (other.v[2] - v[2]) * t.v[2], v[3] + (other.v[3] - v[3]) * t.v[3]);
+        return Vector<Type>(v[0] + (other.v[0] - v[0]) * t.v[0], v[1] + (other.v[1] - v[1]) * t.v[1],
+                            v[2] + (other.v[2] - v[2]) * t.v[2], v[3] + (other.v[3] - v[3]) * t.v[3]);
     }
 
     Vector<Type> &lerp(const Vector<Type> &other, const Type &t, const Type &dt)
@@ -280,7 +269,8 @@ PACKED_END
 
     Vector<Type> lerped(const Vector<Type> &other, const Type &t, const Type &dt) const
     {
-        return Vector<Type>(v[0] + (other.v[0] - v[0]) * t * dt, v[1] + (other.v[1] - v[1]) * t * dt, v[2] + (other.v[2] - v[2]) * t * dt, v[3] + (other.v[3] - v[3]) * t * dt);
+        return Vector<Type>(v[0] + (other.v[0] - v[0]) * t * dt, v[1] + (other.v[1] - v[1]) * t * dt,
+                            v[2] + (other.v[2] - v[2]) * t * dt, v[3] + (other.v[3] - v[3]) * t * dt);
     }
 
     Vector<Type> &lerp(const Vector<Type> &other, const Vector<Type> &t, const Type &dt)
@@ -294,7 +284,8 @@ PACKED_END
 
     Vector<Type> lerped(const Vector<Type> &other, const Vector<Type> &t, const Type &dt) const
     {
-        return Vector<Type>(v[0] + (other.v[0] - v[0]) * t.v[0] * dt, v[1] + (other.v[1] - v[1]) * t.v[1] * dt, v[2] + (other.v[2] - v[2]) * t.v[2] * dt, v[3] + (other.v[3] - v[3]) * t.v[3] * dt);
+        return Vector<Type>(v[0] + (other.v[0] - v[0]) * t.v[0] * dt, v[1] + (other.v[1] - v[1]) * t.v[1] * dt,
+                            v[2] + (other.v[2] - v[2]) * t.v[2] * dt, v[3] + (other.v[3] - v[3]) * t.v[3] * dt);
     }
 
     Vector<Type> &lerp(const Vector<Type> &other, const Type &t, const Vector<Type> &dt)
@@ -320,9 +311,12 @@ PACKED_END
     {
         Type c = cos(angleRadians);
         Type s = sin(angleRadians);
-        Type x = v[0] * (c + axis.x * axis.x * (1 - c)) + v[1] * (axis.x * axis.y * (1 - c) - axis.z * s) + v[2] * (axis.x * axis.z * (1 - c) + axis.y * s);
-        Type y = v[0] * (axis.y * axis.x * (1 - c) + axis.z * s) + v[1] * (c + axis.y * axis.y * (1 - c)) + v[2] * (axis.y * axis.z * (1 - c) - axis.x * s);
-        Type z = v[0] * (axis.z * axis.x * (1 - c) - axis.y * s) + v[1] * (axis.z * axis.y * (1 - c) + axis.x * s) + v[2] * (c + axis.z * axis.z * (1 - c));
+        Type x = v[0] * (c + axis.x * axis.x * (1 - c)) + v[1] * (axis.x * axis.y * (1 - c) - axis.z * s) +
+                 v[2] * (axis.x * axis.z * (1 - c) + axis.y * s);
+        Type y = v[0] * (axis.y * axis.x * (1 - c) + axis.z * s) + v[1] * (c + axis.y * axis.y * (1 - c)) +
+                 v[2] * (axis.y * axis.z * (1 - c) - axis.x * s);
+        Type z = v[0] * (axis.z * axis.x * (1 - c) - axis.y * s) + v[1] * (axis.z * axis.y * (1 - c) + axis.x * s) +
+                 v[2] * (c + axis.z * axis.z * (1 - c));
         v[0] = x;
         v[1] = y;
         v[2] = z;
@@ -343,8 +337,7 @@ using Vector4i = Vector<int>;
 using Vector4u = Vector<unsigned int>;
 using Color = Vector4f;
 
-template <typename Type>
-std::ostream &operator<<(std::ostream &os, const Vector<Type> &vector);
+template <typename Type> std::ostream &operator<<(std::ostream &os, const Vector<Type> &vector);
 
 } // namespace Flakkari::Engine::Math
 

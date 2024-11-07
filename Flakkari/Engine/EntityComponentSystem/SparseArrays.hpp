@@ -12,32 +12,30 @@
  * @date 2023-01-05
  **************************************************************************/
 
-
 #ifndef FLAKKARI_SPARSEARRAYS_HPP_
-    #define FLAKKARI_SPARSEARRAYS_HPP_
+#define FLAKKARI_SPARSEARRAYS_HPP_
 
-#include <vector>
+#include <algorithm>
 #include <optional>
 #include <type_traits>
-#include <algorithm>
+#include <vector>
 
 namespace Flakkari::Engine::ECS {
 
-template <typename Component>
-class SparseArrays {
-public:
+template <typename Component> class SparseArrays {
+    public:
     using value_type = std::optional<Component>;
-    using reference_type = value_type&;
-    using const_reference_type = const value_type&;
+    using reference_type = value_type &;
+    using const_reference_type = const value_type &;
     using container_type = std::vector<value_type>;
     using size_type = typename container_type::size_type;
     using iterator = typename container_type::iterator;
     using const_iterator = typename container_type::const_iterator;
 
-public:
+    public:
     SparseArrays() = default;
-    SparseArrays(const SparseArrays &other) : _data(other._data) {};
-    SparseArrays(SparseArrays&&other) noexcept : _data(std::move(other._data)) {};
+    SparseArrays(const SparseArrays &other) : _data(other._data){};
+    SparseArrays(SparseArrays &&other) noexcept : _data(std::move(other._data)){};
     ~SparseArrays() = default;
 
     /**
@@ -46,7 +44,8 @@ public:
      * @param other  The SparseArrays to copy.
      * @return SparseArrays&  The SparseArrays copied.
      */
-    SparseArrays &operator=(SparseArrays const &other) {
+    SparseArrays &operator=(SparseArrays const &other)
+    {
         _data = std::move(other._data);
         return *this;
     }
@@ -149,8 +148,7 @@ public:
      * @param params  The parameters to construct the component.
      * @return reference_type  The component inserted.
      */
-    template <class... Params>
-    reference_type emplace_at(size_type pos, Params&&... params)
+    template <class... Params> reference_type emplace_at(size_type pos, Params &&...params)
     {
         if (pos >= _data.size())
             _data.resize(pos + 1, std::nullopt);
@@ -178,9 +176,8 @@ public:
      */
     size_type get_index(value_type const &component) const
     {
-        auto it = std::find_if(_data.begin(), _data.end(), [&component](auto const& opt) {
-            return opt.has_value() && opt.value() == component;
-        });
+        auto it = std::find_if(_data.begin(), _data.end(),
+                               [&component](auto const &opt) { return opt.has_value() && opt.value() == component; });
 
         if (it == _data.end())
             return _data.size();
@@ -188,7 +185,7 @@ public:
         return std::distance(_data.begin(), it);
     }
 
-private:
+    private:
     container_type _data;
 };
 

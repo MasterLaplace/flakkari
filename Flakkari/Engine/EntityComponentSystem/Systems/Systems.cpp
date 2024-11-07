@@ -16,16 +16,20 @@ void position(Registry &r, float deltaTime)
 {
     if (!r.isRegistered<ECS::Components::_2D::Transform>() || !r.isRegistered<ECS::Components::_2D::Movable>())
         return;
-    auto& positions = r.getComponents<ECS::Components::_2D::Transform>();
-    auto& velocities = r.getComponents<ECS::Components::_2D::Movable>();
+    auto &positions = r.getComponents<ECS::Components::_2D::Transform>();
+    auto &velocities = r.getComponents<ECS::Components::_2D::Movable>();
 
-    for (Entity i(0); i < positions.size() && i < velocities.size(); ++i) {
-        auto& pos = positions[i];
-        auto& vel = velocities[i];
+    for (Entity i(0); i < positions.size() && i < velocities.size(); ++i)
+    {
+        auto &pos = positions[i];
+        auto &vel = velocities[i];
 
-        if (pos.has_value() && vel.has_value()) {
-            float magnitude = std::sqrt(vel->velocity.vec.x * vel->velocity.vec.x + vel->velocity.vec.y * vel->velocity.vec.y);
-            if (magnitude > 0.0f) {
+        if (pos.has_value() && vel.has_value())
+        {
+            float magnitude =
+                std::sqrt(vel->velocity.vec.x * vel->velocity.vec.x + vel->velocity.vec.y * vel->velocity.vec.y);
+            if (magnitude > 0.0f)
+            {
                 vel->velocity.vec.x /= magnitude;
                 vel->velocity.vec.y /= magnitude;
             }
@@ -39,12 +43,13 @@ void update_control(Registry &r)
 {
     if (!r.isRegistered<ECS::Components::_2D::Movable>() || !r.isRegistered<ECS::Components::Common::NetworkEvent>())
         return;
-    auto& velocities = r.getComponents<ECS::Components::_2D::Movable>();
-    auto& networkEvent = r.getComponents<Engine::ECS::Components::Common::NetworkEvent>();
+    auto &velocities = r.getComponents<ECS::Components::_2D::Movable>();
+    auto &networkEvent = r.getComponents<Engine::ECS::Components::Common::NetworkEvent>();
 
-    for (Entity i(0); i < velocities.size(); ++i) {
-        auto& vel = velocities[i];
-        auto& net = networkEvent[i];
+    for (Entity i(0); i < velocities.size(); ++i)
+    {
+        auto &vel = velocities[i];
+        auto &net = networkEvent[i];
 
         if (!net.has_value() || !vel.has_value())
             continue;

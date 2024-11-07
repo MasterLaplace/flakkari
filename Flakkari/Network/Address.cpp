@@ -23,7 +23,8 @@ Address::Address(address_t &address, port_t port, SocketType socket_type, IpType
 
 #ifdef _WIN32
     addrinfo *result = nullptr;
-    if (getaddrinfo(address.c_str(), std::to_string(port).c_str(), &hints, &result) != 0) {
+    if (getaddrinfo(address.c_str(), std::to_string(port).c_str(), &hints, &result) != 0)
+    {
         FLAKKARI_LOG_ERROR("getaddrinfo() failed for " + address);
         return;
     }
@@ -35,13 +36,15 @@ Address::Address(address_t &address, port_t port, SocketType socket_type, IpType
 #else
     struct hostent *host = nullptr;
 
-    if ((host = gethostbyname(address.c_str())) == nullptr) {
+    if ((host = gethostbyname(address.c_str())) == nullptr)
+    {
         FLAKKARI_LOG_ERROR("gethostbyname() failed for " + address);
         return;
     }
 
     addrinfo *result = nullptr;
-    if (getaddrinfo(inet_ntoa(*(struct in_addr *)host->h_addr), std::to_string(port).c_str(), &hints, &result) != 0) {
+    if (getaddrinfo(inet_ntoa(*(struct in_addr *) host->h_addr), std::to_string(port).c_str(), &hints, &result) != 0)
+    {
         FLAKKARI_LOG_ERROR("getaddrinfo() failed");
         return;
     }
@@ -53,8 +56,7 @@ Address::Address(address_t &address, port_t port, SocketType socket_type, IpType
 #endif
 }
 
-Address::Address(port_t port, SocketType socket_type, IpType ip_type)
-    : _socket_type(socket_type), _ip_type(ip_type)
+Address::Address(port_t port, SocketType socket_type, IpType ip_type) : _socket_type(socket_type), _ip_type(ip_type)
 {
     addrinfo hints;
     hints.ai_family = (ip_type == IpType::IPv4) ? AF_INET : AF_INET6;
@@ -63,7 +65,8 @@ Address::Address(port_t port, SocketType socket_type, IpType ip_type)
     hints.ai_flags = (AI_PASSIVE | AI_V4MAPPED | AI_ALL);
 
     addrinfo *result = nullptr;
-    if (getaddrinfo(nullptr, std::to_string(port).c_str(), &hints, &result) != 0) {
+    if (getaddrinfo(nullptr, std::to_string(port).c_str(), &hints, &result) != 0)
+    {
         FLAKKARI_LOG_ERROR("getaddrinfo() failed");
         return;
     }
@@ -85,7 +88,9 @@ Address::Address(const sockaddr_in &clientAddr, SocketType socket_type, IpType i
     hints.ai_flags = (AI_PASSIVE | AI_V4MAPPED | AI_ALL);
 
     addrinfo *result = nullptr;
-    if (getaddrinfo(inet_ntoa(clientAddr.sin_addr), std::to_string(ntohs(clientAddr.sin_port)).c_str(), &hints, &result) != 0) {
+    if (getaddrinfo(inet_ntoa(clientAddr.sin_addr), std::to_string(ntohs(clientAddr.sin_port)).c_str(), &hints,
+                    &result) != 0)
+    {
         FLAKKARI_LOG_ERROR("getaddrinfo() failed");
         return;
     }
@@ -110,17 +115,18 @@ Address::Address(const sockaddr_storage &clientAddr, SocketType socket_type, IpT
     char name[INET6_ADDRSTRLEN];
 
     if (clientAddr.ss_family == AF_INET)
-        inet_ntop(AF_INET, &(((sockaddr_in *)&clientAddr)->sin_addr), name, INET_ADDRSTRLEN);
+        inet_ntop(AF_INET, &(((sockaddr_in *) &clientAddr)->sin_addr), name, INET_ADDRSTRLEN);
     else
-        inet_ntop(AF_INET6, &(((sockaddr_in6 *)&clientAddr)->sin6_addr), name, INET6_ADDRSTRLEN);
+        inet_ntop(AF_INET6, &(((sockaddr_in6 *) &clientAddr)->sin6_addr), name, INET6_ADDRSTRLEN);
 #else
-    const char *name = inet_ntoa(((sockaddr_in *)&clientAddr)->sin_addr);
+    const char *name = inet_ntoa(((sockaddr_in *) &clientAddr)->sin_addr);
 #endif
 
-    const std::string serviceStr = std::to_string(ntohs(((sockaddr_in *)&clientAddr)->sin_port));
+    const std::string serviceStr = std::to_string(ntohs(((sockaddr_in *) &clientAddr)->sin_port));
     const char *service = serviceStr.c_str();
 
-    if (getaddrinfo(name, service, &hints, &result) != 0) {
+    if (getaddrinfo(name, service, &hints, &result) != 0)
+    {
         FLAKKARI_LOG_ERROR("getaddrinfo() failed");
         return;
     }
@@ -137,7 +143,9 @@ std::optional<std::string> Address::toString() const
         return {};
     char host[NI_MAXHOST];
     char service[NI_MAXSERV];
-    if (getnameinfo(_addrInfo->ai_addr, (int)_addrInfo->ai_addrlen, host, NI_MAXHOST, service, NI_MAXSERV, NI_NUMERICSERV) != 0) {
+    if (getnameinfo(_addrInfo->ai_addr, (int) _addrInfo->ai_addrlen, host, NI_MAXHOST, service, NI_MAXSERV,
+                    NI_NUMERICSERV) != 0)
+    {
         FLAKKARI_LOG_ERROR("getnameinfo() failed");
         return {};
     }
@@ -149,7 +157,8 @@ std::optional<std::string> Address::getIp() const
     if (_addrInfo == nullptr)
         return {};
     char host[NI_MAXHOST];
-    if (getnameinfo(_addrInfo->ai_addr, (int)_addrInfo->ai_addrlen, host, NI_MAXHOST, nullptr, 0, NI_NUMERICHOST) != 0) {
+    if (getnameinfo(_addrInfo->ai_addr, (int) _addrInfo->ai_addrlen, host, NI_MAXHOST, nullptr, 0, NI_NUMERICHOST) != 0)
+    {
         FLAKKARI_LOG_ERROR("getnameinfo() failed");
         return {};
     }
@@ -158,44 +167,30 @@ std::optional<std::string> Address::getIp() const
 
 constexpr const char *Address::ipTypeToString(IpType ip_type)
 {
-    switch (ip_type) {
-        case IpType::None:
-            return "None";
-        case IpType::IPv4:
-            return "IPv4";
-        case IpType::IPv6:
-            return "IPv6";
-        default:
-            return "Unknown";
+    switch (ip_type)
+    {
+    case IpType::None: return "None";
+    case IpType::IPv4: return "IPv4";
+    case IpType::IPv6: return "IPv6";
+    default: return "Unknown";
     }
 }
 
 constexpr const char *Address::socketTypeToString(SocketType socket_type)
 {
-    switch (socket_type) {
-        case SocketType::None:
-            return "None";
-        case SocketType::TCP:
-            return "TCP";
-        case SocketType::UDP:
-            return "UDP";
-        default:
-            return "Unknown";
+    switch (socket_type)
+    {
+    case SocketType::None: return "None";
+    case SocketType::TCP: return "TCP";
+    case SocketType::UDP: return "UDP";
+    default: return "Unknown";
     }
 }
 
 Address::operator std::string() const
 {
-    return std::string(
-        toString().value_or("null")
-        + " ("
-        + socketTypeToString(_socket_type)
-        + ", "
-        + ipTypeToString(_ip_type)
-        + ", "
-        + std::to_string(getId())
-        + ")"
-    );
+    return std::string(toString().value_or("null") + " (" + socketTypeToString(_socket_type) + ", " +
+                       ipTypeToString(_ip_type) + ", " + std::to_string(getId()) + ")");
 }
 
 std::ostream &operator<<(std::ostream &os, const Address &addr)
