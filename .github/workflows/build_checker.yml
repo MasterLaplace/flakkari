@@ -49,7 +49,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-            brew install cmake
             brew install ninja
 
       - name: Configure and Build
