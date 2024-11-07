@@ -20,6 +20,9 @@
 #include "Network/Network.hpp"
 #include "Network/Serializer.hpp"
 
+#define SINGLETON_IMPLEMENTATION
+#include <Singleton.hpp>
+#include <unordered_map>
 #include <memory>
 #include <mutex>
 #include <unordered_map>
@@ -46,29 +49,21 @@ namespace Flakkari {
  * Flakkari::ClientManager::checkInactiveClients();
  * @endcode
  */
-class ClientManager {
+class ClientManager : public Singleton<ClientManager> {
     private:
-    static std::shared_ptr<ClientManager> _instance;
-    static std::mutex _mutex;
+        std::unordered_map<std::string /*ip*/, std::shared_ptr<Client>> _clients;
+        std::vector<std::string /*ip*/> _bannedClients;
+        std::shared_ptr<Network::Socket> _socket;
 
-    using id_t = short;
-
-    public:
-    std::unordered_map<std::string /*ip*/, std::shared_ptr<Client>> _clients;
-    std::vector<std::string /*ip*/> _bannedClients;
-    std::shared_ptr<Network::Socket> _socket;
+        using id_t = short;
 
     public:
-    ClientManager(const ClientManager &) = delete;
-    ClientManager(const std::shared_ptr<ClientManager> &) = delete;
-    void operator=(const ClientManager &) = delete;
-    void operator=(const std::shared_ptr<ClientManager> &) = delete;
-
-    /**
-     * @brief Construct a new ClientManager object
-     *
-     */
-    ClientManager() = default;
+        /**
+         * @brief Construct a new ClientManager object
+         *
+         * @param socket  The server's socket
+         */
+        explicit ClientManager(std::shared_ptr<Network::Socket> socket) : _socket(socket) {}
 
     /**
      * @brief Destroy the ClientManager object
@@ -76,103 +71,94 @@ class ClientManager {
      */
     ~ClientManager() = default;
 
-    static void setSocket(std::shared_ptr<Network::Socket> socket);
+        /**
+         * @brief Add a client to the client manager or update the last activity of the client
+         *
+         * @param client  The client's address
+         */
+        void addClient(std::shared_ptr<Network::Address> client, Network::Buffer &buffer);
 
-    /**
-     * @brief Get the instance of the client manager
-     *
-     * @return std::shared_ptr<ClientManager>  The instance of the client manager
-     */
-    static std::shared_ptr<ClientManager> getInstance();
+        /**
+         * @brief Remove a client from the client manager
+         *
+         * @param client  The client's address
+         */
+        void removeClient(std::shared_ptr<Network::Address> client);
 
-    /**
-     * @brief Add a client to the client manager or update the last activity of the client
-     *
-     * @param client  The client's address
-     */
-    static void addClient(std::shared_ptr<Network::Address> client, Network::Buffer &buffer);
+        /**
+         * @brief Ban a client from the server
+         *
+         * @param client  The client's address
+         */
+        void banClient(std::shared_ptr<Network::Address> client);
 
-    /**
-     * @brief Remove a client from the client manager
-     *
-     * @param client  The client's address
-     */
-    static void removeClient(std::shared_ptr<Network::Address> client);
+        [[nodiscard]] bool isBanned(std::shared_ptr<Network::Address> client);
 
-    /**
-     * @brief Ban a client from the server
-     *
-     * @param client  The client's address
-     */
-    static void banClient(std::shared_ptr<Network::Address> client);
+        /**
+         * @brief Check if the clients are still connected to the server
+         * and remove the inactive clients from the client manager
+         * (inactive clients are clients that didn't send any packet to the server
+         * for more than 5 seconds)
+         *
+         * @see Client::isConnected()
+         * @see Client::keepAlive()
+         */
+        void checkInactiveClients();
 
-    [[nodiscard]] static bool isBanned(std::shared_ptr<Network::Address> client);
+        /**
+         * @brief Send a packet to a client
+         *
+         * @param client  The client's address
+         * @param packet  The packet to send
+         */
+        void sendPacketToClient(std::shared_ptr<Network::Address> client, const Network::Buffer &packet);
 
-    /**
-     * @brief Check if the clients are still connected to the server
-     * and remove the inactive clients from the client manager
-     * (inactive clients are clients that didn't send any packet to the server
-     * for more than 5 seconds)
-     *
-     * @see Client::isConnected()
-     * @see Client::keepAlive()
-     */
-    static void checkInactiveClients();
+        /**
+         * @brief Send a packet to all clients
+         *
+         * @param packet  The packet to send
+         */
+        void sendPacketToAllClients(const Network::Buffer &packet);
 
-    /**
-     * @brief Send a packet to a client
-     *
-     * @param client  The client's address
-     * @param packet  The packet to send
-     */
-    static void sendPacketToClient(std::shared_ptr<Network::Address> client, const Network::Buffer &packet);
+        /**
+         * @brief Send a packet to all clients except one
+         *
+         * @param client  The client's address
+         * @param packet  The packet to send
+         */
+        void sendPacketToAllClientsExcept(std::shared_ptr<Network::Address> client, const Network::Buffer &packet);
 
-    /**
-     * @brief Send a packet to all clients
-     *
-     * @param packet  The packet to send
-     */
-    static void sendPacketToAllClients(const Network::Buffer &packet);
+        /**
+         * @brief Receive a packet from a client
+         *
+         * @param client  The client's address
+         * @param packet  The packet received
+         */
+        void receivePacketFromClient(std::shared_ptr<Network::Address> client, const Network::Buffer &packet);
 
-    /**
-     * @brief Send a packet to all clients except one
-     *
-     * @param client  The client's address
-     * @param packet  The packet to send
-     */
-    static void sendPacketToAllClientsExcept(std::shared_ptr<Network::Address> client, const Network::Buffer &packet);
+        /**
+         * @brief Get the Client object
+         *
+         * @param client  The client's address
+         * @return std::shared_ptr<Client>  The client object
+         */
+        std::shared_ptr<Client> getClient(std::shared_ptr<Network::Address> client);
 
-    /**
-     * @brief Receive a packet from a client
-     *
-     * @param client  The client's address
-     * @param packet  The packet received
-     */
-    static void receivePacketFromClient(std::shared_ptr<Network::Address> client, const Network::Buffer &packet);
+        /**
+         * @brief Get the Client object
+         *
+         * @param id  The client's id
+         * @return std::shared_ptr<Client>  The client object
+         */
+        std::shared_ptr<Client> getClient(std::string id);
 
-    /**
-     * @brief Get the Client object
-     *
-     * @param client  The client's address
-     * @return std::shared_ptr<Client>  The client object
-     */
-    static std::shared_ptr<Client> getClient(std::shared_ptr<Network::Address> client);
-
-    /**
-     * @brief Get the Client object
-     *
-     * @param id  The client's id
-     * @return std::shared_ptr<Client>  The client object
-     */
-    static std::shared_ptr<Client> getClient(std::string id);
-
-    /**
-     * @brief Get the Address object
-     *
-     * @param id The client's id
-     * @return std::shared_ptr<Network::Address>  The client's address
-     */
-    static std::shared_ptr<Network::Address> getAddress(std::string id);
+        /**
+         * @brief Get the Address object
+         *
+         * @param id The client's id
+         * @return std::shared_ptr<Network::Address>  The client's address
+         */
+        std::shared_ptr<Network::Address> getAddress(std::string id);
 
     /**
      * @brief Get the client object from the client manager

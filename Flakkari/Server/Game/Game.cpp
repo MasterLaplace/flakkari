@@ -34,7 +34,8 @@ void Game::sendAllEntities(const std::string &sceneName, std::shared_ptr<Client>
         packet.injectString(sceneName);
         Protocol::PacketFactory::addComponentsToPacketByEntity<Protocol::CommandId>(packet, registry, i);
 
-        ClientManager::sendPacketToClient(player->getAddress(), packet.serialize());
+        ClientManager::GetInstance().sendPacketToClient(player->getAddress(), packet.serialize());
+        ClientManager::UnlockInstance();
     }
 }
 
@@ -224,7 +225,8 @@ void Game::sendOnSameScene(const std::string &sceneName, const Network::Buffer &
         if (player->getSceneName() != sceneName)
             continue;
 
-        ClientManager::sendPacketToClient(player->getAddress(), message);
+        ClientManager::GetInstance().sendPacketToClient(player->getAddress(), message);
+        ClientManager::UnlockInstance();
     }
 }
 
@@ -242,7 +244,8 @@ void Game::sendOnSameSceneExcept(const std::string &sceneName, const Network::Bu
         if (player == except)
             continue;
 
-        ClientManager::sendPacketToClient(player->getAddress(), message);
+        ClientManager::GetInstance().sendPacketToClient(player->getAddress(), message);
+        ClientManager::UnlockInstance();
     }
 }
 
@@ -470,7 +473,8 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
     packet.injectString(sceneGame);
     packet.injectString(player->getName().value_or(""));
     packet.injectString(p_Template);
-    ClientManager::sendPacketToClient(address, packet.serialize());
+    ClientManager::GetInstance().sendPacketToClient(address, packet.serialize());
+    ClientManager::DestroyInstance();
 
     Protocol::Packet<Protocol::CommandId> packet2;
     packet2.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;
