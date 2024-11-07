@@ -27,12 +27,14 @@ UDPServer::UDPServer(std::string ip, unsigned short port)
 
     ClientManager::CreateInstance(_socket);
     ResourceManager::CreateInstance();
+    GameManager::CreateInstance();
 }
 
 UDPServer::~UDPServer()
 {
     ClientManager::DestroyInstance();
     ResourceManager::DestroyInstance();
+    GameManager::DestroyInstance();
     Network::cleanup();
     FLAKKARI_LOG_INFO("UDPServer is now stopped");
 }

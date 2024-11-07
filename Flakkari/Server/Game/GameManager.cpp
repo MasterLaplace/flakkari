@@ -14,9 +14,6 @@
 
 namespace Flakkari {
 
-std::shared_ptr<GameManager> GameManager::_instance = nullptr;
-std::mutex GameManager::_mutex;
-
 #define STR_ADDRESS std::string(*client->getAddress())
 
 GameManager::GameManager()
@@ -68,19 +65,8 @@ GameManager::GameManager()
     }
 }
 
-std::shared_ptr<GameManager> GameManager::getInstance()
-{
-    std::lock_guard<std::mutex> lock(_mutex);
-    if (!_instance)
-        _instance = std::make_shared<GameManager>();
-    return _instance;
-}
-
 int GameManager::addGame(std::string gameName)
 {
-    auto &_gamesStore = getInstance()->_gamesStore;
-    auto _game_dir = getInstance()->_game_dir;
-
     if (_gamesStore.find(gameName) != _gamesStore.end())
         return FLAKKARI_LOG_ERROR("game already loaded"), 1;
     std::ifstream configFile(_game_dir + "/" + gameName + "/config.cfg");
@@ -100,7 +86,6 @@ int GameManager::addGame(std::string gameName)
 
 std::shared_ptr<Game> GameManager::getGame(std::string gameName)
 {
-    auto &_gamesStore = getInstance()->_gamesStore;
     if (_gamesStore.find(gameName) == _gamesStore.end())
         return FLAKKARI_LOG_ERROR("game not found"), nullptr;
     return std::make_shared<Game>(gameName, _gamesStore[gameName]);
@@ -108,7 +93,6 @@ std::shared_ptr<Game> GameManager::getGame(std::string gameName)
 
 std::vector<std::shared_ptr<Game>> GameManager::getGamesInstances()
 {
-    auto &_gamesInstances = getInstance()->_gamesInstances;
     std::vector<std::shared_ptr<Game>> gamesInstances;
 
     for (auto &game : _gamesInstances)
@@ -118,9 +102,6 @@ std::vector<std::shared_ptr<Game>> GameManager::getGamesInstances()
 
 int GameManager::updateGame(std::string gameName)
 {
-    auto &_gamesStore = getInstance()->_gamesStore;
-    auto _game_dir = getInstance()->_game_dir;
-
     if (_gamesStore.find(gameName) == _gamesStore.end())
         return FLAKKARI_LOG_ERROR("game not found"), 1;
     std::ifstream configFile(_game_dir + "/" + gameName + "/config.cfg");
@@ -137,7 +118,6 @@ int GameManager::updateGame(std::string gameName)
 
 int GameManager::removeGame(std::string gameName)
 {
-    auto &_gamesStore = getInstance()->_gamesStore;
     if (_gamesStore.find(gameName) == _gamesStore.end())
         return FLAKKARI_LOG_ERROR("game not found"), 1;
 
@@ -149,7 +129,6 @@ int GameManager::removeGame(std::string gameName)
 
 void GameManager::listGames()
 {
-    auto &_gamesStore = getInstance()->_gamesStore;
     std::string gamesList = "Games list:\n";
 
     for (const auto &game : _gamesStore)
@@ -159,20 +138,14 @@ void GameManager::listGames()
 
 void GameManager::addClientToGame(std::string gameName, std::shared_ptr<Client> client)
 {
-    auto current = getInstance();
-    auto &gamesStore = current->_gamesStore;
-    auto &gamesInstances = current->_gamesInstances;
-    auto &waitingClients = current->_waitingClients;
-
-    if (gamesStore.find(gameName) == gamesStore.end())
-    {
+    if (_gamesStore.find(gameName) == _gamesStore.end()) {
         FLAKKARI_LOG_ERROR("game not found");
         client.reset();
         return;
     }
 
-    auto &gameStore = gamesStore[gameName];
-    auto &gameInstance = gamesInstances[gameName];
+    auto &gameStore = _gamesStore[gameName];
+    auto &gameInstance = _gamesInstances[gameName];
 
     auto minPlayers = gameStore->at("minPlayers").get<size_t>();
     auto maxPlayers = gameStore->at("maxPlayers").get<size_t>();
@@ -188,7 +161,7 @@ void GameManager::addClientToGame(std::string gameName, std::shared_ptr<Client> 
         if (gameInstance.size() >= maxInstances)
         {
             FLAKKARI_LOG_ERROR("game \"" + gameName + "\"is full");
-            waitingClients[gameName].push(client);
+            _waitingClients[gameName].push(client);
             return;
         }
         gameInstance.push_back(std::make_shared<Game>(gameName, gameStore));
@@ -209,25 +182,23 @@ void GameManager::addClientToGame(std::string gameName, std::shared_ptr<Client> 
 
 void GameManager::removeClientFromGame(std::string gameName, std::shared_ptr<Client> client)
 {
-    auto &gamesStore = getInstance()->_gamesStore;
-    auto &gamesInstances = getInstance()->_gamesInstances;
-    auto &waitingClients = getInstance()->_waitingClients;
-    if (gamesStore.find(gameName) == gamesStore.end())
+    if (_gamesStore.find(gameName) == _gamesStore.end())
         return FLAKKARI_LOG_ERROR("game not found"), void();
 
-    auto &waitingQueue = waitingClients[gameName];
+    auto &waitingQueue = _waitingClients[gameName];
 
-    auto minPlayers = gamesStore[gameName]->at("minPlayers").get<size_t>();
+    auto minPlayers = _gamesStore[gameName]->at("minPlayers").get<size_t>();
 
-    for (auto &instance : gamesInstances[gameName])
-    {
+    for (auto &instance : _gamesInstances[gameName]) {
         if (!instance->removePlayer(client))
             continue;
 
-        if (instance->getPlayers().empty())
-        {
-            gamesInstances[gameName].erase(
-                std::find(gamesInstances[gameName].begin(), gamesInstances[gameName].end(), instance));
+        if (instance->getPlayers().empty()) {
+            _gamesInstances[gameName].erase(
+                std::find(
+                    _gamesInstances[gameName].begin(), _gamesInstances[gameName].end(), instance
+                )
+            );
             FLAKKARI_LOG_INFO("game \"" + gameName + "\" removed");
         }
         else if (instance->getPlayers().size() > minPlayers)
@@ -252,14 +223,11 @@ void GameManager::removeClientFromGame(std::string gameName, std::shared_ptr<Cli
 
 int GameManager::getIndexInWaitingQueue(std::string gameName, std::shared_ptr<Client> client)
 {
-    auto &waitingClients = getInstance()->_waitingClients;
-    auto &gamesStore = getInstance()->_gamesStore;
-    if (gamesStore.find(gameName) == gamesStore.end())
+    if (_gamesStore.find(gameName) == _gamesStore.end())
         return FLAKKARI_LOG_ERROR("game not found"), -1;
 
-    auto tmpQueue = waitingClients[gameName];
-    for (int i = 0; !tmpQueue.empty(); i++)
-    {
+    auto tmpQueue = _waitingClients[gameName];
+    for (int i = 0; !tmpQueue.empty(); i++) {
         if (tmpQueue.front() == client)
             return FLAKKARI_LOG_INFO("client \"" + STR_ADDRESS + "\" found in waiting queue at " + std::to_string(i)),
                    i;
