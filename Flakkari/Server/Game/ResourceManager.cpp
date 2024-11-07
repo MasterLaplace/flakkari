@@ -29,15 +29,12 @@ void ResourceManager::addScene(std::shared_ptr<nlohmann::json> config, const std
     }
 }
 
-void ResourceManager::deleteScene(const std::string &game, const std::string &scene)
-{
-    _templates[game].erase(scene);
-}
+void ResourceManager::deleteScene(const std::string &game, const std::string &scene) { _templates[game].erase(scene); }
 
-std::optional<ResourceManager::nl_template> ResourceManager::getTemplateById (
-    const std::string &game, const std::string &scene, const std::string &templateId
-) {
+std::optional<ResourceManager::nl_template>
+ResourceManager::getTemplateById(const std::string &game, const std::string &scene, const std::string &templateId)
+{
     return _templates[game][scene][templateId];
 }
 
-} // namespace Engine::Resource
+} // namespace Flakkari
