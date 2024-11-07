@@ -102,8 +102,7 @@ class PacketFactory {
      * @param entity  Entity to get the components from.
      */
     template <typename Id>
-    static void add2dToPacketByEntity(Packet<Id> &packet, Engine::ECS::Registry &registry,
-                                      Engine::ECS::Entity entity)
+    static void add2dToPacketByEntity(Packet<Id> &packet, Engine::ECS::Registry &registry, Engine::ECS::Entity entity)
     {
         auto transform = registry.getComponents<Engine::ECS::Components::_2D::Transform>()[entity];
 
