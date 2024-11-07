@@ -2,7 +2,7 @@
 Language:          Cpp
 BasedOnStyle:      LLVM
 Standard:          c++20
-AccessModifierOffset: -2
+AccessModifierOffset: 0
 AlignAfterOpenBracket: Align
 AlignArrayOfStructures: Left
 AlignConsecutiveMacros: Consecutive
@@ -100,7 +100,7 @@ IncludeIsMainSourceRegex: ''
 IndentAccessModifiers: false
 IndentCaseLabels:  false
 IndentCaseBlocks:  false
-IndentGotoLabels:  true
+IndentGotoLabels:  false
 IndentPPDirectives: AfterHash
 IndentExternBlock: AfterExternBlock
 IndentRequires:    false
