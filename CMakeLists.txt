@@ -35,7 +35,6 @@ set(HEADERS
     Flakkari/Logger/Logger.hpp
 
     Flakkari/Network/Network.hpp
-    Flakkari/Network/Packed.hpp
     Flakkari/Network/Address.hpp
     Flakkari/Network/Buffer.hpp
     Flakkari/Network/Socket.hpp
@@ -78,7 +77,6 @@ set(HEADER_LIB_LOGGER
 
 set(HEADER_LIB_NETWORK
     Flakkari/Network/Network.hpp
-    Flakkari/Network/Packed.hpp
     Flakkari/Network/Address.hpp
     Flakkari/Network/Buffer.hpp
     Flakkari/Network/Socket.hpp
@@ -198,6 +196,7 @@ add_library(flakkari_network SHARED ${SOURCES_LIB_NETWORK} ${HEADER_LIB_NETWORK}
 
 # Include Directories:
 target_include_directories(flakkari_network PRIVATE ${CMAKE_SOURCE_DIR}/Flakkari)
+target_include_directories(flakkari_network PRIVATE ${singleton_SOURCE_DIR})
 
 # Link Libraries:
 target_link_libraries(flakkari_network PRIVATE nlohmann_json::nlohmann_json)

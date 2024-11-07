@@ -13,8 +13,6 @@
 #include "../../../Math/Vector.hpp"
 #include <string>
 
-#include "Network/Packed.hpp"
-
 namespace Flakkari::Engine::ECS::Components::_2D {
 PACKED_START
 

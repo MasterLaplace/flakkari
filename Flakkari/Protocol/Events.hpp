@@ -17,9 +17,7 @@
 #ifndef EVENTS_HPP_
 #define EVENTS_HPP_
 
-#include <cstdint>
-
-#include "../Network/Packed.hpp"
+#include "config.h.in"
 
 namespace Flakkari::Protocol {
 

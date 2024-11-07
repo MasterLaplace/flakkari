@@ -17,7 +17,7 @@
 #ifndef PACKETFACTORY_HPP_
 #define PACKETFACTORY_HPP_
 
-#include "Packet.hpp"
+#include "config.h.in"
 
 #include "Engine/EntityComponentSystem/Systems/Systems.hpp"
 

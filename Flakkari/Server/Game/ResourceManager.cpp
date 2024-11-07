@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Title: Flakkari
 ** Author: MasterLaplace
-** Created: 2023-01-12
+** Created: 2024-01-12
 ** File description:
 ** ResourceManager
 */

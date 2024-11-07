@@ -12,7 +12,7 @@
 
 #include <cstdint>
 
-#include "Network/Packed.hpp"
+#include "config.h.in"
 
 namespace Flakkari::Engine::ECS::Components::Common {
 PACKED_START

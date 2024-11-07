@@ -20,8 +20,9 @@
 
 #define PROTOCOL_VERSION 1
 
+#include "config.h.in"
+
 #include "../Network/Buffer.hpp"
-#include "../Network/Packed.hpp"
 #include "Commands.hpp"
 #include <chrono>
 

@@ -12,7 +12,7 @@
  * https://opensource.org/licenses/MIT
  * © 2023 @MasterLaplace
  * @version 0.3.0
- * @date 2023-01-05
+ * @date 2024-01-05
  **************************************************************************/
 
 #ifndef FLAKKARI_VECTOR_HPP_
@@ -21,7 +21,7 @@
 #include <cmath>
 #include <iostream>
 
-#include "Network/Packed.hpp"
+#include "config.h.in"
 
 namespace Flakkari::Engine::Math {
 

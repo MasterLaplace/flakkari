@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Title: Flakkari
 ** Author: MasterLaplace
-** Created: 2023-01-06
+** Created: 2024-01-06
 ** File description:
 ** Parent
 */
@@ -12,7 +12,7 @@
 
 #include <cstddef>
 
-#include "Network/Packed.hpp"
+#include "config.h.in"
 
 namespace Flakkari::Engine::ECS::Components::Common {
 PACKED_START
