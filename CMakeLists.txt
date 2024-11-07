@@ -1,7 +1,7 @@
 # Flakkari/CMakeLists.txt
-cmake_minimum_required(VERSION 3.22.0)
+cmake_minimum_required(VERSION 3.2...3.22)
 
-project(R-Type_Server)
+project(Flakkari-Server VERSION 0.2.0 LANGUAGES CXX)
 
 # Add all your source and headers files:
 set(SOURCES
@@ -112,32 +112,33 @@ set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(FLAKKARI_GAME_DIR ${CMAKE_SOURCE_DIR}/Games)
+message(STATUS "FLAKKARI_GAME_DIR: ${FLAKKARI_GAME_DIR}")
 
 # Compiler Standards:
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Compiler Warnings:
-if(MSVC)
+if (MSVC)
     add_compile_options(/W4)
-elseif(WIN32)
+elseif (WIN32)
     add_compile_options(-Wall -Wextra)
 else()
     add_compile_options(-Wall -Wextra)
 endif()
 
 # Create the executable
-add_executable(r-type_server ${SOURCES} ${HEADERS})
+add_executable(flakkari ${SOURCES} ${HEADERS})
 
 # Include Directories:
-target_include_directories(r-type_server PRIVATE ${CMAKE_SOURCE_DIR}/Flakkari)
+target_include_directories(flakkari PRIVATE ${CMAKE_SOURCE_DIR}/Flakkari)
 
 # Link Libraries:
-target_link_libraries(r-type_server PRIVATE nlohmann_json::nlohmann_json)
+target_link_libraries(flakkari PRIVATE nlohmann_json::nlohmann_json)
 
 # Documentation: sudo apt-get install graphviz
 find_package(Doxygen)
-if(DOXYGEN_FOUND)
+if (DOXYGEN_FOUND)
     add_custom_target(doc
         COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_SOURCE_DIR}/Doxyfile.cfg
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
@@ -154,14 +155,14 @@ set(PROJECT_VERSION_PATCH 0)
 configure_file(${CMAKE_SOURCE_DIR}/Flakkari/config.h.in ${CMAKE_BINARY_DIR}/config.h)
 
 # Install Targets:
-install(TARGETS r-type_server DESTINATION bin)
+install(TARGETS flakkari DESTINATION bin)
 install(FILES ${CMAKE_BINARY_DIR}/config.h DESTINATION include/Flakkari)
 install(FILES ${HEADER_LIB_LOGGER} DESTINATION include/Flakkari/Logger)
 install(FILES ${HEADER_LIB_NETWORK} DESTINATION include/Flakkari/Network)
 install(FILES ${HEADER_LIB_PROTOCOL} DESTINATION include/Flakkari/Protocol)
 
 # Packaging:
-set(CPACK_PACKAGE_NAME "r-type_server")
+set(CPACK_PACKAGE_NAME "flakkari")
 set(CPACK_PACKAGE_VENDOR "R-Type")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "R-Type Server")
 set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
@@ -185,14 +186,14 @@ set(SOURCES_LIB_NETWORK
     Flakkari/Network/Socket.cpp
     Flakkari/Network/IOMultiplexer.cpp
 )
-add_library(r-type_server_network SHARED ${SOURCES_LIB_NETWORK} ${HEADER_LIB_NETWORK} ${HEADER_LIB_LOGGER})
+add_library(flakkari_network SHARED ${SOURCES_LIB_NETWORK} ${HEADER_LIB_NETWORK} ${HEADER_LIB_LOGGER})
 
 # Include Directories:
-target_include_directories(r-type_server_network PRIVATE ${CMAKE_SOURCE_DIR}/Flakkari)
+target_include_directories(flakkari_network PRIVATE ${CMAKE_SOURCE_DIR}/Flakkari)
 
 # Link Libraries:
-target_link_libraries(r-type_server_network PRIVATE nlohmann_json::nlohmann_json)
+target_link_libraries(flakkari_network PRIVATE nlohmann_json::nlohmann_json)
 
 # Install dynamic library:
-install(TARGETS r-type_server_network DESTINATION lib)
+install(TARGETS flakkari_network DESTINATION lib)
 install(FILES ${HEADER_LIB_NETWORK} DESTINATION include/Flakkari/Network)

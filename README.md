@@ -11,12 +11,13 @@
     </a>
     </h3>
 </p>
-<h3 align="center">🌐 Supported Platforms</h3>
 <p align="center">
+    <h3 align="center">🌐 Supported Platforms
+    &#xa0; : &#xa0;
     <img
         src="https://img.shields.io/badge/Linux-blue?style=for-the-badge"
         alt="Linux"
-        href="https://github.com/MasterLaplace/Flakkari/releases/download/v0.2.0/r-type_server"
+        href="https://github.com/MasterLaplace/Flakkari/releases/latest"
     > &#xa0; | &#xa0;
     <img
         src="https://img.shields.io/badge/Windows-blue?style=for-the-badge"
@@ -25,12 +26,16 @@
     <img
         src="https://img.shields.io/badge/MacOS-blue?style=for-the-badge"
         alt="MacOS"
-    > &#xa0; | &#xa0;
+    >
+    </h3>
 </p>
-<h3 align="center">📡 Supported Protocol</h3>
 <p align="center">
-    <img src="https://img.shields.io/badge/UDP-blue?style=for-the-badge" alt="UDP">
-    <img src="https://img.shields.io/badge/TCP-blue?style=for-the-badge" alt="TCP">
+    <h3 align="center">📡 Supported Protocol
+        &#xa0; : &#xa0;
+        <img src="https://img.shields.io/badge/UDP-blue?style=for-the-badge" alt="UDP">
+        &#xa0; | &#xa0;
+        <img src="https://img.shields.io/badge/TCP-blue?style=for-the-badge" alt="TCP">
+    </h3>
 </p>
 
 
