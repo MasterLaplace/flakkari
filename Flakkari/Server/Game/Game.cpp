@@ -307,9 +307,9 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     Protocol::Event event = *(Protocol::Event *) packet.payload.data();
     if (event.id == Protocol::EventId::MOVE_UP && ctrl->up)
     {
-        if (netEvent->events.size() < int(event.id))
-            netEvent->events.resize(int(event.id) + 1);
-        netEvent->events[int(event.id)] = int(event.state);
+        if (netEvent->events.size() < size_t(event.id))
+            netEvent->events.resize(size_t(event.id) + 1);
+        netEvent->events[size_t(event.id)] = (unsigned short)event.state;
 
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
@@ -322,9 +322,9 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     }
     if (event.id == Protocol::EventId::MOVE_DOWN && ctrl->down)
     {
-        if (netEvent->events.size() < int(event.id))
-            netEvent->events.resize(int(event.id) + 1);
-        netEvent->events[int(event.id)] = int(event.state);
+        if (netEvent->events.size() < size_t(event.id))
+            netEvent->events.resize(size_t(event.id) + 1);
+        netEvent->events[size_t(event.id)] = (unsigned short)event.state;
 
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
@@ -337,9 +337,9 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     }
     if (event.id == Protocol::EventId::MOVE_LEFT && ctrl->left)
     {
-        if (netEvent->events.size() < int(event.id))
-            netEvent->events.resize(int(event.id) + 1);
-        netEvent->events[int(event.id)] = int(event.state);
+        if (netEvent->events.size() < size_t(event.id))
+            netEvent->events.resize(size_t(event.id) + 1);
+        netEvent->events[size_t(event.id)] = (unsigned short)event.state;
 
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
@@ -352,9 +352,9 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     }
     if (event.id == Protocol::EventId::MOVE_RIGHT && ctrl->right)
     {
-        if (netEvent->events.size() < int(event.id))
-            netEvent->events.resize(int(event.id) + 1);
-        netEvent->events[int(event.id)] = int(event.state);
+        if (netEvent->events.size() < size_t(event.id))
+            netEvent->events.resize(size_t(event.id) + 1);
+        netEvent->events[size_t(event.id)] = (unsigned short)event.state;
 
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
@@ -367,9 +367,9 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     }
     if (event.id == Protocol::EventId::SHOOT && ctrl->shoot)
     {
-        if (netEvent->events.size() < int(event.id))
-            netEvent->events.resize(int(event.id) + 1);
-        netEvent->events[int(event.id)] = int(event.state);
+        if (netEvent->events.size() < size_t(event.id))
+            netEvent->events.resize(size_t(event.id) + 1);
+        netEvent->events[size_t(event.id)] = (unsigned short)event.state;
 
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
