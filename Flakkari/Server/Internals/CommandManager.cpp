@@ -83,25 +83,29 @@ bool CommandManager::handleAdminCommand(const std::string &input)
         return true;
     }
 
-    if (std::regex_match(input, ADD_GAME_REGEX)) {
+    if (std::regex_match(input, ADD_GAME_REGEX))
+    {
         GameManager::GetInstance().addGame(input.substr(8));
         GameManager::UnlockInstance();
         return true;
     }
 
-    if (std::regex_match(input, UPDATE_GAME_REGEX)) {
+    if (std::regex_match(input, UPDATE_GAME_REGEX))
+    {
         GameManager::GetInstance().updateGame(input.substr(11));
         GameManager::UnlockInstance();
         return true;
     }
 
-    if (std::regex_match(input, REMOVE_GAME_REGEX)) {
+    if (std::regex_match(input, REMOVE_GAME_REGEX))
+    {
         GameManager::GetInstance().removeGame(input.substr(11));
         GameManager::UnlockInstance();
         return true;
     }
 
-    if (input == "listGames") {
+    if (input == "listGames")
+    {
         GameManager::GetInstance().listGames();
         GameManager::UnlockInstance();
         return true;
