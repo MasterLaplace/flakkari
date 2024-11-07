@@ -1,5 +1,5 @@
 /**************************************************************************
- * Flakkari Library v0.2.0
+ * Flakkari Library v0.3.0
  *
  * Flakkari Library is a C++ Library for Network.
  * @file Address.hpp
@@ -8,7 +8,7 @@
  * Flakkari Library is under MIT License.
  * https://opensource.org/licenses/MIT
  * © 2023 @MasterLaplace
- * @version 0.2.0
+ * @version 0.3.0
  * @date 2023-12-20
  **************************************************************************/
 
