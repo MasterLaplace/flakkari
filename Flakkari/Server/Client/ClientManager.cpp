@@ -16,7 +16,8 @@ namespace Flakkari {
 
 void ClientManager::addClient(std::shared_ptr<Network::Address> client, Network::Buffer &buffer)
 {
-    if (this->isBanned(client)) {
+    if (this->isBanned(client))
+    {
         FLAKKARI_LOG_LOG("Client " + client->toString().value_or("Unknown") + " tried to connect but is banned");
         return;
     }
@@ -73,43 +74,47 @@ void ClientManager::banClient(std::shared_ptr<Network::Address> client)
 
 bool ClientManager::isBanned(std::shared_ptr<Network::Address> client)
 {
-    return std::find(_bannedClients.begin(), _bannedClients.end(), client->getIp().value_or("")) != _bannedClients.end();
+    return std::find(_bannedClients.begin(), _bannedClients.end(), client->getIp().value_or("")) !=
+           _bannedClients.end();
 }
 
 void ClientManager::checkInactiveClients()
 {
-    for (auto it = _clients.begin(); it != _clients.end();) {
-        if (!it->second->isConnected()) {
+    for (auto it = _clients.begin(); it != _clients.end();)
+    {
+        if (!it->second->isConnected())
+        {
             FLAKKARI_LOG_LOG("Client " + it->first + " disconnected");
             it = _clients.erase(it);
-        } else {
+        }
+        else
+        {
             ++it;
         }
     }
 }
 
-void ClientManager::sendPacketToClient (
-    std::shared_ptr<Network::Address> client, const Network::Buffer &packet
-) {
-    std::thread([this, client, packet] {
-        _socket->sendTo(client, packet);
-    }).detach();
+void ClientManager::sendPacketToClient(std::shared_ptr<Network::Address> client, const Network::Buffer &packet)
+{
+    std::thread([this, client, packet] { _socket->sendTo(client, packet); }).detach();
 }
 
 void ClientManager::sendPacketToAllClients(const Network::Buffer &packet)
 {
-    for (auto &tmp_client : _clients) {
+    for (auto &tmp_client : _clients)
+    {
         if (tmp_client.second->isConnected())
             _socket->sendTo(tmp_client.second->getAddress(), packet);
     }
 }
 
-void ClientManager::sendPacketToAllClientsExcept (
-    std::shared_ptr<Network::Address> client, const Network::Buffer &packet
-) {
+void ClientManager::sendPacketToAllClientsExcept(std::shared_ptr<Network::Address> client,
+                                                 const Network::Buffer &packet)
+{
     auto clientKey = client->toString().value_or("");
 
-    for (auto &tmp_client : _clients) {
+    for (auto &tmp_client : _clients)
+    {
         auto tmp_clientKey = tmp_client.second->getName().value_or("");
 
         if (tmp_client.second->isConnected() && tmp_clientKey != clientKey)
@@ -117,13 +122,13 @@ void ClientManager::sendPacketToAllClientsExcept (
     }
 }
 
-void ClientManager::receivePacketFromClient (
-    std::shared_ptr<Network::Address> client, const Network::Buffer &buffer
-) {
+void ClientManager::receivePacketFromClient(std::shared_ptr<Network::Address> client, const Network::Buffer &buffer)
+{
     auto clientName = client->toString().value_or("");
     auto ip = client->getIp().value_or("");
 
-    if (std::find(_bannedClients.begin(), _bannedClients.end(), ip) != _bannedClients.end()) {
+    if (std::find(_bannedClients.begin(), _bannedClients.end(), ip) != _bannedClients.end())
+    {
         FLAKKARI_LOG_LOG("Client " + clientName + " tried to connect but is banned");
         return;
     }
@@ -154,17 +159,14 @@ void ClientManager::receivePacketFromClient (
     _clients.erase(clientName);
 }
 
-std::shared_ptr<Client> ClientManager::getClient(std::shared_ptr<Network::Address> client) {
+std::shared_ptr<Client> ClientManager::getClient(std::shared_ptr<Network::Address> client)
+{
     return _clients[client->toString().value_or("")];
 }
 
-std::shared_ptr<Client> ClientManager::getClient(std::string id) {
-    return _clients[id];
-}
+std::shared_ptr<Client> ClientManager::getClient(std::string id) { return _clients[id]; }
 
-std::shared_ptr<Network::Address> ClientManager::getAddress(std::string id) {
-    return _clients[id]->getAddress();
-}
+std::shared_ptr<Network::Address> ClientManager::getAddress(std::string id) { return _clients[id]->getAddress(); }
 
 std::shared_ptr<Client> ClientManager::operator[](std::string id) { return _clients[id]; }
 
