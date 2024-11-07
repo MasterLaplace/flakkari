@@ -2,8 +2,9 @@ name: Commit Norm Checker
 
 on:
   push:
-    branches:
-      - '*'
+    branches-ignore:
+     - 'ga-ignore-**'
+     - 'gh-pages'
 
 jobs:
   verify-commit-name:

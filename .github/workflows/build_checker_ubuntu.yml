@@ -2,11 +2,9 @@ name: Build Checker Ubuntu
 
 on:
   push:
-    branches:
-      - '*'
-  pull_request:
-    branches:
-      - '*'
+    branches-ignore:
+     - 'ga-ignore-**'
+     - 'gh-pages'
 
 jobs:
   build_checker_ubuntu:
