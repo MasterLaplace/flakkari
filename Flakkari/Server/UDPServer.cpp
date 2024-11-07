@@ -11,7 +11,7 @@
 
 using namespace Flakkari;
 
-UDPServer::UDPServer(std::string ip, unsigned short port)
+UDPServer::UDPServer(const std::string &gameDir, const std::string &ip, unsigned short port)
 {
     Network::init();
 
@@ -27,7 +27,7 @@ UDPServer::UDPServer(std::string ip, unsigned short port)
 
     ClientManager::CreateInstance(_socket);
     ResourceManager::CreateInstance();
-    GameManager::CreateInstance();
+    GameManager::CreateInstance(gameDir);
 }
 
 UDPServer::~UDPServer()

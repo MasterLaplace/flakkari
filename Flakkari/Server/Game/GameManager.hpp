@@ -44,8 +44,9 @@ class GameManager : public Singleton<GameManager> {
      * @brief Construct a new GameManager object and load all games
      * already present in the Games folder
      *
+     * @param gameDir Directory of the Games folder
      */
-    explicit GameManager();
+    explicit GameManager(const std::string &gameDir);
 
     /**
      * @brief Destroy the GameManager object
@@ -62,7 +63,7 @@ class GameManager : public Singleton<GameManager> {
      * @return 2 Game not added (certificate not valid) (not implemented)
      * @return 3 Game not added (corrupted game) (not implemented)
      */
-    int addGame(std::string gameName);
+    int addGame(const std::string &gameName);
 
     /**
      * @brief Get the Game object
@@ -72,14 +73,14 @@ class GameManager : public Singleton<GameManager> {
      *
      * @deprecated Use getGameInstance instead
      */
-    std::shared_ptr<Game> getGame(std::string gameName);
+    const std::shared_ptr<Game> &getGame(const std::string &gameName);
 
     /**
      * @brief Get the Games Instances object (all games loaded)
      *
      * @return std::vector<std::shared_ptr<Game>> Games Instances
      */
-    std::vector<std::shared_ptr<Game>> getGamesInstances();
+    const std::vector<std::shared_ptr<Game>> &getGamesInstances();
 
     /**
      * @brief Update a game from the GameManager
@@ -88,7 +89,7 @@ class GameManager : public Singleton<GameManager> {
      * @return 0 Game updated
      * @return 1 Game not updated (not found)
      */
-    int updateGame(std::string gameName);
+    int updateGame(const std::string &gameName);
 
     /**
      * @brief Remove a game from the GameManager
@@ -97,7 +98,7 @@ class GameManager : public Singleton<GameManager> {
      * @return 0 Game removed
      * @return 1 Game not removed (not found)
      */
-    int removeGame(std::string gameName);
+    int removeGame(const std::string &gameName);
 
     /**
      * @brief List all games present in the GameManager
@@ -111,7 +112,7 @@ class GameManager : public Singleton<GameManager> {
      * @param gameName Game to add the client to
      * @param client Client to add to the game
      */
-    void addClientToGame(std::string gameName, std::shared_ptr<Client> client);
+    void addClientToGame(const std::string &gameName, std::shared_ptr<Client> &client);
 
     /**
      * @brief Remove a client from a game
@@ -119,7 +120,7 @@ class GameManager : public Singleton<GameManager> {
      * @param gameName Game to remove the client from
      * @param client Client to remove from the game
      */
-    void removeClientFromGame(std::string gameName, std::shared_ptr<Client> client);
+    void removeClientFromGame(const std::string &gameName, const std::shared_ptr<Client> &client);
 
     /**
      * @brief Get the index of a client in the waiting queue
@@ -128,7 +129,7 @@ class GameManager : public Singleton<GameManager> {
      * @param client Client to get the index of
      * @return int Index of the client in the waiting queue
      */
-    int getIndexInWaitingQueue(std::string gameName, std::shared_ptr<Client> client);
+    int getIndexInWaitingQueue(const std::string &gameName, const std::shared_ptr<Client> &client);
 };
 
 } /* namespace Flakkari */

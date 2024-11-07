@@ -16,20 +16,8 @@ namespace Flakkari {
 
 #define STR_ADDRESS std::string(*client->getAddress())
 
-GameManager::GameManager()
+GameManager::GameManager(const std::string &gameDir) : _game_dir(gameDir)
 {
-#if !defined(_WIN32) && !defined(_WIN64) && !defined(MSVC) && !defined(_MSC_VER)
-    _game_dir = std::getenv("FLAKKARI_GAME_DIR");
-#else
-    char *gameDir = nullptr;
-    size_t len = 0;
-    errno_t err = _dupenv_s(&gameDir, &len, "FLAKKARI_GAME_DIR");
-    if (err == 0 && gameDir != nullptr)
-    {
-        _game_dir = gameDir;
-        free(gameDir);
-    }
-#endif
     if (_game_dir.empty())
         FLAKKARI_LOG_FATAL("No game directory set: please set \"FLAKKARI_GAME_DIR\" environment variable");
 
@@ -65,7 +53,7 @@ GameManager::GameManager()
     }
 }
 
-int GameManager::addGame(std::string gameName)
+int GameManager::addGame(const std::string &gameName)
 {
     if (_gamesStore.find(gameName) != _gamesStore.end())
         return FLAKKARI_LOG_ERROR("game already loaded"), 1;
@@ -84,23 +72,23 @@ int GameManager::addGame(std::string gameName)
     return 0;
 }
 
-std::shared_ptr<Game> GameManager::getGame(std::string gameName)
+const std::shared_ptr<Game> &GameManager::getGame(const std::string &gameName)
 {
     if (_gamesStore.find(gameName) == _gamesStore.end())
         return FLAKKARI_LOG_ERROR("game not found"), nullptr;
     return std::make_shared<Game>(gameName, _gamesStore[gameName]);
 }
 
-std::vector<std::shared_ptr<Game>> GameManager::getGamesInstances()
+const std::vector<std::shared_ptr<Game>> &GameManager::getGamesInstances()
 {
-    std::vector<std::shared_ptr<Game>> gamesInstances;
+    std::vector<std::shared_ptr<Game>> gamesInstances(_gamesInstances.size());
 
     for (auto &game : _gamesInstances)
         gamesInstances.insert(gamesInstances.end(), game.second.begin(), game.second.end());
     return gamesInstances;
 }
 
-int GameManager::updateGame(std::string gameName)
+int GameManager::updateGame(const std::string &gameName)
 {
     if (_gamesStore.find(gameName) == _gamesStore.end())
         return FLAKKARI_LOG_ERROR("game not found"), 1;
@@ -116,7 +104,7 @@ int GameManager::updateGame(std::string gameName)
     return 0;
 }
 
-int GameManager::removeGame(std::string gameName)
+int GameManager::removeGame(const std::string &gameName)
 {
     if (_gamesStore.find(gameName) == _gamesStore.end())
         return FLAKKARI_LOG_ERROR("game not found"), 1;
@@ -136,7 +124,7 @@ void GameManager::listGames()
     FLAKKARI_LOG_INFO(gamesList);
 }
 
-void GameManager::addClientToGame(std::string gameName, std::shared_ptr<Client> client)
+void GameManager::addClientToGame(const std::string &gameName, std::shared_ptr<Client> &client)
 {
     if (_gamesStore.find(gameName) == _gamesStore.end())
     {
@@ -181,7 +169,7 @@ void GameManager::addClientToGame(std::string gameName, std::shared_ptr<Client> 
     FLAKKARI_LOG_ERROR("could not add client \"" + STR_ADDRESS + "\" to game \"" + gameName + "\"");
 }
 
-void GameManager::removeClientFromGame(std::string gameName, std::shared_ptr<Client> client)
+void GameManager::removeClientFromGame(const std::string &gameName, const std::shared_ptr<Client> &client)
 {
     if (_gamesStore.find(gameName) == _gamesStore.end())
         return FLAKKARI_LOG_ERROR("game not found"), void();
@@ -221,7 +209,7 @@ void GameManager::removeClientFromGame(std::string gameName, std::shared_ptr<Cli
     FLAKKARI_LOG_ERROR("could not remove client \"" + STR_ADDRESS + "\" from game \"" + gameName + "\"");
 }
 
-int GameManager::getIndexInWaitingQueue(std::string gameName, std::shared_ptr<Client> client)
+int GameManager::getIndexInWaitingQueue(const std::string &gameName, const std::shared_ptr<Client> &client)
 {
     if (_gamesStore.find(gameName) == _gamesStore.end())
         return FLAKKARI_LOG_ERROR("game not found"), -1;
