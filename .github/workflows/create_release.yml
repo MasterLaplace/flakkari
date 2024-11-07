@@ -1,30 +1,35 @@
-name: Bump Patch Version
+name: Bump Version and Create Release
 
 on:
   pull_request:
     types: [closed]
-    branches:
-      - master
-      - main
+    branches: [master, main]
 
 permissions:
   contents: write
 
 jobs:
-  create_patch_release:
-    name: Bump version and create release
+  bump_version:
+    name: Bump version
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - name: Install Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.8'
 
-      - name: Run Version Bump Script
+      - name: Calculate bumped version
+        id: test_tag_version
+        uses: mathieudutour/github-tag-action@v6.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          dry_run: true
+
+      - name: Run version bump script
         run: |
-          python3 Scripts/increment_version.py patch
+          python3 Scripts/increment_version.py ${{ steps.test_tag_version.outputs.new_tag }}
 
       - name: Set up Git and Push changes
         env:
@@ -33,15 +38,21 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "chore: bump the Flakkari patch version" || true
+          git commit -m "chore: bump the Flakkari version to ${{ steps.test_tag_version.outputs.new_tag }}" || true
           git push || true
+
+  create_release:
+    name: Create release
+    needs: bump_version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Bump version and push tag
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          default_bump: patch
 
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1.14.0
