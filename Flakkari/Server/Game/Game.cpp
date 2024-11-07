@@ -49,7 +49,8 @@ Game::Game(const std::string &name, std::shared_ptr<nlohmann::json> config)
         throw std::runtime_error("Game: no scenes found");
 
     loadScene((*_config)["startGame"]);
-    ResourceManager::addScene(config, (*_config)["startGame"]);
+    ResourceManager::GetInstance().addScene(config, (*_config)["startGame"]);
+    ResourceManager::UnlockInstance();
 }
 
 Game::~Game()
@@ -449,9 +450,10 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
 
     Engine::ECS::Entity newEntity = registry.spawn_entity();
     auto p_Template = (*_config)["playerTemplate"];
-    auto player_info = ResourceManager::getTemplateById(_name, sceneGame, p_Template);
+    auto player_info = ResourceManager::GetInstance().getTemplateById(_name, sceneGame, p_Template);
 
     loadComponents(registry, player_info.value_or(nullptr), newEntity);
+    ResourceManager::UnlockInstance();
 
     registry.registerComponent<Engine::ECS::Components::Common::NetworkIp>();
     registry.add_component<Engine::ECS::Components::Common::NetworkIp>(
