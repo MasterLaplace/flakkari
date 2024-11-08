@@ -26,7 +26,7 @@ jobs:
           cd ..
 
       - name: Generate Doxygen Documentation
-        run: doxygen Doxyfile
+        run: doxygen Doxyfile.cfg
 
       - name: Create .nojekyll file
         run: touch docs/html/.nojekyll
