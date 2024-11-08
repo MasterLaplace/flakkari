@@ -201,7 +201,7 @@ WSA::WSA(FileDescriptor socket, int seconds, int microseconds)
 
     WSAPOLLFD pollFd;
     pollFd.fd = socket;
-    pollFd.events = POLLIN | POLLOUT;
+    pollFd.events = POLLIN;
     pollFd.revents = 0;
     _fdArray.emplace_back(pollFd);
     _sockets.emplace_back(socket);
@@ -217,7 +217,7 @@ void WSA::addSocket(FileDescriptor socket)
 
     WSAPOLLFD pollFd;
     pollFd.fd = socket;
-    pollFd.events = POLLIN | POLLOUT;
+    pollFd.events = POLLIN;
     pollFd.revents = 0;
     if (_freeSpace.empty())
     {
@@ -259,7 +259,7 @@ bool WSA::isReady(FileDescriptor socket)
         throw std::runtime_error("Socket not found");
 
     size_t index = std::distance(_sockets.begin(), it);
-    return _fdArray[index].revents & (POLLIN | POLLOUT);
+    return _fdArray[index].revents & POLLIN;
 }
 
 bool WSA::skipableError()

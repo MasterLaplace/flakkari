@@ -58,7 +58,7 @@ Address::Address(address_t &address, port_t port, SocketType socket_type, IpType
 
 Address::Address(port_t port, SocketType socket_type, IpType ip_type) : _socket_type(socket_type), _ip_type(ip_type)
 {
-    addrinfo hints;
+    addrinfo hints{};
     hints.ai_family = (ip_type == IpType::IPv4) ? AF_INET : AF_INET6;
     hints.ai_socktype = (socket_type == SocketType::TCP) ? SOCK_STREAM : SOCK_DGRAM;
     hints.ai_protocol = (socket_type == SocketType::TCP) ? IPPROTO_TCP : IPPROTO_UDP;
@@ -80,8 +80,7 @@ Address::Address(port_t port, SocketType socket_type, IpType ip_type) : _socket_
 Address::Address(const sockaddr_in &clientAddr, SocketType socket_type, IpType ip_type)
     : _socket_type(socket_type), _ip_type(ip_type)
 {
-    addrinfo hints;
-
+    addrinfo hints{};
     hints.ai_family = (_ip_type == IpType::IPv4) ? AF_INET : AF_INET6;
     hints.ai_socktype = (_socket_type == SocketType::TCP) ? SOCK_STREAM : SOCK_DGRAM;
     hints.ai_protocol = (_socket_type == SocketType::TCP) ? IPPROTO_TCP : IPPROTO_UDP;
@@ -104,15 +103,16 @@ Address::Address(const sockaddr_in &clientAddr, SocketType socket_type, IpType i
 Address::Address(const sockaddr_storage &clientAddr, SocketType socket_type, IpType ip_type)
     : _socket_type(socket_type), _ip_type(ip_type)
 {
-    addrinfo hints;
+    addrinfo hints{};
     hints.ai_family = (_ip_type == IpType::IPv4) ? AF_INET : AF_INET6;
     hints.ai_socktype = (_socket_type == SocketType::TCP) ? SOCK_STREAM : SOCK_DGRAM;
     hints.ai_protocol = (_socket_type == SocketType::TCP) ? IPPROTO_TCP : IPPROTO_UDP;
-    hints.ai_flags = (AI_PASSIVE | AI_V4MAPPED | AI_ALL);
+    hints.ai_flags =
+        (_ip_type == IpType::IPv4) ? (AI_ADDRCONFIG | AI_PASSIVE | AI_V4MAPPED) : (AI_ADDRCONFIG | AI_PASSIVE | AI_ALL);
 
     addrinfo *result = nullptr;
 #if defined(_WIN32)
-    char name[INET6_ADDRSTRLEN];
+    char name[INET6_ADDRSTRLEN] = {0};
 
     if (clientAddr.ss_family == AF_INET)
         inet_ntop(AF_INET, &(((sockaddr_in *) &clientAddr)->sin_addr), name, INET_ADDRSTRLEN);
@@ -123,9 +123,8 @@ Address::Address(const sockaddr_storage &clientAddr, SocketType socket_type, IpT
 #endif
 
     const std::string serviceStr = std::to_string(ntohs(((sockaddr_in *) &clientAddr)->sin_port));
-    const char *service = serviceStr.c_str();
 
-    if (getaddrinfo(name, service, &hints, &result) != 0)
+    if (getaddrinfo(name, serviceStr.c_str(), &hints, &result) != 0)
     {
         FLAKKARI_LOG_ERROR("getaddrinfo() failed");
         return;

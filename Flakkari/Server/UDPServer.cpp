@@ -19,10 +19,10 @@ UDPServer::UDPServer(const std::string &gameDir, const std::string &ip, unsigned
     _socket->create(ip, port, Network::Address::IpType::IPv4, Network::Address::SocketType::UDP);
 
     FLAKKARI_LOG_INFO(std::string(*_socket));
+    _socket->setBlocking(false);
     _socket->bind();
 
-    _io = std::make_unique<IO_SELECTED>(1);
-    _io->addSocket((int) _socket->getSocket());
+    _io = std::make_unique<IO_SELECTED>(_socket->getSocket());
     _io->addSocket(STDIN_FILENO);
 
     ClientManager::CreateInstance(_socket);

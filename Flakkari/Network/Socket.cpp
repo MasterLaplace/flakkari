@@ -11,7 +11,7 @@
 
 namespace Flakkari::Network {
 
-void Socket::create(std::shared_ptr<Address> address)
+void Socket::create(const std::shared_ptr<Address> &address)
 {
     _address = address;
     _socket = INVALID_SOCKET;
@@ -43,7 +43,7 @@ void Socket::create(std::shared_ptr<Address> address)
 #endif
 }
 
-void Socket::create(socket_t socket, std::shared_ptr<Address> address)
+void Socket::create(socket_t socket, const std::shared_ptr<Address> &address)
 {
     _socket = socket;
     _address = address;
@@ -67,7 +67,7 @@ void Socket::create(socket_t socket, std::shared_ptr<Address> address)
 #endif
 }
 
-void Socket::create(Address address)
+void Socket::create(const Address &address)
 {
     _address = std::make_shared<Address>(address);
     _socket = INVALID_SOCKET;

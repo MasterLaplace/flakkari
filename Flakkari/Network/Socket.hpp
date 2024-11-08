@@ -133,9 +133,9 @@ class Socket {
     Socket(Socket &&) = delete;
     ~Socket();
 
-    void create(std::shared_ptr<Address> address);
-    void create(socket_t socket, std::shared_ptr<Address> address);
-    void create(Address address);
+    void create(const std::shared_ptr<Address> &address);
+    void create(socket_t socket, const std::shared_ptr<Address> &address);
+    void create(const Address &address);
     void create(ip_t address, port_t port, Address::IpType ip_type, Address::SocketType socket_type);
 
     bool operator==(const Socket &other) const { return _socket == other._socket; }
