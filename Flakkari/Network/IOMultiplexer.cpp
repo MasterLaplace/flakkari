@@ -182,24 +182,29 @@ bool PPOLL::isReady(FileDescriptor socket)
     return false;
 }
 
+bool PPOLL::skipableError() { return errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK; }
+
 #endif
 
 #if defined(_WSA_)
 
-WSA::WSA(long int seconds, long int microseconds)
+WSA::WSA(FileDescriptor socket, int seconds, int microseconds)
 {
-    _timeoutInMs = seconds * 1000 + microseconds / 1000; // Convert to milliseconds
-    _hEvent = CreateEvent(NULL, FALSE, FALSE, NULL);     // Create a manual-reset event
-    if (_hEvent == NULL)
-        throw std::runtime_error("Failed to create event.");
-}
+    if (socket == -1)
+        FLAKKARI_LOG_FATAL("Socket is -1");
 
-WSA::~WSA()
-{
-    for (auto &socket : _sockets)
-        WSAEventSelect(socket, NULL, 0);
+    _sockets.reserve(MAX_POLLFD);
+    _fdArray.reserve(MAX_POLLFD);
+    _freeSpace.reserve(MAX_POLLFD);
 
-    CloseHandle(_hEvent);
+    _timeoutInMs = seconds * 1000 + microseconds / 1000;
+
+    WSAPOLLFD pollFd;
+    pollFd.fd = socket;
+    pollFd.events = POLLIN | POLLOUT;
+    pollFd.revents = 0;
+    _fdArray.emplace_back(pollFd);
+    _sockets.emplace_back(socket);
 }
 
 void WSA::addSocket(FileDescriptor socket)
@@ -207,12 +212,24 @@ void WSA::addSocket(FileDescriptor socket)
     if (socket == -1)
         throw std::runtime_error("Socket is -1");
 
-    if (_events.find(socket) != _events.end())
-        throw std::runtime_error("Socket already added.");
+    if (std::find(_sockets.begin(), _sockets.end(), socket) != _sockets.end())
+        return;
 
-    _events[socket] = _hEvent;
-    WSAEventSelect(socket, _hEvent, FD_READ | FD_ACCEPT);
-    _sockets.push_back(socket);
+    WSAPOLLFD pollFd;
+    pollFd.fd = socket;
+    pollFd.events = POLLIN | POLLOUT;
+    pollFd.revents = 0;
+    if (_freeSpace.empty())
+    {
+        _fdArray.emplace_back(pollFd);
+        _sockets.emplace_back(socket);
+        return;
+    }
+
+    size_t index = _freeSpace.back();
+    _fdArray[index] = pollFd;
+    _sockets[index] = socket;
+    _freeSpace.pop_back();
 }
 
 void WSA::removeSocket(FileDescriptor socket)
@@ -220,26 +237,19 @@ void WSA::removeSocket(FileDescriptor socket)
     if (socket == -1)
         throw std::runtime_error("Socket is -1");
 
-    auto it = std::remove(_sockets.begin(), _sockets.end(), socket);
-    if (it != _sockets.end())
-    {
-        WSAEventSelect(socket, NULL, 0);
-        _sockets.erase(it, _sockets.end());
-        _events.erase(socket);
-    }
+    auto it = std::find(_sockets.begin(), _sockets.end(), socket);
+    if (it == _sockets.end())
+        throw std::runtime_error("Socket not found");
+
+    size_t index = std::distance(_sockets.begin(), it);
+    _fdArray[index].fd = 0;
+    _sockets[index] = 0;
+    _freeSpace.emplace_back(index);
 }
 
 int WSA::wait()
 {
-    DWORD waitResult = WSAWaitForMultipleEvents(1, &_hEvent, FALSE, _timeoutInMs, FALSE);
-    if (waitResult == WAIT_FAILED)
-        return -1;
-    else if (waitResult == WAIT_TIMEOUT)
-        return 0;
-
-    WSAResetEvent(_hEvent);
-
-    return static_cast<int>(_sockets.size());
+    return WSAPoll(_fdArray.data(), (ULONG)_fdArray.size(), _timeoutInMs);
 }
 
 bool WSA::isReady(FileDescriptor socket)
@@ -247,8 +257,12 @@ bool WSA::isReady(FileDescriptor socket)
     if (socket == -1)
         throw std::runtime_error("Socket is -1");
 
-    DWORD result = WSAEnumNetworkEvents(socket, _events[socket], nullptr);
-    return (result == 0);
+    auto it = std::find(_sockets.begin(), _sockets.end(), socket);
+    if (it == _sockets.end())
+        throw std::runtime_error("Socket not found");
+
+    size_t index = std::distance(_sockets.begin(), it);
+    return _fdArray[index].revents & (POLLIN | POLLOUT);
 }
 
 bool WSA::skipableError()

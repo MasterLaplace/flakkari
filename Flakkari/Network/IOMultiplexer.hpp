@@ -210,8 +210,8 @@ class PPOLL {
     pollfd &operator[](std::size_t index);
     pollfd &operator[](FileDescriptor socket);
 
-    std::vector<pollfd>::iterator begin() { return _pollfds.begin(); }
-    std::vector<pollfd>::iterator end() { return _pollfds.end(); }
+    std::vector<pollfd>::const_iterator begin() const { return _pollfds.begin(); }
+    std::vector<pollfd>::const_iterator end() const { return _pollfds.end(); }
 
     /**
      * @brief Check if a socket is ready to read from
@@ -231,6 +231,14 @@ class PPOLL {
      */
     [[nodiscard]] bool isReady(FileDescriptor socket);
 
+    /**
+     * @brief Check if the error is skipable
+     *
+     * @return true  If the error is skipable
+     * @return false  If the error is not skipable
+     */
+    [[nodiscard]] bool skipableError();
+
     protected:
     private:
     std::vector<pollfd> _pollfds;
@@ -239,6 +247,8 @@ class PPOLL {
 #endif
 
 #if defined(_WSA_)
+
+#define MAX_POLLFD 1024
 
 /**
  * @brief WSA is a class that represents a WSA
@@ -272,8 +282,15 @@ class WSA {
     using FileDescriptor = SOCKET;
 
     public:
-    WSA(long int seconds = 1, long int microseconds = 0);
-    ~WSA();
+    /**
+     * @brief Construct a new WSA object with a timeout of 1 second by default
+     *
+     * @param socket  The server socket
+     * @param seconds  The seconds to wait for an event
+     * @param microseconds  The microseconds to wait for an event
+     */
+    WSA(FileDescriptor socket, int seconds = 1, int microseconds = 0);
+    ~WSA() = default;
 
     /**
      * @brief Add a socket to the WSA list
@@ -297,8 +314,8 @@ class WSA {
      */
     int wait();
 
-    std::vector<FileDescriptor>::iterator begin() { return _sockets.begin(); }
-    std::vector<FileDescriptor>::iterator end() { return _sockets.end(); }
+    std::vector<FileDescriptor>::const_iterator begin() const { return _sockets.cbegin(); }
+    std::vector<FileDescriptor>::const_iterator end() const { return _sockets.cend(); }
 
     /**
      * @brief Check if a socket is ready to read from
@@ -320,9 +337,9 @@ class WSA {
     protected:
     private:
     std::vector<FileDescriptor> _sockets;
-    std::unordered_map<FileDescriptor, HANDLE> _events;
-    HANDLE _hEvent;
-    long int _timeoutInMs;
+    std::vector<WSAPOLLFD> _fdArray;
+    std::vector<size_t> _freeSpace;
+    INT _timeoutInMs;
 };
 #endif
 
