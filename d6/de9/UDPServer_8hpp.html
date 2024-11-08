@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('d6/de9/UDPServer_8hpp.html','../../');
 <div class="title">UDPServer.hpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<h3 class="version">(107  384 3020 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/UDPServer.hpp)</h3><div class="textblock"><code>#include &quot;<a class="el" href="../../d8/dff/ClientManager_8hpp_source.html">Client/ClientManager.hpp</a>&quot;</code><br />
+<h3 class="version">(107  384 3033 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/UDPServer.hpp)</h3><div class="textblock"><code>#include &quot;<a class="el" href="../../d8/dff/ClientManager_8hpp_source.html">Client/ClientManager.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d6/d27/GameManager_8hpp_source.html">Game/GameManager.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d9/dae/CommandManager_8hpp_source.html">Internals/CommandManager.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d5/d63/IOMultiplexer_8hpp_source.html">Network/IOMultiplexer.hpp</a>&quot;</code><br />
@@ -128,7 +128,7 @@ Macros</h2></td></tr>
 <tr class="separator:a9d6bcaab110de89f124e90ba23e90dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4ff2a4bab0bc918722708b0cca24faf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de9/UDPServer_8hpp.html#af4ff2a4bab0bc918722708b0cca24faf">GOTO_LOOP</a>&#160;&#160;&#160;goto loop;</td></tr>
 <tr class="separator:af4ff2a4bab0bc918722708b0cca24faf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcf80a6d91178952d107ad00b165752b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de9/UDPServer_8hpp.html#afcf80a6d91178952d107ad00b165752b">STDIN_FILENO</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memitem:afcf80a6d91178952d107ad00b165752b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de9/UDPServer_8hpp.html#afcf80a6d91178952d107ad00b165752b">STDIN_FILENO</a>&#160;&#160;&#160;_fileno(stdin)</td></tr>
 <tr class="separator:afcf80a6d91178952d107ad00b165752b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18d295a837ac71add5578860b55e5502"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de9/UDPServer_8hpp.html#a18d295a837ac71add5578860b55e5502">STR</a>(x)&#160;&#160;&#160;#x</td></tr>
 <tr class="separator:a18d295a837ac71add5578860b55e5502"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -171,7 +171,7 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define STDIN_FILENO&#160;&#160;&#160;0</td>
+          <td class="memname">#define STDIN_FILENO&#160;&#160;&#160;_fileno(stdin)</td>
         </tr>
       </table>
 </div><div class="memdoc">

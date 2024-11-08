@@ -115,12 +115,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a283d27d36a88bc236f2d3e78d66a4650"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a250e9ae37435f110701780a262bcbb21"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dea/classFlakkari_1_1Network_1_1Socket.html#a250e9ae37435f110701780a262bcbb21">~Socket</a> ()</td></tr>
 <tr class="separator:a250e9ae37435f110701780a262bcbb21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06b54c4da72e97823100c915069ac493"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dea/classFlakkari_1_1Network_1_1Socket.html#a06b54c4da72e97823100c915069ac493">create</a> (std::shared_ptr&lt; Address &gt; address)</td></tr>
-<tr class="separator:a06b54c4da72e97823100c915069ac493"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adeb5393e556fbbe17e2732e0827ac52f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dea/classFlakkari_1_1Network_1_1Socket.html#adeb5393e556fbbe17e2732e0827ac52f">create</a> (<a class="el" href="../../d2/dea/classFlakkari_1_1Network_1_1Socket.html#a804367892f025fbf6c59b512284fd2d1">socket_t</a> socket, std::shared_ptr&lt; Address &gt; address)</td></tr>
-<tr class="separator:adeb5393e556fbbe17e2732e0827ac52f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29ba49bba3614b2e611759cddce26f14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dea/classFlakkari_1_1Network_1_1Socket.html#a29ba49bba3614b2e611759cddce26f14">create</a> (Address address)</td></tr>
-<tr class="separator:a29ba49bba3614b2e611759cddce26f14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a602570da942f98f5df9770a40a4315ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dea/classFlakkari_1_1Network_1_1Socket.html#a602570da942f98f5df9770a40a4315ac">create</a> (const std::shared_ptr&lt; Address &gt; &amp;address)</td></tr>
+<tr class="separator:a602570da942f98f5df9770a40a4315ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04c014fc215f29bea5a7514ff2424339"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dea/classFlakkari_1_1Network_1_1Socket.html#a04c014fc215f29bea5a7514ff2424339">create</a> (<a class="el" href="../../d2/dea/classFlakkari_1_1Network_1_1Socket.html#a804367892f025fbf6c59b512284fd2d1">socket_t</a> socket, const std::shared_ptr&lt; Address &gt; &amp;address)</td></tr>
+<tr class="separator:a04c014fc215f29bea5a7514ff2424339"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add5b6d360df5b17fe3fe3cfbbc9186fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dea/classFlakkari_1_1Network_1_1Socket.html#add5b6d360df5b17fe3fe3cfbbc9186fc">create</a> (const Address &amp;address)</td></tr>
+<tr class="separator:add5b6d360df5b17fe3fe3cfbbc9186fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad41e8c4fbcdca6760e6dfd72a9e98fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dea/classFlakkari_1_1Network_1_1Socket.html#aad41e8c4fbcdca6760e6dfd72a9e98fe">create</a> (<a class="el" href="../../d2/dea/classFlakkari_1_1Network_1_1Socket.html#a65dee62ceaf8d67f29f6b50db7b7bdda">ip_t</a> address, <a class="el" href="../../d2/dea/classFlakkari_1_1Network_1_1Socket.html#a62a5e576ea491095e45e22cc1792e4f5">port_t</a> port, Address::IpType ip_type, Address::SocketType socket_type)</td></tr>
 <tr class="separator:aad41e8c4fbcdca6760e6dfd72a9e98fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad69d786f39ca761a685f8127c82be2b1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dea/classFlakkari_1_1Network_1_1Socket.html#ad69d786f39ca761a685f8127c82be2b1">operator==</a> (const <a class="el" href="../../d2/dea/classFlakkari_1_1Network_1_1Socket.html">Socket</a> &amp;other) const</td></tr>
@@ -409,8 +409,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a29ba49bba3614b2e611759cddce26f14"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29ba49bba3614b2e611759cddce26f14">&#9670;&nbsp;</a></span>create() <span class="overload">[1/4]</span></h2>
+<a id="add5b6d360df5b17fe3fe3cfbbc9186fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add5b6d360df5b17fe3fe3cfbbc9186fc">&#9670;&nbsp;</a></span>create() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -418,7 +418,25 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="memname">void Flakkari::Network::Socket::create </td>
           <td>(</td>
-          <td class="paramtype">Address&#160;</td>
+          <td class="paramtype">const Address &amp;&#160;</td>
+          <td class="paramname"><em>address</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a602570da942f98f5df9770a40a4315ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a602570da942f98f5df9770a40a4315ac">&#9670;&nbsp;</a></span>create() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Flakkari::Network::Socket::create </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; Address &gt; &amp;&#160;</td>
           <td class="paramname"><em>address</em></td><td>)</td>
           <td></td>
         </tr>
@@ -428,7 +446,7 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <a id="aad41e8c4fbcdca6760e6dfd72a9e98fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad41e8c4fbcdca6760e6dfd72a9e98fe">&#9670;&nbsp;</a></span>create() <span class="overload">[2/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aad41e8c4fbcdca6760e6dfd72a9e98fe">&#9670;&nbsp;</a></span>create() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -467,8 +485,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="adeb5393e556fbbe17e2732e0827ac52f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adeb5393e556fbbe17e2732e0827ac52f">&#9670;&nbsp;</a></span>create() <span class="overload">[3/4]</span></h2>
+<a id="a04c014fc215f29bea5a7514ff2424339"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04c014fc215f29bea5a7514ff2424339">&#9670;&nbsp;</a></span>create() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -482,31 +500,13 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::shared_ptr&lt; Address &gt;&#160;</td>
+          <td class="paramtype">const std::shared_ptr&lt; Address &gt; &amp;&#160;</td>
           <td class="paramname"><em>address</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
           <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a06b54c4da72e97823100c915069ac493"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06b54c4da72e97823100c915069ac493">&#9670;&nbsp;</a></span>create() <span class="overload">[4/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Flakkari::Network::Socket::create </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; Address &gt;&#160;</td>
-          <td class="paramname"><em>address</em></td><td>)</td>
-          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1055,8 +1055,8 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>Flakkari/Network/<a class="el" href="../../dd/df5/Socket_8hpp_source.html">Socket.hpp (313 1250 9101 /home/runner/work/Flakkari/Flakkari/Flakkari/Network/Socket.hpp)</a></li>
-<li>Flakkari/Network/<a class="el" href="../../da/d66/Socket_8cpp.html">Socket.cpp (435  1320 12927 /home/runner/work/Flakkari/Flakkari/Flakkari/Network/Socket.cpp)</a></li>
+<li>Flakkari/Network/<a class="el" href="../../dd/df5/Socket_8hpp_source.html">Socket.hpp (313 1253 9122 /home/runner/work/Flakkari/Flakkari/Flakkari/Network/Socket.hpp)</a></li>
+<li>Flakkari/Network/<a class="el" href="../../da/d66/Socket_8cpp.html">Socket.cpp (435  1323 12948 /home/runner/work/Flakkari/Flakkari/Flakkari/Network/Socket.cpp)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
