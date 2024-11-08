@@ -11,7 +11,7 @@
 
 namespace Flakkari {
 
-Client::Client(std::shared_ptr<Network::Address> address, std::string name)
+Client::Client(const std::shared_ptr<Network::Address> &address, const std::string &name)
     : _address(address), _gameName(name), _name(address->toString().value_or(""))
 {
     _lastActivity = std::chrono::steady_clock::now();
@@ -33,7 +33,7 @@ bool Client::isConnected(float timeout)
 
 void Client::keepAlive() { _lastActivity = std::chrono::steady_clock::now(); }
 
-void Client::addPacketToHistory(Network::Buffer packet)
+void Client::addPacketToHistory(const Network::Buffer &packet)
 {
     if (_packetHistory.size() >= _maxPacketHistory)
         _packetHistory.erase(_packetHistory.begin());

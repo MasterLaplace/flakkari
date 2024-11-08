@@ -62,7 +62,7 @@ class ClientManager : public Singleton<ClientManager> {
      *
      * @param socket  The server's socket
      */
-    explicit ClientManager(std::shared_ptr<Network::Socket> socket) : _socket(socket) {}
+    explicit ClientManager(const std::shared_ptr<Network::Socket> &socket) : _socket(socket) {}
 
     /**
      * @brief Destroy the ClientManager object
@@ -75,23 +75,30 @@ class ClientManager : public Singleton<ClientManager> {
      *
      * @param client  The client's address
      */
-    void addClient(std::shared_ptr<Network::Address> client, Network::Buffer &buffer);
+    bool addClient(const std::shared_ptr<Network::Address> &client, Network::Buffer &buffer);
 
     /**
      * @brief Remove a client from the client manager
      *
      * @param client  The client's address
      */
-    void removeClient(std::shared_ptr<Network::Address> client);
+    void removeClient(const std::shared_ptr<Network::Address> &client);
 
     /**
      * @brief Ban a client from the server
      *
      * @param client  The client's address
      */
-    void banClient(std::shared_ptr<Network::Address> client);
+    void banClient(const std::shared_ptr<Network::Address> &client);
 
-    [[nodiscard]] bool isBanned(std::shared_ptr<Network::Address> client);
+    /**
+     * @brief Check if a client is banned
+     *
+     * @param client  The client's address
+     * @return true  If the client is banned
+     * @return false  If the client is not banned
+     */
+    [[nodiscard]] bool isBanned(const std::shared_ptr<Network::Address> &client);
 
     /**
      * @brief Check if the clients are still connected to the server
@@ -125,7 +132,7 @@ class ClientManager : public Singleton<ClientManager> {
      * @param client  The client's address
      * @param packet  The packet to send
      */
-    void sendPacketToAllClientsExcept(std::shared_ptr<Network::Address> client, const Network::Buffer &packet);
+    void sendPacketToAllClientsExcept(const std::shared_ptr<Network::Address> &client, const Network::Buffer &packet);
 
     /**
      * @brief Receive a packet from a client
@@ -133,7 +140,7 @@ class ClientManager : public Singleton<ClientManager> {
      * @param client  The client's address
      * @param packet  The packet received
      */
-    void receivePacketFromClient(std::shared_ptr<Network::Address> client, const Network::Buffer &packet);
+    void receivePacketFromClient(const std::shared_ptr<Network::Address> &client, const Network::Buffer &packet);
 
     /**
      * @brief Get the Client object
@@ -141,7 +148,7 @@ class ClientManager : public Singleton<ClientManager> {
      * @param client  The client's address
      * @return std::shared_ptr<Client>  The client object
      */
-    std::shared_ptr<Client> getClient(std::shared_ptr<Network::Address> client);
+    std::shared_ptr<Client> getClient(const std::shared_ptr<Network::Address> &client);
 
     /**
      * @brief Get the Client object
@@ -149,7 +156,7 @@ class ClientManager : public Singleton<ClientManager> {
      * @param id  The client's id
      * @return std::shared_ptr<Client>  The client object
      */
-    std::shared_ptr<Client> getClient(std::string id);
+    std::shared_ptr<Client> getClient(const std::string &id);
 
     /**
      * @brief Get the Address object
@@ -157,7 +164,7 @@ class ClientManager : public Singleton<ClientManager> {
      * @param id The client's id
      * @return std::shared_ptr<Network::Address>  The client's address
      */
-    std::shared_ptr<Network::Address> getAddress(std::string id);
+    std::shared_ptr<Network::Address> getAddress(const std::string &id);
 
     /**
      * @brief Get the client object from the client manager
@@ -165,7 +172,7 @@ class ClientManager : public Singleton<ClientManager> {
      * @param id  The client's id
      * @return std::shared_ptr<Client>  The client object
      */
-    std::shared_ptr<Client> operator[](std::string id);
+    std::shared_ptr<Client> operator[](const std::string &id);
 };
 
 } /* namespace Flakkari */

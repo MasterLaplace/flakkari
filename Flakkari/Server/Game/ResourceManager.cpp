@@ -11,7 +11,7 @@
 
 namespace Flakkari {
 
-void ResourceManager::addScene(std::shared_ptr<nlohmann::json> config, const std::string &scene)
+void ResourceManager::addScene(const std::shared_ptr<nlohmann::json> &config, const std::string &scene)
 {
     for (auto &_scene : (*config)["scenes"].items())
     {

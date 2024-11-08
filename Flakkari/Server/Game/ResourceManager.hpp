@@ -67,7 +67,7 @@ class ResourceManager : public Singleton<ResourceManager> {
      * @param configPath  The path to the config file of the game to add
      * @param scene  The scene to add to the ResourceManager instance
      */
-    void addScene(std::shared_ptr<nlohmann::json> config, const std::string &scene);
+    void addScene(const std::shared_ptr<nlohmann::json> &config, const std::string &scene);
 
     /**
      * @brief Delete a scene from the ResourceManager instance
