@@ -29,7 +29,7 @@ loop:
 #define GOTO_LOOP goto loop;
 
 #ifndef STDIN_FILENO
-#    define STDIN_FILENO 0
+#    define STDIN_FILENO _fileno(stdin)
 #endif
 
 #define STR(x)  #x
