@@ -3,6 +3,8 @@ on:
   pull_request:
     types: [closed]
     branches: [master, main]
+  milestone:
+    types: [closed]
 
 jobs:
   generate:
