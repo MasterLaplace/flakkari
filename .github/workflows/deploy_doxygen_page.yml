@@ -1,7 +1,8 @@
 name: Doxygen GitHub Pages Deploy Action
 on:
-  release:
-    types: [released]
+  pull_request:
+    types: [closed]
+    branches: [master, main]
 
 jobs:
   generate:
@@ -10,7 +11,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          submodules: "true"
+          submodules: true
 
       - name: Install Doxygen
         run: |

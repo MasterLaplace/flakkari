@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Title: Flakkari
 ** Author: MasterLaplace
-** Created: 2023-01-14
+** Created: 2024-01-14
 ** File description:
 ** Weapon
 */
@@ -13,10 +13,10 @@
 #include <cstring>
 #include <string>
 
-#include "Network/Packed.hpp"
+#include "config.h.in"
 
 namespace Flakkari::Engine::ECS::Components::Common {
-PACKED_START
+LPL_PACKED_START
 
 /**
  * @brief Weapon is a structure that defines the characteristics of a weapon.
@@ -43,10 +43,22 @@ struct Weapon {
     Weapon(const Weapon &other) = default;
     Weapon(std::size_t dmg, float rate, std::size_t lvl) : damage(dmg), fireRate(rate), level(lvl){};
 
+    Weapon &operator=(const Weapon &other)
+    {
+        if (this != &other)
+        {
+            damage = other.damage;
+            fireRate = other.fireRate;
+            level = other.level;
+        }
+
+        return *this;
+    }
+
     std::size_t size() const { return sizeof(*this); };
 };
 
-PACKED_END
+LPL_PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::Common
 
 #endif /* !WEAPON_HPP_ */

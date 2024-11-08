@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Title: Flakkari
 ** Author: MasterLaplace
-** Created: 2023-01-05
+** Created: 2024-01-05
 ** File description:
 ** CommandManager
 */
@@ -85,25 +85,29 @@ bool CommandManager::handleAdminCommand(const std::string &input)
 
     if (std::regex_match(input, ADD_GAME_REGEX))
     {
-        GameManager::addGame(input.substr(8));
+        GameManager::GetInstance().addGame(input.substr(8));
+        GameManager::UnlockInstance();
         return true;
     }
 
     if (std::regex_match(input, UPDATE_GAME_REGEX))
     {
-        GameManager::updateGame(input.substr(11));
+        GameManager::GetInstance().updateGame(input.substr(11));
+        GameManager::UnlockInstance();
         return true;
     }
 
     if (std::regex_match(input, REMOVE_GAME_REGEX))
     {
-        GameManager::removeGame(input.substr(11));
+        GameManager::GetInstance().removeGame(input.substr(11));
+        GameManager::UnlockInstance();
         return true;
     }
 
     if (input == "listGames")
     {
-        GameManager::listGames();
+        GameManager::GetInstance().listGames();
+        GameManager::UnlockInstance();
         return true;
     }
 

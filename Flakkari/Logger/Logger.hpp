@@ -1,12 +1,26 @@
-/*
-** EPITECH PROJECT, 2023
-** Flakkari
-** File description:
-** Flakkari::Logger
-*/
+/**************************************************************************
+ * Flakkari Library v0.3.0
+ *
+ * Flakkari Library is a C++ Library for Network.
+ * @file Logger.hpp
+ * @brief Logger class header. Can be used to log messages.
+ *
+ * Flakkari Library is under MIT License.
+ * https://opensource.org/licenses/MIT
+ * © 2023 @MasterLaplace
+ * @version 0.3.0
+ * @date 2023-12-19
+ **************************************************************************/
 
 #ifndef FLAKKARI_LOGGER_HPP_
 #define FLAKKARI_LOGGER_HPP_
+
+#include "config.h.in"
+
+#include <chrono>
+#include <ctime>
+#include <iostream>
+#include <string>
 
 #define LOG_INFO    0
 #define LOG_LOG     1
@@ -14,11 +28,6 @@
 #define LOG_WARNING 3
 #define LOG_ERROR   4
 #define LOG_FATAL   5
-
-#include <chrono>
-#include <ctime>
-#include <iostream>
-#include <string>
 
 #define FLAKKARI_LOG(level, message)  Flakkari::Logger::log(level, message, __LINE__, __FILE__)
 #define FLAKKARI_LOG_INFO(message)    FLAKKARI_LOG(LOG_INFO, message)
@@ -28,7 +37,7 @@
 #define FLAKKARI_LOG_ERROR(message)   FLAKKARI_LOG(LOG_ERROR, message)
 #define FLAKKARI_LOG_FATAL(message)   FLAKKARI_LOG(LOG_FATAL, message)
 
-#ifdef _WIN32
+#ifdef FLAKKARI_SYSTEM_WINDOWS
 #    define STD_ERROR                                                                                                  \
         []() -> std::string {                                                                                          \
             char buffer[256];                                                                                          \
@@ -42,7 +51,7 @@
 #    define SPECIAL_ERROR STD_ERROR
 #endif
 
-#if _WIN32
+#ifdef FLAKKARI_SYSTEM_WINDOWS
 #    define WIN32_LEAN_AND_MEAN
 #    define _WINSOCK_DEPRECATED_NO_WARNINGS
 #    define _CRT_SECURE_NO_WARNINGS
@@ -86,6 +95,7 @@
 #endif
 
 namespace Flakkari {
+
 class Logger {
     public:
     enum class Mode {
@@ -101,6 +111,7 @@ class Logger {
     static void log(int level, std::string message, int line, std::string file = "") noexcept;
     static void log(int level, std::string message) noexcept;
 };
+
 } /* namespace Flakkari */
 
 #endif /* !FLAKKARI_LOGGER_HPP_ */

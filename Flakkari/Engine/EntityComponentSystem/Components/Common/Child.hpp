@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Title: Flakkari
 ** Author: MasterLaplace
-** Created: 2023-01-06
+** Created: 2024-01-06
 ** File description:
 ** Child
 */
@@ -26,6 +26,14 @@ struct Child {
     Child() : name("") {}
     Child(const std::string &nname) : name(nname) {}
     Child(const Child &other) : name(other.name) {}
+
+    Child &operator=(const Child &other)
+    {
+        if (this != &other)
+            name = other.name;
+
+        return *this;
+    }
 
     std::size_t size() const { return name.size(); }
 };

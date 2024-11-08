@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Title: Flakkari
 ** Author: MasterLaplace
-** Created: 2023-01-06
+** Created: 2024-01-06
 ** File description:
 ** Transform
 */
@@ -13,7 +13,7 @@
 #include "../../../Math/Vector.hpp"
 
 namespace Flakkari::Engine::ECS::Components::_2D {
-PACKED_START
+LPL_PACKED_START
 
 struct Transform {
     Math::Vector2f position;
@@ -25,10 +25,22 @@ struct Transform {
         : position(position), scale(scale), rotation(rotation){};
     Transform(const Transform &other) : position(other.position), scale(other.scale), rotation(other.rotation){};
 
+    Transform &operator=(const Transform &other)
+    {
+        if (this != &other)
+        {
+            position = other.position;
+            scale = other.scale;
+            rotation = other.rotation;
+        }
+
+        return *this;
+    }
+
     std::size_t size() const { return sizeof(*this); }
 };
 
-PACKED_END
+LPL_PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::_2D
 
 #endif /* !FLAKKARI_TRANSFORM_HPP_ */

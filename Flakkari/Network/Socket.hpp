@@ -129,8 +129,8 @@ class Socket {
 
     public:
     Socket() = default;
-    Socket(const Socket &) = default;
-    Socket(Socket &&) = default;
+    Socket(const Socket &) = delete;
+    Socket(Socket &&) = delete;
     ~Socket();
 
     void create(std::shared_ptr<Address> address);

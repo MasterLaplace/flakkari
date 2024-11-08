@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Title: Flakkari
 ** Author: MasterLaplace
-** Created: 2023-01-14
+** Created: 2024-01-14
 ** File description:
 ** Level
 */
@@ -13,7 +13,7 @@
 #include <cstring>
 #include <string>
 
-#include "Network/Packed.hpp"
+#include "config.h.in"
 
 namespace Flakkari::Engine::ECS::Components::Common {
 
@@ -36,6 +36,19 @@ struct Level {
         : level(other.level), currentWeapon(other.currentWeapon), currentExp(other.currentExp),
           requiredExp(other.requiredExp)
     {
+    }
+
+    Level &operator=(const Level &other)
+    {
+        if (this != &other)
+        {
+            level = other.level;
+            currentWeapon = other.currentWeapon;
+            currentExp = other.currentExp;
+            requiredExp = other.requiredExp;
+        }
+
+        return *this;
     }
 
     std::size_t size() const { return sizeof(level) + currentWeapon.size() + sizeof(currentExp) + sizeof(requiredExp); }

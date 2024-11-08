@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Title: Flakkari
 ** Author: MasterLaplace
-** Created: 2023-01-06
+** Created: 2024-01-06
 ** File description:
 ** Parent
 */
@@ -12,10 +12,10 @@
 
 #include <cstddef>
 
-#include "Network/Packed.hpp"
+#include "config.h.in"
 
 namespace Flakkari::Engine::ECS::Components::Common {
-PACKED_START
+LPL_PACKED_START
 
 /**
  * @brief Parent component for ECS entities that have a parent entity attached to them
@@ -28,10 +28,19 @@ struct Parent {
     Parent() : entity(0) {}
     Parent(const std::size_t &entity) : entity(entity) {}
     Parent(const Parent &other) : entity(other.entity) {}
+
+    Parent &operator=(const Parent &other)
+    {
+        if (this != &other)
+            entity = other.entity;
+
+        return *this;
+    }
+
     std::size_t size() const { return sizeof(*this); }
 };
 
-PACKED_END
+LPL_PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::Common
 
 #endif /* !FLAKKARI_PARENT_HPP_ */

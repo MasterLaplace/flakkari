@@ -12,7 +12,7 @@
  * https://opensource.org/licenses/MIT
  * © 2023 @MasterLaplace
  * @version 0.3.0
- * @date 2023-01-05
+ * @date 2024-01-05
  **************************************************************************/
 
 #ifndef FLAKKARI_VECTOR_HPP_
@@ -21,13 +21,13 @@
 #include <cmath>
 #include <iostream>
 
-#include "Network/Packed.hpp"
+#include "config.h.in"
 
 namespace Flakkari::Engine::Math {
 
 template <typename Type> struct Vector {
 
-    PACKED_START
+    LPL_PACKED_START
     union {
         struct {
             Type x;
@@ -56,7 +56,7 @@ template <typename Type> struct Vector {
     Vector(Type x, Type y) : v{x, y, 0, 1} {};
     Vector(Type x) : v{x, 0, 0, 1} {};
     Vector(const Vector<Type> &other) : v{other.v[0], other.v[1], other.v[2], other.v[3]} {};
-    PACKED_END
+    LPL_PACKED_END
 
     Vector<Type> &operator=(const Vector<Type> &other)
     {

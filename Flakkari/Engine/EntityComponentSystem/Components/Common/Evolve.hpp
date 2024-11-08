@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Title: Flakkari
 ** Author: MasterLaplace
-** Created: 2023-01-13
+** Created: 2024-01-13
 ** File description:
 ** Evolve
 */
@@ -26,6 +26,14 @@ struct Evolve {
     Evolve() : name("") {}
     Evolve(const std::string &nname) : name(nname) {}
     Evolve(const Evolve &other) : name(other.name) {}
+
+    Evolve &operator=(const Evolve &other)
+    {
+        if (this != &other)
+            name = other.name;
+
+        return *this;
+    }
 
     std::size_t size() const { return name.size(); }
 };

@@ -47,7 +47,7 @@ class Client {
      * @param address The client's address
      * @param name The Game's name
      */
-    Client(std::shared_ptr<Network::Address> address, std::string name);
+    Client(const std::shared_ptr<Network::Address> &address, const std::string &name);
     ~Client();
 
     /**
@@ -70,7 +70,7 @@ class Client {
      *
      * @param packet  The packet to add
      */
-    void addPacketToHistory(Network::Buffer packet);
+    void addPacketToHistory(const Network::Buffer &packet);
 
     /**
      * @brief Increment the warning count of the client

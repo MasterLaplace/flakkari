@@ -57,10 +57,11 @@ class UDPServer {
     /**
      * @brief Construct a new UDPServer object
      *
+     * @param gameDir The directory of the games folder
      * @param ip The ip to bind the server to (default: localhost)
      * @param port The port to bind the server to (default: 8080)
      */
-    UDPServer(std::string ip = "localhost", unsigned short port = 8080);
+    UDPServer(const std::string &gameDir, const std::string &ip = "localhost", unsigned short port = 8080);
     ~UDPServer();
 
     /**

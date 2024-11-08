@@ -12,10 +12,10 @@
 
 #include <cstdint>
 
-#include "Network/Packed.hpp"
+#include "config.h.in"
 
 namespace Flakkari::Engine::ECS::Components::Common {
-PACKED_START
+LPL_PACKED_START
 
 struct Id {
     std::size_t id;
@@ -24,10 +24,18 @@ struct Id {
     Id(std::size_t id) : id(id) {}
     Id(const Id &other) : id(other.id) {}
 
+    Id &operator=(const Id &other)
+    {
+        if (this != &other)
+            id = other.id;
+
+        return *this;
+    }
+
     std::size_t size() const { return sizeof(id); }
 };
 
-PACKED_END
+LPL_PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::Common
 
 #endif /* !FLAKKARI_ID_HPP_ */

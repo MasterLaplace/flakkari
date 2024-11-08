@@ -9,7 +9,7 @@
  * https://opensource.org/licenses/MIT
  * © 2023 @MasterLaplace
  * @version 0.3.0
- * @date 2023-01-05
+ * @date 2024-01-05
  **************************************************************************/
 
 #ifndef FLAKKARI_ENTITY_HPP_

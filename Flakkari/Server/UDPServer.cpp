@@ -11,7 +11,7 @@
 
 using namespace Flakkari;
 
-UDPServer::UDPServer(std::string ip, unsigned short port)
+UDPServer::UDPServer(const std::string &gameDir, const std::string &ip, unsigned short port)
 {
     Network::init();
 
@@ -25,12 +25,16 @@ UDPServer::UDPServer(std::string ip, unsigned short port)
     _io->addSocket((int) _socket->getSocket());
     _io->addSocket(STDIN_FILENO);
 
-    ClientManager::setSocket(_socket);
-    GameManager::getInstance();
+    ClientManager::CreateInstance(_socket);
+    ResourceManager::CreateInstance();
+    GameManager::CreateInstance(gameDir);
 }
 
 UDPServer::~UDPServer()
 {
+    ClientManager::DestroyInstance();
+    ResourceManager::DestroyInstance();
+    GameManager::DestroyInstance();
     Network::cleanup();
     FLAKKARI_LOG_INFO("UDPServer is now stopped");
 }
@@ -40,7 +44,8 @@ bool UDPServer::handleTimeout(int event)
     if (event != 0)
         return false;
     FLAKKARI_LOG_DEBUG(XSTR(IO_SELECTED) " timed out");
-    ClientManager::checkInactiveClients();
+    ClientManager::GetInstance().checkInactiveClients();
+    ClientManager::UnlockInstance();
     return true;
 }
 
@@ -57,10 +62,13 @@ bool UDPServer::handleInput(int fd)
 void UDPServer::handlePacket()
 {
     auto packet = _socket->receiveFrom();
-    ClientManager::addClient(packet->first, packet->second);
-    ClientManager::checkInactiveClients();
+    auto &instance = ClientManager::GetInstance();
 
-    ClientManager::receivePacketFromClient(packet->first, packet->second);
+    bool result = instance.addClient(packet->first, packet->second);
+    instance.checkInactiveClients();
+    if (result)
+        instance.receivePacketFromClient(packet->first, packet->second);
+    ClientManager::UnlockInstance();
 }
 
 void UDPServer::run()

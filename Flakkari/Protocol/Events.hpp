@@ -17,9 +17,7 @@
 #ifndef EVENTS_HPP_
 #define EVENTS_HPP_
 
-#include <cstdint>
-
-#include "../Network/Packed.hpp"
+#include "config.h.in"
 
 namespace Flakkari::Protocol {
 
@@ -41,14 +39,14 @@ enum class EventState : uint8_t {
     MAX_STATE
 };
 
-PACKED_START
+LPL_PACKED_START
 
 struct Event {
     EventId id;
     EventState state;
 };
 
-PACKED_END
+LPL_PACKED_END
 
 } /* namespace V_0 */
 

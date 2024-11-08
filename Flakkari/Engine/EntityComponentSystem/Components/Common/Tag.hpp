@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Title: Flakkari
 ** Author: MasterLaplace
-** Created: 2023-01-06
+** Created: 2024-01-06
 ** File description:
 ** Tag
 */
@@ -25,6 +25,14 @@ struct Tag {
     Tag() : tag("") {}
     Tag(const std::string &ntag) : tag(ntag) {}
     Tag(const Tag &other) : tag(other.tag) {}
+
+    Tag &operator=(const Tag &other)
+    {
+        if (this != &other)
+            tag = other.tag;
+
+        return *this;
+    }
 
     std::size_t size() const { return tag.size(); }
 };

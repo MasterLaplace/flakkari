@@ -7,7 +7,7 @@
 
 #include "Logger.hpp"
 
-using namespace Flakkari;
+namespace Flakkari {
 
 #if defined(DEBUG) || defined(_DEBUG) || !defined(DEBUG)
 static Logger::Mode _mode = Logger::Mode::DEBUG;
@@ -254,3 +254,5 @@ void Logger::log(int level, std::string message) noexcept
     if (level == LOG_FATAL)
         std::cout << fatal_error_message() << std::endl;
 }
+
+} /* namespace Flakkari */

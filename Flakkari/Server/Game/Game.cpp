@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Title: Flakkari
 ** Author: MasterLaplace
-** Created: 2023-01-06
+** Created: 2024-01-06
 ** File description:
 ** Game
 */
@@ -34,7 +34,8 @@ void Game::sendAllEntities(const std::string &sceneName, std::shared_ptr<Client>
         packet.injectString(sceneName);
         Protocol::PacketFactory::addComponentsToPacketByEntity<Protocol::CommandId>(packet, registry, i);
 
-        ClientManager::sendPacketToClient(player->getAddress(), packet.serialize());
+        ClientManager::GetInstance().sendPacketToClient(player->getAddress(), packet.serialize());
+        ClientManager::UnlockInstance();
     }
 }
 
@@ -48,7 +49,8 @@ Game::Game(const std::string &name, std::shared_ptr<nlohmann::json> config)
         throw std::runtime_error("Game: no scenes found");
 
     loadScene((*_config)["startGame"]);
-    ResourceManager::addScene(config, (*_config)["startGame"]);
+    ResourceManager::GetInstance().addScene(config, (*_config)["startGame"]);
+    ResourceManager::UnlockInstance();
 }
 
 Game::~Game()
@@ -224,7 +226,8 @@ void Game::sendOnSameScene(const std::string &sceneName, const Network::Buffer &
         if (player->getSceneName() != sceneName)
             continue;
 
-        ClientManager::sendPacketToClient(player->getAddress(), message);
+        ClientManager::GetInstance().sendPacketToClient(player->getAddress(), message);
+        ClientManager::UnlockInstance();
     }
 }
 
@@ -242,7 +245,8 @@ void Game::sendOnSameSceneExcept(const std::string &sceneName, const Network::Bu
         if (player == except)
             continue;
 
-        ClientManager::sendPacketToClient(player->getAddress(), message);
+        ClientManager::GetInstance().sendPacketToClient(player->getAddress(), message);
+        ClientManager::UnlockInstance();
     }
 }
 
@@ -303,9 +307,9 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     Protocol::Event event = *(Protocol::Event *) packet.payload.data();
     if (event.id == Protocol::EventId::MOVE_UP && ctrl->up)
     {
-        if (netEvent->events.size() < int(event.id))
-            netEvent->events.resize(int(event.id) + 1);
-        netEvent->events[int(event.id)] = int(event.state);
+        if (netEvent->events.size() < size_t(event.id))
+            netEvent->events.resize(size_t(event.id) + 1);
+        netEvent->events[size_t(event.id)] = (unsigned short) event.state;
 
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
@@ -318,9 +322,9 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     }
     if (event.id == Protocol::EventId::MOVE_DOWN && ctrl->down)
     {
-        if (netEvent->events.size() < int(event.id))
-            netEvent->events.resize(int(event.id) + 1);
-        netEvent->events[int(event.id)] = int(event.state);
+        if (netEvent->events.size() < size_t(event.id))
+            netEvent->events.resize(size_t(event.id) + 1);
+        netEvent->events[size_t(event.id)] = (unsigned short) event.state;
 
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
@@ -333,9 +337,9 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     }
     if (event.id == Protocol::EventId::MOVE_LEFT && ctrl->left)
     {
-        if (netEvent->events.size() < int(event.id))
-            netEvent->events.resize(int(event.id) + 1);
-        netEvent->events[int(event.id)] = int(event.state);
+        if (netEvent->events.size() < size_t(event.id))
+            netEvent->events.resize(size_t(event.id) + 1);
+        netEvent->events[size_t(event.id)] = (unsigned short) event.state;
 
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
@@ -348,9 +352,9 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     }
     if (event.id == Protocol::EventId::MOVE_RIGHT && ctrl->right)
     {
-        if (netEvent->events.size() < int(event.id))
-            netEvent->events.resize(int(event.id) + 1);
-        netEvent->events[int(event.id)] = int(event.state);
+        if (netEvent->events.size() < size_t(event.id))
+            netEvent->events.resize(size_t(event.id) + 1);
+        netEvent->events[size_t(event.id)] = (unsigned short) event.state;
 
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
@@ -363,9 +367,9 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     }
     if (event.id == Protocol::EventId::SHOOT && ctrl->shoot)
     {
-        if (netEvent->events.size() < int(event.id))
-            netEvent->events.resize(int(event.id) + 1);
-        netEvent->events[int(event.id)] = int(event.state);
+        if (netEvent->events.size() < size_t(event.id))
+            netEvent->events.resize(size_t(event.id) + 1);
+        netEvent->events[size_t(event.id)] = (unsigned short) event.state;
 
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
@@ -446,9 +450,10 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
 
     Engine::ECS::Entity newEntity = registry.spawn_entity();
     auto p_Template = (*_config)["playerTemplate"];
-    auto player_info = ResourceManager::getTemplateById(_name, sceneGame, p_Template);
+    auto player_info = ResourceManager::GetInstance().getTemplateById(_name, sceneGame, p_Template);
 
     loadComponents(registry, player_info.value_or(nullptr), newEntity);
+    ResourceManager::UnlockInstance();
 
     registry.registerComponent<Engine::ECS::Components::Common::NetworkIp>();
     registry.add_component<Engine::ECS::Components::Common::NetworkIp>(
@@ -470,7 +475,8 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
     packet.injectString(sceneGame);
     packet.injectString(player->getName().value_or(""));
     packet.injectString(p_Template);
-    ClientManager::sendPacketToClient(address, packet.serialize());
+    ClientManager::GetInstance().sendPacketToClient(address, packet.serialize());
+    ClientManager::DestroyInstance();
 
     Protocol::Packet<Protocol::CommandId> packet2;
     packet2.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;

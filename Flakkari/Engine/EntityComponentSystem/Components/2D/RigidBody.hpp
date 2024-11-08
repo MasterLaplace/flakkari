@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Title: Flakkari
 ** Author: MasterLaplace
-** Created: 2023-01-14
+** Created: 2024-01-14
 ** File description:
 ** RigidBody
 */
@@ -12,10 +12,8 @@
 
 #include "../../../Math/Vector.hpp"
 
-#include "Network/Packed.hpp"
-
 namespace Flakkari::Engine::ECS::Components::_2D {
-PACKED_START
+LPL_PACKED_START
 
 /**
  * @brief RigidBody represent the physical properties of a rigid body in a game engine
@@ -37,10 +35,25 @@ struct RigidBody {
         : mass(mass), restitution(restitution), friction(friction), gravityScale(gravityScale), isGravityAffected(true),
           isKinematic(false){};
 
+    RigidBody &operator=(const RigidBody &other)
+    {
+        if (this != &other)
+        {
+            mass = other.mass;
+            restitution = other.restitution;
+            friction = other.friction;
+            gravityScale = other.gravityScale;
+            isGravityAffected = other.isGravityAffected;
+            isKinematic = other.isKinematic;
+        }
+
+        return *this;
+    }
+
     std::size_t size() const { return sizeof(*this); }
 };
 
-PACKED_END
+LPL_PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::_2D
 
 #endif /* !RIGIDBODY_HPP_ */

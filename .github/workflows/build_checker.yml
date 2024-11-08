@@ -1,0 +1,57 @@
+name: Build Checker Windows
+
+on:
+  push:
+    branches-ignore:
+     - 'ga-ignore-**'
+     - 'gh-pages'
+
+jobs:
+  build_checker_windows:
+    name: Build Checker Windows
+    runs-on: windows-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          choco install cmake -y
+
+      - name: Configure and Build
+        run: |
+          mkdir build && cd build
+          cmake .. && cmake --build .
+
+  build_checker_ubuntu:
+    name: Build Checker Ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+            sudo apt update
+            sudo apt install cmake
+
+      - name: Configure and Build
+        run: |
+            mkdir build && cd build
+            cmake .. && cmake --build .
+
+  build_checker_macos:
+    name: Build Checker MacOS
+    runs-on: macos-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+            brew install ninja
+
+      - name: Configure and Build
+        run: |
+            mkdir build && cd build
+            cmake -G Ninja .. && ninja

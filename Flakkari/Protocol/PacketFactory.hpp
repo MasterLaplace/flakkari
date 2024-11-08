@@ -17,9 +17,10 @@
 #ifndef PACKETFACTORY_HPP_
 #define PACKETFACTORY_HPP_
 
-#include "Packet.hpp"
+#include "config.h.in"
 
 #include "Engine/EntityComponentSystem/Systems/Systems.hpp"
+#include "Packet.hpp"
 
 namespace Flakkari::Protocol {
 
@@ -101,14 +102,13 @@ class PacketFactory {
      * @param entity  Entity to get the components from.
      */
     template <typename Id>
-    static void add2dToPacketByEntity(Protocol::Packet<Id> &packet, Engine::ECS::Registry &registry,
-                                      Engine::ECS::Entity entity)
+    static void add2dToPacketByEntity(Packet<Id> &packet, Engine::ECS::Registry &registry, Engine::ECS::Entity entity)
     {
         auto transform = registry.getComponents<Engine::ECS::Components::_2D::Transform>()[entity];
 
         if (transform.has_value())
         {
-            packet << Protocol::ComponentId::TRANSFORM;
+            packet << ComponentId::TRANSFORM;
             packet << transform->position.vec.x;
             packet << transform->position.vec.y;
             packet << transform->rotation;
@@ -120,7 +120,7 @@ class PacketFactory {
 
         if (movable.has_value())
         {
-            packet << Protocol::ComponentId::MOVABLE;
+            packet << ComponentId::MOVABLE;
             packet << movable->velocity.vec.x;
             packet << movable->velocity.vec.y;
             packet << movable->acceleration.vec.x;
@@ -131,7 +131,7 @@ class PacketFactory {
 
         if (control.has_value())
         {
-            packet << Protocol::ComponentId::CONTROL;
+            packet << ComponentId::CONTROL;
             packet << control->up;
             packet << control->down;
             packet << control->left;
@@ -143,7 +143,7 @@ class PacketFactory {
 
         if (collider.has_value())
         {
-            packet << Protocol::ComponentId::COLLIDER;
+            packet << ComponentId::COLLIDER;
             packet << collider->_size.vec.x;
             packet << collider->_size.vec.y;
         }
@@ -152,7 +152,7 @@ class PacketFactory {
 
         if (rigidbody.has_value())
         {
-            packet << Protocol::ComponentId::RIGIDBODY;
+            packet << ComponentId::RIGIDBODY;
             packet << rigidbody->mass;
             packet << rigidbody->restitution;
             packet << rigidbody->friction;
@@ -164,7 +164,7 @@ class PacketFactory {
 
         if (health.has_value())
         {
-            packet << Protocol::ComponentId::HEALTH;
+            packet << ComponentId::HEALTH;
             packet << health->currentHealth;
             packet << health->maxHealth;
             packet << health->shield;
@@ -175,7 +175,7 @@ class PacketFactory {
 
         if (weapon.has_value())
         {
-            packet << Protocol::ComponentId::WEAPON;
+            packet << ComponentId::WEAPON;
             packet << weapon->damage;
             packet << weapon->fireRate;
             packet << weapon->level;
@@ -185,7 +185,7 @@ class PacketFactory {
 
         if (level.has_value())
         {
-            packet << Protocol::ComponentId::LEVEL;
+            packet << ComponentId::LEVEL;
             packet << level->level;
             packet.injectString(level->currentWeapon);
             packet << level->currentExp;
@@ -196,7 +196,7 @@ class PacketFactory {
 
         if (spawned.has_value())
         {
-            packet << Protocol::ComponentId::SPAWNED;
+            packet << ComponentId::SPAWNED;
             packet << spawned->has_spawned;
         }
 
@@ -204,7 +204,7 @@ class PacketFactory {
 
         if (networkEvent.has_value())
         {
-            packet << Protocol::ComponentId::NETWORK_EVENT;
+            packet << ComponentId::NETWORK_EVENT;
             packet << networkEvent->events.size();
             for (auto &event : networkEvent->events)
             {
@@ -216,7 +216,7 @@ class PacketFactory {
 
         if (templateName.has_value())
         {
-            packet << Protocol::ComponentId::TEMPLATE;
+            packet << ComponentId::TEMPLATE;
             packet.injectString(templateName->name);
         }
 
@@ -224,7 +224,7 @@ class PacketFactory {
 
         if (parent.has_value())
         {
-            packet << Protocol::ComponentId::PARENT;
+            packet << ComponentId::PARENT;
             packet << parent->entity;
         }
 
@@ -232,7 +232,7 @@ class PacketFactory {
 
         if (child.has_value())
         {
-            packet << Protocol::ComponentId::CHILD;
+            packet << ComponentId::CHILD;
             packet.injectString(child->name);
         }
 
@@ -240,7 +240,7 @@ class PacketFactory {
 
         if (tag.has_value())
         {
-            packet << Protocol::ComponentId::TAG;
+            packet << ComponentId::TAG;
             packet.injectString(tag->tag);
         }
     }
@@ -254,7 +254,7 @@ class PacketFactory {
      * @param entity  Entity to get the components from.
      */
     template <typename Id>
-    static void addComponentsToPacketByEntity(Protocol::Packet<Id> &packet, Engine::ECS::Registry &registry,
+    static void addComponentsToPacketByEntity(Packet<Id> &packet, Engine::ECS::Registry &registry,
                                               Engine::ECS::Entity entity)
     {
         /*_ Common Components _*/
@@ -266,22 +266,6 @@ class PacketFactory {
         add2dToPacketByEntity<Id>(packet, registry, entity);
     }
 
-    /**
-     * @brief Add requirement information for Command that use components.
-     * @tparam Id  Type of the entity id.
-     * @param packet  Packet to add the components to.
-     * @param size  Size of the packet.
-     * @param sceneName  Name of the scene.
-     * @param entity  Entity to get the components from.
-     */
-    template <typename Id>
-    static void addInfoToPacket(Protocol::Packet<Id> &packet, std::size_t size, const std::string &sceneName,
-                                Engine::ECS::Entity entity)
-    {
-        packet.injectString(sceneName);
-        packet << entity;
-    }
-
     struct UpdateMovement {
         Engine::ECS::Entity entity;
         Engine::ECS::Components::_2D::Transform pos;
@@ -289,7 +273,7 @@ class PacketFactory {
     };
 
     template <typename Id>
-    static void addUpdateMovementToPacket(Protocol::Packet<Id> &packet, Engine::ECS::Entity entity,
+    static void addUpdateMovementToPacket(Packet<Id> &packet, Engine::ECS::Entity entity,
                                           Engine::ECS::Components::_2D::Transform pos,
                                           Engine::ECS::Components::_2D::Movable vel)
     {

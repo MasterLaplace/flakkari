@@ -11,7 +11,7 @@
  * https://opensource.org/licenses/MIT
  * © 2023 @MasterLaplace
  * @version 0.3.0
- * @date 2023-01-06
+ * @date 2024-01-06
  **************************************************************************/
 
 #ifndef GAMEMANAGER_HPP_
@@ -31,12 +31,8 @@
 
 namespace Flakkari {
 
-class GameManager {
+class GameManager : public Singleton<GameManager> {
     private:
-    static std::shared_ptr<GameManager> _instance;
-    static std::mutex _mutex;
-
-    public:
     std::unordered_map<std::string /*gameName*/, std::queue<std::shared_ptr<Client>> /*waitingClients*/>
         _waitingClients;
     std::unordered_map<std::string /*gameName*/, std::vector<std::shared_ptr<Game>> /*gamesInstances*/> _gamesInstances;
@@ -44,30 +40,19 @@ class GameManager {
     std::string _game_dir;
 
     public:
-    GameManager(const GameManager &) = delete;
-    GameManager(const std::shared_ptr<GameManager> &) = delete;
-    void operator=(const GameManager &) = delete;
-    void operator=(const std::shared_ptr<GameManager> &) = delete;
-
     /**
      * @brief Construct a new GameManager object and load all games
      * already present in the Games folder
      *
+     * @param gameDir Directory of the Games folder
      */
-    GameManager();
+    explicit GameManager(const std::string &gameDir);
 
     /**
      * @brief Destroy the GameManager object
      *
      */
     ~GameManager() = default;
-
-    /**
-     * @brief Get the instance of the GameManager
-     *
-     * @return std::shared_ptr<GameManager> instance of the GameManager
-     */
-    static std::shared_ptr<GameManager> getInstance();
 
     /**
      * @brief Add a game to the GameManager and load it from the Games folder
@@ -78,24 +63,7 @@ class GameManager {
      * @return 2 Game not added (certificate not valid) (not implemented)
      * @return 3 Game not added (corrupted game) (not implemented)
      */
-    static int addGame(std::string gameName);
-
-    /**
-     * @brief Get the Game object
-     *
-     * @param gameName Game to get
-     * @return std::shared_ptr<Game> Game
-     *
-     * @deprecated Use getGameInstance instead
-     */
-    static std::shared_ptr<Game> getGame(std::string gameName);
-
-    /**
-     * @brief Get the Games Instances object (all games loaded)
-     *
-     * @return std::vector<std::shared_ptr<Game>> Games Instances
-     */
-    static std::vector<std::shared_ptr<Game>> getGamesInstances();
+    int addGame(const std::string &gameName);
 
     /**
      * @brief Update a game from the GameManager
@@ -104,7 +72,7 @@ class GameManager {
      * @return 0 Game updated
      * @return 1 Game not updated (not found)
      */
-    static int updateGame(std::string gameName);
+    int updateGame(const std::string &gameName);
 
     /**
      * @brief Remove a game from the GameManager
@@ -113,13 +81,13 @@ class GameManager {
      * @return 0 Game removed
      * @return 1 Game not removed (not found)
      */
-    static int removeGame(std::string gameName);
+    int removeGame(const std::string &gameName);
 
     /**
      * @brief List all games present in the GameManager
      *
      */
-    static void listGames();
+    void listGames();
 
     /**
      * @brief Add a client to a game
@@ -127,7 +95,7 @@ class GameManager {
      * @param gameName Game to add the client to
      * @param client Client to add to the game
      */
-    static void addClientToGame(std::string gameName, std::shared_ptr<Client> client);
+    void addClientToGame(const std::string &gameName, std::shared_ptr<Client> &client);
 
     /**
      * @brief Remove a client from a game
@@ -135,7 +103,7 @@ class GameManager {
      * @param gameName Game to remove the client from
      * @param client Client to remove from the game
      */
-    static void removeClientFromGame(std::string gameName, std::shared_ptr<Client> client);
+    void removeClientFromGame(const std::string &gameName, const std::shared_ptr<Client> &client);
 
     /**
      * @brief Get the index of a client in the waiting queue
@@ -144,7 +112,7 @@ class GameManager {
      * @param client Client to get the index of
      * @return int Index of the client in the waiting queue
      */
-    static int getIndexInWaitingQueue(std::string gameName, std::shared_ptr<Client> client);
+    int getIndexInWaitingQueue(const std::string &gameName, const std::shared_ptr<Client> &client);
 };
 
 } /* namespace Flakkari */

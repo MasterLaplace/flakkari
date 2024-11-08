@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Title: Flakkari
 ** Author: MasterLaplace
-** Created: 2023-01-14
+** Created: 2024-01-14
 ** File description:
 ** Spawned
 */
@@ -13,10 +13,10 @@
 #include <cstring>
 #include <string>
 
-#include "Network/Packed.hpp"
+#include "config.h.in"
 
 namespace Flakkari::Engine::ECS::Components::Common {
-PACKED_START
+LPL_PACKED_START
 
 /**
  * @brief  Spawned component for ECS entities that have a script attached to them
@@ -30,10 +30,18 @@ struct Spawned {
     Spawned(bool spawed) : has_spawned(spawed) {}
     Spawned(const Spawned &other) : has_spawned(other.has_spawned) {}
 
+    Spawned &operator=(const Spawned &other)
+    {
+        if (this != &other)
+            has_spawned = other.has_spawned;
+
+        return *this;
+    }
+
     std::size_t size() const { return sizeof(has_spawned); }
 };
 
-PACKED_END
+LPL_PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::Common
 
 #endif /* !SPAWNED_HPP_ */

@@ -9,8 +9,8 @@ permissions:
   contents: write
 
 jobs:
-  bump_version:
-    name: Bump version
+  bump_version_and_create_release:
+    name: Bump version and create release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -41,18 +41,13 @@ jobs:
           git commit -m "chore: bump the Flakkari version to ${{ steps.test_tag_version.outputs.new_tag }}" || true
           git push || true
 
-  create_release:
-    name: Create release
-    needs: bump_version
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Bump version and push tag
+      - name: Create Tag
         id: tag_version
-        uses: mathieudutour/github-tag-action@v6.2
-        with:
+        env:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git tag ${{ steps.test_tag_version.outputs.new_tag }}
+          git push origin ${{ steps.test_tag_version.outputs.new_tag }}
 
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1.14.0
@@ -60,6 +55,4 @@ jobs:
           tag: ${{ steps.tag_version.outputs.new_tag }}
           name: Flakkari ${{ steps.tag_version.outputs.new_tag }}
           body: ${{ steps.tag_version.outputs.changelog }}
-          draft: false
-          prerelease: false
           generateReleaseNotes: true
