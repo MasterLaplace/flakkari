@@ -1,0 +1,10 @@
+digraph "Flakkari::UDPServer::~UDPServer"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="Flakkari::UDPServer\l::~UDPServer",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Flakkari::Network::\lcleanup",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/db0/namespaceFlakkari_1_1Network.html#af7789e98dd3f4a6551008f0ab4be5f4d",tooltip="Cleanup the network. This function is only used by Windows."];
+}

@@ -1,0 +1,14 @@
+digraph "Flakkari::Network::Buffer::extractData"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="Flakkari::Network::\lBuffer::extractData",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Get the data of the buffer."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Flakkari::Protocol\l::V_0::Packet::deserialize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a0d6fb9d2f315e1ce6ee1cd2abd31906c",tooltip="Deserialize the buffer into a packet."];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="Flakkari::ClientManager\l::addClient",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/da5/classFlakkari_1_1ClientManager.html#add94cee15bd387eb916319d8eb44f413",tooltip="Add a client to the client manager or update the last activity of the client."];
+  Node2 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="Flakkari::ClientManager\l::receivePacketFromClient",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/da5/classFlakkari_1_1ClientManager.html#aa0b49f304e0a3edefabd72d971a10aa1",tooltip="Receive a packet from a client."];
+}
