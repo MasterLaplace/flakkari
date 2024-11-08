@@ -15,7 +15,7 @@
 #include "config.h.in"
 
 namespace Flakkari::Engine::ECS::Components::Common {
-PACKED_START
+LPL_PACKED_START
 
 struct Id {
     std::size_t id;
@@ -35,7 +35,7 @@ struct Id {
     std::size_t size() const { return sizeof(id); }
 };
 
-PACKED_END
+LPL_PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::Common
 
 #endif /* !FLAKKARI_ID_HPP_ */

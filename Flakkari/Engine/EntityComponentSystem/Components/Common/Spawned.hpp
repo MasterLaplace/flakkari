@@ -16,7 +16,7 @@
 #include "config.h.in"
 
 namespace Flakkari::Engine::ECS::Components::Common {
-PACKED_START
+LPL_PACKED_START
 
 /**
  * @brief  Spawned component for ECS entities that have a script attached to them
@@ -41,7 +41,7 @@ struct Spawned {
     std::size_t size() const { return sizeof(has_spawned); }
 };
 
-PACKED_END
+LPL_PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::Common
 
 #endif /* !SPAWNED_HPP_ */

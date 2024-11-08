@@ -15,7 +15,7 @@
 #include "config.h.in"
 
 namespace Flakkari::Engine::ECS::Components::Common {
-PACKED_START
+LPL_PACKED_START
 
 /**
  * @brief Health is a structure that represents the life of an "living object"
@@ -50,7 +50,7 @@ struct Health {
     std::size_t size() const { return sizeof(*this); }
 };
 
-PACKED_END
+LPL_PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::Common
 
 #endif /* !Health_HPP_ */

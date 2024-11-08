@@ -14,7 +14,7 @@
 #include <string>
 
 namespace Flakkari::Engine::ECS::Components::_2D {
-PACKED_START
+LPL_PACKED_START
 
 /**
  * @brief  Collider component for ECS entities that have a script attached to them
@@ -39,7 +39,7 @@ struct Collider {
     std::size_t size() const { return sizeof(_size); }
 };
 
-PACKED_END
+LPL_PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::_2D
 
 #endif /* !COLLIDER_HPP_ */

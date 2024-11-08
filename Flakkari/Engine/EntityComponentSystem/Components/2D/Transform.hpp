@@ -13,7 +13,7 @@
 #include "../../../Math/Vector.hpp"
 
 namespace Flakkari::Engine::ECS::Components::_2D {
-PACKED_START
+LPL_PACKED_START
 
 struct Transform {
     Math::Vector2f position;
@@ -40,7 +40,7 @@ struct Transform {
     std::size_t size() const { return sizeof(*this); }
 };
 
-PACKED_END
+LPL_PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::_2D
 
 #endif /* !FLAKKARI_TRANSFORM_HPP_ */

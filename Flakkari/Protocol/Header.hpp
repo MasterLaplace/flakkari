@@ -57,7 +57,7 @@ enum class Priority : byte {
     MAX_PRIORITY = 4
 };
 
-PACKED_START
+LPL_PACKED_START
 
 template <typename Id> struct Header {
     Priority _priority     : 4 = Priority::LOW;
@@ -69,7 +69,7 @@ template <typename Id> struct Header {
             .count());
 };
 
-PACKED_END
+LPL_PACKED_END
 
 } // namespace V_0
 
