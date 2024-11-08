@@ -107,7 +107,8 @@ Address::Address(const sockaddr_storage &clientAddr, SocketType socket_type, IpT
     hints.ai_family = (_ip_type == IpType::IPv4) ? AF_INET : AF_INET6;
     hints.ai_socktype = (_socket_type == SocketType::TCP) ? SOCK_STREAM : SOCK_DGRAM;
     hints.ai_protocol = (_socket_type == SocketType::TCP) ? IPPROTO_TCP : IPPROTO_UDP;
-    hints.ai_flags = (_ip_type == IpType::IPv4) ? (AI_ADDRCONFIG | AI_PASSIVE | AI_V4MAPPED) : (AI_ADDRCONFIG | AI_PASSIVE | AI_ALL);
+    hints.ai_flags =
+        (_ip_type == IpType::IPv4) ? (AI_ADDRCONFIG | AI_PASSIVE | AI_V4MAPPED) : (AI_ADDRCONFIG | AI_PASSIVE | AI_ALL);
 
     addrinfo *result = nullptr;
 #if defined(_WIN32)
