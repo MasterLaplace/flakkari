@@ -7,6 +7,9 @@ on:
 
 permissions:
   contents: write
+  id-token: write
+  attestations: write
+  security-events: write
 
 jobs:
   bump_version_and_create_release:
@@ -30,6 +33,13 @@ jobs:
       - name: Run version bump script
         run: |
           python3 Scripts/increment_version.py ${{ steps.test_tag_version.outputs.new_tag }}
+
+      - name: Attest Build Provenance
+        uses: actions/attest-build-provenance@v1.4.4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          subject-name: "Flakkari Version Bump"
+          subject-path: "Scripts/increment_version.py"
 
       - name: Set up Git and Push changes
         env:

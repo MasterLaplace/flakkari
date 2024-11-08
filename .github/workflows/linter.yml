@@ -6,6 +6,9 @@ on:
      - 'ga-ignore-**'
      - 'gh-pages'
 
+permissions:
+  contents: write
+
 jobs:
   lint_code:
     name: Lint with clang-format
