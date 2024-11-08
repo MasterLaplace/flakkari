@@ -247,10 +247,7 @@ void WSA::removeSocket(FileDescriptor socket)
     _freeSpace.emplace_back(index);
 }
 
-int WSA::wait()
-{
-    return WSAPoll(_fdArray.data(), (ULONG)_fdArray.size(), _timeoutInMs);
-}
+int WSA::wait() { return WSAPoll(_fdArray.data(), (ULONG) _fdArray.size(), _timeoutInMs); }
 
 bool WSA::isReady(FileDescriptor socket)
 {

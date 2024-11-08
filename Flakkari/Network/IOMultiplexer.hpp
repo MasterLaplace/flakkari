@@ -248,7 +248,7 @@ class PPOLL {
 
 #if defined(_WSA_)
 
-#define MAX_POLLFD 1024
+#    define MAX_POLLFD 1024
 
 /**
  * @brief WSA is a class that represents a WSA
