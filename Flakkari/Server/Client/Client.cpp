@@ -17,11 +17,7 @@ Client::Client(const std::shared_ptr<Network::Address> &address, const std::stri
     _lastActivity = std::chrono::steady_clock::now();
 }
 
-Client::~Client()
-{
-    _isConnected = false;
-    _address->setId(-1);
-}
+Client::~Client() { _isConnected = false; }
 
 bool Client::isConnected(float timeout)
 {

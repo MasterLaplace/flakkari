@@ -46,7 +46,10 @@ Game::Game(const std::string &name, std::shared_ptr<nlohmann::json> config)
     _time = std::chrono::steady_clock::now();
 
     if ((*_config)["scenes"].empty())
-        throw std::runtime_error("Game: no scenes found");
+    {
+        FLAKKARI_LOG_ERROR("Game: no scenes found");
+        return;
+    }
 
     loadScene((*_config)["startGame"]);
     ResourceManager::GetInstance().addScene(config, (*_config)["startGame"]);

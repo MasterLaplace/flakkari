@@ -95,8 +95,6 @@ public:
     [[nodiscard]] Engine::ECS::Entity getEntity() const { return _entity; }
     void setEntity(Engine::ECS::Entity entity) { _entity = entity; }
 
-    [[nodiscard]] short getId() const { return _address->getId(); }
-
     [[nodiscard]] std::string getSceneName() const { return _sceneName; }
     void setSceneName(std::string sceneName) { _sceneName = sceneName; }
 

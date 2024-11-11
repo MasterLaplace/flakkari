@@ -17,7 +17,7 @@ void init()
     WSADATA WSAData;
 
     if (::WSAStartup(MAKEWORD(2, 2), &WSAData) != NO_ERROR)
-        FLAKKARI_LOG_FATAL("WSAStartup failed");
+        throw std::runtime_error("WSAStartup failed");
 #endif
 }
 
