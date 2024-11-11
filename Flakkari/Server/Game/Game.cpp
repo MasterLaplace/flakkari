@@ -395,7 +395,7 @@ void Game::updateIncomingPackets(unsigned char maxMessagePerFrame)
     {
         if (!player->isConnected())
             continue;
-        auto &packets = player->_receiveQueue;
+        auto &packets = player->getReceiveQueue();
         auto messageCount = maxMessagePerFrame;
 
         while (!packets.empty() && messageCount > 0)
@@ -479,7 +479,7 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
     packet.injectString(player->getName().value_or(""));
     packet.injectString(p_Template);
     ClientManager::GetInstance().sendPacketToClient(address, packet.serialize());
-    ClientManager::DestroyInstance();
+    ClientManager::UnlockInstance();
 
     Protocol::Packet<Protocol::CommandId> packet2;
     packet2.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;

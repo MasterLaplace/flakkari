@@ -62,13 +62,33 @@ bool UDPServer::handleInput(int fd)
 void UDPServer::handlePacket()
 {
     auto packet = _socket->receiveFrom();
-    auto &instance = ClientManager::GetInstance();
-
-    bool result = instance.addClient(packet->first, packet->second);
-    instance.checkInactiveClients();
-    if (result)
-        instance.receivePacketFromClient(packet->first, packet->second);
+    auto resultAddClient = ClientManager::GetInstance().addClient(packet->first, packet->second);
     ClientManager::UnlockInstance();
+    if (!resultAddClient.has_value())
+        return;
+
+    if (!resultAddClient->first.empty())
+    {
+        bool result = GameManager::GetInstance().addClientToGame(resultAddClient->first, resultAddClient->second);
+        GameManager::UnlockInstance();
+        if (!result)
+        {
+            ClientManager::GetInstance().removeClient(packet->first->toString().value_or(""));
+            ClientManager::UnlockInstance();
+        }
+    }
+
+    ClientManager::GetInstance().checkInactiveClients();
+    ClientManager::UnlockInstance();
+    if (resultAddClient->first.empty())
+    {
+        auto resultRecvClient = ClientManager::GetInstance().receivePacketFromClient(packet->first, packet->second);
+        ClientManager::UnlockInstance();
+        if (!resultRecvClient.has_value())
+            return;
+        GameManager::GetInstance().removeClientFromGame(resultRecvClient->first, resultRecvClient->second);
+        GameManager::UnlockInstance();
+    }
 }
 
 void UDPServer::run()

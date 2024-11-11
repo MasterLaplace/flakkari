@@ -81,6 +81,14 @@ public:
     bool incrementWarningCount();
 
     /**
+     * @brief Add a packet to the client's send queue and set the api version
+     * used by the client
+     *
+     * @param packet  The packet to add
+     */
+    void addPacketToQueue(const Protocol::Packet<Protocol::CommandId> &packet);
+
+    /**
      * @brief Get the client's address
      *
      * @return std::shared_ptr<Network::Address>  The client's address
@@ -110,7 +118,11 @@ public:
 
     [[nodiscard]] unsigned short getMaxPacketHistory() const { return _maxPacketHistory; }
 
-protected:
+    [[nodiscard]] Network::PacketQueue<Protocol::Packet<Protocol::CommandId>> &getReceiveQueue()
+    {
+        return _receiveQueue;
+    }
+
 private:
     std::chrono::steady_clock::time_point _lastActivity;
     std::shared_ptr<Network::Address> _address;
@@ -123,7 +135,6 @@ private:
     unsigned short _maxWarningCount = 5;
     unsigned short _maxPacketHistory = 10;
 
-public:
     std::vector<Network::Buffer> _packetHistory;
     Network::PacketQueue<Protocol::Packet<Protocol::CommandId>> _sendQueue;
     Network::PacketQueue<Protocol::Packet<Protocol::CommandId>> _receiveQueue;

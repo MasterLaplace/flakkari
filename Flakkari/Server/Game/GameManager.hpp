@@ -94,8 +94,10 @@ public:
      *
      * @param gameName Game to add the client to
      * @param client Client to add to the game
+     * @return true Client added to the game
+     * @return false Client not added to the game
      */
-    void addClientToGame(const std::string &gameName, std::shared_ptr<Client> &client);
+    [[nodiscard]] bool addClientToGame(const std::string &gameName, std::shared_ptr<Client> client);
 
     /**
      * @brief Remove a client from a game
@@ -112,7 +114,7 @@ public:
      * @param client Client to get the index of
      * @return int Index of the client in the waiting queue
      */
-    int getIndexInWaitingQueue(const std::string &gameName, const std::shared_ptr<Client> &client);
+    [[nodiscard]] int getIndexInWaitingQueue(const std::string &gameName, const std::shared_ptr<Client> &client);
 };
 
 } /* namespace Flakkari */

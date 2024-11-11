@@ -74,22 +74,19 @@ public:
      * @brief Add a client to the client manager or update the last activity of the client
      *
      * @param client  The client's address
+     * @param buffer  The packet received from the client
+     * @return std::optional<std::pair<std::string, std::shared_ptr<Client>>
+     *         The client's name and the client object
      */
-    bool addClient(const std::shared_ptr<Network::Address> &client, Network::Buffer &buffer);
+    std::optional<std::pair<std::string, std::shared_ptr<Client>>>
+    addClient(const std::shared_ptr<Network::Address> &client, Network::Buffer &buffer);
 
     /**
      * @brief Remove a client from the client manager
      *
-     * @param client  The client's address
+     * @param client  The client's name
      */
-    void removeClient(const std::shared_ptr<Network::Address> &client);
-
-    /**
-     * @brief Ban a client from the server
-     *
-     * @param client  The client's address
-     */
-    void banClient(const std::shared_ptr<Network::Address> &client);
+    void removeClient(const std::string &client);
 
     /**
      * @brief Check if a client is banned
@@ -117,7 +114,7 @@ public:
      * @param client  The client's address
      * @param packet  The packet to send
      */
-    void sendPacketToClient(std::shared_ptr<Network::Address> client, const Network::Buffer &packet);
+    void sendPacketToClient(const std::shared_ptr<Network::Address> &client, const Network::Buffer &packet);
 
     /**
      * @brief Send a packet to all clients
@@ -139,8 +136,11 @@ public:
      *
      * @param client  The client's address
      * @param packet  The packet received
+     * @return std::optional<std::pair<const std::string &, std::shared_ptr<Client>>
+     *         The client's name and the client object
      */
-    void receivePacketFromClient(const std::shared_ptr<Network::Address> &client, const Network::Buffer &packet);
+    std::optional<std::pair<const std::string &, std::shared_ptr<Client>>>
+    receivePacketFromClient(const std::shared_ptr<Network::Address> &client, const Network::Buffer &packet);
 
     /**
      * @brief Get the Client object

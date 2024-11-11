@@ -108,17 +108,16 @@ void GameManager::listGames()
     FLAKKARI_LOG_INFO(gamesList);
 }
 
-void GameManager::addClientToGame(const std::string &gameName, std::shared_ptr<Client> &client)
+bool GameManager::addClientToGame(const std::string &gameName, std::shared_ptr<Client> client)
 {
     if (_gamesStore.find(gameName) == _gamesStore.end())
-    {
-        FLAKKARI_LOG_ERROR("game not found");
-        client.reset();
-        return;
-    }
+        return FLAKKARI_LOG_ERROR("game not found"), false;
 
     auto &gameStore = _gamesStore[gameName];
     auto &gameInstance = _gamesInstances[gameName];
+
+    if (gameStore->at("online").get<bool>() == false)
+        return FLAKKARI_LOG_ERROR("game \"" + gameName + "\" is'nt an online game"), false;
 
     auto minPlayers = gameStore->at("minPlayers").get<size_t>();
     auto maxPlayers = gameStore->at("maxPlayers").get<size_t>();
@@ -135,7 +134,7 @@ void GameManager::addClientToGame(const std::string &gameName, std::shared_ptr<C
         {
             FLAKKARI_LOG_ERROR("game \"" + gameName + "\"is full");
             _waitingClients[gameName].push(client);
-            return;
+            return true;
         }
         gameInstance.push_back(std::make_shared<Game>(gameName, gameStore));
         FLAKKARI_LOG_INFO("game \"" + gameName + "\" created");
@@ -148,9 +147,10 @@ void GameManager::addClientToGame(const std::string &gameName, std::shared_ptr<C
             gameInstance.back()->start();
         if (lobby == "OpenWorld" && !gameInstance.back()->isRunning())
             gameInstance.back()->start();
-        return;
+        return true;
     }
     FLAKKARI_LOG_ERROR("could not add client \"" + STR_ADDRESS + "\" to game \"" + gameName + "\"");
+    return false;
 }
 
 void GameManager::removeClientFromGame(const std::string &gameName, const std::shared_ptr<Client> &client)

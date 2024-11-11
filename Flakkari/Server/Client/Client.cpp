@@ -33,7 +33,7 @@ void Client::addPacketToHistory(const Network::Buffer &packet)
 {
     if (_packetHistory.size() >= _maxPacketHistory)
         _packetHistory.erase(_packetHistory.begin());
-    _packetHistory.push_back(packet);
+    _packetHistory.emplace_back(packet);
 }
 
 bool Client::incrementWarningCount()
@@ -41,5 +41,7 @@ bool Client::incrementWarningCount()
     _warningCount++;
     return _warningCount >= _maxWarningCount;
 }
+
+void Client::addPacketToQueue(const Protocol::Packet<Protocol::CommandId> &packet) { _receiveQueue.push_back(packet); }
 
 } /* namespace Flakkari */
