@@ -116,7 +116,7 @@ enum class CommandId : uint8_t {
 static_assert(static_cast<uint8_t>(CommandId::MAX_COMMAND_ID) <= 0xFF, "CommandId is too big");
 
 class Commands final {
-    public:
+public:
     static std::string command_to_string(CommandId id)
     {
         switch (id)

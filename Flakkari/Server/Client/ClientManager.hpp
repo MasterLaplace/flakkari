@@ -49,14 +49,14 @@ namespace Flakkari {
  * @endcode
  */
 class ClientManager : public Singleton<ClientManager> {
-    private:
+private:
     std::unordered_map<std::string /*ip*/, std::shared_ptr<Client>> _clients;
     std::vector<std::string /*ip*/> _bannedClients;
     std::shared_ptr<Network::Socket> _socket;
 
     using id_t = short;
 
-    public:
+public:
     /**
      * @brief Construct a new ClientManager object
      *

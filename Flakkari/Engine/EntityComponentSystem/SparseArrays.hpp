@@ -23,7 +23,7 @@
 namespace Flakkari::Engine::ECS {
 
 template <typename Component> class SparseArrays {
-    public:
+public:
     using value_type = std::optional<Component>;
     using reference_type = value_type &;
     using const_reference_type = const value_type &;
@@ -32,7 +32,7 @@ template <typename Component> class SparseArrays {
     using iterator = typename container_type::iterator;
     using const_iterator = typename container_type::const_iterator;
 
-    public:
+public:
     SparseArrays() = default;
     SparseArrays(const SparseArrays &other) : _data(other._data){};
     SparseArrays(SparseArrays &&other) noexcept : _data(std::move(other._data)){};
@@ -185,7 +185,7 @@ template <typename Component> class SparseArrays {
         return std::distance(_data.begin(), it);
     }
 
-    private:
+private:
     container_type _data;
 };
 

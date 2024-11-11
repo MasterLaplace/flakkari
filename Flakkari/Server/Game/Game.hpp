@@ -42,10 +42,10 @@ using nl_template =
 using nl_component = nlohmann::json;
 
 class Game {
-    public:
+public:
     friend class Client;
 
-    public: // Constructors/Destructors
+public: // Constructors/Destructors
     /**
      * @brief Construct a new Game object and load the config file
      *        of the game.
@@ -56,7 +56,7 @@ class Game {
     Game(const std::string &name, std::shared_ptr<nlohmann::json> config);
     ~Game();
 
-    public: // Loaders
+public: // Loaders
     /**
      * @brief Add all the systems of the game to the registry.
      *
@@ -91,7 +91,7 @@ class Game {
      */
     void loadScene(const std::string &name);
 
-    public: // Actions
+public: // Actions
     void sendAllEntities(const std::string &sceneName, std::shared_ptr<Client> player);
     void sendOnSameScene(const std::string &sceneName, const Network::Buffer &message);
 
@@ -175,7 +175,7 @@ class Game {
      */
     [[nodiscard]] bool isRunning() const;
 
-    public: // Getters
+public: // Getters
     /**
      * @brief Get the Name object (name of the game).
      *
@@ -190,8 +190,8 @@ class Game {
      */
     [[nodiscard]] std::vector<std::shared_ptr<Client>> getPlayers() const;
 
-    protected:
-    private:
+protected:
+private:
     bool _running = false;                                                                    // Is the game running
     std::thread _thread;                                                                      // Thread of the game
     std::string _name;                                                                        // Name of the game

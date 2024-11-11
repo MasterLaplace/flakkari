@@ -50,14 +50,14 @@ namespace Flakkari {
  * TODO: add a way to load multiple config files cause multiple scenes could be used for multiple windows
  */
 class ResourceManager : public Singleton<ResourceManager> {
-    private:
+private:
     using nl_template = nlohmann::json;
 
-    private:
+private:
     std::map<std::string /*game*/, std::map<std::string /*scene*/, std::map<std::string /*template*/, nl_template>>>
         _templates;
 
-    public:
+public:
     explicit ResourceManager() = default;
     ~ResourceManager() = default;
 

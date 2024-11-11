@@ -29,7 +29,7 @@
 namespace Flakkari {
 
 class UDPServer {
-    public:
+public:
     UDPServer(std::string ip, unsigned short port) : _io(std::make_unique<IO_SELECTED>())
     {
         Network::init();
@@ -74,8 +74,8 @@ class UDPServer {
         return 0;
     }
 
-    protected:
-    private:
+protected:
+private:
     Network::Socket _socket;
     std::unique_ptr<IO_SELECTED> _io;
 };

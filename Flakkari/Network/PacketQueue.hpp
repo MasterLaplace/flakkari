@@ -23,12 +23,12 @@
 namespace Flakkari::Network {
 
 template <typename T> class PacketQueue {
-    public:
+public:
     PacketQueue() = default;
     PacketQueue(const PacketQueue<T> &) = delete;
     virtual ~PacketQueue() { clear(); }
 
-    public:
+public:
     const T &front()
     {
         std::scoped_lock lock(_mutex);
@@ -87,8 +87,8 @@ template <typename T> class PacketQueue {
         _queue.clear();
     }
 
-    protected:
-    private:
+protected:
+private:
     std::mutex _mutex;
     std::deque<T> _queue;
 };

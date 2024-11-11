@@ -24,7 +24,8 @@
 
 namespace Flakkari {
 
-#define INIT_LOOP loop:
+#define INIT_LOOP                                                                                                      \
+loop:
 #define GOTO_LOOP goto loop;
 
 #ifndef STDIN_FILENO

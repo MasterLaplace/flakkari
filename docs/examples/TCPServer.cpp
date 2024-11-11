@@ -29,7 +29,7 @@
 namespace Flakkari {
 
 class TCPServer {
-    public:
+public:
     TCPServer(std::string ip = "localhost", std::size_t port = 8080) : _io(std::make_unique<IO_SELECTED>())
     {
         Network::init();
@@ -75,8 +75,8 @@ class TCPServer {
         return 0;
     }
 
-    protected:
-    private:
+protected:
+private:
     Network::Socket _socket;
     std::unique_ptr<IO_SELECTED> _io;
 };

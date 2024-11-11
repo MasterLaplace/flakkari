@@ -28,14 +28,14 @@
 namespace Flakkari::Internals {
 
 class CommandManager {
-    public:
+public:
     static std::regex PASSWORD_REGEX;
     static std::regex ADD_GAME_REGEX;
     static std::regex UPDATE_GAME_REGEX;
     static std::regex REMOVE_GAME_REGEX;
     static bool _unlocked;
 
-    public:
+public:
     /**
      * @brief Handle a command from the admin user and execute it.
      *
@@ -44,7 +44,7 @@ class CommandManager {
      */
     static void handleCommand();
 
-    private:
+private:
     /**
      * @brief Handle a command from the admin user and execute it.
      *

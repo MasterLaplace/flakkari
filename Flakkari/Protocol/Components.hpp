@@ -50,7 +50,7 @@ enum class ComponentId : uint8_t {
 static_assert(static_cast<uint8_t>(ComponentId::MAX_COMPONENT) <= 30, "ComponentId::MAX_COMPONENT is too big");
 
 class Components final {
-    public:
+public:
     static std::string component_to_string(ComponentId id)
     {
         switch (id)

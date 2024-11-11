@@ -40,7 +40,7 @@ namespace Flakkari {
  * @see Network::Address
  */
 class Client {
-    public:
+public:
     /**
      * @brief Construct a new Client object
      *
@@ -112,8 +112,8 @@ class Client {
 
     [[nodiscard]] unsigned short getMaxPacketHistory() const { return _maxPacketHistory; }
 
-    protected:
-    private:
+protected:
+private:
     std::chrono::steady_clock::time_point _lastActivity;
     std::shared_ptr<Network::Address> _address;
     Engine::ECS::Entity _entity;
@@ -125,7 +125,7 @@ class Client {
     unsigned short _maxWarningCount = 5;
     unsigned short _maxPacketHistory = 10;
 
-    public:
+public:
     std::vector<Network::Buffer> _packetHistory;
     Network::PacketQueue<Protocol::Packet<Protocol::CommandId>> _sendQueue;
     Network::PacketQueue<Protocol::Packet<Protocol::CommandId>> _receiveQueue;

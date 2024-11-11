@@ -32,14 +32,14 @@
 namespace Flakkari {
 
 class GameManager : public Singleton<GameManager> {
-    private:
+private:
     std::unordered_map<std::string /*gameName*/, std::queue<std::shared_ptr<Client>> /*waitingClients*/>
         _waitingClients;
     std::unordered_map<std::string /*gameName*/, std::vector<std::shared_ptr<Game>> /*gamesInstances*/> _gamesInstances;
     std::unordered_map<std::string /*gameName*/, std::shared_ptr<nlohmann::json> /*data*/> _gamesStore;
     std::string _game_dir;
 
-    public:
+public:
     /**
      * @brief Construct a new GameManager object and load all games
      * already present in the Games folder

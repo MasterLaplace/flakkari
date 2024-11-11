@@ -122,12 +122,12 @@ namespace Flakkari::Network {
  * @endcode
  */
 class Socket {
-    public:
+public:
     using port_t = Address::port_t;
     using ip_t = const std::string &;
     using socket_t = SOCKET;
 
-    public:
+public:
     Socket() = default;
     Socket(const Socket &) = delete;
     Socket(Socket &&) = delete;
@@ -292,8 +292,8 @@ class Socket {
      */
     operator std::string() const;
 
-    protected:
-    private:
+protected:
+private:
     std::mutex _mutex;
     socket_t _socket;
     std::shared_ptr<Address> _address = nullptr;
