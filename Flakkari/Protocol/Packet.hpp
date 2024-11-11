@@ -165,11 +165,13 @@ template <typename Id> struct Packet {
             return FLAKKARI_LOG_WARNING("Buffer is too small to deserialize a packet."), false;
         std::memcpy(&header, buffer.data(), sizeof(header));
         if (header._priority >= Priority::MAX_PRIORITY)
-            return FLAKKARI_LOG_WARNING("Priority is too big ("+ std::to_string((int)header._priority) +")"), false;
+            return FLAKKARI_LOG_WARNING("Priority is too big (" + std::to_string((int) header._priority) + ")"), false;
         if (header._apiVersion >= ApiVersion::MAX_VERSION)
-            return FLAKKARI_LOG_WARNING("ApiVersion is too big ("+ std::to_string((int)header._apiVersion) +")"), false;
+            return FLAKKARI_LOG_WARNING("ApiVersion is too big (" + std::to_string((int) header._apiVersion) + ")"),
+                   false;
         if (header._commandId >= CommandId::MAX_COMMAND_ID)
-            return FLAKKARI_LOG_WARNING("CommandId is too big ("+ std::to_string((int)header._commandId) +")"), false;
+            return FLAKKARI_LOG_WARNING("CommandId is too big (" + std::to_string((int) header._commandId) + ")"),
+                   false;
         if (header._contentLength > buffer.size() - sizeof(header))
             return false;
         payload = buffer.extractData(sizeof(header), header._contentLength);
