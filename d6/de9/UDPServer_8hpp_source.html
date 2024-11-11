@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Flakkari: Flakkari/Server/UDPServer.hpp (107  384 3033 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/UDPServer.hpp) Source File</title>
+<title>Flakkari: Flakkari/Server/UDPServer.hpp (107  384 3021 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/UDPServer.hpp) Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -128,20 +128,20 @@ $(document).ready(function(){initNavTree('d6/de9/UDPServer_8hpp_source.html','..
 <div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="../../d6/de9/UDPServer_8hpp.html#abe87b341f562fd1cf40b7672e4d759da">   36</a></span>&#160;<span class="preprocessor">#define XSTR(x) STR(x)</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
 <div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="../../d0/dd1/classFlakkari_1_1UDPServer.html">   55</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../d0/dd1/classFlakkari_1_1UDPServer.html">UDPServer</a> {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <a class="code" href="../../d0/dd1/classFlakkari_1_1UDPServer.html#a476f3aba5b97812d3f445629b75ccbd5">UDPServer</a>(<span class="keyword">const</span> std::string &amp;gameDir, <span class="keyword">const</span> std::string &amp;ip = <span class="stringliteral">&quot;localhost&quot;</span>, <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> port = 8080);</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <a class="code" href="../../d0/dd1/classFlakkari_1_1UDPServer.html#a09b1a38f1a03d3832f85fe05e6370a11">~UDPServer</a>();</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="../../d0/dd1/classFlakkari_1_1UDPServer.html#ab30d892e78733f051ade74aa7dc0cab8">run</a>();</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    [[nodiscard]] <span class="keywordtype">bool</span> handleTimeout(<span class="keywordtype">int</span> event);</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    [[nodiscard]] <span class="keywordtype">bool</span> handleInput(<span class="keywordtype">int</span> fd);</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordtype">void</span> handlePacket();</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    std::shared_ptr&lt;Network::Socket&gt; _socket;</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    std::unique_ptr&lt;IO_SELECTED&gt; _io;</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;};</div>
@@ -157,7 +157,7 @@ $(document).ready(function(){initNavTree('d6/de9/UDPServer_8hpp_source.html','..
 <div class="ttc" id="aclassFlakkari_1_1UDPServer_html"><div class="ttname"><a href="../../d0/dd1/classFlakkari_1_1UDPServer.html">Flakkari::UDPServer</a></div><div class="ttdef"><b>Definition:</b> UDPServer.hpp:55</div></div>
 <div class="ttc" id="aclassFlakkari_1_1UDPServer_html_a09b1a38f1a03d3832f85fe05e6370a11"><div class="ttname"><a href="../../d0/dd1/classFlakkari_1_1UDPServer.html#a09b1a38f1a03d3832f85fe05e6370a11">Flakkari::UDPServer::~UDPServer</a></div><div class="ttdeci">~UDPServer()</div><div class="ttdef"><b>Definition:</b> UDPServer.cpp:33</div></div>
 <div class="ttc" id="aclassFlakkari_1_1UDPServer_html_a476f3aba5b97812d3f445629b75ccbd5"><div class="ttname"><a href="../../d0/dd1/classFlakkari_1_1UDPServer.html#a476f3aba5b97812d3f445629b75ccbd5">Flakkari::UDPServer::UDPServer</a></div><div class="ttdeci">UDPServer(const std::string &amp;gameDir, const std::string &amp;ip=&quot;localhost&quot;, unsigned short port=8080)</div><div class="ttdoc">Construct a new UDPServer object.</div><div class="ttdef"><b>Definition:</b> UDPServer.cpp:14</div></div>
-<div class="ttc" id="aclassFlakkari_1_1UDPServer_html_ab30d892e78733f051ade74aa7dc0cab8"><div class="ttname"><a href="../../d0/dd1/classFlakkari_1_1UDPServer.html#ab30d892e78733f051ade74aa7dc0cab8">Flakkari::UDPServer::run</a></div><div class="ttdeci">void run()</div><div class="ttdoc">Run the server and wait for incoming packets and clients.</div><div class="ttdef"><b>Definition:</b> UDPServer.cpp:74</div></div>
+<div class="ttc" id="aclassFlakkari_1_1UDPServer_html_ab30d892e78733f051ade74aa7dc0cab8"><div class="ttname"><a href="../../d0/dd1/classFlakkari_1_1UDPServer.html#ab30d892e78733f051ade74aa7dc0cab8">Flakkari::UDPServer::run</a></div><div class="ttdeci">void run()</div><div class="ttdoc">Run the server and wait for incoming packets and clients.</div><div class="ttdef"><b>Definition:</b> UDPServer.cpp:94</div></div>
 <div class="ttc" id="anamespaceFlakkari_html"><div class="ttname"><a href="../../d2/da2/namespaceFlakkari.html">Flakkari</a></div><div class="ttdef"><b>Definition:</b> Collider.hpp:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

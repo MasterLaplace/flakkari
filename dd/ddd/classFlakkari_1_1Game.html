@@ -117,10 +117,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7a922284fb3aadc37fcac64724508db0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaad0a70892d4039c74530326fe398d96"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/ddd/classFlakkari_1_1Game.html#aaad0a70892d4039c74530326fe398d96">sendAllEntities</a> (const std::string &amp;sceneName, std::shared_ptr&lt; <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html">Client</a> &gt; player)</td></tr>
 <tr class="separator:aaad0a70892d4039c74530326fe398d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afda290406b5d7c92e8bee1d4890f36b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/ddd/classFlakkari_1_1Game.html#afda290406b5d7c92e8bee1d4890f36b2">sendOnSameScene</a> (const std::string &amp;sceneName, const <a class="el" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Network::Buffer</a> &amp;message)</td></tr>
-<tr class="separator:afda290406b5d7c92e8bee1d4890f36b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20b48ff889c6f3abae0e63b71c2206b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/ddd/classFlakkari_1_1Game.html#a20b48ff889c6f3abae0e63b71c2206b5">sendOnSameSceneExcept</a> (const std::string &amp;sceneName, const <a class="el" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Network::Buffer</a> &amp;message, std::shared_ptr&lt; <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html">Client</a> &gt; except)</td></tr>
-<tr class="separator:a20b48ff889c6f3abae0e63b71c2206b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a049bba6f759cc1f72ed3ae6cbd14804f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/ddd/classFlakkari_1_1Game.html#a049bba6f759cc1f72ed3ae6cbd14804f">sendOnSameScene</a> (const std::string &amp;sceneName, <a class="el" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html">Protocol::Packet</a>&lt; <a class="el" href="../../d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#adeff7b48bf0c05fe02740289753786b3">Protocol::CommandId</a> &gt; &amp;packet)</td></tr>
+<tr class="separator:a049bba6f759cc1f72ed3ae6cbd14804f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad2da6e3812a3e756753375a6fa7894b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/ddd/classFlakkari_1_1Game.html#aad2da6e3812a3e756753375a6fa7894b">sendOnSameSceneExcept</a> (const std::string &amp;sceneName, <a class="el" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html">Protocol::Packet</a>&lt; <a class="el" href="../../d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#adeff7b48bf0c05fe02740289753786b3">Protocol::CommandId</a> &gt; &amp;packet, std::shared_ptr&lt; <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html">Client</a> &gt; except)</td></tr>
+<tr class="separator:aad2da6e3812a3e756753375a6fa7894b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac2a90cc3ac31b5e674881b040e4d2a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/ddd/classFlakkari_1_1Game.html#aac2a90cc3ac31b5e674881b040e4d2a0">checkDisconnect</a> ()</td></tr>
 <tr class="memdesc:aac2a90cc3ac31b5e674881b040e4d2a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a player is disconnected.  <a href="../../dd/ddd/classFlakkari_1_1Game.html#aac2a90cc3ac31b5e674881b040e4d2a0">More...</a><br /></td></tr>
 <tr class="separator:aac2a90cc3ac31b5e674881b040e4d2a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -688,8 +688,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="afda290406b5d7c92e8bee1d4890f36b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afda290406b5d7c92e8bee1d4890f36b2">&#9670;&nbsp;</a></span>sendOnSameScene()</h2>
+<a id="a049bba6f759cc1f72ed3ae6cbd14804f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a049bba6f759cc1f72ed3ae6cbd14804f">&#9670;&nbsp;</a></span>sendOnSameScene()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -703,8 +703,8 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Network::Buffer</a> &amp;&#160;</td>
-          <td class="paramname"><em>message</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html">Protocol::Packet</a>&lt; <a class="el" href="../../d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#adeff7b48bf0c05fe02740289753786b3">Protocol::CommandId</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>packet</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -714,15 +714,20 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 <div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../dd/ddd/classFlakkari_1_1Game_a049bba6f759cc1f72ed3ae6cbd14804f_cgraph.png" border="0" usemap="#add/ddd/classFlakkari_1_1Game_a049bba6f759cc1f72ed3ae6cbd14804f_cgraph" alt=""/></div>
+</div>
+<div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../dd/ddd/classFlakkari_1_1Game_afda290406b5d7c92e8bee1d4890f36b2_icgraph.png" border="0" usemap="#add/ddd/classFlakkari_1_1Game_afda290406b5d7c92e8bee1d4890f36b2_icgraph" alt=""/></div>
+<div class="center"><img src="../../dd/ddd/classFlakkari_1_1Game_a049bba6f759cc1f72ed3ae6cbd14804f_icgraph.png" border="0" usemap="#add/ddd/classFlakkari_1_1Game_a049bba6f759cc1f72ed3ae6cbd14804f_icgraph" alt=""/></div>
 </div>
 
 </div>
 </div>
-<a id="a20b48ff889c6f3abae0e63b71c2206b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20b48ff889c6f3abae0e63b71c2206b5">&#9670;&nbsp;</a></span>sendOnSameSceneExcept()</h2>
+<a id="aad2da6e3812a3e756753375a6fa7894b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad2da6e3812a3e756753375a6fa7894b">&#9670;&nbsp;</a></span>sendOnSameSceneExcept()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -736,8 +741,8 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Network::Buffer</a> &amp;&#160;</td>
-          <td class="paramname"><em>message</em>, </td>
+          <td class="paramtype"><a class="el" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html">Protocol::Packet</a>&lt; <a class="el" href="../../d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#adeff7b48bf0c05fe02740289753786b3">Protocol::CommandId</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>packet</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -753,9 +758,14 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 <div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../dd/ddd/classFlakkari_1_1Game_aad2da6e3812a3e756753375a6fa7894b_cgraph.png" border="0" usemap="#add/ddd/classFlakkari_1_1Game_aad2da6e3812a3e756753375a6fa7894b_cgraph" alt=""/></div>
+</div>
+<div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../dd/ddd/classFlakkari_1_1Game_a20b48ff889c6f3abae0e63b71c2206b5_icgraph.png" border="0" usemap="#add/ddd/classFlakkari_1_1Game_a20b48ff889c6f3abae0e63b71c2206b5_icgraph" alt=""/></div>
+<div class="center"><img src="../../dd/ddd/classFlakkari_1_1Game_aad2da6e3812a3e756753375a6fa7894b_icgraph.png" border="0" usemap="#add/ddd/classFlakkari_1_1Game_aad2da6e3812a3e756753375a6fa7894b_icgraph" alt=""/></div>
 </div>
 
 </div>
@@ -921,8 +931,8 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>Flakkari/Server/Game/<a class="el" href="../../d5/d4b/Game_8hpp_source.html">Game.hpp (207  792 7004 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Game/Game.hpp)</a></li>
-<li>Flakkari/Server/Game/<a class="el" href="../../d0/dc4/Game_8cpp.html">Game.cpp (520  1221 19686 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Game/Game.cpp)</a></li>
+<li>Flakkari/Server/Game/<a class="el" href="../../d5/d4b/Game_8hpp_source.html">Game.hpp (207  790 7006 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Game/Game.hpp)</a></li>
+<li>Flakkari/Server/Game/<a class="el" href="../../d0/dc4/Game_8cpp.html">Game.cpp (539  1253 20494 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Game/Game.cpp)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

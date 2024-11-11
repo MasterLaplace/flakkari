@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Flakkari: Flakkari/Network/Address.hpp (193  584 5096 /home/runner/work/Flakkari/Flakkari/Flakkari/Network/Address.hpp) Source File</title>
+<title>Flakkari: Flakkari/Network/Address.hpp (178  538 4805 /home/runner/work/Flakkari/Flakkari/Flakkari/Network/Address.hpp) Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -130,7 +130,7 @@ $(document).ready(function(){initNavTree('d4/d47/Address_8hpp_source.html','../.
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">namespace </span><a class="code" href="../../db/db0/namespaceFlakkari_1_1Network.html">Flakkari::Network</a> {</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">class </span>Address {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">enum class</span> IpType {</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        None,</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        IPv4, <span class="comment">// Internet Protocol version 4</span></div>
@@ -143,17 +143,17 @@ $(document).ready(function(){initNavTree('d4/d47/Address_8hpp_source.html','../.
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        UDP, <span class="comment">// User Datagram Protocol</span></div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    };</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">static</span> constexpr <span class="keyword">const</span> <span class="keywordtype">char</span> *ipTypeToString(IpType ip_type);</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">static</span> constexpr <span class="keyword">const</span> <span class="keywordtype">char</span> *socketTypeToString(SocketType socket_type);</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keyword">using</span> address_t = <span class="keyword">const</span> std::string;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">using</span> port_t = <span class="keywordtype">unsigned</span> short;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">using</span> id_t = short;</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    Address(address_t &amp;address, port_t port, SocketType socket_type, IpType ip_type);</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    Address(port_t port, SocketType socket_type, IpType ip_type);</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    Address(<span class="keyword">const</span> sockaddr_in &amp;clientAddr, SocketType socket_type, IpType ip_type);</div>
@@ -179,25 +179,20 @@ $(document).ready(function(){initNavTree('d4/d47/Address_8hpp_source.html','../.
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    [[nodiscard]] IpType getIpType()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _ip_type; }</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    [[nodiscard]] id_t getId()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _id; }</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keyword">operator</span> std::string() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keywordtype">void</span> setId(id_t <span class="keywordtype">id</span>) { _id = id; }</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    std::shared_ptr&lt;addrinfo&gt; _addrInfo = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    SocketType _socket_type = SocketType::None;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    IpType _ip_type = IpType::None;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;};</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="keyword">operator</span> std::string() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    std::shared_ptr&lt;addrinfo&gt; _addrInfo = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    SocketType _socket_type = SocketType::None;</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    IpType _ip_type = IpType::None;</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    id_t _id = -1;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;};</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160; </div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;std::ostream &amp;<a class="code" href="../../db/db0/namespaceFlakkari_1_1Network.html#a85572af387ad3c63aa80b168b748b9eb">operator&lt;&lt;</a>(std::ostream &amp;os, <span class="keyword">const</span> Address &amp;addr);</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160; </div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;} <span class="comment">// namespace Flakkari::Network</span></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !ADDRESS_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;std::ostream &amp;<a class="code" href="../../db/db0/namespaceFlakkari_1_1Network.html#a85572af387ad3c63aa80b168b748b9eb">operator&lt;&lt;</a>(std::ostream &amp;os, <span class="keyword">const</span> Address &amp;addr);</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;} <span class="comment">// namespace Flakkari::Network</span></div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !ADDRESS_HPP_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="anamespaceFlakkari_1_1Network_html"><div class="ttname"><a href="../../db/db0/namespaceFlakkari_1_1Network.html">Flakkari::Network</a></div><div class="ttdef"><b>Definition:</b> Address.cpp:12</div></div>
 <div class="ttc" id="anamespaceFlakkari_1_1Network_html_a85572af387ad3c63aa80b168b748b9eb"><div class="ttname"><a href="../../db/db0/namespaceFlakkari_1_1Network.html#a85572af387ad3c63aa80b168b748b9eb">Flakkari::Network::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, const Address &amp;addr)</div><div class="ttdef"><b>Definition:</b> Address.cpp:195</div></div>
 </div><!-- fragment --></div><!-- contents -->

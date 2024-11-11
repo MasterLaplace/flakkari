@@ -1,7 +1,6 @@
 var structFlakkari_1_1Protocol_1_1V__0_1_1Packet =
 [
     [ "deserialize", "de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a0d6fb9d2f315e1ce6ee1cd2abd31906c", null ],
-    [ "extractString", "de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a7bf7de7cb6baf87ba95fa12e9bb6c8d2", null ],
     [ "injectComponent", "de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a68de2a693bb00c65a7b817e4a6475f56", null ],
     [ "injectString", "de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a711f13b9f573d313652c2a5401767750", null ],
     [ "serialize", "de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a189dc3d94e199fd788d2d47861a5a0e5", null ],

@@ -1,0 +1,12 @@
+digraph "Flakkari::Game::sendOnSameScene"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="Flakkari::Game::sendOnSame\lScene",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Flakkari::Protocol\l::V_0::Packet::serialize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a189dc3d94e199fd788d2d47861a5a0e5",tooltip="Serialize the packet into a buffer to be sent over the network."];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="Flakkari::Protocol\l::V_0::Packet::size",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a276e50236c57dae9372b0acd2878b845",tooltip=" "];
+}

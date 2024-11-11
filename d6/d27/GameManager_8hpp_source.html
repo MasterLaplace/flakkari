@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Flakkari: Flakkari/Server/Game/GameManager.hpp (120  446 3539 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Game/GameManager.hpp) Source File</title>
+<title>Flakkari: Flakkari/Server/Game/GameManager.hpp (122  465 3653 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Game/GameManager.hpp) Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -124,14 +124,14 @@ $(document).ready(function(){initNavTree('d6/d27/GameManager_8hpp_source.html','
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">namespace </span><a class="code" href="../../d2/da2/namespaceFlakkari.html">Flakkari</a> {</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
 <div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="../../dc/de7/classFlakkari_1_1GameManager.html">   34</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../dc/de7/classFlakkari_1_1GameManager.html">GameManager</a> : <span class="keyword">public</span> Singleton&lt;GameManager&gt; {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    std::unordered_map&lt;std::string <span class="comment">/*gameName*/</span>, std::queue&lt;std::shared_ptr&lt;Client&gt;&gt; <span class="comment">/*waitingClients*/</span>&gt;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        _waitingClients;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    std::unordered_map&lt;std::string <span class="comment">/*gameName*/</span>, std::vector&lt;std::shared_ptr&lt;Game&gt;&gt; <span class="comment">/*gamesInstances*/</span>&gt; _gamesInstances;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    std::unordered_map&lt;std::string <span class="comment">/*gameName*/</span>, std::shared_ptr&lt;nlohmann::json&gt; <span class="comment">/*data*/</span>&gt; _gamesStore;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    std::string _game_dir;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="../../dc/de7/classFlakkari_1_1GameManager.html#ad5f7682e7930aa2a9cd7d3c8f518a837">GameManager</a>(<span class="keyword">const</span> std::string &amp;gameDir);</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
 <div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="../../dc/de7/classFlakkari_1_1GameManager.html#a3b0895e422211b2ad7210821e768a8e7">   55</a></span>&#160;    <a class="code" href="../../dc/de7/classFlakkari_1_1GameManager.html#a3b0895e422211b2ad7210821e768a8e7">~GameManager</a>() = <span class="keywordflow">default</span>;</div>
@@ -144,16 +144,16 @@ $(document).ready(function(){initNavTree('d6/d27/GameManager_8hpp_source.html','
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="../../dc/de7/classFlakkari_1_1GameManager.html#a67b734ceba74a48925d7085b2ca34082">listGames</a>();</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="../../dc/de7/classFlakkari_1_1GameManager.html#a8fc23a0f674420caf77698ec9f534116">addClientToGame</a>(<span class="keyword">const</span> std::string &amp;gameName, std::shared_ptr&lt;Client&gt; &amp;client);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="../../dc/de7/classFlakkari_1_1GameManager.html#a506a7b3c2808703cb84cf8b69c1bbe78">removeClientFromGame</a>(<span class="keyword">const</span> std::string &amp;gameName, <span class="keyword">const</span> std::shared_ptr&lt;Client&gt; &amp;client);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="../../dc/de7/classFlakkari_1_1GameManager.html#a94a61db9e4faeec8119a7f85a00b706a">getIndexInWaitingQueue</a>(<span class="keyword">const</span> std::string &amp;gameName, <span class="keyword">const</span> std::shared_ptr&lt;Client&gt; &amp;client);</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;};</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;} <span class="comment">/* namespace Flakkari */</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    [[nodiscard]] <span class="keywordtype">bool</span> <a class="code" href="../../dc/de7/classFlakkari_1_1GameManager.html#a9c4f19fcde0aa230d785b5df8bc2819e">addClientToGame</a>(<span class="keyword">const</span> std::string &amp;gameName, std::shared_ptr&lt;Client&gt; client);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="../../dc/de7/classFlakkari_1_1GameManager.html#a506a7b3c2808703cb84cf8b69c1bbe78">removeClientFromGame</a>(<span class="keyword">const</span> std::string &amp;gameName, <span class="keyword">const</span> std::shared_ptr&lt;Client&gt; &amp;client);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    [[nodiscard]] <span class="keywordtype">int</span> <a class="code" href="../../dc/de7/classFlakkari_1_1GameManager.html#a94a61db9e4faeec8119a7f85a00b706a">getIndexInWaitingQueue</a>(<span class="keyword">const</span> std::string &amp;gameName, <span class="keyword">const</span> std::shared_ptr&lt;Client&gt; &amp;client);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;};</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !GAMEMANAGER_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;} <span class="comment">/* namespace Flakkari */</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !GAMEMANAGER_HPP_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="aGame_8hpp_html"><div class="ttname"><a href="../../d5/d4b/Game_8hpp.html">Game.hpp</a></div></div>
 <div class="ttc" id="aLogger_8hpp_html"><div class="ttname"><a href="../../d9/d11/Logger_8hpp.html">Logger.hpp</a></div></div>
 <div class="ttc" id="aclassFlakkari_1_1GameManager_html"><div class="ttname"><a href="../../dc/de7/classFlakkari_1_1GameManager.html">Flakkari::GameManager</a></div><div class="ttdef"><b>Definition:</b> GameManager.hpp:34</div></div>
@@ -163,8 +163,8 @@ $(document).ready(function(){initNavTree('d6/d27/GameManager_8hpp_source.html','
 <div class="ttc" id="aclassFlakkari_1_1GameManager_html_a634995d64835d39036f3e3b0240c53a1"><div class="ttname"><a href="../../dc/de7/classFlakkari_1_1GameManager.html#a634995d64835d39036f3e3b0240c53a1">Flakkari::GameManager::removeGame</a></div><div class="ttdeci">int removeGame(const std::string &amp;gameName)</div><div class="ttdoc">Remove a game from the GameManager.</div><div class="ttdef"><b>Definition:</b> GameManager.cpp:91</div></div>
 <div class="ttc" id="aclassFlakkari_1_1GameManager_html_a67b734ceba74a48925d7085b2ca34082"><div class="ttname"><a href="../../dc/de7/classFlakkari_1_1GameManager.html#a67b734ceba74a48925d7085b2ca34082">Flakkari::GameManager::listGames</a></div><div class="ttdeci">void listGames()</div><div class="ttdoc">List all games present in the GameManager.</div><div class="ttdef"><b>Definition:</b> GameManager.cpp:102</div></div>
 <div class="ttc" id="aclassFlakkari_1_1GameManager_html_a6953f181b45d50081efc2b60b4e1049c"><div class="ttname"><a href="../../dc/de7/classFlakkari_1_1GameManager.html#a6953f181b45d50081efc2b60b4e1049c">Flakkari::GameManager::updateGame</a></div><div class="ttdeci">int updateGame(const std::string &amp;gameName)</div><div class="ttdoc">Update a game from the GameManager.</div><div class="ttdef"><b>Definition:</b> GameManager.cpp:75</div></div>
-<div class="ttc" id="aclassFlakkari_1_1GameManager_html_a8fc23a0f674420caf77698ec9f534116"><div class="ttname"><a href="../../dc/de7/classFlakkari_1_1GameManager.html#a8fc23a0f674420caf77698ec9f534116">Flakkari::GameManager::addClientToGame</a></div><div class="ttdeci">void addClientToGame(const std::string &amp;gameName, std::shared_ptr&lt; Client &gt; &amp;client)</div><div class="ttdoc">Add a client to a game.</div><div class="ttdef"><b>Definition:</b> GameManager.cpp:111</div></div>
 <div class="ttc" id="aclassFlakkari_1_1GameManager_html_a94a61db9e4faeec8119a7f85a00b706a"><div class="ttname"><a href="../../dc/de7/classFlakkari_1_1GameManager.html#a94a61db9e4faeec8119a7f85a00b706a">Flakkari::GameManager::getIndexInWaitingQueue</a></div><div class="ttdeci">int getIndexInWaitingQueue(const std::string &amp;gameName, const std::shared_ptr&lt; Client &gt; &amp;client)</div><div class="ttdoc">Get the index of a client in the waiting queue.</div><div class="ttdef"><b>Definition:</b> GameManager.cpp:196</div></div>
+<div class="ttc" id="aclassFlakkari_1_1GameManager_html_a9c4f19fcde0aa230d785b5df8bc2819e"><div class="ttname"><a href="../../dc/de7/classFlakkari_1_1GameManager.html#a9c4f19fcde0aa230d785b5df8bc2819e">Flakkari::GameManager::addClientToGame</a></div><div class="ttdeci">bool addClientToGame(const std::string &amp;gameName, std::shared_ptr&lt; Client &gt; client)</div><div class="ttdoc">Add a client to a game.</div><div class="ttdef"><b>Definition:</b> GameManager.cpp:111</div></div>
 <div class="ttc" id="aclassFlakkari_1_1GameManager_html_ad5f7682e7930aa2a9cd7d3c8f518a837"><div class="ttname"><a href="../../dc/de7/classFlakkari_1_1GameManager.html#ad5f7682e7930aa2a9cd7d3c8f518a837">Flakkari::GameManager::GameManager</a></div><div class="ttdeci">GameManager(const std::string &amp;gameDir)</div><div class="ttdoc">Construct a new GameManager object and load all games already present in the Games folder.</div><div class="ttdef"><b>Definition:</b> GameManager.cpp:19</div></div>
 <div class="ttc" id="anamespaceFlakkari_html"><div class="ttname"><a href="../../d2/da2/namespaceFlakkari.html">Flakkari</a></div><div class="ttdef"><b>Definition:</b> Collider.hpp:16</div></div>
 </div><!-- fragment --></div><!-- contents -->

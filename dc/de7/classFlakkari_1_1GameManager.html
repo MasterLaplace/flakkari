@@ -125,9 +125,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a67b734ceba74a48925d7085b2ca34082"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/de7/classFlakkari_1_1GameManager.html#a67b734ceba74a48925d7085b2ca34082">listGames</a> ()</td></tr>
 <tr class="memdesc:a67b734ceba74a48925d7085b2ca34082"><td class="mdescLeft">&#160;</td><td class="mdescRight">List all games present in the <a class="el" href="../../dc/de7/classFlakkari_1_1GameManager.html">GameManager</a>.  <a href="../../dc/de7/classFlakkari_1_1GameManager.html#a67b734ceba74a48925d7085b2ca34082">More...</a><br /></td></tr>
 <tr class="separator:a67b734ceba74a48925d7085b2ca34082"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fc23a0f674420caf77698ec9f534116"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/de7/classFlakkari_1_1GameManager.html#a8fc23a0f674420caf77698ec9f534116">addClientToGame</a> (const std::string &amp;gameName, std::shared_ptr&lt; <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html">Client</a> &gt; &amp;client)</td></tr>
-<tr class="memdesc:a8fc23a0f674420caf77698ec9f534116"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a client to a game.  <a href="../../dc/de7/classFlakkari_1_1GameManager.html#a8fc23a0f674420caf77698ec9f534116">More...</a><br /></td></tr>
-<tr class="separator:a8fc23a0f674420caf77698ec9f534116"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c4f19fcde0aa230d785b5df8bc2819e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/de7/classFlakkari_1_1GameManager.html#a9c4f19fcde0aa230d785b5df8bc2819e">addClientToGame</a> (const std::string &amp;gameName, std::shared_ptr&lt; <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html">Client</a> &gt; client)</td></tr>
+<tr class="memdesc:a9c4f19fcde0aa230d785b5df8bc2819e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a client to a game.  <a href="../../dc/de7/classFlakkari_1_1GameManager.html#a9c4f19fcde0aa230d785b5df8bc2819e">More...</a><br /></td></tr>
+<tr class="separator:a9c4f19fcde0aa230d785b5df8bc2819e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a506a7b3c2808703cb84cf8b69c1bbe78"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/de7/classFlakkari_1_1GameManager.html#a506a7b3c2808703cb84cf8b69c1bbe78">removeClientFromGame</a> (const std::string &amp;gameName, const std::shared_ptr&lt; <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html">Client</a> &gt; &amp;client)</td></tr>
 <tr class="memdesc:a506a7b3c2808703cb84cf8b69c1bbe78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a client from a game.  <a href="../../dc/de7/classFlakkari_1_1GameManager.html#a506a7b3c2808703cb84cf8b69c1bbe78">More...</a><br /></td></tr>
 <tr class="separator:a506a7b3c2808703cb84cf8b69c1bbe78"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -198,14 +198,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8fc23a0f674420caf77698ec9f534116"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8fc23a0f674420caf77698ec9f534116">&#9670;&nbsp;</a></span>addClientToGame()</h2>
+<a id="a9c4f19fcde0aa230d785b5df8bc2819e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c4f19fcde0aa230d785b5df8bc2819e">&#9670;&nbsp;</a></span>addClientToGame()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Flakkari::GameManager::addClientToGame </td>
+          <td class="memname">bool Flakkari::GameManager::addClientToGame </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>gameName</em>, </td>
@@ -213,7 +213,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html">Client</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html">Client</a> &gt;&#160;</td>
           <td class="paramname"><em>client</em>&#160;</td>
         </tr>
         <tr>
@@ -232,6 +232,9 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>true <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html" title="Client class that handles the client&#39;s activity and disconnection timeout.">Client</a> added to the game </dd>
+<dd>
+false <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html" title="Client class that handles the client&#39;s activity and disconnection timeout.">Client</a> not added to the game </dd></dl>
 
 </div>
 </div>
@@ -421,8 +424,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>Flakkari/Server/Game/<a class="el" href="../../d6/d27/GameManager_8hpp_source.html">GameManager.hpp (120  446 3539 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Game/GameManager.hpp)</a></li>
-<li>Flakkari/Server/Game/<a class="el" href="../../dc/dd7/GameManager_8cpp.html">GameManager.cpp (212  613 7182 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Game/GameManager.cpp)</a></li>
+<li>Flakkari/Server/Game/<a class="el" href="../../d6/d27/GameManager_8hpp_source.html">GameManager.hpp (122  465 3653 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Game/GameManager.hpp)</a></li>
+<li>Flakkari/Server/Game/<a class="el" href="../../dc/dd7/GameManager_8cpp.html">GameManager.cpp (212  634 7312 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Game/GameManager.cpp)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Flakkari: Flakkari/Server/Internals/CommandManager.hpp (98  354 2871 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Internals/CommandManager.hpp) Source File</title>
+<title>Flakkari: Flakkari/Server/Internals/CommandManager.hpp (98  354 2859 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Internals/CommandManager.hpp) Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -120,17 +120,17 @@ $(document).ready(function(){initNavTree('d9/dae/CommandManager_8hpp_source.html
 <div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="../../d4/ded/namespaceFlakkari_1_1Internals.html">   28</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="../../d4/ded/namespaceFlakkari_1_1Internals.html">Flakkari::Internals</a> {</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
 <div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="../../d5/d15/classFlakkari_1_1Internals_1_1CommandManager.html">   30</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../d5/d15/classFlakkari_1_1Internals_1_1CommandManager.html">CommandManager</a> {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="../../d5/d15/classFlakkari_1_1Internals_1_1CommandManager.html#a8769f7cc02b4d135aaae973b9feea961">   32</a></span>&#160;    <span class="keyword">static</span> std::regex <a class="code" href="../../d5/d15/classFlakkari_1_1Internals_1_1CommandManager.html#a8769f7cc02b4d135aaae973b9feea961">PASSWORD_REGEX</a>;</div>
 <div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="../../d5/d15/classFlakkari_1_1Internals_1_1CommandManager.html#a52cc0824f8c895aaaea6caf68e391751">   33</a></span>&#160;    <span class="keyword">static</span> std::regex <a class="code" href="../../d5/d15/classFlakkari_1_1Internals_1_1CommandManager.html#a52cc0824f8c895aaaea6caf68e391751">ADD_GAME_REGEX</a>;</div>
 <div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="../../d5/d15/classFlakkari_1_1Internals_1_1CommandManager.html#a5530d762b2aac6ca21d89e1ed90c11cb">   34</a></span>&#160;    <span class="keyword">static</span> std::regex <a class="code" href="../../d5/d15/classFlakkari_1_1Internals_1_1CommandManager.html#a5530d762b2aac6ca21d89e1ed90c11cb">UPDATE_GAME_REGEX</a>;</div>
 <div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="../../d5/d15/classFlakkari_1_1Internals_1_1CommandManager.html#a3dd2653394b125d468097883bfb34eae">   35</a></span>&#160;    <span class="keyword">static</span> std::regex <a class="code" href="../../d5/d15/classFlakkari_1_1Internals_1_1CommandManager.html#a3dd2653394b125d468097883bfb34eae">REMOVE_GAME_REGEX</a>;</div>
 <div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="../../d5/d15/classFlakkari_1_1Internals_1_1CommandManager.html#ad8b00d2f8eb34d0189b6b29ef35ffc98">   36</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="../../d5/d15/classFlakkari_1_1Internals_1_1CommandManager.html#ad8b00d2f8eb34d0189b6b29ef35ffc98">_unlocked</a>;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="../../d5/d15/classFlakkari_1_1Internals_1_1CommandManager.html#ac769c453e5cd33cfc915b38a2403b029">handleCommand</a>();</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    [[nodiscard]] <span class="keyword">static</span> <span class="keywordtype">bool</span> handleOpenCommand(<span class="keyword">const</span> std::string &amp;input);</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    [[nodiscard]] <span class="keyword">static</span> <span class="keywordtype">bool</span> handlePasswordCommand(<span class="keyword">const</span> std::string &amp;input);</div>

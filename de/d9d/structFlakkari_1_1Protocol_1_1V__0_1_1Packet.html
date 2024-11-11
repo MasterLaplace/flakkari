@@ -115,9 +115,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a68de2a693bb00c65a7b817e4a6475f56"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a68de2a693bb00c65a7b817e4a6475f56">injectComponent</a> (T component)</td></tr>
 <tr class="separator:a68de2a693bb00c65a7b817e4a6475f56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a711f13b9f573d313652c2a5401767750"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a711f13b9f573d313652c2a5401767750">injectString</a> (std::string str)</td></tr>
+<tr class="memdesc:a711f13b9f573d313652c2a5401767750"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inject a string into the packet.  <a href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a711f13b9f573d313652c2a5401767750">More...</a><br /></td></tr>
 <tr class="separator:a711f13b9f573d313652c2a5401767750"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7bf7de7cb6baf87ba95fa12e9bb6c8d2"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a7bf7de7cb6baf87ba95fa12e9bb6c8d2">extractString</a> ()</td></tr>
-<tr class="separator:a7bf7de7cb6baf87ba95fa12e9bb6c8d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a189dc3d94e199fd788d2d47861a5a0e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Network::Buffer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a189dc3d94e199fd788d2d47861a5a0e5">serialize</a> () const</td></tr>
 <tr class="memdesc:a189dc3d94e199fd788d2d47861a5a0e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize the packet into a buffer to be sent over the network.  <a href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a189dc3d94e199fd788d2d47861a5a0e5">More...</a><br /></td></tr>
 <tr class="separator:a189dc3d94e199fd788d2d47861a5a0e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -213,38 +212,6 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a7bf7de7cb6baf87ba95fa12e9bb6c8d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7bf7de7cb6baf87ba95fa12e9bb6c8d2">&#9670;&nbsp;</a></span>extractString()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Id &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string <a class="el" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html">Flakkari::Protocol::V_0::Packet</a>&lt; Id &gt;::extractString </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet_a7bf7de7cb6baf87ba95fa12e9bb6c8d2_icgraph.png" border="0" usemap="#ade/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet_a7bf7de7cb6baf87ba95fa12e9bb6c8d2_icgraph" alt=""/></div>
-</div>
-
-</div>
-</div>
 <a id="a68de2a693bb00c65a7b817e4a6475f56"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a68de2a693bb00c65a7b817e4a6475f56">&#9670;&nbsp;</a></span>injectComponent()</h2>
 
@@ -300,6 +267,14 @@ template&lt;typename Id &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Inject a string into the packet. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>The string to inject. </td></tr>
+  </table>
+  </dd>
+</dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -603,7 +578,7 @@ template&lt;typename Id &gt; </div>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>Flakkari/Protocol/<a class="el" href="../../db/d1b/Packet_8hpp_source.html">Packet.hpp (182  695 6817 /home/runner/work/Flakkari/Flakkari/Flakkari/Protocol/Packet.hpp)</a></li>
+<li>Flakkari/Protocol/<a class="el" href="../../db/d1b/Packet_8hpp_source.html">Packet.hpp (180  721 6932 /home/runner/work/Flakkari/Flakkari/Flakkari/Protocol/Packet.hpp)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

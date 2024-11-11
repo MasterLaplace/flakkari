@@ -87,8 +87,7 @@ $(document).ready(function(){initNavTree('d9/d34/classFlakkari_1_1Client.html','
 
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Data Fields</a>  </div>
+<a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Flakkari::Client Class Reference</div>  </div>
 </div><!--header-->
@@ -98,17 +97,12 @@ $(document).ready(function(){initNavTree('d9/d34/classFlakkari_1_1Client.html','
  <a href="../../d9/d34/classFlakkari_1_1Client.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="../../d3/d8e/Client_8hpp_source.html">Client.hpp</a>&gt;</code></p>
-<div class="dynheader">
-Collaboration diagram for Flakkari::Client:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../d7/dce/classFlakkari_1_1Client__coll__graph.png" border="0" usemap="#aFlakkari_1_1Client_coll__map" alt="Collaboration graph"/></div>
-<center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a87dc53e29ba30b71a36ef3c716ab8bfe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d34/classFlakkari_1_1Client.html#a87dc53e29ba30b71a36ef3c716ab8bfe">Client</a> (const std::shared_ptr&lt; Network::Address &gt; &amp;address, const std::string &amp;name)</td></tr>
-<tr class="memdesc:a87dc53e29ba30b71a36ef3c716ab8bfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html" title="Client class that handles the client&#39;s activity and disconnection timeout.">Client</a> object.  <a href="../../d9/d34/classFlakkari_1_1Client.html#a87dc53e29ba30b71a36ef3c716ab8bfe">More...</a><br /></td></tr>
-<tr class="separator:a87dc53e29ba30b71a36ef3c716ab8bfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8100cc11656b9feaf2e9e49dfe0a847a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d34/classFlakkari_1_1Client.html#a8100cc11656b9feaf2e9e49dfe0a847a">Client</a> (const std::shared_ptr&lt; Network::Address &gt; &amp;address, const std::string &amp;name, <a class="el" href="../../dc/d58/namespaceFlakkari_1_1Protocol.html#a302e0d2f906390c0a05e720dc87fd30d">Protocol::ApiVersion</a> apiVersion)</td></tr>
+<tr class="memdesc:a8100cc11656b9feaf2e9e49dfe0a847a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html" title="Client class that handles the client&#39;s activity and disconnection timeout.">Client</a> object.  <a href="../../d9/d34/classFlakkari_1_1Client.html#a8100cc11656b9feaf2e9e49dfe0a847a">More...</a><br /></td></tr>
+<tr class="separator:a8100cc11656b9feaf2e9e49dfe0a847a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a840989d3c74a47d0f20fe43b252b9402"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d34/classFlakkari_1_1Client.html#a840989d3c74a47d0f20fe43b252b9402">~Client</a> ()</td></tr>
 <tr class="separator:a840989d3c74a47d0f20fe43b252b9402"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9862c78b874235de1db86bcc6810baf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d34/classFlakkari_1_1Client.html#ae9862c78b874235de1db86bcc6810baf">isConnected</a> (float timeout=5)</td></tr>
@@ -123,6 +117,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad69c75902d0bc12498f3f0db0ed8dca5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d34/classFlakkari_1_1Client.html#ad69c75902d0bc12498f3f0db0ed8dca5">incrementWarningCount</a> ()</td></tr>
 <tr class="memdesc:ad69c75902d0bc12498f3f0db0ed8dca5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increment the warning count of the client.  <a href="../../d9/d34/classFlakkari_1_1Client.html#ad69c75902d0bc12498f3f0db0ed8dca5">More...</a><br /></td></tr>
 <tr class="separator:ad69c75902d0bc12498f3f0db0ed8dca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac402753166065758fe470d0b2775e426"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d34/classFlakkari_1_1Client.html#ac402753166065758fe470d0b2775e426">addPacketToQueue</a> (const <a class="el" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html">Protocol::Packet</a>&lt; <a class="el" href="../../d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#adeff7b48bf0c05fe02740289753786b3">Protocol::CommandId</a> &gt; &amp;packet)</td></tr>
+<tr class="memdesc:ac402753166065758fe470d0b2775e426"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a packet to the client's send queue and set the api version used by the client.  <a href="../../d9/d34/classFlakkari_1_1Client.html#ac402753166065758fe470d0b2775e426">More...</a><br /></td></tr>
+<tr class="separator:ac402753166065758fe470d0b2775e426"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cdcbd980c70925bd0437fc230ec0729"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; Network::Address &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d34/classFlakkari_1_1Client.html#a8cdcbd980c70925bd0437fc230ec0729">getAddress</a> () const</td></tr>
 <tr class="memdesc:a8cdcbd980c70925bd0437fc230ec0729"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the client's address.  <a href="../../d9/d34/classFlakkari_1_1Client.html#a8cdcbd980c70925bd0437fc230ec0729">More...</a><br /></td></tr>
 <tr class="separator:a8cdcbd980c70925bd0437fc230ec0729"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,8 +128,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac0eeb15520bdc95d14bb3d552db42cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76c52ec17e5ba8787bd45a71ec81587a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d34/classFlakkari_1_1Client.html#a76c52ec17e5ba8787bd45a71ec81587a">setEntity</a> (<a class="el" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">Engine::ECS::Entity</a> entity)</td></tr>
 <tr class="separator:a76c52ec17e5ba8787bd45a71ec81587a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa62209e3bfc30ced664a40ef8450d633"><td class="memItemLeft" align="right" valign="top">short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d34/classFlakkari_1_1Client.html#aa62209e3bfc30ced664a40ef8450d633">getId</a> () const</td></tr>
-<tr class="separator:aa62209e3bfc30ced664a40ef8450d633"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e3dff2c0166ca5f51f4be894e4ca9a9"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d34/classFlakkari_1_1Client.html#a3e3dff2c0166ca5f51f4be894e4ca9a9">getSceneName</a> () const</td></tr>
 <tr class="separator:a3e3dff2c0166ca5f51f4be894e4ca9a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a74dcc0afaeb5cf38373f462834831d1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d34/classFlakkari_1_1Client.html#a74dcc0afaeb5cf38373f462834831d1a">setSceneName</a> (std::string sceneName)</td></tr>
@@ -151,15 +146,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad128281d868e408dc932433ee7d29951"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a609055047eaf74bd855f977237010e3b"><td class="memItemLeft" align="right" valign="top">unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d34/classFlakkari_1_1Client.html#a609055047eaf74bd855f977237010e3b">getMaxPacketHistory</a> () const</td></tr>
 <tr class="separator:a609055047eaf74bd855f977237010e3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a6f40ccca538aa73ec3e068fd9b2039ee"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Network::Buffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d34/classFlakkari_1_1Client.html#a6f40ccca538aa73ec3e068fd9b2039ee">_packetHistory</a></td></tr>
-<tr class="separator:a6f40ccca538aa73ec3e068fd9b2039ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a265ea0b3488cac7277e381fa17d9df7a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d2/df5/classFlakkari_1_1Network_1_1PacketQueue.html">Network::PacketQueue</a>&lt; <a class="el" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html">Protocol::Packet</a>&lt; <a class="el" href="../../d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#adeff7b48bf0c05fe02740289753786b3">Protocol::CommandId</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d34/classFlakkari_1_1Client.html#a265ea0b3488cac7277e381fa17d9df7a">_sendQueue</a></td></tr>
-<tr class="separator:a265ea0b3488cac7277e381fa17d9df7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94926cbed08975e50077a331d97fafa7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d2/df5/classFlakkari_1_1Network_1_1PacketQueue.html">Network::PacketQueue</a>&lt; <a class="el" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html">Protocol::Packet</a>&lt; <a class="el" href="../../d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#adeff7b48bf0c05fe02740289753786b3">Protocol::CommandId</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d34/classFlakkari_1_1Client.html#a94926cbed08975e50077a331d97fafa7">_receiveQueue</a></td></tr>
-<tr class="separator:a94926cbed08975e50077a331d97fafa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80e4cab5045197cd20787e31afdb290a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../dc/d58/namespaceFlakkari_1_1Protocol.html#a302e0d2f906390c0a05e720dc87fd30d">Protocol::ApiVersion</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d34/classFlakkari_1_1Client.html#a80e4cab5045197cd20787e31afdb290a">getApiVersion</a> () const</td></tr>
+<tr class="separator:a80e4cab5045197cd20787e31afdb290a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bb4aff18d5fb4e21ca4275866efe8a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d2/df5/classFlakkari_1_1Network_1_1PacketQueue.html">Network::PacketQueue</a>&lt; <a class="el" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html">Protocol::Packet</a>&lt; <a class="el" href="../../d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#adeff7b48bf0c05fe02740289753786b3">Protocol::CommandId</a> &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d34/classFlakkari_1_1Client.html#a6bb4aff18d5fb4e21ca4275866efe8a8">getReceiveQueue</a> ()</td></tr>
+<tr class="separator:a6bb4aff18d5fb4e21ca4275866efe8a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="../../d9/d34/classFlakkari_1_1Client.html" title="Client class that handles the client&#39;s activity and disconnection timeout.">Client</a> class that handles the client's activity and disconnection timeout. </p>
@@ -168,8 +158,8 @@ Data Fields</h2></td></tr>
 <dd>
 Network::Address </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a87dc53e29ba30b71a36ef3c716ab8bfe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a87dc53e29ba30b71a36ef3c716ab8bfe">&#9670;&nbsp;</a></span>Client()</h2>
+<a id="a8100cc11656b9feaf2e9e49dfe0a847a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8100cc11656b9feaf2e9e49dfe0a847a">&#9670;&nbsp;</a></span>Client()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -184,7 +174,13 @@ Network::Address </dd></dl>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/d58/namespaceFlakkari_1_1Protocol.html#a302e0d2f906390c0a05e720dc87fd30d">Protocol::ApiVersion</a>&#160;</td>
+          <td class="paramname"><em>apiVersion</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -199,6 +195,7 @@ Network::Address </dd></dl>
   <table class="params">
     <tr><td class="paramname">address</td><td>The client's address </td></tr>
     <tr><td class="paramname">name</td><td>The <a class="el" href="../../dd/ddd/classFlakkari_1_1Game.html">Game</a>'s name </td></tr>
+    <tr><td class="paramname">apiVersion</td><td>The API version used by the client </td></tr>
   </table>
   </dd>
 </dl>
@@ -249,6 +246,32 @@ Network::Address </dd></dl>
 
 </div>
 </div>
+<a id="ac402753166065758fe470d0b2775e426"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac402753166065758fe470d0b2775e426">&#9670;&nbsp;</a></span>addPacketToQueue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Flakkari::Client::addPacketToQueue </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html">Protocol::Packet</a>&lt; <a class="el" href="../../d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#adeff7b48bf0c05fe02740289753786b3">Protocol::CommandId</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>packet</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a packet to the client's send queue and set the api version used by the client. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">packet</td><td>The packet to add </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a8cdcbd980c70925bd0437fc230ec0729"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8cdcbd980c70925bd0437fc230ec0729">&#9670;&nbsp;</a></span>getAddress()</h2>
 
@@ -274,6 +297,31 @@ Network::Address </dd></dl>
 
 <p>Get the client's address. </p>
 <dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;Network::Address&gt; The client's address </dd></dl>
+
+</div>
+</div>
+<a id="a80e4cab5045197cd20787e31afdb290a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a80e4cab5045197cd20787e31afdb290a">&#9670;&nbsp;</a></span>getApiVersion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../dc/d58/namespaceFlakkari_1_1Protocol.html#a302e0d2f906390c0a05e720dc87fd30d">Protocol::ApiVersion</a> Flakkari::Client::getApiVersion </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -316,31 +364,6 @@ Network::Address </dd></dl>
       <table class="memname">
         <tr>
           <td class="memname">std::string Flakkari::Client::getGameName </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa62209e3bfc30ced664a40ef8450d633"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa62209e3bfc30ced664a40ef8450d633">&#9670;&nbsp;</a></span>getId()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">short Flakkari::Client::getId </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -419,6 +442,31 @@ Network::Address </dd></dl>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6bb4aff18d5fb4e21ca4275866efe8a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bb4aff18d5fb4e21ca4275866efe8a8">&#9670;&nbsp;</a></span>getReceiveQueue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d2/df5/classFlakkari_1_1Network_1_1PacketQueue.html">Network::PacketQueue</a>&lt;<a class="el" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html">Protocol::Packet</a>&lt;<a class="el" href="../../d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#adeff7b48bf0c05fe02740289753786b3">Protocol::CommandId</a>&gt; &gt;&amp; Flakkari::Client::getReceiveQueue </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
   </td>
@@ -654,52 +702,9 @@ false If the client is not connected anymore </dd></dl>
 
 </div>
 </div>
-<h2 class="groupheader">Field Documentation</h2>
-<a id="a6f40ccca538aa73ec3e068fd9b2039ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f40ccca538aa73ec3e068fd9b2039ee">&#9670;&nbsp;</a></span>_packetHistory</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Network::Buffer</a>&gt; Flakkari::Client::_packetHistory</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a94926cbed08975e50077a331d97fafa7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a94926cbed08975e50077a331d97fafa7">&#9670;&nbsp;</a></span>_receiveQueue</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="../../d2/df5/classFlakkari_1_1Network_1_1PacketQueue.html">Network::PacketQueue</a>&lt;<a class="el" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html">Protocol::Packet</a>&lt;<a class="el" href="../../d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#adeff7b48bf0c05fe02740289753786b3">Protocol::CommandId</a>&gt; &gt; Flakkari::Client::_receiveQueue</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a265ea0b3488cac7277e381fa17d9df7a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a265ea0b3488cac7277e381fa17d9df7a">&#9670;&nbsp;</a></span>_sendQueue</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="../../d2/df5/classFlakkari_1_1Network_1_1PacketQueue.html">Network::PacketQueue</a>&lt;<a class="el" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html">Protocol::Packet</a>&lt;<a class="el" href="../../d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#adeff7b48bf0c05fe02740289753786b3">Protocol::CommandId</a>&gt; &gt; Flakkari::Client::_sendQueue</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>Flakkari/Server/Client/<a class="el" href="../../d3/d8e/Client_8hpp_source.html">Client.hpp (136  517 4370 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Client/Client.hpp)</a></li>
-<li>Flakkari/Server/Client/<a class="el" href="../../dc/d4f/Client_8cpp.html">Client.cpp (49   95 1138 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Client/Client.cpp)</a></li>
+<li>Flakkari/Server/Client/<a class="el" href="../../d3/d8e/Client_8hpp_source.html">Client.hpp (149  570 4871 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Client/Client.hpp)</a></li>
+<li>Flakkari/Server/Client/<a class="el" href="../../dc/d4f/Client_8cpp.html">Client.cpp (53  109 1360 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Client/Client.cpp)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

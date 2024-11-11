@@ -6,7 +6,7 @@ digraph "Flakkari::Game::addPlayer"
   rankdir="LR";
   Node1 [label="Flakkari::Game::addPlayer",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Add a player to the game instance."];
   Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="Flakkari::Protocol\l::V_0::Packet::injectString",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a711f13b9f573d313652c2a5401767750",tooltip=" "];
+  Node2 [label="Flakkari::Protocol\l::V_0::Packet::injectString",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a711f13b9f573d313652c2a5401767750",tooltip="Inject a string into the packet."];
   Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 [label="Flakkari::Game::loadComponents",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#a58ec493f758d629370dfc28c4e198ba7",tooltip="Add all the components of the game to the registry."];
   Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -16,9 +16,10 @@ digraph "Flakkari::Game::addPlayer"
   Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node6 [label="Flakkari::Engine::ECS\l::Registry::remove_component",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#afec03d0edf17b2ad7098604ae70d0f33",tooltip="Remove a component from an entity in the registry."];
   Node1 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7 [label="Flakkari::Game::sendOnSame\lSceneExcept",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#a20b48ff889c6f3abae0e63b71c2206b5",tooltip=" "];
-  Node1 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="Flakkari::Game::sendOnSame\lSceneExcept",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#aad2da6e3812a3e756753375a6fa7894b",tooltip=" "];
+  Node7 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node8 [label="Flakkari::Protocol\l::V_0::Packet::serialize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a189dc3d94e199fd788d2d47861a5a0e5",tooltip="Serialize the packet into a buffer to be sent over the network."];
   Node8 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node9 [label="Flakkari::Protocol\l::V_0::Packet::size",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a276e50236c57dae9372b0acd2878b845",tooltip=" "];
+  Node1 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

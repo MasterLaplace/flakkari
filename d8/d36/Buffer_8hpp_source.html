@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Flakkari: Flakkari/Network/Buffer.hpp (265  824 6536 /home/runner/work/Flakkari/Flakkari/Flakkari/Network/Buffer.hpp) Source File</title>
+<title>Flakkari: Flakkari/Network/Buffer.hpp (265  824 6516 /home/runner/work/Flakkari/Flakkari/Flakkari/Network/Buffer.hpp) Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -119,7 +119,7 @@ $(document).ready(function(){initNavTree('d8/d36/Buffer_8hpp_source.html','../..
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">namespace </span><a class="code" href="../../db/db0/namespaceFlakkari_1_1Network.html">Flakkari::Network</a> {</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
 <div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">   50</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Buffer</a> : <span class="keyword">public</span> std::vector&lt;byte&gt; {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">using</span> std::vector&lt;byte&gt;::operator=;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">using</span> std::vector&lt;byte&gt;::operator[];</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">using</span> std::vector&lt;byte&gt;::at;</div>
@@ -143,10 +143,10 @@ $(document).ready(function(){initNavTree('d8/d36/Buffer_8hpp_source.html','../..
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keyword">using</span> std::vector&lt;byte&gt;::resize;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">using</span> std::vector&lt;byte&gt;::swap;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">using</span> std::vector&lt;byte&gt;::vector;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html#acf6139241c71fa29efd930b4f3c5dcec">Buffer</a>(std::string data);</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    std::size_t <a class="code" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html#a273543a4d7a5cfca6e0c8e22f14c6501">getSize</a>() <span class="keyword">const</span>;</div>
@@ -191,8 +191,8 @@ $(document).ready(function(){initNavTree('d8/d36/Buffer_8hpp_source.html','../..
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <a class="code" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Buffer</a> <a class="code" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html#ac93b8f29092f3c740f04ee412bd6dba6">operator-=</a>(<span class="keyword">const</span> <a class="code" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Buffer</a> &amp;otherBuffer);</div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160; </div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;};</div>
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160; </div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;std::ostream &amp;<a class="code" href="../../db/db0/namespaceFlakkari_1_1Network.html#a85572af387ad3c63aa80b168b748b9eb">operator&lt;&lt;</a>(std::ostream &amp;os, <span class="keyword">const</span> <a class="code" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Buffer</a> &amp;buffer);</div>

@@ -6,5 +6,5 @@ digraph "Flakkari::Protocol::V_0::Packet::to_string"
   rankdir="RL";
   Node1 [label="Flakkari::Protocol\l::V_0::Packet::to_string",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
   Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="Flakkari::ClientManager\l::receivePacketFromClient",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/da5/classFlakkari_1_1ClientManager.html#aa0b49f304e0a3edefabd72d971a10aa1",tooltip="Receive a packet from a client."];
+  Node2 [label="Flakkari::ClientManager\l::receivePacketFromClient",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/da5/classFlakkari_1_1ClientManager.html#af06fee7a25e3bef6f7bf7dcf34ecb944",tooltip="Receive a packet from a client."];
 }

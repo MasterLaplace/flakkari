@@ -6,7 +6,7 @@ digraph "Flakkari::Protocol::V_0::Packet::deserialize"
   rankdir="RL";
   Node1 [label="Flakkari::Protocol\l::V_0::Packet::deserialize",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Deserialize the buffer into a packet."];
   Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="Flakkari::ClientManager\l::addClient",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/da5/classFlakkari_1_1ClientManager.html#add94cee15bd387eb916319d8eb44f413",tooltip="Add a client to the client manager or update the last activity of the client."];
+  Node2 [label="Flakkari::ClientManager\l::addClient",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/da5/classFlakkari_1_1ClientManager.html#adb7842df0768fcab21fb46b1b2a60b75",tooltip="Add a client to the client manager or update the last activity of the client."];
   Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="Flakkari::ClientManager\l::receivePacketFromClient",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/da5/classFlakkari_1_1ClientManager.html#aa0b49f304e0a3edefabd72d971a10aa1",tooltip="Receive a packet from a client."];
+  Node3 [label="Flakkari::ClientManager\l::receivePacketFromClient",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/da5/classFlakkari_1_1ClientManager.html#af06fee7a25e3bef6f7bf7dcf34ecb944",tooltip="Receive a packet from a client."];
 }

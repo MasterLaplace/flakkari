@@ -113,33 +113,30 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9c793175bf8066eae2dd4ae294f08a92"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#a9c793175bf8066eae2dd4ae294f08a92">~ClientManager</a> ()=default</td></tr>
 <tr class="memdesc:a9c793175bf8066eae2dd4ae294f08a92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the <a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html">ClientManager</a> object.  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#a9c793175bf8066eae2dd4ae294f08a92">More...</a><br /></td></tr>
 <tr class="separator:a9c793175bf8066eae2dd4ae294f08a92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add94cee15bd387eb916319d8eb44f413"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#add94cee15bd387eb916319d8eb44f413">addClient</a> (const std::shared_ptr&lt; Network::Address &gt; &amp;client, <a class="el" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Network::Buffer</a> &amp;buffer)</td></tr>
-<tr class="memdesc:add94cee15bd387eb916319d8eb44f413"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a client to the client manager or update the last activity of the client.  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#add94cee15bd387eb916319d8eb44f413">More...</a><br /></td></tr>
-<tr class="separator:add94cee15bd387eb916319d8eb44f413"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45da76e3db5da986608ee80962fee453"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#a45da76e3db5da986608ee80962fee453">removeClient</a> (const std::shared_ptr&lt; Network::Address &gt; &amp;client)</td></tr>
-<tr class="memdesc:a45da76e3db5da986608ee80962fee453"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a client from the client manager.  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#a45da76e3db5da986608ee80962fee453">More...</a><br /></td></tr>
-<tr class="separator:a45da76e3db5da986608ee80962fee453"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ac6c6418b551625f141c7105eccb2e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#a5ac6c6418b551625f141c7105eccb2e3">banClient</a> (const std::shared_ptr&lt; Network::Address &gt; &amp;client)</td></tr>
-<tr class="memdesc:a5ac6c6418b551625f141c7105eccb2e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ban a client from the server.  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#a5ac6c6418b551625f141c7105eccb2e3">More...</a><br /></td></tr>
-<tr class="separator:a5ac6c6418b551625f141c7105eccb2e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb7842df0768fcab21fb46b1b2a60b75"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::pair&lt; std::string, std::shared_ptr&lt; <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html">Client</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#adb7842df0768fcab21fb46b1b2a60b75">addClient</a> (const std::shared_ptr&lt; Network::Address &gt; &amp;client, <a class="el" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Network::Buffer</a> &amp;buffer)</td></tr>
+<tr class="memdesc:adb7842df0768fcab21fb46b1b2a60b75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a client to the client manager or update the last activity of the client.  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#adb7842df0768fcab21fb46b1b2a60b75">More...</a><br /></td></tr>
+<tr class="separator:adb7842df0768fcab21fb46b1b2a60b75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2b5d566645a617a7826112ddb1f2052"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#ae2b5d566645a617a7826112ddb1f2052">removeClient</a> (const std::string &amp;client)</td></tr>
+<tr class="memdesc:ae2b5d566645a617a7826112ddb1f2052"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a client from the client manager.  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#ae2b5d566645a617a7826112ddb1f2052">More...</a><br /></td></tr>
+<tr class="separator:ae2b5d566645a617a7826112ddb1f2052"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d7bf49567aaf1c2c5ffb3f1a8779866"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#a5d7bf49567aaf1c2c5ffb3f1a8779866">isBanned</a> (const std::shared_ptr&lt; Network::Address &gt; &amp;client)</td></tr>
 <tr class="memdesc:a5d7bf49567aaf1c2c5ffb3f1a8779866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a client is banned.  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#a5d7bf49567aaf1c2c5ffb3f1a8779866">More...</a><br /></td></tr>
 <tr class="separator:a5d7bf49567aaf1c2c5ffb3f1a8779866"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc56daddc0d88305a337c9b024284ff8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#afc56daddc0d88305a337c9b024284ff8">checkInactiveClients</a> ()</td></tr>
 <tr class="memdesc:afc56daddc0d88305a337c9b024284ff8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the clients are still connected to the server and remove the inactive clients from the client manager (inactive clients are clients that didn't send any packet to the server for more than 5 seconds)  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#afc56daddc0d88305a337c9b024284ff8">More...</a><br /></td></tr>
 <tr class="separator:afc56daddc0d88305a337c9b024284ff8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b0db249e366adf4e872930f4c7abd79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#a4b0db249e366adf4e872930f4c7abd79">sendPacketToClient</a> (std::shared_ptr&lt; Network::Address &gt; client, const <a class="el" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Network::Buffer</a> &amp;packet)</td></tr>
-<tr class="memdesc:a4b0db249e366adf4e872930f4c7abd79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a packet to a client.  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#a4b0db249e366adf4e872930f4c7abd79">More...</a><br /></td></tr>
-<tr class="separator:a4b0db249e366adf4e872930f4c7abd79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31355cbaad2fb0e6581ffd3f091743b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#a31355cbaad2fb0e6581ffd3f091743b7">sendPacketToClient</a> (const std::shared_ptr&lt; Network::Address &gt; &amp;client, const <a class="el" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Network::Buffer</a> &amp;packet)</td></tr>
+<tr class="memdesc:a31355cbaad2fb0e6581ffd3f091743b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a packet to a client.  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#a31355cbaad2fb0e6581ffd3f091743b7">More...</a><br /></td></tr>
+<tr class="separator:a31355cbaad2fb0e6581ffd3f091743b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad78ea9290521ff53e1c81decffef6698"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#ad78ea9290521ff53e1c81decffef6698">sendPacketToAllClients</a> (const <a class="el" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Network::Buffer</a> &amp;packet)</td></tr>
 <tr class="memdesc:ad78ea9290521ff53e1c81decffef6698"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a packet to all clients.  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#ad78ea9290521ff53e1c81decffef6698">More...</a><br /></td></tr>
 <tr class="separator:ad78ea9290521ff53e1c81decffef6698"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67424e87853a0717ecc718802a3dfaad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#a67424e87853a0717ecc718802a3dfaad">sendPacketToAllClientsExcept</a> (const std::shared_ptr&lt; Network::Address &gt; &amp;client, const <a class="el" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Network::Buffer</a> &amp;packet)</td></tr>
 <tr class="memdesc:a67424e87853a0717ecc718802a3dfaad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a packet to all clients except one.  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#a67424e87853a0717ecc718802a3dfaad">More...</a><br /></td></tr>
 <tr class="separator:a67424e87853a0717ecc718802a3dfaad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0b49f304e0a3edefabd72d971a10aa1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#aa0b49f304e0a3edefabd72d971a10aa1">receivePacketFromClient</a> (const std::shared_ptr&lt; Network::Address &gt; &amp;client, const <a class="el" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Network::Buffer</a> &amp;packet)</td></tr>
-<tr class="memdesc:aa0b49f304e0a3edefabd72d971a10aa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive a packet from a client.  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#aa0b49f304e0a3edefabd72d971a10aa1">More...</a><br /></td></tr>
-<tr class="separator:aa0b49f304e0a3edefabd72d971a10aa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af06fee7a25e3bef6f7bf7dcf34ecb944"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::pair&lt; const std::string &amp;, std::shared_ptr&lt; <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html">Client</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#af06fee7a25e3bef6f7bf7dcf34ecb944">receivePacketFromClient</a> (const std::shared_ptr&lt; Network::Address &gt; &amp;client, const <a class="el" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Network::Buffer</a> &amp;packet)</td></tr>
+<tr class="memdesc:af06fee7a25e3bef6f7bf7dcf34ecb944"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive a packet from a client.  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#af06fee7a25e3bef6f7bf7dcf34ecb944">More...</a><br /></td></tr>
+<tr class="separator:af06fee7a25e3bef6f7bf7dcf34ecb944"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a531c94c6cbb43fc6c706fa57cafd8b7c"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html">Client</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#a531c94c6cbb43fc6c706fa57cafd8b7c">getClient</a> (const std::shared_ptr&lt; Network::Address &gt; &amp;client)</td></tr>
 <tr class="memdesc:a531c94c6cbb43fc6c706fa57cafd8b7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html" title="Client class that handles the client&#39;s activity and disconnection timeout.">Client</a> object.  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#a531c94c6cbb43fc6c706fa57cafd8b7c">More...</a><br /></td></tr>
 <tr class="separator:a531c94c6cbb43fc6c706fa57cafd8b7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -216,14 +213,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="add94cee15bd387eb916319d8eb44f413"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#add94cee15bd387eb916319d8eb44f413">&#9670;&nbsp;</a></span>addClient()</h2>
+<a id="adb7842df0768fcab21fb46b1b2a60b75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb7842df0768fcab21fb46b1b2a60b75">&#9670;&nbsp;</a></span>addClient()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool Flakkari::ClientManager::addClient </td>
+          <td class="memname">std::optional&lt; std::pair&lt; std::string, std::shared_ptr&lt; <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html">Client</a> &gt; &gt; &gt; Flakkari::ClientManager::addClient </td>
           <td>(</td>
           <td class="paramtype">const std::shared_ptr&lt; Network::Address &gt; &amp;&#160;</td>
           <td class="paramname"><em>client</em>, </td>
@@ -246,42 +243,18 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">client</td><td>The client's address </td></tr>
+    <tr><td class="paramname">buffer</td><td>The packet received from the client </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>std::optional&lt;std::pair&lt;std::string, std::shared_ptr&lt;Client&gt;&gt; The client's name and the client object </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../de/d22/Flakkari_2Server_2Client_2ClientManager_8cpp-example.html#a0">Flakkari/Server/Client/ClientManager.cpp</a>.</dd>
 </dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d5/da5/classFlakkari_1_1ClientManager_add94cee15bd387eb916319d8eb44f413_cgraph.png" border="0" usemap="#ad5/da5/classFlakkari_1_1ClientManager_add94cee15bd387eb916319d8eb44f413_cgraph" alt=""/></div>
+<div class="center"><img src="../../d5/da5/classFlakkari_1_1ClientManager_adb7842df0768fcab21fb46b1b2a60b75_cgraph.png" border="0" usemap="#ad5/da5/classFlakkari_1_1ClientManager_adb7842df0768fcab21fb46b1b2a60b75_cgraph" alt=""/></div>
 </div>
-
-</div>
-</div>
-<a id="a5ac6c6418b551625f141c7105eccb2e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ac6c6418b551625f141c7105eccb2e3">&#9670;&nbsp;</a></span>banClient()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Flakkari::ClientManager::banClient </td>
-          <td>(</td>
-          <td class="paramtype">const std::shared_ptr&lt; Network::Address &gt; &amp;&#160;</td>
-          <td class="paramname"><em>client</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Ban a client from the server. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">client</td><td>The client's address </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
@@ -451,14 +424,14 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="aa0b49f304e0a3edefabd72d971a10aa1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0b49f304e0a3edefabd72d971a10aa1">&#9670;&nbsp;</a></span>receivePacketFromClient()</h2>
+<a id="af06fee7a25e3bef6f7bf7dcf34ecb944"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af06fee7a25e3bef6f7bf7dcf34ecb944">&#9670;&nbsp;</a></span>receivePacketFromClient()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Flakkari::ClientManager::receivePacketFromClient </td>
+          <td class="memname">std::optional&lt; std::pair&lt; const std::string &amp;, std::shared_ptr&lt; <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html">Client</a> &gt; &gt; &gt; Flakkari::ClientManager::receivePacketFromClient </td>
           <td>(</td>
           <td class="paramtype">const std::shared_ptr&lt; Network::Address &gt; &amp;&#160;</td>
           <td class="paramname"><em>client</em>, </td>
@@ -485,16 +458,17 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>std::optional&lt;std::pair&lt;const std::string &amp;, std::shared_ptr&lt;Client&gt;&gt; The client's name and the client object </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d5/da5/classFlakkari_1_1ClientManager_aa0b49f304e0a3edefabd72d971a10aa1_cgraph.png" border="0" usemap="#ad5/da5/classFlakkari_1_1ClientManager_aa0b49f304e0a3edefabd72d971a10aa1_cgraph" alt=""/></div>
+<div class="center"><img src="../../d5/da5/classFlakkari_1_1ClientManager_af06fee7a25e3bef6f7bf7dcf34ecb944_cgraph.png" border="0" usemap="#ad5/da5/classFlakkari_1_1ClientManager_af06fee7a25e3bef6f7bf7dcf34ecb944_cgraph" alt=""/></div>
 </div>
 
 </div>
 </div>
-<a id="a45da76e3db5da986608ee80962fee453"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45da76e3db5da986608ee80962fee453">&#9670;&nbsp;</a></span>removeClient()</h2>
+<a id="ae2b5d566645a617a7826112ddb1f2052"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2b5d566645a617a7826112ddb1f2052">&#9670;&nbsp;</a></span>removeClient()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -502,7 +476,7 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="memname">void Flakkari::ClientManager::removeClient </td>
           <td>(</td>
-          <td class="paramtype">const std::shared_ptr&lt; Network::Address &gt; &amp;&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>client</em></td><td>)</td>
           <td></td>
         </tr>
@@ -512,7 +486,7 @@ Here is the call graph for this function:</div>
 <p>Remove a client from the client manager. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">client</td><td>The client's address </td></tr>
+    <tr><td class="paramname">client</td><td>The client's name </td></tr>
   </table>
   </dd>
 </dl>
@@ -582,8 +556,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a4b0db249e366adf4e872930f4c7abd79"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b0db249e366adf4e872930f4c7abd79">&#9670;&nbsp;</a></span>sendPacketToClient()</h2>
+<a id="a31355cbaad2fb0e6581ffd3f091743b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31355cbaad2fb0e6581ffd3f091743b7">&#9670;&nbsp;</a></span>sendPacketToClient()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -591,7 +565,7 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="memname">void Flakkari::ClientManager::sendPacketToClient </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; Network::Address &gt;&#160;</td>
+          <td class="paramtype">const std::shared_ptr&lt; Network::Address &gt; &amp;&#160;</td>
           <td class="paramname"><em>client</em>, </td>
         </tr>
         <tr>
@@ -620,8 +594,8 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>Flakkari/Server/Client/<a class="el" href="../../d8/dff/ClientManager_8hpp_source.html">ClientManager.hpp (180  639 5439 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Client/ClientManager.hpp)</a></li>
-<li>Flakkari/Server/Client/<a class="el" href="../../d9/d36/ClientManager_8cpp.html">ClientManager.cpp (179  412 5875 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Client/ClientManager.cpp)</a></li>
+<li>Flakkari/Server/Client/<a class="el" href="../../d8/dff/ClientManager_8hpp_source.html">ClientManager.hpp (180  658 5696 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Client/ClientManager.hpp)</a></li>
+<li>Flakkari/Server/Client/<a class="el" href="../../d9/d36/ClientManager_8cpp.html">ClientManager.cpp (165  395 5221 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Client/ClientManager.cpp)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

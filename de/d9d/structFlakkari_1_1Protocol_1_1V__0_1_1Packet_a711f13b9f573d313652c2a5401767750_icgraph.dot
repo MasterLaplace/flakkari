@@ -4,7 +4,7 @@ digraph "Flakkari::Protocol::V_0::Packet::injectString"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="RL";
-  Node1 [label="Flakkari::Protocol\l::V_0::Packet::injectString",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 [label="Flakkari::Protocol\l::V_0::Packet::injectString",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Inject a string into the packet."];
   Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 [label="Flakkari::Protocol\l::PacketFactory::add2dToPacket\lByEntity",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#aa31054ac0397e1a5cc48aa0575a5829b",tooltip="Add all the 2D components of an entity to a packet."];
   Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

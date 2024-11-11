@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Flakkari: Flakkari/Engine/EntityComponentSystem/Registry.hpp (227  769 7383 /home/runner/work/Flakkari/Flakkari/Flakkari/Engine/EntityComponentSystem/Registry.hpp) Source File</title>
+<title>Flakkari: Flakkari/Engine/EntityComponentSystem/Registry.hpp (227  769 7375 /home/runner/work/Flakkari/Flakkari/Flakkari/Engine/EntityComponentSystem/Registry.hpp) Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -122,7 +122,7 @@ $(document).ready(function(){initNavTree('db/dd1/Registry_8hpp_source.html','../
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">namespace </span><a class="code" href="../../d7/d16/namespaceFlakkari_1_1Engine_1_1ECS.html">Flakkari::Engine::ECS</a> {</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html">   32</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html">Registry</a> {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a0cf234234893012adbf7eef2400a0c03">   34</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">entity_type</a> = <a class="code" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">Entity</a>;</div>
 <div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#ac3758cc367841374188cf154263a5699">   35</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#ac3758cc367841374188cf154263a5699">EraseFn</a> = std::function&lt;void(<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html">Registry</a> &amp;, <span class="keyword">const</span> <a class="code" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">entity_type</a> &amp;)&gt;;</div>
 <div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a0f8df826b5f57d7d8f064b8e60fb4b96">   36</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a0f8df826b5f57d7d8f064b8e60fb4b96">SystemFn</a> = std::function&lt;void(<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html">Registry</a> &amp;)&gt;;</div>
@@ -215,7 +215,7 @@ $(document).ready(function(){initNavTree('db/dd1/Registry_8hpp_source.html','../
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160; </div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#afdbc3c87317ca6be0a11b9a55957b935">run_systems</a>();</div>
 <div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160; </div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    std::unordered_map&lt;std::type_index, std::any&gt; _components;</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    std::unordered_map&lt;std::type_index, EraseFn&gt; _eraseFunctions;</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    std::vector&lt;SystemFn&gt; _systems;</div>

@@ -7,6 +7,7 @@ var Header_8hpp =
     [ "ushort", "d4/d64/Header_8hpp.html#a4c808784c2b95a74dfbc73ba686a53c5", null ],
     [ "ApiVersion", "d4/d64/Header_8hpp.html#a302e0d2f906390c0a05e720dc87fd30d", [
       [ "V_0", "d4/d64/Header_8hpp.html#a302e0d2f906390c0a05e720dc87fd30da9ef5db61af0c0d69875ff753a249bd2f", null ],
+      [ "V_1", "d4/d64/Header_8hpp.html#a302e0d2f906390c0a05e720dc87fd30da47e205a9f01f6951d4dc6de16c404a8d", null ],
       [ "MAX_VERSION", "d4/d64/Header_8hpp.html#a302e0d2f906390c0a05e720dc87fd30da9950aba67d5500417e8a8d87e5394cfb", null ]
     ] ],
     [ "Priority", "d4/d64/Header_8hpp.html#a8ca1eaf005084e91c6387d30a1eba4dd", [

@@ -12,7 +12,9 @@ digraph "Flakkari::ClientManager::addClient"
   Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 [label="Flakkari::Network::\lBuffer::Buffer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/df8/classFlakkari_1_1Network_1_1Buffer.html#acf6139241c71fa29efd930b4f3c5dcec",tooltip="Construct a new Buffer object."];
   Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="Flakkari::Protocol\l::V_0::Packet::extractString",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a7bf7de7cb6baf87ba95fa12e9bb6c8d2",tooltip=" "];
+  Node5 [label="Flakkari::Network::\lBuffer::getData",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/df8/classFlakkari_1_1Network_1_1Buffer.html#ae308d60e79fe9387b58c0cb8640e5ef7",tooltip="Get the data of the buffer."];
   Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="Flakkari::ClientManager\l::isBanned",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/da5/classFlakkari_1_1ClientManager.html#a5d7bf49567aaf1c2c5ffb3f1a8779866",tooltip="Check if a client is banned."];
+  Node6 [label="Flakkari::Network::\lBuffer::getSize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/df8/classFlakkari_1_1Network_1_1Buffer.html#a273543a4d7a5cfca6e0c8e22f14c6501",tooltip="Get the size of the buffer."];
+  Node1 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="Flakkari::ClientManager\l::isBanned",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/da5/classFlakkari_1_1ClientManager.html#a5d7bf49567aaf1c2c5ffb3f1a8779866",tooltip="Check if a client is banned."];
 }
