@@ -46,8 +46,9 @@ public:
      *
      * @param address The client's address
      * @param name The Game's name
+     * @param apiVersion The API version used by the client
      */
-    Client(const std::shared_ptr<Network::Address> &address, const std::string &name);
+    Client(const std::shared_ptr<Network::Address> &address, const std::string &name, Protocol::ApiVersion apiVersion);
     ~Client();
 
     /**
@@ -118,6 +119,8 @@ public:
 
     [[nodiscard]] unsigned short getMaxPacketHistory() const { return _maxPacketHistory; }
 
+    [[nodiscard]] Protocol::ApiVersion getApiVersion() const { return _apiVersion; }
+
     [[nodiscard]] Network::PacketQueue<Protocol::Packet<Protocol::CommandId>> &getReceiveQueue()
     {
         return _receiveQueue;
@@ -131,6 +134,7 @@ private:
     std::string _gameName;
     bool _isConnected = true;
     std::string _name;
+    Protocol::ApiVersion _apiVersion;
     unsigned short _warningCount = 0;
     unsigned short _maxWarningCount = 5;
     unsigned short _maxPacketHistory = 10;

@@ -30,6 +30,7 @@ void Game::sendAllEntities(const std::string &sceneName, std::shared_ptr<Client>
 
         Protocol::Packet<Protocol::CommandId> packet;
         packet.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;
+        packet.header._apiVersion = player->getApiVersion();
         packet << i;
         packet.injectString(sceneName);
         Protocol::PacketFactory::addComponentsToPacketByEntity<Protocol::CommandId>(packet, registry, i);
@@ -218,7 +219,7 @@ void Game::loadScene(const std::string &sceneName)
     }
 }
 
-void Game::sendOnSameScene(const std::string &sceneName, const Network::Buffer &message)
+void Game::sendOnSameScene(const std::string &sceneName, Protocol::Packet<Protocol::CommandId> &packet)
 {
     for (auto &player : _players)
     {
@@ -229,12 +230,14 @@ void Game::sendOnSameScene(const std::string &sceneName, const Network::Buffer &
         if (player->getSceneName() != sceneName)
             continue;
 
-        ClientManager::GetInstance().sendPacketToClient(player->getAddress(), message);
+        packet.header._apiVersion = player->getApiVersion();
+
+        ClientManager::GetInstance().sendPacketToClient(player->getAddress(), packet.serialize());
         ClientManager::UnlockInstance();
     }
 }
 
-void Game::sendOnSameSceneExcept(const std::string &sceneName, const Network::Buffer &message,
+void Game::sendOnSameSceneExcept(const std::string &sceneName, Protocol::Packet<Protocol::CommandId> &packet,
                                  std::shared_ptr<Client> except)
 {
     for (auto &player : _players)
@@ -248,7 +251,9 @@ void Game::sendOnSameSceneExcept(const std::string &sceneName, const Network::Bu
         if (player == except)
             continue;
 
-        ClientManager::GetInstance().sendPacketToClient(player->getAddress(), message);
+        packet.header._apiVersion = player->getApiVersion();
+
+        ClientManager::GetInstance().sendPacketToClient(player->getAddress(), packet.serialize());
         ClientManager::UnlockInstance();
     }
 }
@@ -262,7 +267,7 @@ void Game::checkDisconnect()
         Protocol::Packet<Protocol::CommandId> packet;
         packet.header._commandId = Protocol::CommandId::REQ_DISCONNECT;
         packet << player->getEntity();
-        sendOnSameScene(player->getSceneName(), packet.serialize());
+        sendOnSameScene(player->getSceneName(), packet);
         _scenes[player->getSceneName()].kill_entity(player->getEntity());
         removePlayer(player);
     }
@@ -291,7 +296,7 @@ void Game::sendUpdatePosition(std::shared_ptr<Client> player, Engine::ECS::Compo
                      std::to_string(pos.position.vec.y) + ")" + ", Vel: (" + std::to_string(vel.velocity.vec.x) + ", " +
                      std::to_string(vel.velocity.vec.y) + ")" + ", Acc: (" + std::to_string(vel.acceleration.vec.x) +
                      ", " + std::to_string(vel.acceleration.vec.y) + ")" + ">");
-    sendOnSameScene(player->getSceneName(), packet.serialize());
+    sendOnSameScene(player->getSceneName(), packet);
 }
 
 void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol::CommandId> packet)
@@ -383,7 +388,7 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
             shootPacket.injectString(player->getSceneName());
             shootPacket << player->getEntity();
             // create a bullet with player as parent
-            sendOnSameScene(player->getSceneName(), shootPacket.serialize());
+            sendOnSameScene(player->getSceneName(), shootPacket);
         }
         return;
     }
@@ -474,6 +479,7 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
 
     Protocol::Packet<Protocol::CommandId> packet;
     packet.header._commandId = Protocol::CommandId::REP_CONNECT;
+    packet.header._apiVersion = player->getApiVersion();
     packet << newEntity;
     packet.injectString(sceneGame);
     packet.injectString(player->getName().value_or(""));
@@ -483,11 +489,12 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
 
     Protocol::Packet<Protocol::CommandId> packet2;
     packet2.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;
+    packet2.header._apiVersion = packet.header._apiVersion;
     packet2 << newEntity;
     packet2.injectString(sceneGame);
     packet2.injectString(p_Template);
 
-    sendOnSameSceneExcept(sceneGame, packet2.serialize(), player);
+    sendOnSameSceneExcept(sceneGame, packet2, player);
     return true;
 }
 
@@ -506,7 +513,7 @@ bool Game::removePlayer(std::shared_ptr<Client> player)
     packet.header._commandId = Protocol::CommandId::REQ_ENTITY_DESTROY;
     packet << entity;
 
-    sendOnSameScene(sceneGame, packet.serialize());
+    sendOnSameScene(sceneGame, packet);
 
     registry.kill_entity(entity);
     _players.erase(it);

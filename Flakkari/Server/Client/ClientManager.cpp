@@ -47,7 +47,8 @@ ClientManager::addClient(const std::shared_ptr<Network::Address> &client, Networ
     }
 
     std::string gameName = std::string((const char *) packet.payload.getData(), packet.payload.getSize());
-    _clients[clientString] = std::make_shared<Client>(client, gameName);
+    auto apiVersion = packet.header._apiVersion;
+    _clients[clientString] = std::make_shared<Client>(client, gameName, apiVersion);
 
     return std::make_pair(gameName, _clients[clientString]);
 }
@@ -82,7 +83,7 @@ void ClientManager::checkInactiveClients()
     }
 }
 
-void ClientManager::sendPacketToClient(std::shared_ptr<Network::Address> client, const Network::Buffer &packet)
+void ClientManager::sendPacketToClient(const std::shared_ptr<Network::Address> &client, const Network::Buffer &packet)
 {
     std::thread([this, client, packet] { _socket->sendTo(client, packet); }).detach();
 }

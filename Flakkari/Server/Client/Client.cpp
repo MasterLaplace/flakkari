@@ -11,9 +11,11 @@
 
 namespace Flakkari {
 
-Client::Client(const std::shared_ptr<Network::Address> &address, const std::string &name)
+Client::Client(const std::shared_ptr<Network::Address> &address, const std::string &name,
+               Protocol::ApiVersion apiVersion)
     : _address(address), _gameName(name), _name(address->toString().value_or(""))
 {
+    _apiVersion = apiVersion;
     _lastActivity = std::chrono::steady_clock::now();
 }
 
@@ -42,6 +44,10 @@ bool Client::incrementWarningCount()
     return _warningCount >= _maxWarningCount;
 }
 
-void Client::addPacketToQueue(const Protocol::Packet<Protocol::CommandId> &packet) { _receiveQueue.push_back(packet); }
+void Client::addPacketToQueue(const Protocol::Packet<Protocol::CommandId> &packet)
+{
+    _apiVersion = packet.header._apiVersion;
+    _receiveQueue.push_back(packet);
+}
 
 } /* namespace Flakkari */
