@@ -151,20 +151,6 @@ class Address {
     [[nodiscard]] IpType getIpType() const { return _ip_type; }
 
     /**
-     * @brief Get the Id object
-     *
-     * @return id_t  Id
-     */
-    [[nodiscard]] id_t getId() const { return _id; }
-
-    /**
-     * @brief Set the Id object
-     *
-     * @param id  Id
-     */
-    void setId(id_t id) { _id = id; }
-
-    /**
      * @brief Convert Address to string (std::string)
      *
      * @return std::string  String representation of Address
@@ -176,7 +162,6 @@ class Address {
     std::shared_ptr<addrinfo> _addrInfo = nullptr;
     SocketType _socket_type = SocketType::None;
     IpType _ip_type = IpType::None;
-    id_t _id = -1;
 };
 
 /**
