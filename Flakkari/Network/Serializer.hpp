@@ -27,7 +27,7 @@ namespace Flakkari::Network {
  *          in the Flakkari/Protocol/Component.hpp file.
  */
 class Serializer {
-    public:
+public:
     /**
      * @brief Serialize an object into a buffer.
      *

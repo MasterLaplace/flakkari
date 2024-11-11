@@ -26,20 +26,14 @@ void Socket::create(const std::shared_ptr<Address> &address)
 
     _socket = ::socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
     if (_socket == INVALID_SOCKET)
-    {
-        FLAKKARI_LOG_FATAL("Failed to create socket, error: " + STD_ERROR);
-        return;
-    }
+        throw std::runtime_error("Failed to create socket, error: " + STD_ERROR);
 
 #if __APPLE__
     int optval = 1;
     ::setsockopt(_socket, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval));
 #elif __linux__
     if (::setsockopt(_socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, "\001", 4))
-    {
-        FLAKKARI_LOG_FATAL("Failed to set socket to reuse address and port, error: " + STD_ERROR);
-        return;
-    }
+        throw std::runtime_error("Failed to set socket to reuse address and port, error: " + STD_ERROR);
 #endif
 }
 
@@ -51,19 +45,13 @@ void Socket::create(socket_t socket, const std::shared_ptr<Address> &address)
 #if _WIN32
     u_long mode = 1;
     if (::ioctlsocket(_socket, FIONBIO, &mode) != NO_ERROR)
-    {
-        FLAKKARI_LOG_FATAL("Failed to set socket to non-blocking, error: " + STD_ERROR);
-        return;
-    }
+        throw std::runtime_error("Failed to set socket to non-blocking, error: " + STD_ERROR);
 #elif __APPLE__
     int optval = 1;
     ::setsockopt(_socket, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval));
 #elif __linux__
     if (::setsockopt(_socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, "\001", 4))
-    {
-        FLAKKARI_LOG_FATAL("Failed to set socket to reuse address and port, error: " + STD_ERROR);
-        return;
-    }
+        throw std::runtime_error("Failed to set socket to reuse address and port, error: " + STD_ERROR);
 #endif
 }
 
@@ -82,20 +70,14 @@ void Socket::create(const Address &address)
 
     _socket = ::socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
     if (_socket == INVALID_SOCKET)
-    {
-        FLAKKARI_LOG_FATAL("Failed to create socket, error: " + STD_ERROR);
-        return;
-    }
+        throw std::runtime_error("Failed to create socket, error: " + STD_ERROR);
 
 #if __APPLE__
     int optval = 1;
     ::setsockopt(_socket, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval));
 #elif __linux__
     if (::setsockopt(_socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, "\001", 4))
-    {
-        FLAKKARI_LOG_FATAL("Failed to set socket to reuse address and port, error: " + STD_ERROR);
-        return;
-    }
+        throw std::runtime_error("Failed to set socket to reuse address and port, error: " + STD_ERROR);
 #endif
 }
 
@@ -114,20 +96,14 @@ void Socket::create(ip_t address, port_t port, Address::IpType ip_type, Address:
 
     _socket = ::socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
     if (_socket == INVALID_SOCKET)
-    {
-        FLAKKARI_LOG_FATAL("Failed to create socket, error: " + STD_ERROR);
-        return;
-    }
+        throw std::runtime_error("Failed to create socket, error: " + STD_ERROR);
 
 #if __APPLE__
     int optval = 1;
     ::setsockopt(_socket, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval));
 #elif __linux__
     if (::setsockopt(_socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, "\001", 4))
-    {
-        FLAKKARI_LOG_FATAL("Failed to set socket to reuse address and port, error: " + STD_ERROR);
-        return;
-    }
+        throw std::runtime_error("Failed to set socket to reuse address and port, error: " + STD_ERROR);
 #endif
 }
 
@@ -141,19 +117,13 @@ void Socket::bind()
         return FLAKKARI_LOG_ERROR("Address is nullptr"), void();
 
     if (::bind(_socket, addr->ai_addr, (int) addr->ai_addrlen) == SOCKET_ERROR)
-    {
-        FLAKKARI_LOG_FATAL("Failed to bind socket, error: " + STD_ERROR);
-        return;
-    }
+        throw std::runtime_error("Failed to bind socket, error: " + STD_ERROR);
 }
 
 void Socket::listen(int backlog)
 {
     if (::listen(_socket, backlog) == SOCKET_ERROR)
-    {
-        FLAKKARI_LOG_FATAL("Failed to listen on socket, error: " + STD_ERROR);
-        return;
-    }
+        throw std::runtime_error("Failed to listen on socket, error: " + STD_ERROR);
 }
 
 void Socket::connect()
@@ -164,40 +134,25 @@ void Socket::connect()
         return FLAKKARI_LOG_ERROR("Address is nullptr"), void();
 
     if (::connect(_socket, addr->ai_addr, (int) addr->ai_addrlen) == SOCKET_ERROR)
-    {
-        FLAKKARI_LOG_FATAL("Failed to connect socket, error: " + STD_ERROR);
-        return;
-    }
+        throw std::runtime_error("Failed to connect socket, error: " + STD_ERROR);
 }
 
 void Socket::disconnect()
 {
 #if _WIN32
     if (::shutdown(_socket, SD_BOTH) == SOCKET_ERROR)
-    {
-        FLAKKARI_LOG_FATAL("Failed to disconnect socket, error: " + STD_ERROR);
-        return;
-    }
+        throw std::runtime_error("Failed to disconnect socket, error: " + STD_ERROR);
 #else
     if (::shutdown(_socket, SHUT_RDWR) == SOCKET_ERROR)
-    {
-        FLAKKARI_LOG_FATAL("Failed to disconnect socket, error: " + STD_ERROR);
-        return;
-    }
+        throw std::runtime_error("Failed to disconnect socket, error: " + STD_ERROR);
 #endif
 
 #ifdef _WIN32
     if (::closesocket(_socket) == SOCKET_ERROR)
-    {
-        FLAKKARI_LOG_FATAL("Failed to close socket, error: " + STD_ERROR);
-        return;
-    }
+        throw std::runtime_error("Failed to close socket, error: " + STD_ERROR);
 #else
     if (::close(_socket) == SOCKET_ERROR)
-    {
-        FLAKKARI_LOG_FATAL("Failed to close socket, error: " + STD_ERROR);
-        return;
-    }
+        throw std::runtime_error("Failed to close socket, error: " + STD_ERROR);
 #endif
 
 #ifdef _WIN32
@@ -214,10 +169,7 @@ std::shared_ptr<Socket> Socket::accept()
     SOCKET clientSocket = ::accept(_socket, (struct sockaddr *) &clientAddr, &clientAddrLen);
 
     if (clientSocket == INVALID_SOCKET)
-    {
-        FLAKKARI_LOG_FATAL("Failed to accept socket, error: " + STD_ERROR);
-        return nullptr;
-    }
+        throw std::runtime_error("Failed to accept socket, error: " + STD_ERROR);
 
     auto _ip_type = (clientAddr.ss_family == AF_INET)  ? Address::IpType::IPv4 :
                     (clientAddr.ss_family == AF_INET6) ? Address::IpType::IPv6 :

@@ -28,6 +28,7 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          default_bump: patch
           dry_run: true
 
       - name: Run version bump script

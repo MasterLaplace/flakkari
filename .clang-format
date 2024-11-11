@@ -2,7 +2,7 @@
 Language:          Cpp
 BasedOnStyle:      LLVM
 Standard:          c++20
-AccessModifierOffset: 0
+AccessModifierOffset: -4
 AlignAfterOpenBracket: Align
 AlignArrayOfStructures: Left
 AlignConsecutiveMacros: Consecutive

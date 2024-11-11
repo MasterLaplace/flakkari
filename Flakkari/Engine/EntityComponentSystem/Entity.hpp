@@ -23,7 +23,7 @@ namespace Flakkari::Engine::ECS {
 class Registry;
 
 class Entity {
-    public:
+public:
     friend class Registry;
 
     explicit Entity(std::size_t id) : _id(id) {}
@@ -43,7 +43,7 @@ class Entity {
         return *this;
     }
 
-    private:
+private:
     std::size_t _id;
 };
 

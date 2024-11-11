@@ -27,10 +27,10 @@
 namespace Flakkari::Engine::ECS {
 
 class EntityFactory {
-    public:
+public:
     using nl_template = nlohmann::json;
 
-    public:
+public:
     /**
      * @brief Create a Entity From Template object based on a template JSON
      *

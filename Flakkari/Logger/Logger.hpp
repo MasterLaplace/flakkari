@@ -97,14 +97,14 @@
 namespace Flakkari {
 
 class Logger {
-    public:
+public:
     enum class Mode {
         SILENT,
         NORMAL,
         DEBUG
     };
 
-    public:
+public:
     static void setMode(Mode mode) noexcept;
     static const std::string get_current_time() noexcept;
     static const std::string fatal_error_message() noexcept;

@@ -67,10 +67,10 @@ namespace Flakkari::Network {
  * @endcode
  */
 class PSELECT {
-    public:
+public:
     using FileDescriptor = int;
 
-    public:
+public:
     PSELECT(FileDescriptor fileDescriptorn, long int seconds = 1, long int microseconds = 0);
     PSELECT(long int seconds = 1, long int microseconds = 0);
     ~PSELECT() = default;
@@ -118,8 +118,8 @@ class PSELECT {
      */
     [[nodiscard]] bool skipableError();
 
-    protected:
-    private:
+protected:
+private:
     fd_set _fds;
     std::vector<FileDescriptor> _sockets;
     FileDescriptor _maxFd = 0;
@@ -164,14 +164,14 @@ class PSELECT {
  * @endcode
  */
 class PPOLL {
-    public:
+public:
     using FileDescriptor = int;
     using pollfd = struct pollfd;
     using event_t = short int;
     using revents_t = short int;
     using nfds_t = unsigned long int;
 
-    public:
+public:
     PPOLL(FileDescriptor fileDescriptor, event_t events, long int seconds = 1, long int microseconds = 0);
     PPOLL(long int seconds = 1, long int microseconds = 0);
     ~PPOLL() = default;
@@ -239,8 +239,8 @@ class PPOLL {
      */
     [[nodiscard]] bool skipableError();
 
-    protected:
-    private:
+protected:
+private:
     std::vector<pollfd> _pollfds;
     struct timespec _timeout = {0, 0};
 };
@@ -278,10 +278,10 @@ class PPOLL {
  * @endcode
  */
 class WSA {
-    public:
+public:
     using FileDescriptor = SOCKET;
 
-    public:
+public:
     /**
      * @brief Construct a new WSA object with a timeout of 1 second by default
      *
@@ -334,8 +334,8 @@ class WSA {
      */
     [[nodiscard]] bool skipableError();
 
-    protected:
-    private:
+protected:
+private:
     std::vector<FileDescriptor> _sockets;
     std::vector<WSAPOLLFD> _fdArray;
     std::vector<size_t> _freeSpace;

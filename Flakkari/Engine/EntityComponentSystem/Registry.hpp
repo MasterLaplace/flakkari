@@ -30,7 +30,7 @@
 namespace Flakkari::Engine::ECS {
 
 class Registry {
-    public:
+public:
     using entity_type = Entity;
     using EraseFn = std::function<void(Registry &, const entity_type &)>;
     using SystemFn = std::function<void(Registry &)>;
@@ -214,7 +214,7 @@ class Registry {
      */
     void run_systems();
 
-    private:
+private:
     std::unordered_map<std::type_index, std::any> _components;
     std::unordered_map<std::type_index, EraseFn> _eraseFunctions;
     std::vector<SystemFn> _systems;

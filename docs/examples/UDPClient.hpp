@@ -24,7 +24,7 @@
 namespace Flakkari {
 
 class UDPClient {
-    public:
+public:
     UDPClient(std::string ip = "localhost", unsigned short port = 8080) : _io(std::make_unique<IO_SELECTED>())
     {
         Network::init();
@@ -69,8 +69,8 @@ class UDPClient {
         return 0;
     }
 
-    protected:
-    private:
+protected:
+private:
     Network::Socket _socket;
     std::unique_ptr<IO_SELECTED> _io;
 };

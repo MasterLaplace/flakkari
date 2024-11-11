@@ -48,7 +48,7 @@ namespace Flakkari::Network {
  * @see Flakkari::Network::Socket
  */
 class Buffer : public std::vector<byte> {
-    public:
+public:
     using std::vector<byte>::operator=;
     using std::vector<byte>::operator[];
     using std::vector<byte>::at;
@@ -72,10 +72,10 @@ class Buffer : public std::vector<byte> {
     using std::vector<byte>::resize;
     using std::vector<byte>::swap;
 
-    public:
+public:
     using std::vector<byte>::vector;
 
-    public:
+public:
     /**
      * @brief Construct a new Buffer object
      *
@@ -238,8 +238,8 @@ class Buffer : public std::vector<byte> {
      */
     Buffer operator-=(const Buffer &otherBuffer);
 
-    protected:
-    private:
+protected:
+private:
 };
 
 /**

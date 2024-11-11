@@ -24,6 +24,7 @@
 #include "Components.hpp"
 #include "Events.hpp"
 #include "Header.hpp"
+#include "Logger/Logger.hpp"
 
 #include <cstring>
 
@@ -87,7 +88,7 @@ template <typename Id> struct Packet {
 
         const byte *dataBytes = reinterpret_cast<const byte *>(&data);
         packet.payload.insert(packet.payload.end(), dataBytes, dataBytes + sizeof(data));
-        packet.header._contentLength += (ushort) packet.payload.size() + (ushort) sizeof(data);
+        packet.header._contentLength += (ushort) sizeof(data);
         return packet;
     }
 
@@ -118,25 +119,18 @@ template <typename Id> struct Packet {
         return packet;
     }
 
+    /**
+     * @brief Inject a string into the packet.
+     *
+     * @param str  The string to inject.
+     */
     void injectString(std::string str)
     {
         int intValue = (int) str.size();
         const byte *dataBytes = reinterpret_cast<const byte *>(&intValue);
         payload.insert(payload.end(), dataBytes, dataBytes + sizeof(intValue));
         payload += str;
-        header._contentLength += (ushort) payload.size() + (ushort) sizeof(intValue);
-    }
-
-    std::string extractString()
-    {
-        std::string str;
-        int intValue;
-        std::memcpy(&intValue, payload.data(), sizeof(intValue));
-        payload.erase(payload.begin(), payload.begin() + sizeof(intValue));
-        str = std::string((const char *) payload.data(), intValue);
-        payload.erase(payload.begin(), payload.begin() + intValue);
-        header._contentLength -= (ushort) sizeof(intValue) + (ushort) intValue;
-        return str;
+        header._contentLength += (ushort) str.size() + (ushort) sizeof(intValue);
     }
 
     /**
@@ -162,12 +156,16 @@ template <typename Id> struct Packet {
     [[nodiscard]] bool deserialize(const Network::Buffer &buffer)
     {
         if (buffer.size() < sizeof(header))
-            return false;
+            return FLAKKARI_LOG_WARNING("Buffer is too small to deserialize a packet."), false;
         std::memcpy(&header, buffer.data(), sizeof(header));
         if (header._priority >= Priority::MAX_PRIORITY)
-            return false;
+            return FLAKKARI_LOG_WARNING("Priority is too big (" + std::to_string((int) header._priority) + ")"), false;
         if (header._apiVersion >= ApiVersion::MAX_VERSION)
-            return false;
+            return FLAKKARI_LOG_WARNING("ApiVersion is too big (" + std::to_string((int) header._apiVersion) + ")"),
+                   false;
+        if (header._commandId >= CommandId::MAX_COMMAND_ID)
+            return FLAKKARI_LOG_WARNING("CommandId is too big (" + std::to_string((int) header._commandId) + ")"),
+                   false;
         if (header._contentLength > buffer.size() - sizeof(header))
             return false;
         payload = buffer.extractData(sizeof(header), header._contentLength);

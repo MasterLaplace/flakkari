@@ -37,7 +37,8 @@ using ulong = unsigned long;   // 64 bits (max: 18446744073709551615)
  *
  */
 enum class ApiVersion : byte {
-    V_0,
+    V_0 = 0,
+    V_1 = 1,
     MAX_VERSION
 };
 

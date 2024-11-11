@@ -40,14 +40,15 @@ namespace Flakkari {
  * @see Network::Address
  */
 class Client {
-    public:
+public:
     /**
      * @brief Construct a new Client object
      *
      * @param address The client's address
      * @param name The Game's name
+     * @param apiVersion The API version used by the client
      */
-    Client(const std::shared_ptr<Network::Address> &address, const std::string &name);
+    Client(const std::shared_ptr<Network::Address> &address, const std::string &name, Protocol::ApiVersion apiVersion);
     ~Client();
 
     /**
@@ -81,6 +82,14 @@ class Client {
     bool incrementWarningCount();
 
     /**
+     * @brief Add a packet to the client's send queue and set the api version
+     * used by the client
+     *
+     * @param packet  The packet to add
+     */
+    void addPacketToQueue(const Protocol::Packet<Protocol::CommandId> &packet);
+
+    /**
      * @brief Get the client's address
      *
      * @return std::shared_ptr<Network::Address>  The client's address
@@ -94,8 +103,6 @@ class Client {
      */
     [[nodiscard]] Engine::ECS::Entity getEntity() const { return _entity; }
     void setEntity(Engine::ECS::Entity entity) { _entity = entity; }
-
-    [[nodiscard]] short getId() const { return _address->getId(); }
 
     [[nodiscard]] std::string getSceneName() const { return _sceneName; }
     void setSceneName(std::string sceneName) { _sceneName = sceneName; }
@@ -112,8 +119,14 @@ class Client {
 
     [[nodiscard]] unsigned short getMaxPacketHistory() const { return _maxPacketHistory; }
 
-    protected:
-    private:
+    [[nodiscard]] Protocol::ApiVersion getApiVersion() const { return _apiVersion; }
+
+    [[nodiscard]] Network::PacketQueue<Protocol::Packet<Protocol::CommandId>> &getReceiveQueue()
+    {
+        return _receiveQueue;
+    }
+
+private:
     std::chrono::steady_clock::time_point _lastActivity;
     std::shared_ptr<Network::Address> _address;
     Engine::ECS::Entity _entity;
@@ -121,11 +134,11 @@ class Client {
     std::string _gameName;
     bool _isConnected = true;
     std::string _name;
+    Protocol::ApiVersion _apiVersion;
     unsigned short _warningCount = 0;
     unsigned short _maxWarningCount = 5;
     unsigned short _maxPacketHistory = 10;
 
-    public:
     std::vector<Network::Buffer> _packetHistory;
     Network::PacketQueue<Protocol::Packet<Protocol::CommandId>> _sendQueue;
     Network::PacketQueue<Protocol::Packet<Protocol::CommandId>> _receiveQueue;

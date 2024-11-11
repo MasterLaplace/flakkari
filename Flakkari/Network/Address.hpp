@@ -38,7 +38,7 @@
 namespace Flakkari::Network {
 
 class Address {
-    public:
+public:
     enum class IpType {
         None,
         IPv4, // Internet Protocol version 4
@@ -51,7 +51,7 @@ class Address {
         UDP, // User Datagram Protocol
     };
 
-    public:
+public:
     /**
      * @brief Convert IpType to string
      *
@@ -68,12 +68,12 @@ class Address {
      */
     static constexpr const char *socketTypeToString(SocketType socket_type);
 
-    public:
+public:
     using address_t = const std::string;
     using port_t = unsigned short;
     using id_t = short;
 
-    public:
+public:
     Address(address_t &address, port_t port, SocketType socket_type, IpType ip_type);
     Address(port_t port, SocketType socket_type, IpType ip_type);
     Address(const sockaddr_in &clientAddr, SocketType socket_type, IpType ip_type);
@@ -151,32 +151,17 @@ class Address {
     [[nodiscard]] IpType getIpType() const { return _ip_type; }
 
     /**
-     * @brief Get the Id object
-     *
-     * @return id_t  Id
-     */
-    [[nodiscard]] id_t getId() const { return _id; }
-
-    /**
-     * @brief Set the Id object
-     *
-     * @param id  Id
-     */
-    void setId(id_t id) { _id = id; }
-
-    /**
      * @brief Convert Address to string (std::string)
      *
      * @return std::string  String representation of Address
      */
     operator std::string() const;
 
-    protected:
-    private:
+protected:
+private:
     std::shared_ptr<addrinfo> _addrInfo = nullptr;
     SocketType _socket_type = SocketType::None;
     IpType _ip_type = IpType::None;
-    id_t _id = -1;
 };
 
 /**

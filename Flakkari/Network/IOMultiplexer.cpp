@@ -16,10 +16,7 @@ namespace Flakkari::Network {
 PSELECT::PSELECT(FileDescriptor fileDescriptor, long int seconds, long int microseconds)
 {
     if (fileDescriptor == -1)
-    {
-        FLAKKARI_LOG_ERROR("Socket is -1");
         throw std::runtime_error("Socket is -1");
-    }
 
     FD_ZERO(&_fds);
     _maxFd = fileDescriptor;
@@ -43,6 +40,7 @@ void PSELECT::addSocket(FileDescriptor socket)
         throw std::runtime_error("Socket is -1");
     if (socket > FD_SETSIZE)
         throw std::runtime_error("Index out of range");
+
     FD_SET(socket, &_fds);
     if (socket > _maxFd)
         _maxFd = socket;
@@ -55,6 +53,7 @@ void PSELECT::removeSocket(FileDescriptor socket)
         throw std::runtime_error("Socket is -1");
     if (socket > _maxFd)
         throw std::runtime_error("Index out of range");
+
     FD_CLR(socket, &_fds);
     _sockets.erase(std::remove(_sockets.begin(), _sockets.end(), socket), _sockets.end());
     _maxFd = *std::max_element(_sockets.begin(), _sockets.end());
@@ -78,6 +77,7 @@ bool PSELECT::isReady(FileDescriptor socket)
         throw std::runtime_error("Socket is -1");
     if (socket > _maxFd)
         throw std::runtime_error("Index out of range");
+
     return FD_ISSET(socket, &_fds);
 }
 
@@ -90,13 +90,11 @@ bool PSELECT::skipableError() { return errno == EINTR || errno == EAGAIN || errn
 PPOLL::PPOLL(FileDescriptor fileDescriptor, event_t events, long int seconds, long int microseconds)
 {
     if (fileDescriptor == -1)
-    {
-        FLAKKARI_LOG_ERROR("Socket is -1");
         throw std::runtime_error("Socket is -1");
-    }
 
     if (_pollfds.size() < std::size_t(fileDescriptor))
         _pollfds.resize(fileDescriptor + 1);
+
     _pollfds[fileDescriptor] = pollfd{fileDescriptor, events, 0};
 
     _timeout.tv_sec = seconds;
@@ -115,6 +113,7 @@ void PPOLL::addSocket(FileDescriptor socket)
         throw std::runtime_error("Socket is -1");
     if (_pollfds.size() < std::size_t(socket))
         _pollfds.resize(socket + 1);
+
     _pollfds[socket] = pollfd{socket, POLLIN | POLLPRI, 0};
 }
 
@@ -124,6 +123,7 @@ void PPOLL::addSocket(FileDescriptor socket, event_t events)
         throw std::runtime_error("Socket is -1");
     if (_pollfds.size() < std::size_t(socket))
         _pollfds.resize(socket + 1);
+
     _pollfds[socket] = pollfd{socket, events, 0};
 }
 
@@ -152,6 +152,7 @@ pollfd &PPOLL::operator[](std::size_t index)
 {
     if (_pollfds.size() < index)
         throw std::runtime_error("Index out of range");
+
     return _pollfds[index];
 }
 
@@ -161,6 +162,7 @@ pollfd &PPOLL::operator[](FileDescriptor socket)
         throw std::runtime_error("Socket is -1");
     if (_pollfds.size() < std::size_t(socket))
         throw std::runtime_error("Index out of range");
+
     return _pollfds[socket];
 }
 
@@ -168,6 +170,7 @@ bool PPOLL::isReady(pollfd fd)
 {
     if (fd.fd == -1)
         throw std::runtime_error("Socket is -1");
+
     return fd.revents & (POLLIN | POLLPRI);
 }
 
@@ -179,6 +182,7 @@ bool PPOLL::isReady(FileDescriptor socket)
         throw std::runtime_error("Index out of range");
     if (_pollfds[socket].revents & (POLLIN | POLLPRI))
         return true;
+
     return false;
 }
 
@@ -191,7 +195,7 @@ bool PPOLL::skipableError() { return errno == EINTR || errno == EAGAIN || errno 
 WSA::WSA(FileDescriptor socket, int seconds, int microseconds)
 {
     if (socket == -1)
-        FLAKKARI_LOG_FATAL("Socket is -1");
+        throw std::runtime_error("Socket is -1");
 
     _sockets.reserve(MAX_POLLFD);
     _fdArray.reserve(MAX_POLLFD);

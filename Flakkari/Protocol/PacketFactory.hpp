@@ -25,7 +25,7 @@
 namespace Flakkari::Protocol {
 
 class PacketFactory {
-    public:
+public:
     // /**
     //  * @brief Add all the commons components of an entity to a packet.
     //  *
