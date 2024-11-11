@@ -24,8 +24,7 @@
 
 namespace Flakkari {
 
-#define INIT_LOOP                                                                                                      \
-loop:
+#define INIT_LOOP loop:
 #define GOTO_LOOP goto loop;
 
 #ifndef STDIN_FILENO
@@ -53,7 +52,7 @@ loop:
  * @endcode
  */
 class UDPServer {
-    public:
+public:
     /**
      * @brief Construct a new UDPServer object
      *
@@ -72,7 +71,7 @@ class UDPServer {
      */
     void run();
 
-    private:
+private:
     /**
      * @brief Handle the timeout of the server (check for inactive clients)
      *
@@ -97,7 +96,7 @@ class UDPServer {
      */
     void handlePacket();
 
-    private:
+private:
     std::shared_ptr<Network::Socket> _socket;
     std::unique_ptr<IO_SELECTED> _io;
 };
