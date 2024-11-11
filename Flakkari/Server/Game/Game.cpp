@@ -411,6 +411,15 @@ void Game::updateIncomingPackets(unsigned char maxMessagePerFrame)
 
             if (packet.header._commandId == Protocol::CommandId::REQ_USER_UPDATE)
                 handleEvent(player, packet);
+
+            if (packet.header._commandId == Protocol::CommandId::REQ_HEARTBEAT)
+            {
+                Protocol::Packet<Protocol::CommandId> repPacket;
+                repPacket.header._commandId = Protocol::CommandId::REP_HEARTBEAT;
+                repPacket.header._apiVersion = packet.header._apiVersion;
+                ClientManager::GetInstance().sendPacketToClient(player->getAddress(), repPacket.serialize());
+                ClientManager::UnlockInstance();
+            }
         }
     }
 }
