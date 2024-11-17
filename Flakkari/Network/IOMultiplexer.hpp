@@ -310,7 +310,7 @@ public:
      * @brief Wait for an event to happen on a socket or timeout
      *
      * @return int  The number of events that happened or -1 if an error occured or 0 if the timeout expired (EINTR)
-     * @see WSAWaitForMultipleEvents
+     * @see WSAPoll
      */
     int wait();
 

@@ -34,8 +34,8 @@ public:
 
 public:
     SparseArrays() = default;
-    SparseArrays(const SparseArrays &other) : _data(other._data){};
-    SparseArrays(SparseArrays &&other) noexcept : _data(std::move(other._data)){};
+    SparseArrays(const SparseArrays &other) : _data(other._data) {};
+    SparseArrays(SparseArrays &&other) noexcept : _data(std::move(other._data)) {};
     ~SparseArrays() = default;
 
     /**

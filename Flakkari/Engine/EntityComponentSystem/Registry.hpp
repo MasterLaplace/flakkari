@@ -29,11 +29,27 @@
 
 namespace Flakkari::Engine::ECS {
 
+/**
+ * @class Registry
+ * @brief A class that manages entities, components, and systems in an Entity-Component-System (ECS) architecture.
+ *
+ * The Registry class provides methods to create, manage, and destroy entities and components, as well as to add and run
+ * systems.
+ *
+ * @tparam Entity The type representing an entity.
+ * @tparam SparseArrays The type representing a sparse array of components.
+ */
 class Registry {
 public:
     using entity_type = Entity;
     using EraseFn = std::function<void(Registry &, const entity_type &)>;
     using SystemFn = std::function<void(Registry &)>;
+
+    /**
+     * @brief Clear all components, systems, and entities from the registry.
+     *
+     */
+    void clear();
 
     /**
      * @brief Spawn a new entity in the registry.
@@ -193,6 +209,22 @@ public:
     {
         auto ti = std::type_index(typeid(Component));
         return std::any_cast<const SparseArrays<Component> &>(_components.at(ti));
+    }
+
+    /**
+     * @brief Retrieves a reference to an optional component at the specified index.
+     *
+     * This function template retrieves a reference to an optional component of the specified type
+     * from the internal component storage at the given index. If the component exists at the specified
+     * index, it returns a reference to the optional component; otherwise, it returns an empty optional.
+     *
+     * @tparam Component The type of the component to retrieve.
+     * @param i The index of the component to retrieve.
+     * @return std::optional<Component>& A reference to the optional component at the specified index.
+     */
+    template <typename Component> std::optional<Component> &getComponents(std::size_t i)
+    {
+        return this->getComponents<Component>()[i];
     }
 
     /**
