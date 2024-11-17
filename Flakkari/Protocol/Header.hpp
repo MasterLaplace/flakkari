@@ -42,8 +42,6 @@ enum class ApiVersion : byte {
     MAX_VERSION
 };
 
-inline namespace V_0 {
-
 /**
  * @brief The priority of the message in the queue
  *
@@ -57,6 +55,8 @@ enum class Priority : byte {
     CRITICAL = 3,
     MAX_PRIORITY = 4
 };
+
+namespace V_0 {
 
 LPL_PACKED_START
 
@@ -73,6 +73,24 @@ template <typename Id> struct Header {
 LPL_PACKED_END
 
 } // namespace V_0
+
+namespace V_1 {
+
+LPL_PACKED_START
+
+template <typename Id> struct Header {
+    Priority _priority     : 4 = Priority::LOW;
+    ApiVersion _apiVersion : 4 = ApiVersion::V_1;
+    Id _commandId;
+    ushort _contentLength = 0;
+    uint _sequenceNumber = static_cast<uint>(
+        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch())
+            .count());
+};
+
+LPL_PACKED_END
+
+} // namespace V_1
 
 } // namespace Flakkari::Protocol
 
