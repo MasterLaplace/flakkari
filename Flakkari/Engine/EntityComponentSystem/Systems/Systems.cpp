@@ -226,6 +226,17 @@ static bool SphereBoxCollisions(const Components::_3D::Transform &pos1, const Co
     float distance = std::sqrt(dx * dx + dy * dy + dz * dz);
     return distance < col1._radius;
 }
+
+static Math::Vector3f reflectVelocity(const Math::Vector3f &velocity, const Math::Vector3f &normal)
+{
+    Math::Vector3f reflected;
+    float dot = 2 * (velocity.vec.x * normal.vec.x + velocity.vec.y * normal.vec.y + velocity.vec.z * normal.vec.z);
+    reflected.vec.x = velocity.vec.x - dot * normal.vec.x;
+    reflected.vec.y = velocity.vec.y - dot * normal.vec.y;
+    reflected.vec.z = velocity.vec.z - dot * normal.vec.z;
+    return reflected;
+}
+
 static bool outOfSkybox(float maxRangeX, float maxRangeY, float maxRangeZ, const Components::_3D::Transform &pos)
 {
     return pos._position.vec.x < -maxRangeX || pos._position.vec.x > maxRangeX || pos._position.vec.y < -maxRangeY ||
@@ -300,7 +311,7 @@ void handle_collisions(Registry &r)
                 continue;
 
             if ((tag1->tag == "Player" && tag2->tag == "Enemy") ||
-                (tag2->tag == "Player" && tag1->tag == "Enemy") && scol1.has_value() && scol2.has_value())
+                (tag2->tag == "Player" && tag1->tag == "Enemy") && (scol1.has_value() && scol2.has_value()))
             {
                 if (SphereCollisions(pos1.value(), scol1.value(), pos2.value(), scol2.value()))
                 {
@@ -312,9 +323,17 @@ void handle_collisions(Registry &r)
                     pos2->_position.vec.x -= normal.vec.x;
                     pos2->_position.vec.y -= normal.vec.y;
                     pos2->_position.vec.z -= normal.vec.z;
+
+                    auto &vel1 = r.getComponents<Components::_3D::Movable>()[i];
+                    auto &vel2 = r.getComponents<Components::_3D::Movable>()[j];
+                    if (vel1.has_value() && vel2.has_value())
+                    {
+                        vel1->_velocity = reflectVelocity(vel1->_velocity, normal);
+                        vel2->_velocity = reflectVelocity(vel2->_velocity, normal);
+                    }
                 }
             }
-            else if ((tag2->tag == "Bullet" && tag1->tag == "Enemy") && scol1.has_value() && bcol2.has_value())
+            else if (tag2->tag == "Bullet" && tag1->tag == "Enemy" && scol1.has_value() && bcol2.has_value())
             {
                 if (r.isRegistered<Components::Common::Health>(i) &&
                     SphereBoxCollisions(pos1.value(), scol1.value(), pos2.value(), bcol2.value()))

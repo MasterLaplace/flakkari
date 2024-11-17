@@ -56,6 +56,13 @@ void apply_movable(Registry &r, float deltaTime);
  */
 void spawn_random_within_skybox(Registry &r);
 
+/**
+ * @brief Handles collisions between entities.
+ *
+ * @param r  The registry containing the entities to update.
+ */
+void handle_collisions(Registry &r);
+
 } // namespace Flakkari::Engine::ECS::Systems::_3D
 
 #endif /* !FLAKKARI_SYSTEMS_HPP_ */
