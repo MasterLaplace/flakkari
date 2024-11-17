@@ -17,17 +17,17 @@
     <img
         src="https://img.shields.io/badge/Linux-blue?style=for-the-badge"
         alt="Linux deb"
-        href="https://github.com/MasterLaplace/Flakkari/releases/download/latest/flakkari-linux.deb"
+        href="https://github.com/MasterLaplace/Flakkari/releases/latest/download/flakkari-linux.deb"
     > &#xa0; | &#xa0;
     <img
         src="https://img.shields.io/badge/Windows-blue?style=for-the-badge"
         alt="Windows"
-        href="https://github.com/MasterLaplace/Flakkari/releases/download/latest/flakkari-win64.exe"
+        href="https://github.com/MasterLaplace/Flakkari/releases/latest/download/flakkari-win64.exe"
     > &#xa0; | &#xa0;
     <img
         src="https://img.shields.io/badge/MacOS-blue?style=for-the-badge"
         alt="MacOS"
-        href="https://github.com/MasterLaplace/Flakkari/releases/download/latest/flakkari-macos.pkg"
+        href="https://github.com/MasterLaplace/Flakkari/releases/latest/download/flakkari-macos.pkg"
     >
     </h3>
 </p>
@@ -129,7 +129,7 @@ $ docker --version
 $ docker build -t flakkari .
 
 # run docker image
-$ docker run Flakkari -p 4242:4242
+$ docker run -p 8081:8081 -it flakkari
 
 # list docker images
 $ docker ps
