@@ -42,13 +42,48 @@ enum class EventState : uint8_t {
 LPL_PACKED_START
 
 struct Event {
-    EventId id;
-    EventState state;
+    V_0::EventId id;
+    V_0::EventState state;
 };
 
 LPL_PACKED_END
 
 } /* namespace V_0 */
+
+namespace V_1 {
+
+enum class EventId : uint8_t {
+    MOVE_LEFT = 10,
+    MOVE_RIGHT = 11,
+    MOVE_UP = 12,
+    MOVE_DOWN = 13,
+    MOVE_FRONT = 14,
+    MOVE_BACK = 15,
+    LOOK_LEFT = 16,
+    LOOK_RIGHT = 17,
+    LOOK_UP = 18,
+    LOOK_DOWN = 19,
+    SHOOT = 20,
+    MAX_EVENT
+};
+
+enum class EventState : uint8_t {
+    NONE = 0,
+    PRESSED = 1,
+    RELEASED = 2,
+    MAX_STATE
+};
+
+LPL_PACKED_START
+
+struct Event {
+    V_1::EventId id;
+    V_1::EventState state;
+};
+
+LPL_PACKED_END
+
+} /* namespace V_1 */
 
 } // namespace Flakkari::Protocol
 
