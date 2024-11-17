@@ -25,12 +25,12 @@ struct RigidBody {
     bool _useGravity = true;
     bool _isKinematic = false;
 
-    RigidBody() : _mass(0), _drag(0), _angularDrag(0), _useGravity(false), _isKinematic(false) {};
+    RigidBody() : _mass(0), _drag(0), _angularDrag(0), _useGravity(false), _isKinematic(false){};
     RigidBody(const RigidBody &other)
         : _mass(other._mass), _drag(other._drag), _angularDrag(other._angularDrag), _useGravity(other._useGravity),
-          _isKinematic(other._isKinematic) {};
+          _isKinematic(other._isKinematic){};
     RigidBody(float mass, float drag, float angularDrag, bool useGravity, bool isKinematic)
-        : _mass(mass), _drag(drag), _angularDrag(angularDrag), _useGravity(useGravity), _isKinematic(isKinematic) {};
+        : _mass(mass), _drag(drag), _angularDrag(angularDrag), _useGravity(useGravity), _isKinematic(isKinematic){};
 
     RigidBody &operator=(const RigidBody &other)
     {

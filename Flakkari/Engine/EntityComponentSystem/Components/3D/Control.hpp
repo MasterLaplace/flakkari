@@ -48,13 +48,12 @@ struct Control {
     Control(bool m_up, bool m_down, bool m_left, bool m_right, bool m_front, bool m_back, bool l_up, bool l_down,
             bool l_left, bool l_right, bool s)
         : _move_up(m_up), _move_down(m_down), _move_left(m_left), _move_right(m_right), _move_front(m_front),
-          _move_back(m_back), _look_up(l_up), _look_down(l_down), _look_left(l_left), _look_right(l_right),
-          _shoot(s) {};
+          _move_back(m_back), _look_up(l_up), _look_down(l_down), _look_left(l_left), _look_right(l_right), _shoot(s){};
     Control(const Control &other)
         : _move_up(other._move_up), _move_down(other._move_down), _move_left(other._move_left),
           _move_right(other._move_right), _move_front(other._move_front), _move_back(other._move_back),
           _look_up(other._look_up), _look_down(other._look_down), _look_left(other._look_left),
-          _look_right(other._look_right), _shoot(other._shoot) {};
+          _look_right(other._look_right), _shoot(other._shoot){};
 
     Control &operator=(const Control &other)
     {
