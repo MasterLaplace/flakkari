@@ -340,7 +340,6 @@ public:
         }
     }
 
-
     /**
      * @brief Add all the components of an entity to a packet.
      *
