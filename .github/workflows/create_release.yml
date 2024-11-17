@@ -84,3 +84,30 @@ jobs:
           name: Flakkari ${{ steps.test_tag_version.outputs.new_tag }}
           body: ${{ steps.test_tag_version.outputs.changelog }}
           generateReleaseNotes: true
+
+  build_package_artifacts:
+    name: Build package artifacts
+    needs: bump_version_and_create_release
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Flakkari Package
+        run: |
+          mkdir -p build
+          cd build
+          cmake ..
+          cmake --build . --config Release --target package
+
+      - name: Upload Flakkari Package
+        uses: actions/upload-artifact@v4.4.3
+        with:
+          name: Flakkari-${{ matrix.os }}
+          path: |
+            build/*.exe
+            build/*.dmg
+            build/*.deb
+            build/*.rpm

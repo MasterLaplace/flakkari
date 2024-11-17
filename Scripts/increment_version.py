@@ -59,6 +59,10 @@ def update_cmakelists_version(new_version: str) -> None:
     with open("CMakeLists.txt", "r") as f:
         content = f.read()
 
+    content = re.sub(r'set\(FLAKKARI_VERSION_MAJOR \d+', f'set(FLAKKARI_VERSION_MAJOR {new_version.split(".")[0]}', content)
+    content = re.sub(r'set\(FLAKKARI_VERSION_MINOR \d+', f'set(FLAKKARI_VERSION_MINOR {new_version.split(".")[1]}', content)
+    content = re.sub(r'set\(FLAKKARI_VERSION_PATCH \d+', f'set(FLAKKARI_VERSION_PATCH {new_version.split(".")[2]}', content)
+
     content = re.sub(r'project\(Flakkari-Server VERSION \d+\.\d+\.\d+', f'project(Flakkari-Server VERSION {new_version}', content)
 
     with open("CMakeLists.txt", "w", newline='\n') as f:
