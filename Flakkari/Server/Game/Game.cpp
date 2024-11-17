@@ -74,11 +74,10 @@ void Game::loadSystems(Engine::ECS::Registry &registry, const std::string &name)
             [this](Engine::ECS::Registry &r) { Engine::ECS::Systems::_3D::apply_movable(r, _deltaTime); });
 
     else if (name == "spawn_random_within_skybox")
-        registry.add_system(
-            [this](Engine::ECS::Registry &r) { Engine::ECS::Systems::_3D::spawn_random_within_skybox(r); });
+        registry.add_system([](Engine::ECS::Registry &r) { Engine::ECS::Systems::_3D::spawn_random_within_skybox(r); });
 
     else if (name == "handle_collisions")
-        registry.add_system([this](Engine::ECS::Registry &r) { Engine::ECS::Systems::_3D::handle_collisions(r); });
+        registry.add_system([](Engine::ECS::Registry &r) { Engine::ECS::Systems::_3D::handle_collisions(r); });
 }
 
 void Game::loadComponents(Engine::ECS::Registry &registry, const nl_component &components,
