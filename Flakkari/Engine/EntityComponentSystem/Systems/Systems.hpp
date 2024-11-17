@@ -23,6 +23,7 @@
 
 #include <chrono>
 #include <cmath>
+#include <cstdlib>
 
 namespace Flakkari::Engine::ECS::Systems::_2D {
 

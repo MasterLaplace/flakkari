@@ -102,15 +102,7 @@ void apply_movable(Registry &r, float deltaTime)
 
 static float randomRange(float min, float max)
 {
-#ifdef _WIN32
     return min + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (max - min)));
-#else
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(min, max);
-
-    return dis(gen);
-#endif
 }
 
 void spawn_random_within_skybox(Registry &r)
@@ -238,6 +230,128 @@ static bool outOfSkybox(float maxRangeX, float maxRangeY, float maxRangeZ, const
 {
     return pos._position.vec.x < -maxRangeX || pos._position.vec.x > maxRangeX || pos._position.vec.y < -maxRangeY ||
            pos._position.vec.y > maxRangeY || pos._position.vec.z < -maxRangeZ || pos._position.vec.z > maxRangeZ;
+}
+
+void handle_collisions(Registry &r)
+{
+    auto &transforms = r.getComponents<Components::_3D::Transform>();
+    auto &boxcollider = r.getComponents<Components::_3D::BoxCollider>();
+    auto &spherecollider = r.getComponents<Components::_3D::SphereCollider>();
+    auto &tags = r.getComponents<Components::Common::Tag>();
+
+    float maxRangeX = 0;
+    float maxRangeY = 0;
+    float maxRangeZ = 0;
+
+    for (Entity i(0); i < transforms.size() && i < tags.size(); ++i)
+    {
+        auto &transform = transforms[i];
+        auto &tag = tags[i];
+
+        if (transform.has_value() && tag.has_value())
+        {
+            if (tag->tag == "Skybox")
+            {
+                maxRangeX = transform->_scale.vec.x / 2;
+                maxRangeY = transform->_scale.vec.y / 2;
+                maxRangeZ = transform->_scale.vec.z / 2;
+            }
+        }
+    }
+
+    bool bulletKilled = false;
+
+    for (Entity i(0); i < transforms.size() && i < tags.size(); ++i)
+    {
+        auto &pos1 = transforms[i];
+        auto &bcol1 = boxcollider[i];
+        auto &scol1 = spherecollider[i];
+        auto &tag1 = tags[i];
+
+        if (!pos1.has_value() || !tag1.has_value())
+            continue;
+
+        if (tag1->tag == "Player" && outOfSkybox(maxRangeX, maxRangeY, maxRangeZ, *pos1))
+        {
+            pos1->_position.vec.x = std::max(-maxRangeX, std::min(maxRangeX, pos1->_position.vec.x));
+            pos1->_position.vec.y = std::max(-maxRangeY, std::min(maxRangeY, pos1->_position.vec.y));
+            pos1->_position.vec.z = std::max(-maxRangeZ, std::min(maxRangeZ, pos1->_position.vec.z));
+        }
+        else if (tag1->tag == "Enemy" && outOfSkybox(maxRangeX, maxRangeY, maxRangeZ, *pos1))
+        {
+            pos1->_position.vec.x = std::max(-maxRangeX, std::min(maxRangeX, pos1->_position.vec.x));
+            pos1->_position.vec.y = std::max(-maxRangeY, std::min(maxRangeY, pos1->_position.vec.y));
+            pos1->_position.vec.z = std::max(-maxRangeZ, std::min(maxRangeZ, pos1->_position.vec.z));
+        }
+        else if (tag1->tag == "Bullet" && outOfSkybox(maxRangeX, maxRangeY, maxRangeZ, *pos1))
+        {
+            r.kill_entity(i);
+            bulletKilled = true;
+        }
+
+        for (Entity j(i + 1); j < transforms.size() && j < tags.size(); ++j)
+        {
+            auto &pos2 = transforms[j];
+            auto &bcol2 = boxcollider[j];
+            auto &scol2 = spherecollider[j];
+            auto &tag2 = tags[j];
+
+            if (!pos2.has_value() || !tag2.has_value())
+                continue;
+
+            if ((tag1->tag == "Player" && tag2->tag == "Enemy") ||
+                (tag2->tag == "Player" && tag1->tag == "Enemy") && scol1.has_value() && scol2.has_value())
+            {
+                if (SphereCollisions(pos1.value(), scol1.value(), pos2.value(), scol2.value()))
+                {
+                    Math::Vector3f normal = resolveSphereCollisions(*pos1, *scol1, *pos2, *scol2);
+                    pos1->_position.vec.x += normal.vec.x;
+                    pos1->_position.vec.y += normal.vec.y;
+                    pos1->_position.vec.z += normal.vec.z;
+
+                    pos2->_position.vec.x -= normal.vec.x;
+                    pos2->_position.vec.y -= normal.vec.y;
+                    pos2->_position.vec.z -= normal.vec.z;
+                }
+            }
+            else if ((tag2->tag == "Bullet" && tag1->tag == "Enemy") && scol1.has_value() && bcol2.has_value())
+            {
+                if (r.isRegistered<Components::Common::Health>(i) &&
+                    SphereBoxCollisions(pos1.value(), scol1.value(), pos2.value(), bcol2.value()))
+                    handleDeath(r, j, i);
+            }
+            else if (tag2->tag == "Bullet" && tag1->tag == "Player" && scol1.has_value() && bcol2.has_value())
+            {
+                if (r.isRegistered<Components::Common::Health>(i) &&
+                    SphereBoxCollisions(pos1.value(), scol1.value(), pos2.value(), bcol2.value()))
+                    handleDeath(r, j, i);
+            }
+            else if (bulletKilled)
+                continue;
+            else if ((tag1->tag == "Bullet" && tag2->tag == "Bullet") ||
+                     (tag2->tag == "Bullet" && tag1->tag == "Bullet"))
+            {
+                if (BoxCollisions(pos1.value(), bcol1.value(), pos2.value(), bcol2.value()))
+                {
+                    r.kill_entity(i);
+                    r.kill_entity(j);
+                }
+            }
+            else if (tag1->tag == "Bullet" && tag2->tag == "Enemy" && scol2.has_value() && bcol1.has_value())
+            {
+                if (r.isRegistered<Components::Common::Health>(j) &&
+                    SphereBoxCollisions(pos2.value(), scol2.value(), pos1.value(), bcol1.value()))
+                    handleDeath(r, i, j);
+            }
+            else if (tag1->tag == "Bullet" && tag2->tag == "Player" && scol2.has_value() && bcol1.has_value())
+            {
+                if (r.isRegistered<Components::Common::Health>(j) &&
+                    SphereBoxCollisions(pos2.value(), scol2.value(), pos1.value(), bcol1.value()))
+                    handleDeath(r, i, j);
+            }
+        }
+        bulletKilled = false;
+    }
 }
 
 } // namespace Flakkari::Engine::ECS::Systems::_3D
