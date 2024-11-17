@@ -136,6 +136,36 @@ endif()
 # Create the executable
 add_executable(flakkari ${SOURCES} ${HEADERS})
 
+# Add an icon to the executable
+if (WIN32)
+    set(APP_ICON_FILE "${CMAKE_SOURCE_DIR}/docs/Images/icon.ico")
+    set(APP_ICON_RESOURCE "${CMAKE_BINARY_DIR}/icon.rc")
+
+    # Generate the .rc file automatically
+    add_custom_command(
+        OUTPUT ${APP_ICON_RESOURCE}
+        COMMAND ${CMAKE_COMMAND} -E echo "1 ICON \"${APP_ICON_FILE}\"" > ${APP_ICON_RESOURCE}
+        DEPENDS ${APP_ICON_FILE}
+        COMMENT "Generating ${APP_ICON_RESOURCE}"
+    )
+
+    # Include the .rc file as a source
+    target_sources(flakkari PRIVATE ${APP_ICON_RESOURCE})
+elseif (APPLE)
+    set_target_properties(flakkari PROPERTIES MACOSX_BUNDLE_ICON_FILE "icon.icns")
+    set(APP_ICON_MACOSX "${CMAKE_SOURCE_DIR}/docs/Images/icon.icns")
+    add_custom_command(TARGET flakkari POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${APP_ICON_MACOSX} $<TARGET_FILE_DIR:flakkari>/icon.icns
+    )
+    target_sources(flakkari PRIVATE ${APP_ICON_MACOSX})
+elseif(UNIX)
+    set(APP_ICON_X11 "${CMAKE_SOURCE_DIR}/docs/Images/icon.xpm")
+    add_custom_command(TARGET flakkari POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${APP_ICON_X11} $<TARGET_FILE_DIR:flakkari>
+    )
+    target_sources(flakkari PRIVATE ${APP_ICON_X11})
+endif()
+
 # Include Directories:
 target_include_directories(flakkari PRIVATE ${CMAKE_SOURCE_DIR}/Flakkari)
 target_include_directories(flakkari PRIVATE ${singleton_SOURCE_DIR})
