@@ -246,6 +246,102 @@ public:
     }
 
     /**
+     * @brief Add all the 3D components of an entity to a packet.
+     *
+     * @tparam Id  Type of the entity id.
+     * @param packet  Packet to add the components to.
+     * @param registry  Registry to get the components from.
+     * @param entity  Entity to get the components from.
+     */
+    template <typename Id>
+    static void add3dToPacketByEntity(Packet<Id> &packet, Engine::ECS::Registry &registry, Engine::ECS::Entity entity)
+    {
+        auto transform = registry.getComponents<Engine::ECS::Components::_3D::Transform>()[entity];
+
+        if (transform.has_value())
+        {
+            packet << ComponentId::TRANSFORM_3D;
+            packet << transform->_position.vec.x;
+            packet << transform->_position.vec.y;
+            packet << transform->_position.vec.z;
+            packet << transform->_rotation.vec.x;
+            packet << transform->_rotation.vec.y;
+            packet << transform->_rotation.vec.z;
+            packet << transform->_scale.vec.x;
+            packet << transform->_scale.vec.y;
+            packet << transform->_scale.vec.z;
+        }
+
+        auto movable = registry.getComponents<Engine::ECS::Components::_3D::Movable>()[entity];
+
+        if (movable.has_value())
+        {
+            packet << ComponentId::MOVABLE_3D;
+            packet << movable->_velocity.vec.x;
+            packet << movable->_velocity.vec.y;
+            packet << movable->_velocity.vec.z;
+            packet << movable->_acceleration.vec.x;
+            packet << movable->_acceleration.vec.y;
+            packet << movable->_acceleration.vec.z;
+        }
+
+        auto control = registry.getComponents<Engine::ECS::Components::_3D::Control>()[entity];
+
+        if (control.has_value())
+        {
+            packet << ComponentId::CONTROL_3D;
+            packet << control->_move_up;
+            packet << control->_move_down;
+            packet << control->_move_left;
+            packet << control->_move_right;
+            packet << control->_move_front;
+            packet << control->_move_back;
+            packet << control->_look_up;
+            packet << control->_look_down;
+            packet << control->_look_left;
+            packet << control->_look_right;
+            packet << control->_shoot;
+        }
+
+        auto boxCollider = registry.getComponents<Engine::ECS::Components::_3D::BoxCollider>()[entity];
+
+        if (boxCollider.has_value())
+        {
+            packet << ComponentId::BOXCOLLIDER;
+            packet << boxCollider->_size.vec.x;
+            packet << boxCollider->_size.vec.y;
+            packet << boxCollider->_size.vec.z;
+            packet << boxCollider->_center.vec.x;
+            packet << boxCollider->_center.vec.y;
+            packet << boxCollider->_center.vec.z;
+        }
+
+        auto sphereCollider = registry.getComponents<Engine::ECS::Components::_3D::SphereCollider>()[entity];
+
+        if (sphereCollider.has_value())
+        {
+            packet << ComponentId::SPHERECOLLIDER;
+            packet << sphereCollider->_center.vec.x;
+            packet << sphereCollider->_center.vec.y;
+            packet << sphereCollider->_center.vec.z;
+            packet << sphereCollider->_radius;
+        }
+
+        auto rigidbody = registry.getComponents<Engine::ECS::Components::_3D::RigidBody>()[entity];
+
+        if (rigidbody.has_value())
+        {
+            packet << ComponentId::RIGIDBODY_3D;
+            packet << rigidbody->_mass;
+            packet << rigidbody->_drag;
+            packet << rigidbody->_angularDrag;
+            packet << rigidbody->_useGravity;
+            packet << rigidbody->_isKinematic;
+        }
+    }
+
+
+    /**
      * @brief Add all the components of an entity to a packet.
      *
      * @tparam Id  Type of the entity id.
@@ -264,6 +360,10 @@ public:
         /*_ 2D Components _*/
 
         add2dToPacketByEntity<Id>(packet, registry, entity);
+
+        /*_ 3D Components _*/
+
+        add3dToPacketByEntity<Id>(packet, registry, entity);
     }
 
     struct UpdateMovement {
