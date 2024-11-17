@@ -44,6 +44,7 @@
 - [Running](#running)
 - [Docker](#docker)
 - [Documentation](#documentation)
+- [Latest Release](#latest-release)
 - [License](#license)
 - [Contacts](#contacts)
 
@@ -53,6 +54,9 @@
 ### :pencil: **DESCRIPTION**
 
 Flakkari is a UDP server created for the R-Type Epitech project.<br>
+It is a server that allows you to play games in a network environment.<br>
+The server is multi-threaded and can handle multiple games at the same time.<br>
+The server is also able to handle multiple clients at the same time.<br>
 
 > [!NOTE]
 > The project is still under development and may not be stable.
@@ -77,25 +81,9 @@ $> cd build
 # Or configure the project with Ninja
 (build)$> cmake -G Ninja .. && cmake --build .
 
-# Set the FLAKKARI_GAME_DIR environment variable
-(build)$> export FLAKKARI_GAME_DIR=<path_to_game_dir>
-
-# for windows
-(build)$> set FLAKKARI_GAME_DIR=<path_to_game_dir>
-
 # Run the server executable
-(build)$> ./r-type_server
+(build)$> ./flakkari <GamesDir> <ip> <port>
 ```
-
-> [!NOTE]
-> - the server load Games from the `FLAKKARI_GAME_DIR` environment variable,
->  so if you want to add a game, you have to put it in this directory before running.
->  If the server is already running, use the `addGame <gameName>` command to load it.
-
-> [!NOTE]
-> - some input commands need administrator privileges to execute.
-> `export FLAKKARI_PASSWORD=<password>` to set the password for the server
-> to run with administrator privileges.
 
 other build commands:
 ```shell
@@ -106,16 +94,21 @@ other build commands:
 (build)$> cmake --build . --target doc
 
 # Build project package
-(build)$> cmake --build . --target package
-(build)$> sudo dpkg -i r-type_server-<version>-Linux.deb
+(build)$> cmake --build . --config Release --target package
+
+# Install the package
+# For windows systems
+(build)$> flakkari-<version>-win64.exe
+
+# For macos systems
+(build)$> sudo installer -pkg flakkari-<version>-Darwin.pkg -target /
+
+# For redhat based systems
+(build)$> sudo rpm -i flakkari-<version>-Linux.rpm
+
+# For debian based systems
+(build)$> sudo dpkg -i flakkari-<version>-Linux.deb
 ```
-
-> [!NOTE]
-> - the install target will install the server executable in the /usr/local/bin directory,
->   the network library in the /usr/local/lib directory and
->   the header files in the /usr/local/include directory.
-> - the doc target will generate the doxygen documentation in the docs directory.
-
 
 <div id='docker'/>
 
