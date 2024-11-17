@@ -5,7 +5,7 @@ var structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform =
     [ "Transform", "d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a18a88874f61383e042b7352b856752d4", null ],
     [ "operator=", "d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a84237f4a33b3dd5a8cd7f25114e05117", null ],
     [ "size", "d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#ab3545a799c91a57c841cdfb22b916d55", null ],
-    [ "position", "d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#ae9196776ca87fc4fa2067cb7ac31ce14", null ],
-    [ "rotation", "d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a8656ac8f220fdc00b0e954a9082863ec", null ],
-    [ "scale", "d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a991a802b354ff6d7a1119dd968fdbf71", null ]
+    [ "_position", "d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a910782bc22b48d54e2a0cc904a661ce0", null ],
+    [ "_rotation", "d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a19c42c6f25beb116008dcebf352636ce", null ],
+    [ "_scale", "d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a74a694816d4849acccd7451e0d5b63c1", null ]
 ];

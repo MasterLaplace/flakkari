@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="Flakkari::Engine::ECS\l::Components::Common\l::Evolve",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d1c/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Evolve.html",tooltip="Evolve component for ECS entities that can evolve in to another Component."];
+  Node0 [label="Flakkari::Engine::ECS\l::Components::_3D::Control",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d0e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Control.html",tooltip="Control component for 3D entities (player, enemies, etc...)"];
 }

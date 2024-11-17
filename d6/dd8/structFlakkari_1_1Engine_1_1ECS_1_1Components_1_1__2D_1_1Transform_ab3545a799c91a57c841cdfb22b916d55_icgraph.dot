@@ -16,7 +16,7 @@ digraph "Flakkari::Engine::ECS::Components::_2D::Transform::size"
   Node5 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node6 [label="Flakkari::Game::start",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#af4062192215ec0e249ad0929e17ac4e0",tooltip="Start the game. This function is called when the game is launched. It will start the game loop."];
   Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7 [label="Flakkari::Engine::ECS\l::Systems::position",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dde/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems.html#ae4fec4a1a5a55d37756b83248855df32",tooltip="Updates the position of all entities with a Position and a Movable component based on their velocity."];
+  Node7 [label="Flakkari::Engine::ECS\l::Systems::_2D::position",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d92/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__2D.html#aab7adbed4293a12c180840bde1569d88",tooltip="Updates the position of all entities with a Position and a Movable component based on their velocity."];
   Node7 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node8 [label="Flakkari::Game::loadSystems",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#a8c1c536899944afc33cd5dbc60bc6d83",tooltip="Add all the systems of the game to the registry."];
   Node8 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

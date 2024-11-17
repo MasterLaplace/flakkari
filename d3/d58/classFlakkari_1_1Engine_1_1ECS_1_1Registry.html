@@ -94,6 +94,9 @@ $(document).ready(function(){initNavTree('d3/d58/classFlakkari_1_1Engine_1_1ECS_
 </div><!--header-->
 <div class="contents">
 
+<p>A class that manages entities, components, and systems in an Entity-Component-System (<a class="el" href="../../d7/d16/namespaceFlakkari_1_1Engine_1_1ECS.html">ECS</a>) architecture.  
+ <a href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="../../db/dd1/Registry_8hpp_source.html">Registry.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
@@ -107,6 +110,9 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a728670317152c65fe451396bac6cc38f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a728670317152c65fe451396bac6cc38f">clear</a> ()</td></tr>
+<tr class="memdesc:a728670317152c65fe451396bac6cc38f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear all components, systems, and entities from the registry.  <a href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a728670317152c65fe451396bac6cc38f">More...</a><br /></td></tr>
+<tr class="separator:a728670317152c65fe451396bac6cc38f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81799a52fa1e3deabdea66ac4b044729"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a0cf234234893012adbf7eef2400a0c03">entity_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a81799a52fa1e3deabdea66ac4b044729">spawn_entity</a> ()</td></tr>
 <tr class="memdesc:a81799a52fa1e3deabdea66ac4b044729"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spawn a new entity in the registry.  <a href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a81799a52fa1e3deabdea66ac4b044729">More...</a><br /></td></tr>
 <tr class="separator:a81799a52fa1e3deabdea66ac4b044729"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,6 +158,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9ac2321c3331e31aedcee08ef8e7c7f2"><td class="memTemplItemLeft" align="right" valign="top">const <a class="el" href="../../d5/dd2/classFlakkari_1_1Engine_1_1ECS_1_1SparseArrays.html">SparseArrays</a>&lt; Component &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a9ac2321c3331e31aedcee08ef8e7c7f2">getComponents</a> () const</td></tr>
 <tr class="memdesc:a9ac2321c3331e31aedcee08ef8e7c7f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="../../d3/d70/namespaceFlakkari_1_1Engine_1_1ECS_1_1Components.html">Components</a> object from the registry.  <a href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a9ac2321c3331e31aedcee08ef8e7c7f2">More...</a><br /></td></tr>
 <tr class="separator:a9ac2321c3331e31aedcee08ef8e7c7f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a504ed1f695d0e488810a76d617d96649"><td class="memTemplParams" colspan="2">template&lt;typename Component &gt; </td></tr>
+<tr class="memitem:a504ed1f695d0e488810a76d617d96649"><td class="memTemplItemLeft" align="right" valign="top">std::optional&lt; Component &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a504ed1f695d0e488810a76d617d96649">getComponents</a> (std::size_t i)</td></tr>
+<tr class="memdesc:a504ed1f695d0e488810a76d617d96649"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a reference to an optional component at the specified index.  <a href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a504ed1f695d0e488810a76d617d96649">More...</a><br /></td></tr>
+<tr class="separator:a504ed1f695d0e488810a76d617d96649"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b9afe929d82931e4fbbce85acb84fc1"><td class="memTemplParams" colspan="2">template&lt;typename... Components, typename Function &gt; </td></tr>
 <tr class="memitem:a4b9afe929d82931e4fbbce85acb84fc1"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a4b9afe929d82931e4fbbce85acb84fc1">add_system</a> (Function &amp;&amp;f)</td></tr>
 <tr class="memdesc:a4b9afe929d82931e4fbbce85acb84fc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a system to the registry.  <a href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a4b9afe929d82931e4fbbce85acb84fc1">More...</a><br /></td></tr>
@@ -160,7 +170,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:afdbc3c87317ca6be0a11b9a55957b935"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run all the systems in the registry.  <a href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#afdbc3c87317ca6be0a11b9a55957b935">More...</a><br /></td></tr>
 <tr class="separator:afdbc3c87317ca6be0a11b9a55957b935"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A class that manages entities, components, and systems in an Entity-Component-System (<a class="el" href="../../d7/d16/namespaceFlakkari_1_1Engine_1_1ECS.html">ECS</a>) architecture. </p>
+<p>The <a class="el" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html" title="A class that manages entities, components, and systems in an Entity-Component-System (ECS) architectu...">Registry</a> class provides methods to create, manage, and destroy entities and components, as well as to add and run systems.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname"><a class="el" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">Entity</a></td><td>The type representing an entity. </td></tr>
+    <tr><td class="paramname"><a class="el" href="../../d5/dd2/classFlakkari_1_1Engine_1_1ECS_1_1SparseArrays.html">SparseArrays</a></td><td>The type representing a sparse array of components. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a0cf234234893012adbf7eef2400a0c03"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0cf234234893012adbf7eef2400a0c03">&#9670;&nbsp;</a></span>entity_type</h2>
 
@@ -365,6 +385,25 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="a728670317152c65fe451396bac6cc38f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a728670317152c65fe451396bac6cc38f">&#9670;&nbsp;</a></span>clear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Flakkari::Engine::ECS::Registry::clear </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clear all components, systems, and entities from the registry. </p>
+
+</div>
+</div>
 <a id="aa5e432ca7a261fc6d8709dbb8110b16d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa5e432ca7a261fc6d8709dbb8110b16d">&#9670;&nbsp;</a></span>emplace_component()</h2>
 
@@ -448,7 +487,7 @@ template&lt;typename Component , typename... Params&gt; </div>
 </div>
 </div>
 <a id="a99a1a0865c82335ffe9c5848b45182c7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99a1a0865c82335ffe9c5848b45182c7">&#9670;&nbsp;</a></span>getComponents() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a99a1a0865c82335ffe9c5848b45182c7">&#9670;&nbsp;</a></span>getComponents() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -489,7 +528,7 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <a id="a9ac2321c3331e31aedcee08ef8e7c7f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9ac2321c3331e31aedcee08ef8e7c7f2">&#9670;&nbsp;</a></span>getComponents() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ac2321c3331e31aedcee08ef8e7c7f2">&#9670;&nbsp;</a></span>getComponents() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -521,6 +560,50 @@ template&lt;typename Component &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>const SparseArrays&lt;Component&gt;&amp; The component array. </dd></dl>
+
+</div>
+</div>
+<a id="a504ed1f695d0e488810a76d617d96649"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a504ed1f695d0e488810a76d617d96649">&#9670;&nbsp;</a></span>getComponents() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Component &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;Component&gt;&amp; Flakkari::Engine::ECS::Registry::getComponents </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>i</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves a reference to an optional component at the specified index. </p>
+<p>This function template retrieves a reference to an optional component of the specified type from the internal component storage at the given index. If the component exists at the specified index, it returns a reference to the optional component; otherwise, it returns an empty optional.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Component</td><td>The type of the component to retrieve. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i</td><td>The index of the component to retrieve. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::optional&lt;Component&gt;&amp; A reference to the optional component at the specified index. </dd></dl>
 
 </div>
 </div>
@@ -635,6 +718,11 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry_a7fc7d812593412b6f6c81f3c7be2edbc_icgraph.png" border="0" usemap="#ad3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry_a7fc7d812593412b6f6c81f3c7be2edbc_icgraph" alt=""/></div>
+</div>
 
 </div>
 </div>
@@ -776,8 +864,8 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>Flakkari/Engine/EntityComponentSystem/<a class="el" href="../../db/dd1/Registry_8hpp_source.html">Registry.hpp (227  769 7375 /home/runner/work/Flakkari/Flakkari/Flakkari/Engine/EntityComponentSystem/Registry.hpp)</a></li>
-<li>Flakkari/Engine/EntityComponentSystem/<a class="el" href="../../d6/d4f/Registry_8cpp.html">Registry.cpp (45  92 918 /home/runner/work/Flakkari/Flakkari/Flakkari/Engine/EntityComponentSystem/Registry.cpp)</a></li>
+<li>Flakkari/Engine/EntityComponentSystem/<a class="el" href="../../db/dd1/Registry_8hpp_source.html">Registry.hpp (259  957 8702 /home/runner/work/Flakkari/Flakkari/Flakkari/Engine/EntityComponentSystem/Registry.hpp)</a></li>
+<li>Flakkari/Engine/EntityComponentSystem/<a class="el" href="../../d6/d4f/Registry_8cpp.html">Registry.cpp (54  105 1090 /home/runner/work/Flakkari/Flakkari/Flakkari/Engine/EntityComponentSystem/Registry.cpp)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

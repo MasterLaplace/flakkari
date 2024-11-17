@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Flakkari: Flakkari/Engine/EntityComponentSystem/Systems/Systems.hpp (40  134 1230 /home/runner/work/Flakkari/Flakkari/Flakkari/Engine/EntityComponentSystem/Systems/Systems.hpp) Source File</title>
+<title>Flakkari: Flakkari/Engine/EntityComponentSystem/Systems/Systems.hpp (68  239 2025 /home/runner/work/Flakkari/Flakkari/Flakkari/Engine/EntityComponentSystem/Systems/Systems.hpp) Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -109,21 +109,37 @@ $(document).ready(function(){initNavTree('d8/d3d/Systems_8hpp_source.html','../.
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define FLAKKARI_SYSTEMS_HPP_</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;../Components/Components2D.hpp&quot;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;../Components/ComponentsCommon.hpp&quot;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;../Registry.hpp&quot;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;chrono&gt;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;cmath&gt;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">namespace </span><a class="code" href="../../d6/dde/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems.html">Flakkari::Engine::ECS::Systems</a> {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;../Components/Components3D.hpp&quot;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;../Components/ComponentsCommon.hpp&quot;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;../Registry.hpp&quot;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;chrono&gt;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;cstdlib&gt;</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d6/dde/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems.html#ae4fec4a1a5a55d37756b83248855df32">position</a>(Registry &amp;r, <span class="keywordtype">float</span> deltaTime);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;} <span class="comment">// namespace Flakkari::Engine::ECS::Systems</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">namespace </span><a class="code" href="../../d9/d92/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__2D.html">Flakkari::Engine::ECS::Systems::_2D</a> {</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d9/d92/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__2D.html#aab7adbed4293a12c180840bde1569d88">position</a>(Registry &amp;r, <span class="keywordtype">float</span> deltaTime);</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !FLAKKARI_SYSTEMS_HPP_ */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="anamespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_html"><div class="ttname"><a href="../../d6/dde/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems.html">Flakkari::Engine::ECS::Systems</a></div><div class="ttdef"><b>Definition:</b> Systems.cpp:13</div></div>
-<div class="ttc" id="anamespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_html_ae4fec4a1a5a55d37756b83248855df32"><div class="ttname"><a href="../../d6/dde/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems.html#ae4fec4a1a5a55d37756b83248855df32">Flakkari::Engine::ECS::Systems::position</a></div><div class="ttdeci">void position(Registry &amp;r, float deltaTime)</div><div class="ttdoc">Updates the position of all entities with a Position and a Movable component based on their velocity.</div><div class="ttdef"><b>Definition:</b> Systems.cpp:15</div></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;} <span class="comment">// namespace Flakkari::Engine::ECS::Systems::_2D</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">namespace </span><a class="code" href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html">Flakkari::Engine::ECS::Systems::_3D</a> {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#a9448286ff070a8d4c6a778deec46cff1">apply_movable</a>(Registry &amp;r, <span class="keywordtype">float</span> deltaTime);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#a8aa2d0ae6922afe5be505e4c18cafe94">spawn_random_within_skybox</a>(Registry &amp;r);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#a3970ba1e143439b66eb3aa76ea765f6e">handle_collisions</a>(Registry &amp;r);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;} <span class="comment">// namespace Flakkari::Engine::ECS::Systems::_3D</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !FLAKKARI_SYSTEMS_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="anamespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__2D_html"><div class="ttname"><a href="../../d9/d92/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__2D.html">Flakkari::Engine::ECS::Systems::_2D</a></div><div class="ttdef"><b>Definition:</b> Systems.cpp:13</div></div>
+<div class="ttc" id="anamespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__2D_html_aab7adbed4293a12c180840bde1569d88"><div class="ttname"><a href="../../d9/d92/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__2D.html#aab7adbed4293a12c180840bde1569d88">Flakkari::Engine::ECS::Systems::_2D::position</a></div><div class="ttdeci">void position(Registry &amp;r, float deltaTime)</div><div class="ttdoc">Updates the position of all entities with a Position and a Movable component based on their velocity.</div><div class="ttdef"><b>Definition:</b> Systems.cpp:15</div></div>
+<div class="ttc" id="anamespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D_html"><div class="ttname"><a href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html">Flakkari::Engine::ECS::Systems::_3D</a></div><div class="ttdef"><b>Definition:</b> Systems.cpp:80</div></div>
+<div class="ttc" id="anamespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D_html_a3970ba1e143439b66eb3aa76ea765f6e"><div class="ttname"><a href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#a3970ba1e143439b66eb3aa76ea765f6e">Flakkari::Engine::ECS::Systems::_3D::handle_collisions</a></div><div class="ttdeci">void handle_collisions(Registry &amp;r)</div><div class="ttdoc">Handles collisions between entities.</div><div class="ttdef"><b>Definition:</b> Systems.cpp:246</div></div>
+<div class="ttc" id="anamespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D_html_a8aa2d0ae6922afe5be505e4c18cafe94"><div class="ttname"><a href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#a8aa2d0ae6922afe5be505e4c18cafe94">Flakkari::Engine::ECS::Systems::_3D::spawn_random_within_skybox</a></div><div class="ttdeci">void spawn_random_within_skybox(Registry &amp;r)</div><div class="ttdoc">Spawns a random entity within a skybox.</div><div class="ttdef"><b>Definition:</b> Systems.cpp:108</div></div>
+<div class="ttc" id="anamespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D_html_a9448286ff070a8d4c6a778deec46cff1"><div class="ttname"><a href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#a9448286ff070a8d4c6a778deec46cff1">Flakkari::Engine::ECS::Systems::_3D::apply_movable</a></div><div class="ttdeci">void apply_movable(Registry &amp;r, float deltaTime)</div><div class="ttdoc">Updates the position of all entities with a Transform and a Movable component based on their velocity...</div><div class="ttdef"><b>Definition:</b> Systems.cpp:82</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

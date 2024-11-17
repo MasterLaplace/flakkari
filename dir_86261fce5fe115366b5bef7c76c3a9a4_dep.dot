@@ -7,5 +7,5 @@ digraph "Flakkari/Engine/EntityComponentSystem/Components/2D" {
   dir_86261fce5fe115366b5bef7c76c3a9a4 [shape=box, label="2D", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_86261fce5fe115366b5bef7c76c3a9a4.html"];
   }
   dir_91bfd317f0d822e02c021ee39d31f634 [shape=box label="Math" URL="dir_91bfd317f0d822e02c021ee39d31f634.html"];
-  dir_86261fce5fe115366b5bef7c76c3a9a4->dir_91bfd317f0d822e02c021ee39d31f634 [headlabel="5", labeldistance=1.5 headhref="dir_000005_000008.html"];
+  dir_86261fce5fe115366b5bef7c76c3a9a4->dir_91bfd317f0d822e02c021ee39d31f634 [headlabel="5", labeldistance=1.5 headhref="dir_000005_000009.html"];
 }

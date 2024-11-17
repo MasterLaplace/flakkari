@@ -7,5 +7,5 @@ digraph "Flakkari/Server/Internals" {
   dir_96390089ad122cc0e79a3d516a8e4be8 [shape=box label="Game" URL="dir_96390089ad122cc0e79a3d516a8e4be8.html"];
   dir_74e769d2151983ba157e4b397e94e5a6 [shape=box, label="Internals", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_74e769d2151983ba157e4b397e94e5a6.html"];
   }
-  dir_74e769d2151983ba157e4b397e94e5a6->dir_96390089ad122cc0e79a3d516a8e4be8 [headlabel="1", labeldistance=1.5 headhref="dir_000015_000014.html"];
+  dir_74e769d2151983ba157e4b397e94e5a6->dir_96390089ad122cc0e79a3d516a8e4be8 [headlabel="1", labeldistance=1.5 headhref="dir_000016_000015.html"];
 }

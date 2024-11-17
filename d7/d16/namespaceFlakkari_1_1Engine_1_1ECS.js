@@ -1,10 +1,7 @@
 var namespaceFlakkari_1_1Engine_1_1ECS =
 [
     [ "Components", "d3/d70/namespaceFlakkari_1_1Engine_1_1ECS_1_1Components.html", "d3/d70/namespaceFlakkari_1_1Engine_1_1ECS_1_1Components" ],
-    [ "Systems", "d6/dde/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems.html", [
-      [ "position", "d6/dde/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems.html#ae4fec4a1a5a55d37756b83248855df32", null ],
-      [ "update_control", "d6/dde/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems.html#a4e45640fc00262c932e6fcd4b2ce902e", null ]
-    ] ],
+    [ "Systems", "d6/dde/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems.html", "d6/dde/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems" ],
     [ "Entity", "d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html", "d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity" ],
     [ "EntityFactory", "d3/d98/classFlakkari_1_1Engine_1_1ECS_1_1EntityFactory.html", "d3/d98/classFlakkari_1_1Engine_1_1ECS_1_1EntityFactory" ],
     [ "Registry", "d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html", "d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry" ],

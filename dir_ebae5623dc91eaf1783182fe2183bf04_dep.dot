@@ -1,0 +1,11 @@
+digraph "Flakkari/Engine/EntityComponentSystem/Components/3D" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_6b151d91432e5e3a835f5b0d29761f9f {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Components" fontname="Helvetica", fontsize="10", URL="dir_6b151d91432e5e3a835f5b0d29761f9f.html"]
+  dir_ebae5623dc91eaf1783182fe2183bf04 [shape=box, label="3D", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_ebae5623dc91eaf1783182fe2183bf04.html"];
+  }
+  dir_91bfd317f0d822e02c021ee39d31f634 [shape=box label="Math" URL="dir_91bfd317f0d822e02c021ee39d31f634.html"];
+  dir_ebae5623dc91eaf1783182fe2183bf04->dir_91bfd317f0d822e02c021ee39d31f634 [headlabel="6", labeldistance=1.5 headhref="dir_000006_000009.html"];
+}
