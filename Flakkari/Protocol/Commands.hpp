@@ -195,8 +195,8 @@ enum class CommandId : uint8_t {
     REQ_ENTITY_SHOOT = 28,   // Server -> Client [Shoot entity]: (id)(component (position, rotation, velocity, etc))
     REP_ENTITY_SHOOT = 29,   // Client -> Server [Entity shot]: ()
     // 30 - 39: User
-    REQ_USER_UPDATE = 30, // Client -> Server [Update user]: (event_id, state)
-    REP_USER_UPDATE = 31, // Server -> Client [User updated]: ()
+    REQ_USER_UPDATE = 30,  // Client -> Server [Update user]: (event_id, state)
+    REP_USER_UPDATE = 31,  // Server -> Client [User updated]: ()
     REQ_USER_UPDATES = 32, // Client -> Server [Update user multi-events]: (event_id, state|event_id, float)
     REP_USER_UPDATES = 33, // Server -> Client [User updated]: ()
     // 40 - 49: Chat
