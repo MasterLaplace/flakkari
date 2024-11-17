@@ -10,7 +10,7 @@
 #include "Systems.hpp"
 #include "Protocol/Events.hpp"
 
-namespace Flakkari::Engine::ECS::Systems {
+namespace Flakkari::Engine::ECS::Systems::_2D {
 
 void position(Registry &r, float deltaTime)
 {
@@ -27,14 +27,14 @@ void position(Registry &r, float deltaTime)
         if (pos.has_value() && vel.has_value())
         {
             float magnitude =
-                std::sqrt(vel->velocity.vec.x * vel->velocity.vec.x + vel->velocity.vec.y * vel->velocity.vec.y);
+                std::sqrt(vel->_velocity.vec.x * vel->_velocity.vec.x + vel->_velocity.vec.y * vel->_velocity.vec.y);
             if (magnitude > 0.0f)
             {
-                vel->velocity.vec.x /= magnitude;
-                vel->velocity.vec.y /= magnitude;
+                vel->_velocity.vec.x /= magnitude;
+                vel->_velocity.vec.y /= magnitude;
             }
-            pos->position.vec.x += vel->velocity.vec.x * vel->acceleration.vec.x * deltaTime;
-            pos->position.vec.y += vel->velocity.vec.y * vel->acceleration.vec.y * deltaTime;
+            pos->_position.vec.x += vel->_velocity.vec.x * vel->_acceleration.vec.x * deltaTime;
+            pos->_position.vec.y += vel->_velocity.vec.y * vel->_acceleration.vec.y * deltaTime;
         }
     }
 }
@@ -75,4 +75,4 @@ void update_control(Registry &r)
     }
 }
 
-} // namespace Flakkari::Engine::ECS::Systems
+} // namespace Flakkari::Engine::ECS::Systems::_2D

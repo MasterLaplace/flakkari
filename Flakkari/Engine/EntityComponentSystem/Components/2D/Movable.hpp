@@ -15,21 +15,24 @@
 namespace Flakkari::Engine::ECS::Components::_2D {
 LPL_PACKED_START
 
+/**
+ * @brief Movable component for 2D entities
+ */
 struct Movable {
-    Math::Vector2f velocity;     // pixels / second
-    Math::Vector2f acceleration; // pixels / second^2
+    Math::Vector2f _velocity;     // pixels / second
+    Math::Vector2f _acceleration; // pixels / second^2
 
-    Movable() : velocity(0, 0), acceleration(0, 0) {}
+    Movable() : _velocity(0, 0), _acceleration(0, 0) {}
     Movable(const Math::Vector2f &velocity, const Math::Vector2f &acceleration)
-        : velocity(velocity), acceleration(acceleration){};
-    Movable(const Movable &other) : velocity(other.velocity), acceleration(other.acceleration){};
+        : _velocity(velocity), _acceleration(acceleration){};
+    Movable(const Movable &other) : _velocity(other._velocity), _acceleration(other._acceleration){};
 
     Movable &operator=(const Movable &other)
     {
         if (this != &other)
         {
-            velocity = other.velocity;
-            acceleration = other.acceleration;
+            _velocity = other._velocity;
+            _acceleration = other._acceleration;
         }
 
         return *this;

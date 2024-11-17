@@ -15,23 +15,26 @@
 namespace Flakkari::Engine::ECS::Components::_2D {
 LPL_PACKED_START
 
+/**
+ * @brief Transform component for 2D entities
+ */
 struct Transform {
-    Math::Vector2f position;
-    Math::Vector2f scale;
-    float rotation;
+    Math::Vector2f _position;
+    Math::Vector2f _scale;
+    float _rotation;
 
-    Transform() : position(0, 0), scale(1, 1), rotation(0){};
+    Transform() : _position(0, 0), _scale(1, 1), _rotation(0){};
     Transform(const Math::Vector2f &position, const Math::Vector2f &scale, float rotation)
-        : position(position), scale(scale), rotation(rotation){};
-    Transform(const Transform &other) : position(other.position), scale(other.scale), rotation(other.rotation){};
+        : _position(position), _scale(scale), _rotation(rotation){};
+    Transform(const Transform &other) : _position(other._position), _scale(other._scale), _rotation(other._rotation){};
 
     Transform &operator=(const Transform &other)
     {
         if (this != &other)
         {
-            position = other.position;
-            scale = other.scale;
-            rotation = other.rotation;
+            _position = other._position;
+            _scale = other._scale;
+            _rotation = other._rotation;
         }
 
         return *this;

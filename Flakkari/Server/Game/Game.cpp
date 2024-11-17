@@ -67,8 +67,7 @@ Game::~Game()
 void Game::loadSystems(Engine::ECS::Registry &registry, const std::string &name)
 {
     if (name == "position")
-        return registry.add_system([this](Engine::ECS::Registry &r) { Engine::ECS::Systems::position(r, _deltaTime); }),
-               void();
+        registry.add_system([this](Engine::ECS::Registry &r) { Engine::ECS::Systems::_2D::position(r, _deltaTime); });
 }
 
 void Game::loadComponents(Engine::ECS::Registry &registry, const nl_component &components,
@@ -81,14 +80,16 @@ void Game::loadComponents(Engine::ECS::Registry &registry, const nl_component &c
         auto componentName = component.key();
         auto componentContent = component.value();
 
+        //*_ 2D Components _*//
+
         if (componentName == "Transform")
         {
             registry.registerComponent<Engine::ECS::Components::_2D::Transform>();
             Engine::ECS::Components::_2D::Transform transform;
-            transform.position =
+            transform._position =
                 Engine::Math::Vector2f(componentContent["position"]["x"], componentContent["position"]["y"]);
-            transform.rotation = componentContent["rotation"];
-            transform.scale = Engine::Math::Vector2f(componentContent["scale"]["x"], componentContent["scale"]["y"]);
+            transform._rotation = componentContent["rotation"];
+            transform._scale = Engine::Math::Vector2f(componentContent["scale"]["x"], componentContent["scale"]["y"]);
             registry.add_component<Engine::ECS::Components::_2D::Transform>(newEntity, std::move(transform));
             continue;
         }
@@ -97,9 +98,9 @@ void Game::loadComponents(Engine::ECS::Registry &registry, const nl_component &c
         {
             registry.registerComponent<Engine::ECS::Components::_2D::Movable>();
             Engine::ECS::Components::_2D::Movable movable;
-            movable.velocity =
+            movable._velocity =
                 Engine::Math::Vector2f(componentContent["velocity"]["x"], componentContent["velocity"]["y"]);
-            movable.acceleration =
+            movable._acceleration =
                 Engine::Math::Vector2f(componentContent["acceleration"]["x"], componentContent["acceleration"]["y"]);
             registry.add_component<Engine::ECS::Components::_2D::Movable>(newEntity, std::move(movable));
             continue;
@@ -109,11 +110,11 @@ void Game::loadComponents(Engine::ECS::Registry &registry, const nl_component &c
         {
             registry.registerComponent<Engine::ECS::Components::_2D::Control>();
             Engine::ECS::Components::_2D::Control control;
-            control.up = componentContent["up"];
-            control.down = componentContent["down"];
-            control.left = componentContent["left"];
-            control.right = componentContent["right"];
-            control.shoot = componentContent["shoot"];
+            control._up = componentContent["up"];
+            control._down = componentContent["down"];
+            control._left = componentContent["left"];
+            control._right = componentContent["right"];
+            control._shoot = componentContent["shoot"];
             registry.add_component<Engine::ECS::Components::_2D::Control>(newEntity, std::move(control));
             continue;
         }
@@ -126,6 +127,8 @@ void Game::loadComponents(Engine::ECS::Registry &registry, const nl_component &c
             registry.add_component<Engine::ECS::Components::_2D::Collider>(newEntity, std::move(collider));
             continue;
         }
+
+        //*_ Common Components _*//
 
         if (componentName == "Evolve")
         {
@@ -279,23 +282,24 @@ void Game::sendUpdatePosition(std::shared_ptr<Client> player, Engine::ECS::Compo
     Protocol::Packet<Protocol::CommandId> packet;
     packet.header._commandId = Protocol::CommandId::REQ_ENTITY_MOVED;
     packet << player->getEntity();
-    packet << pos.position.vec.x;
-    packet << pos.position.vec.y;
-    packet << pos.rotation;
-    packet << pos.scale.vec.x;
-    packet << pos.scale.vec.y;
-    packet << vel.velocity.vec.x;
-    packet << vel.velocity.vec.y;
-    packet << vel.acceleration.vec.x;
-    packet << vel.acceleration.vec.y;
+    packet << pos._position.vec.x;
+    packet << pos._position.vec.y;
+    packet << pos._rotation;
+    packet << pos._scale.vec.x;
+    packet << pos._scale.vec.y;
+    packet << vel._velocity.vec.x;
+    packet << vel._velocity.vec.y;
+    packet << vel._acceleration.vec.x;
+    packet << vel._acceleration.vec.y;
 
     FLAKKARI_LOG_LOG("packet size: " + std::to_string(packet.size()) +
                      " bytes\n"
                      "packet sent: <Id: " +
-                     std::to_string(player->getEntity()) + ", Pos: (" + std::to_string(pos.position.vec.x) + ", " +
-                     std::to_string(pos.position.vec.y) + ")" + ", Vel: (" + std::to_string(vel.velocity.vec.x) + ", " +
-                     std::to_string(vel.velocity.vec.y) + ")" + ", Acc: (" + std::to_string(vel.acceleration.vec.x) +
-                     ", " + std::to_string(vel.acceleration.vec.y) + ")" + ">");
+                     std::to_string(player->getEntity()) + ", Pos: (" + std::to_string(pos._position.vec.x) + ", " +
+                     std::to_string(pos._position.vec.y) + ")" + ", Vel: (" + std::to_string(vel._velocity.vec.x) +
+                     ", " + std::to_string(vel._velocity.vec.y) + ")" + ", Acc: (" +
+                     std::to_string(vel._acceleration.vec.x) + ", " + std::to_string(vel._acceleration.vec.y) + ")" +
+                     ">");
     sendOnSameScene(player->getSceneName(), packet);
 }
 
@@ -313,7 +317,7 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
         return;
 
     Protocol::Event event = *(Protocol::Event *) packet.payload.data();
-    if (event.id == Protocol::EventId::MOVE_UP && ctrl->up)
+    if (event.id == Protocol::EventId::MOVE_UP && ctrl->_up)
     {
         if (netEvent->events.size() < size_t(event.id))
             netEvent->events.resize(size_t(event.id) + 1);
@@ -322,13 +326,13 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
         if (event.state == Protocol::EventState::PRESSED)
-            vel->velocity.vec.y = -1;
+            vel->_velocity.vec.y = -1;
         if (event.state == Protocol::EventState::RELEASED)
-            vel->velocity.vec.y = 0;
+            vel->_velocity.vec.y = 0;
         sendUpdatePosition(player, pos.value(), vel.value());
         return;
     }
-    if (event.id == Protocol::EventId::MOVE_DOWN && ctrl->down)
+    if (event.id == Protocol::EventId::MOVE_DOWN && ctrl->_down)
     {
         if (netEvent->events.size() < size_t(event.id))
             netEvent->events.resize(size_t(event.id) + 1);
@@ -337,13 +341,13 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
         if (event.state == Protocol::EventState::PRESSED)
-            vel->velocity.vec.y = 1;
+            vel->_velocity.vec.y = 1;
         if (event.state == Protocol::EventState::RELEASED)
-            vel->velocity.vec.y = 0;
+            vel->_velocity.vec.y = 0;
         sendUpdatePosition(player, pos.value(), vel.value());
         return;
     }
-    if (event.id == Protocol::EventId::MOVE_LEFT && ctrl->left)
+    if (event.id == Protocol::EventId::MOVE_LEFT && ctrl->_left)
     {
         if (netEvent->events.size() < size_t(event.id))
             netEvent->events.resize(size_t(event.id) + 1);
@@ -352,13 +356,13 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
         if (event.state == Protocol::EventState::PRESSED)
-            vel->velocity.vec.x = -1;
+            vel->_velocity.vec.x = -1;
         if (event.state == Protocol::EventState::RELEASED)
-            vel->velocity.vec.x = 0;
+            vel->_velocity.vec.x = 0;
         sendUpdatePosition(player, pos.value(), vel.value());
         return;
     }
-    if (event.id == Protocol::EventId::MOVE_RIGHT && ctrl->right)
+    if (event.id == Protocol::EventId::MOVE_RIGHT && ctrl->_right)
     {
         if (netEvent->events.size() < size_t(event.id))
             netEvent->events.resize(size_t(event.id) + 1);
@@ -367,13 +371,13 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
         FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
 
         if (event.state == Protocol::EventState::PRESSED)
-            vel->velocity.vec.x = 1;
+            vel->_velocity.vec.x = 1;
         if (event.state == Protocol::EventState::RELEASED)
-            vel->velocity.vec.x = 0;
+            vel->_velocity.vec.x = 0;
         sendUpdatePosition(player, pos.value(), vel.value());
         return;
     }
-    if (event.id == Protocol::EventId::SHOOT && ctrl->shoot)
+    if (event.id == Protocol::EventId::SHOOT && ctrl->_shoot)
     {
         if (netEvent->events.size() < size_t(event.id))
             netEvent->events.resize(size_t(event.id) + 1);

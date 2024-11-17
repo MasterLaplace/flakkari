@@ -23,7 +23,7 @@
 #include <chrono>
 #include <cmath>
 
-namespace Flakkari::Engine::ECS::Systems {
+namespace Flakkari::Engine::ECS::Systems::_2D {
 
 /**
  * @brief Updates the position of all entities with a Position and a Movable component based on their velocity.
@@ -35,6 +35,6 @@ namespace Flakkari::Engine::ECS::Systems {
  */
 void position(Registry &r, float deltaTime);
 
-} // namespace Flakkari::Engine::ECS::Systems
+} // namespace Flakkari::Engine::ECS::Systems::_2D
 
 #endif /* !FLAKKARI_SYSTEMS_HPP_ */

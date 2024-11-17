@@ -2,13 +2,13 @@
 ** EPITECH PROJECT, 2024
 ** Title: Flakkari
 ** Author: MasterLaplace
-** Created: 2023-01-14
+** Created: 2024-01-14
 ** File description:
 ** Collider
 */
 
-#ifndef COLLIDER_HPP_
-#define COLLIDER_HPP_
+#ifndef FLAKKARI_COLLIDER_HPP_
+#define FLAKKARI_COLLIDER_HPP_
 
 #include "../../../Math/Vector.hpp"
 #include <string>
@@ -17,9 +17,7 @@ namespace Flakkari::Engine::ECS::Components::_2D {
 LPL_PACKED_START
 
 /**
- * @brief  Collider component for ECS entities that have a script attached to them
- *
- * @details This component is used to store the path to the script that will be executed
+ * @brief  Collider component for 2D entities
  */
 struct Collider {
     Math::Vector2f _size;
@@ -42,4 +40,4 @@ struct Collider {
 LPL_PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::_2D
 
-#endif /* !COLLIDER_HPP_ */
+#endif /* !FLAKKARI_COLLIDER_HPP_ */

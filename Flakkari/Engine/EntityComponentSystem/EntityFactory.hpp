@@ -86,11 +86,11 @@ public:
             {
                 registry.registerComponent<Engine::ECS::Components::_2D::Control>();
                 Engine::ECS::Components::_2D::Control control;
-                control.up = componentContent["up"];
-                control.down = componentContent["down"];
-                control.left = componentContent["left"];
-                control.right = componentContent["right"];
-                control.shoot = componentContent["shoot"];
+                control._up = componentContent["up"];
+                control._down = componentContent["down"];
+                control._left = componentContent["left"];
+                control._right = componentContent["right"];
+                control._shoot = componentContent["shoot"];
                 registry.add_component<Engine::ECS::Components::_2D::Control>(entity, std::move(control));
                 continue;
             }
@@ -99,9 +99,9 @@ public:
             {
                 registry.registerComponent<Engine::ECS::Components::_2D::Movable>();
                 Engine::ECS::Components::_2D::Movable movable;
-                movable.velocity =
+                movable._velocity =
                     Engine::Math::Vector2f(componentContent["velocity"]["x"], componentContent["velocity"]["y"]);
-                movable.acceleration = Engine::Math::Vector2f(componentContent["acceleration"]["x"],
+                movable._acceleration = Engine::Math::Vector2f(componentContent["acceleration"]["x"],
                                                               componentContent["acceleration"]["y"]);
                 registry.add_component<Engine::ECS::Components::_2D::Movable>(entity, std::move(movable));
                 continue;
@@ -111,12 +111,12 @@ public:
             {
                 registry.registerComponent<Engine::ECS::Components::_2D::RigidBody>();
                 Engine::ECS::Components::_2D::RigidBody rigidBody;
-                rigidBody.mass = componentContent["mass"];
-                rigidBody.restitution = componentContent["restitution"];
-                rigidBody.friction = componentContent["friction"];
-                rigidBody.gravityScale = componentContent["gravityScale"];
-                rigidBody.isGravityAffected = componentContent["isGravityAffected"];
-                rigidBody.isKinematic = componentContent["isKinematic"];
+                rigidBody._mass = componentContent["mass"];
+                rigidBody._restitution = componentContent["restitution"];
+                rigidBody._friction = componentContent["friction"];
+                rigidBody._gravityScale = componentContent["gravityScale"];
+                rigidBody._isGravityAffected = componentContent["isGravityAffected"];
+                rigidBody._isKinematic = componentContent["isKinematic"];
                 registry.add_component<Engine::ECS::Components::_2D::RigidBody>(entity, std::move(rigidBody));
                 continue;
             }
@@ -125,10 +125,10 @@ public:
             {
                 registry.registerComponent<Engine::ECS::Components::_2D::Transform>();
                 Engine::ECS::Components::_2D::Transform transform;
-                transform.position =
+                transform._position =
                     Engine::Math::Vector2f(componentContent["position"]["x"], componentContent["position"]["y"]);
-                transform.rotation = componentContent["rotation"];
-                transform.scale =
+                transform._rotation = componentContent["rotation"];
+                transform._scale =
                     Engine::Math::Vector2f(componentContent["scale"]["x"], componentContent["scale"]["y"]);
                 registry.add_component<Engine::ECS::Components::_2D::Transform>(entity, std::move(transform));
                 continue;
