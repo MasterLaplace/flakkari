@@ -4,6 +4,9 @@
 # Binary files
 *.jpg binary
 *.png binary
+*.ico binary
+*.xpm binary
+*.icns binary
 *.obj binary
 *.o binary
 *.a binary

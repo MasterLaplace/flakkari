@@ -3,8 +3,9 @@ on:
   pull_request:
     types: [closed]
     branches: [master, main]
-  milestone:
-    types: [closed]
+  repository_dispatch:
+    types:
+      - update_logo_event
 
 jobs:
   generate:

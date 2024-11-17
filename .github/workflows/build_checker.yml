@@ -21,7 +21,7 @@ jobs:
       - name: Configure and Build
         run: |
           mkdir build && cd build
-          cmake .. && cmake --build .
+          cmake .. && cmake --build . --config Release
 
   build_checker_ubuntu:
     name: Build Checker Ubuntu
@@ -38,7 +38,7 @@ jobs:
       - name: Configure and Build
         run: |
             mkdir build && cd build
-            cmake .. && cmake --build .
+            cmake .. && cmake --build . --config Release
 
   build_checker_macos:
     name: Build Checker MacOS

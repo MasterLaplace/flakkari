@@ -6,6 +6,46 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+### Added
+
+### Fixed
+
+### Changed
+
+### Removed
+
+
+## [0.4.0] - 2024-11-08
+
+- Include Singleton library - by @MasterLaplace in [#39](https://github.com/MasterLaplace/Flakkari/pull/39)
+- Enhance GitHub workflows with build provenance and linter permissions - by @MasterLaplace in ([7026c57](https://github.com/MasterLaplace/Flakkari/commit/7026c5730a5adb2171a7e955a8aa43dfb538f056))
+- Add Dependabot configuration - by @MasterLaplace in ([7026c57](https://github.com/MasterLaplace/Flakkari/commit/7026c5730a5adb2171a7e955a8aa43dfb538f056))
+
+### Fixed
+
+- Fix Create Release and Deploy Page - by @MasterLaplace in [#41](https://github.com/MasterLaplace/Flakkari/pull/41)
+- Fix bug failed to connect - by @MasterLaplace in [#43](https://github.com/MasterLaplace/Flakkari/pull/43)
+- Fix to get a constant connection using the protocol - by @MasterLaplace in [#45](https://github.com/MasterLaplace/Flakkari/pull/45)
+
+
+## [0.3.0] - 2024-11-07
+
+### Added
+
+- Implement a complete payload for flakkari protocol - by @MasterLaplace in [#26](https://github.com/MasterLaplace/Flakkari/pull/26)
+- Feature version bumper and release - by @MasterLaplace in [#33](https://github.com/MasterLaplace/Flakkari/pull/33)
+- Feature deploy page on release - by @MasterLaplace in [#37](https://github.com/MasterLaplace/Flakkari/pull/37)
+- Feature clang format linter - by @MasterLaplace in [#38](https://github.com/MasterLaplace/Flakkari/pull/38)
+
+### Fixed
+
+- Bug macos build error caused by logger class - by @MasterLaplace in [#25](https://github.com/MasterLaplace/Flakkari/pull/25)
+- Windows CI Build Errors - by @MasterLaplace in [#28](https://github.com/MasterLaplace/Flakkari/pull/28)
+- Bug bumper script and ci tag out of sync - by @MasterLaplace in [#36](https://github.com/MasterLaplace/Flakkari/pull/36)
+
+### Changed
+
+- Set up Git with GitHub Token - by @MasterLaplace in [#34](https://github.com/MasterLaplace/Flakkari/pull/34)
 
 
 ## [0.2.0] - 2024-01-9
@@ -24,13 +64,9 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Implement the game manager class - by @MasterLaplace in [#21](https://github.com/MasterLaplace/Flakkari/pull/20)
 - Implement a complete game manager - by @MasterLaplace in [#22](https://github.com/MasterLaplace/Flakkari/pull/21)
 
-### Fixed
-
 ### Changed
 
 - Dev 0.2.0 by @MasterLaplace in [#23](https://github.com/MasterLaplace/Flakkari/pull/22)
-
-### Removed
 
 
 ## [0.1.0] - 2023-12-24
@@ -46,10 +82,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 * Implement a complete network lib - by @MasterLaplace in [#8](https://github.com/MasterLaplace/Flakkari/pull/8)
 * Implement a simple udp server and client - by @MasterLaplace in [#9](https://github.com/MasterLaplace/Flakkari/pull/9)
 
-### Fixed
-
 ### Changed
 
 * Dev 0.1.0 by @MasterLaplace in [#10](https://github.com/MasterLaplace/Flakkari/pull/10)
-
-### Removed

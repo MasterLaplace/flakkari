@@ -136,6 +136,36 @@ endif()
 # Create the executable
 add_executable(flakkari ${SOURCES} ${HEADERS})
 
+# Add an icon to the executable
+if (WIN32)
+    set(APP_ICON_FILE "${CMAKE_SOURCE_DIR}/docs/Images/icon.ico")
+    set(APP_ICON_RESOURCE "${CMAKE_BINARY_DIR}/icon.rc")
+
+    # Generate the .rc file automatically
+    add_custom_command(
+        OUTPUT ${APP_ICON_RESOURCE}
+        COMMAND ${CMAKE_COMMAND} -E echo "1 ICON \"${APP_ICON_FILE}\"" > ${APP_ICON_RESOURCE}
+        DEPENDS ${APP_ICON_FILE}
+        COMMENT "Generating ${APP_ICON_RESOURCE}"
+    )
+
+    # Include the .rc file as a source
+    target_sources(flakkari PRIVATE ${APP_ICON_RESOURCE})
+elseif (APPLE)
+    set_target_properties(flakkari PROPERTIES MACOSX_BUNDLE_ICON_FILE "icon.icns")
+    set(APP_ICON_MACOSX "${CMAKE_SOURCE_DIR}/docs/Images/icon.icns")
+    add_custom_command(TARGET flakkari POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${APP_ICON_MACOSX} $<TARGET_FILE_DIR:flakkari>/icon.icns
+    )
+    target_sources(flakkari PRIVATE ${APP_ICON_MACOSX})
+elseif(UNIX)
+    set(APP_ICON_X11 "${CMAKE_SOURCE_DIR}/docs/Images/icon.xpm")
+    add_custom_command(TARGET flakkari POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${APP_ICON_X11} $<TARGET_FILE_DIR:flakkari>
+    )
+    target_sources(flakkari PRIVATE ${APP_ICON_X11})
+endif()
+
 # Include Directories:
 target_include_directories(flakkari PRIVATE ${CMAKE_SOURCE_DIR}/Flakkari)
 target_include_directories(flakkari PRIVATE ${singleton_SOURCE_DIR})
@@ -155,9 +185,9 @@ if (DOXYGEN_FOUND)
 endif()
 
 # Versioning:
-set(PROJECT_VERSION_MAJOR 0)
-set(PROJECT_VERSION_MINOR 2)
-set(PROJECT_VERSION_PATCH 0)
+set(FLAKKARI_VERSION_MAJOR 0)
+set(FLAKKARI_VERSION_MINOR 4)
+set(FLAKKARI_VERSION_PATCH 0)
 
 configure_file(${CMAKE_SOURCE_DIR}/Flakkari/config.h.in ${CMAKE_BINARY_DIR}/config.h)
 
@@ -170,18 +200,60 @@ install(FILES ${HEADER_LIB_PROTOCOL} DESTINATION include/Flakkari/Protocol)
 
 # Packaging:
 set(CPACK_PACKAGE_NAME "flakkari")
-set(CPACK_PACKAGE_VENDOR "R-Type")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "R-Type Server")
-set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
-set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
-set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+set(CPACK_PACKAGE_VENDOR "Flakkari")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Flakkari Server")
+set(CPACK_PACKAGE_VERSION_MAJOR ${FLAKKARI_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${FLAKKARI_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${FLAKKARI_VERSION_PATCH})
 set(CPACK_RESOURCE_FILE_README "${CMAKE_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
+set(CPACK_NSIS_MUI_UNIICON "${CMAKE_SOURCE_DIR}/docs/Images/icon.ico")
+set(CPACK_PACKAGE_EXECUTABLES "flakkari" "Flakkari Server")
 
-set(CPACK_GENERATOR "DEB")
-set(CPACK_DEBIAN_PACKAGE_MAINTAINER "R-Type Team")
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "nlohmann-json3-dev (>= 3.9.1)" "doxygen (>= 1.8.17)" "graphviz (>= 2.40.1)")
-set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
+# Packaging Generators:
+if (WIN32)
+    set(CPACK_GENERATOR "NSIS")
+    set(CPACK_NSIS_MODIFY_PATH ON)
+    set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
+    set(CPACK_NSIS_DISPLAY_NAME "Flakkari Server")
+    set(CPACK_NSIS_CONTACT "Flakkari Team")
+    set(CPACK_NSIS_URL_INFO_ABOUT "https://github.com/MasterLaplace/Flakkari")
+    set(CPACK_NSIS_HELP_LINK "https://github.com/MasterLaplace/Flakkari")
+    set(CPACK_NSIS_MENU_LINKS "https://github.com/MasterLaplace/Flakkari" "Flakkari GitHub Repository")
+    set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\flakkari.exe")
+    set(CPACK_NSIS_MUI_ICON "${CMAKE_SOURCE_DIR}/docs/Images/icon.ico")
+    set(CPACK_NSIS_MUI_UNIICON "${CMAKE_SOURCE_DIR}/docs/Images/icon.ico")
+    set(CPACK_NSIS_EXECUTABLES_DIRECTORY "bin")
+    set(CPACK_PACKAGE_FILE_NAME "flakkari-win64")
+elseif (APPLE)
+    set(CPACK_GENERATOR "DragNDrop")
+    set(CPACK_DMG_FORMAT "UDBZ")
+    set(CPACK_DMG_DS_STORE "${CMAKE_SOURCE_DIR}/.DS_Store")
+    set(CPACK_DMG_BACKGROUND_IMAGE "${CMAKE_SOURCE_DIR}/background.png")
+    set(CPACK_DMG_DS_STORE_SETUP_SCRIPT "${CMAKE_SOURCE_DIR}/DS_Store.sh")
+    set(CPACK_DMG_DS_STORE_SETUP_SCRIPT_PERMISSIONS "0775")
+    set(CPACK_DMG_DS_STORE_SETUP_SCRIPT_EXECUTABLE ON)
+    set(CPACK_DMG_DS_STORE_SETUP_SCRIPT_NAME "DS_Store.sh")
+    set(CPACK_DMG_DS_STORE_SETUP_SCRIPT_DESTINATION ".background")
+    set(CPACK_PACKAGE_FILE_NAME "flakkari-macos")
+else()
+    set(CPACK_GENERATOR "DEB;RPM")
+    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Flakkari Team")
+    set(CPACK_DEBIAN_PACKAGE_DEPENDS "nlohmann-json3-dev (>= 3.9.1)" "doxygen (>= 1.8.17)" "graphviz (>= 2.40.1)")
+    set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
+
+    set(CPACK_RPM_PACKAGE_LICENSE "MIT")
+    set(CPACK_RPM_PACKAGE_GROUP "Development/Tools")
+    set(CPACK_RPM_PACKAGE_REQUIRES "nlohmann-json >= 3.9.1, doxygen >= 1.8.17, graphviz >= 2.40.1")
+    set(CPACK_RPM_PACKAGE_ARCHITECTURE "x86_64")
+    set(CPACK_PACKAGE_FILE_NAME "flakkari-linux")
+endif()
+
+# Signing the package
+if (WIN32)
+    set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "ExecWait '\\\"$INSTDIR\\\\bin\\\\flakkari.exe\\\" --sign'")
+    set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "ExecWait '\\\"$INSTDIR\\\\bin\\\\flakkari.exe\\\" --unsign'")
+endif()
 
 include(CPack)
 
