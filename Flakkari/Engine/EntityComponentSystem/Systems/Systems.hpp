@@ -17,6 +17,7 @@
 #define FLAKKARI_SYSTEMS_HPP_
 
 #include "../Components/Components2D.hpp"
+#include "../Components/Components3D.hpp"
 #include "../Components/ComponentsCommon.hpp"
 #include "../Registry.hpp"
 
@@ -46,6 +47,13 @@ namespace Flakkari::Engine::ECS::Systems::_3D {
  * @param deltaTime  The time elapsed since the last update.
  */
 void apply_movable(Registry &r, float deltaTime);
+
+/**
+ * @brief Spawns a random entity within a skybox.
+ *
+ * @param r  The registry containing the entities to update.
+ */
+void spawn_random_within_skybox(Registry &r);
 
 } // namespace Flakkari::Engine::ECS::Systems::_3D
 
