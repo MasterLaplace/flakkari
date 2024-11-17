@@ -30,10 +30,8 @@
 
 namespace Flakkari::Protocol {
 
-inline namespace V_0 {
-
 /**
- * @brief Flakkari Packet v0 (new packet)
+ * @brief Flakkari Packet v1 (new packet)
  *
  * @tparam Id: The type of the command id.
  * @param header: The header of the packet.
@@ -172,8 +170,6 @@ template <typename Id> struct Packet {
         return true;
     }
 };
-
-} /* namespace V_0 */
 
 } // namespace Flakkari::Protocol
 

@@ -21,7 +21,7 @@
 
 namespace Flakkari::Protocol {
 
-inline namespace V_0 {
+namespace V_0 {
 
 enum class EventId : uint8_t {
     MOVE_LEFT = 10,
@@ -50,7 +50,7 @@ LPL_PACKED_END
 
 } /* namespace V_0 */
 
-namespace V_1 {
+inline namespace V_1 {
 
 enum class EventId : uint8_t {
     MOVE_LEFT = 10,

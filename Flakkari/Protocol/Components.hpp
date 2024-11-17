@@ -22,7 +22,7 @@
 
 namespace Flakkari::Protocol {
 
-inline namespace V_0 {
+namespace V_0 {
 
 enum class ComponentId : uint8_t {
     // 0 - 9: 2D components
@@ -78,7 +78,7 @@ public:
 
 } /* namespace V_0 */
 
-namespace V_1 {
+inline namespace V_1 {
 
 enum class ComponentId : uint8_t {
     // 0 - 9: 2D components

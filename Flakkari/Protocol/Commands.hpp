@@ -22,7 +22,7 @@
 
 namespace Flakkari::Protocol {
 
-inline namespace V_0 {
+namespace V_0 {
 
 enum class CommandId : uint8_t {
     // 0 - 9: System
@@ -166,7 +166,7 @@ public:
 
 } /* namespace V_0 */
 
-namespace V_1 {
+inline namespace V_1 {
 
 enum class CommandId : uint8_t {
     // 0 - 9: System

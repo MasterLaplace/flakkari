@@ -74,7 +74,7 @@ LPL_PACKED_END
 
 } // namespace V_0
 
-namespace V_1 {
+inline namespace V_1 {
 
 LPL_PACKED_START
 
