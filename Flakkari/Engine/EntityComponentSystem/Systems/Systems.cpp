@@ -163,4 +163,81 @@ void spawn_random_within_skybox(Registry &r)
     }
 }
 
+static void handleDeath(Registry &r, Entity bullet, Entity entity)
+{
+    auto &health = r.getComponents<Components::Common::Health>(entity);
+    auto &weapon = r.getComponents<Components::Common::Weapon>(bullet);
+
+    health->currentHealth -= weapon->damage;
+    if (health->currentHealth <= 0)
+        r.kill_entity(entity);
+    r.kill_entity(bullet);
+}
+
+static bool BoxCollisions(const Components::_3D::Transform &pos1, const Components::_3D::BoxCollider &col1,
+                          const Components::_3D::Transform &pos2, const Components::_3D::BoxCollider &col2)
+{
+    return pos1._position.vec.x < pos2._position.vec.x + (col2._size.dimension.width * pos2._scale.dimension.width) &&
+           pos1._position.vec.x + (col1._size.dimension.width * pos1._scale.dimension.width) > pos2._position.vec.x &&
+           pos1._position.vec.y < pos2._position.vec.y + (col2._size.dimension.height * pos2._scale.dimension.height) &&
+           pos1._position.vec.y + (col1._size.dimension.height * pos1._scale.dimension.height) > pos2._position.vec.y &&
+           pos1._position.vec.z < pos2._position.vec.z + (col2._size.dimension.depth * pos2._scale.dimension.depth) &&
+           pos1._position.vec.z + (col1._size.dimension.depth * pos1._scale.dimension.depth) > pos2._position.vec.z;
+}
+
+static bool SphereCollisions(const Components::_3D::Transform &pos1, const Components::_3D::SphereCollider &col1,
+                             const Components::_3D::Transform &pos2, const Components::_3D::SphereCollider &col2)
+{
+    float dx = pos1._position.vec.x - pos2._position.vec.x;
+    float dy = pos1._position.vec.y - pos2._position.vec.y;
+    float dz = pos1._position.vec.z - pos2._position.vec.z;
+    float distance = std::sqrt(dx * dx + dy * dy + dz * dz);
+    return distance < (col1._radius + col2._radius);
+}
+
+static Math::Vector3f resolveSphereCollisions(const Components::_3D::Transform &pos1,
+                                              const Components::_3D::SphereCollider &col1,
+                                              const Components::_3D::Transform &pos2,
+                                              const Components::_3D::SphereCollider &col2)
+{
+    Math::Vector3f normal;
+    float dx = pos1._position.vec.x - pos2._position.vec.x;
+    float dy = pos1._position.vec.y - pos2._position.vec.y;
+    float dz = pos1._position.vec.z - pos2._position.vec.z;
+    float distance = std::sqrt(dx * dx + dy * dy + dz * dz);
+    if (distance < col1._radius + col2._radius)
+    {
+        normal.vec.x = dx / distance;
+        normal.vec.y = dy / distance;
+        normal.vec.z = dz / distance;
+    }
+    return normal;
+}
+
+static bool SphereBoxCollisions(const Components::_3D::Transform &pos1, const Components::_3D::SphereCollider &col1,
+                                const Components::_3D::Transform &pos2, const Components::_3D::BoxCollider &col2)
+{
+    float x = std::max(pos2._position.vec.x,
+                       std::min(pos1._position.vec.x,
+                                pos2._position.vec.x + col2._size.dimension.width * pos2._scale.dimension.width));
+    float y = std::max(pos2._position.vec.y,
+                       std::min(pos1._position.vec.y,
+                                pos2._position.vec.y + col2._size.dimension.height * pos2._scale.dimension.height));
+    float z = std::max(pos2._position.vec.z,
+                       std::min(pos1._position.vec.z,
+                                pos2._position.vec.z + col2._size.dimension.depth * pos2._scale.dimension.depth));
+
+    float dx = x - pos1._position.vec.x;
+    float dy = y - pos1._position.vec.y;
+    float dz = z - pos1._position.vec.z;
+
+    float distance = std::sqrt(dx * dx + dy * dy + dz * dz);
+    return distance < col1._radius;
+}
+static bool outOfSkybox(float maxRangeX, float maxRangeY, float maxRangeZ, const Components::_3D::Transform &pos)
+{
+    return pos._position.vec.x < -maxRangeX || pos._position.vec.x > maxRangeX || pos._position.vec.y < -maxRangeY ||
+           pos._position.vec.y > maxRangeY || pos._position.vec.z < -maxRangeZ || pos._position.vec.z > maxRangeZ;
+}
+
 } // namespace Flakkari::Engine::ECS::Systems::_3D
