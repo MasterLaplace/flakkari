@@ -16,16 +16,18 @@
     &#xa0; : &#xa0;
     <img
         src="https://img.shields.io/badge/Linux-blue?style=for-the-badge"
-        alt="Linux"
-        href="https://github.com/MasterLaplace/Flakkari/releases/latest"
+        alt="Linux deb"
+        href="https://github.com/MasterLaplace/Flakkari/releases/download/latest/flakkari-linux.deb"
     > &#xa0; | &#xa0;
     <img
         src="https://img.shields.io/badge/Windows-blue?style=for-the-badge"
         alt="Windows"
+        href="https://github.com/MasterLaplace/Flakkari/releases/download/latest/flakkari-win64.exe"
     > &#xa0; | &#xa0;
     <img
         src="https://img.shields.io/badge/MacOS-blue?style=for-the-badge"
         alt="MacOS"
+        href="https://github.com/MasterLaplace/Flakkari/releases/download/latest/flakkari-macos.pkg"
     >
     </h3>
 </p>
@@ -98,16 +100,16 @@ other build commands:
 
 # Install the package
 # For windows systems
-(build)$> flakkari-<version>-win64.exe
+(build)$> flakkari-win64.exe
 
 # For macos systems
-(build)$> sudo installer -pkg flakkari-<version>-Darwin.pkg -target /
+(build)$> sudo installer -pkg flakkari-macos.pkg -target /
 
 # For redhat based systems
-(build)$> sudo rpm -i flakkari-<version>-Linux.rpm
+(build)$> sudo rpm -i flakkari-linux.rpm
 
 # For debian based systems
-(build)$> sudo dpkg -i flakkari-<version>-Linux.deb
+(build)$> sudo dpkg -i flakkari-linux.deb
 ```
 
 <div id='docker'/>
