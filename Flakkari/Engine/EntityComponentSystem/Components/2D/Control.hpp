@@ -32,11 +32,11 @@ struct Control {
     bool _right;
     bool _shoot;
 
-    Control() : _up(false), _down(false), _left(false), _right(false), _shoot(false) {};
+    Control() : _up(false), _down(false), _left(false), _right(false), _shoot(false){};
     Control(bool up, bool down, bool left, bool right, bool shoot)
-        : _up(up), _down(down), _left(left), _right(right), _shoot(shoot) {};
+        : _up(up), _down(down), _left(left), _right(right), _shoot(shoot){};
     Control(const Control &other)
-        : _up(other._up), _down(other._down), _left(other._left), _right(other._right), _shoot(other._shoot) {};
+        : _up(other._up), _down(other._down), _left(other._left), _right(other._right), _shoot(other._shoot){};
 
     Control &operator=(const Control &other)
     {

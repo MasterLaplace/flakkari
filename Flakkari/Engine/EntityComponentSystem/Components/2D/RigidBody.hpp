@@ -28,14 +28,14 @@ struct RigidBody {
     bool _isKinematic = false;
 
     RigidBody()
-        : _mass(0), _restitution(0), _friction(0), _gravityScale(0), _isGravityAffected(false), _isKinematic(false) {};
+        : _mass(0), _restitution(0), _friction(0), _gravityScale(0), _isGravityAffected(false), _isKinematic(false){};
     RigidBody(const RigidBody &other)
         : _mass(other._mass), _restitution(other._restitution), _friction(other._friction),
           _gravityScale(other._gravityScale), _isGravityAffected(other._isGravityAffected),
-          _isKinematic(other._isKinematic) {};
+          _isKinematic(other._isKinematic){};
     RigidBody(float mass, float restitution, float friction, float gravityScale)
         : _mass(mass), _restitution(restitution), _friction(friction), _gravityScale(gravityScale),
-          _isGravityAffected(true), _isKinematic(false) {};
+          _isGravityAffected(true), _isKinematic(false){};
 
     RigidBody &operator=(const RigidBody &other)
     {

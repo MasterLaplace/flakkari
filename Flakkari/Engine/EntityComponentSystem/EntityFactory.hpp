@@ -102,7 +102,7 @@ public:
                 movable._velocity =
                     Engine::Math::Vector2f(componentContent["velocity"]["x"], componentContent["velocity"]["y"]);
                 movable._acceleration = Engine::Math::Vector2f(componentContent["acceleration"]["x"],
-                                                              componentContent["acceleration"]["y"]);
+                                                               componentContent["acceleration"]["y"]);
                 registry.add_component<Engine::ECS::Components::_2D::Movable>(entity, std::move(movable));
                 continue;
             }
