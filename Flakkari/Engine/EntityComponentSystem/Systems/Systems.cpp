@@ -310,8 +310,8 @@ void handle_collisions(Registry &r)
             if (!pos2.has_value() || !tag2.has_value())
                 continue;
 
-            if ((tag1->tag == "Player" && tag2->tag == "Enemy") ||
-                (tag2->tag == "Player" && tag1->tag == "Enemy") && (scol1.has_value() && scol2.has_value()))
+            if (((tag1->tag == "Player" && tag2->tag == "Enemy") || (tag2->tag == "Player" && tag1->tag == "Enemy")) &&
+                scol1.has_value() && scol2.has_value())
             {
                 if (SphereCollisions(pos1.value(), scol1.value(), pos2.value(), scol2.value()))
                 {

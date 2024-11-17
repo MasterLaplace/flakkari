@@ -10,7 +10,7 @@
  * https://opensource.org/licenses/MIT
  * © 2023 @MasterLaplace
  * @version 0.4.0
- * @date 2024-01-06
+ * @date 2024-11-11
  **************************************************************************/
 
 #ifndef FLAKKARI_COMPONENTS3D_HPP_
