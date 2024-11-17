@@ -56,22 +56,22 @@ void update_control(Registry &r)
         if (net->events.size() < int(Protocol::EventId::MOVE_UP))
             continue;
         if (net->events[int(Protocol::EventId::MOVE_UP)] == int(Protocol::EventState::PRESSED))
-            vel->velocity.vec.y = -1;
+            vel->_velocity.vec.y = -1;
 
         if (net->events.size() < int(Protocol::EventId::MOVE_DOWN))
             continue;
         if (net->events[int(Protocol::EventId::MOVE_DOWN)] == int(Protocol::EventState::PRESSED))
-            vel->velocity.vec.y = 1;
+            vel->_velocity.vec.y = 1;
 
         if (net->events.size() < int(Protocol::EventId::MOVE_LEFT))
             continue;
         if (net->events[int(Protocol::EventId::MOVE_LEFT)] == int(Protocol::EventState::PRESSED))
-            vel->velocity.vec.x = -1;
+            vel->_velocity.vec.x = -1;
 
         if (net->events.size() < int(Protocol::EventId::MOVE_RIGHT))
             continue;
         if (net->events[int(Protocol::EventId::MOVE_RIGHT)] == int(Protocol::EventState::PRESSED))
-            vel->velocity.vec.x = 1;
+            vel->_velocity.vec.x = 1;
     }
 }
 
