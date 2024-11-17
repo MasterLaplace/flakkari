@@ -55,10 +55,7 @@
 
 ### :pencil: **DESCRIPTION**
 
-Flakkari is a UDP server created for the R-Type Epitech project.<br>
-It is a server that allows you to play games in a network environment.<br>
-The server is multi-threaded and can handle multiple games at the same time.<br>
-The server is also able to handle multiple clients at the same time.<br>
+Flakkari is a UDP/TCP server initially developed for the R-Type Epitech project and updated for the Video Games course at University Laval. It enables network-based gameplay, supporting multiple games and clients simultaneously through its multi-threaded architecture. The server is designed to handle high concurrency and ensure low latency, making it suitable for real-time multiplayer games. Flakkari also includes features such as game state synchronization, player authentication, and robust error handling to provide a seamless gaming experience.
 
 > [!NOTE]
 > The project is still under development and may not be stable.
