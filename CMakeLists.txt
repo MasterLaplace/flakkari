@@ -52,6 +52,7 @@ set(HEADERS
     Flakkari/Engine/Math/Vector.hpp
 
     Flakkari/Engine/EntityComponentSystem/Components/Components2D.hpp
+    Flakkari/Engine/EntityComponentSystem/Components/Components3D.hpp
     Flakkari/Engine/EntityComponentSystem/Components/ComponentsCommon.hpp
     Flakkari/Engine/EntityComponentSystem/Systems/Systems.hpp
     Flakkari/Engine/EntityComponentSystem/Entity.hpp
