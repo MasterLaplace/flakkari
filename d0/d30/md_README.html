@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('d0/d30/md_README.html','../../'); init
 <div class="textblock"><p align="center"></p>
 <h3 align="center">📦 Download &amp;#xa0; : &amp;#xa0; <a href="https://github.com/MasterLaplace/Flakkari/releases/latest/"><img src="https://img.shields.io/github/v/release/MasterLaplace/Flakkari.svg?label=Latest%20Version&amp;style=for-the-badge" alt="Latest Version" style="pointer-events: none;" class="inline"/> </a>&amp;#xa0; | &amp;#xa0; 📜 License &amp;#xa0; : &amp;#xa0; <a href="https://github.com/MasterLaplace/Flakkari/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg?style=for-the-badge" alt="License: MIT" style="pointer-events: none;" class="inline"/> </a> </h3>
 <p align="center"></p>
-<h3 align="center">🌐 Supported Platforms &amp;#xa0; : &amp;#xa0; <img src="https://img.shields.io/badge/Linux-blue?style=for-the-badge" alt="Linux" href="https://github.com/MasterLaplace/Flakkari/releases/latest" class="inline"/> &amp;#xa0; | &amp;#xa0; <img src="https://img.shields.io/badge/Windows-blue?style=for-the-badge" alt="Windows" class="inline"/> &amp;#xa0; | &amp;#xa0; <img src="https://img.shields.io/badge/MacOS-blue?style=for-the-badge" alt="MacOS" class="inline"/> </h3>
+<h3 align="center">🌐 Supported Platforms &amp;#xa0; : &amp;#xa0; <img src="https://img.shields.io/badge/Linux-blue?style=for-the-badge" alt="Linux deb" href="https://github.com/MasterLaplace/Flakkari/releases/latest/download/flakkari-linux.deb" class="inline"/> &amp;#xa0; | &amp;#xa0; <img src="https://img.shields.io/badge/Windows-blue?style=for-the-badge" alt="Windows" href="https://github.com/MasterLaplace/Flakkari/releases/latest/download/flakkari-win64.exe" class="inline"/> &amp;#xa0; | &amp;#xa0; <img src="https://img.shields.io/badge/MacOS-blue?style=for-the-badge" alt="MacOS" href="https://github.com/MasterLaplace/Flakkari/releases/latest/download/flakkari-macos.pkg" class="inline"/> </h3>
 <p align="center"></p>
 <h3 align="center">📡 Supported Protocol &amp;#xa0; : &amp;#xa0; <img src="https://img.shields.io/badge/UDP-blue?style=for-the-badge" alt="UDP" class="inline"/> &amp;#xa0; | &amp;#xa0; <img src="https://img.shields.io/badge/TCP-blue?style=for-the-badge" alt="TCP" class="inline"/> </h3>
 <h1><a class="anchor" id="autotoc_md1"></a>
@@ -104,12 +104,16 @@ $(document).ready(function(){initNavTree('d0/d30/md_README.html','../../'); init
 <li><a href="../../#running">Running</a></li>
 <li><a href="../../#docker">Docker</a></li>
 <li><a href="../../#documentation">Documentation</a></li>
+<li><a href="../../#latest-release">Latest Release</a></li>
 <li><a href="../../#license">License</a></li>
 <li><a href="../../#contacts">Contacts</a></li>
 </ul>
 <h2><a class="anchor" id="autotoc_md2"></a>
 :pencil: &lt;strong&gt;DESCRIPTION&lt;/strong&gt;</h2>
 <p><a class="el" href="../../d2/da2/namespaceFlakkari.html">Flakkari</a> is a UDP server created for the R-Type Epitech project.<br  />
+ It is a server that allows you to play games in a network environment.<br  />
+ The server is multi-threaded and can handle multiple games at the same time.<br  />
+ The server is also able to handle multiple clients at the same time.<br  />
 </p>
 <blockquote class="doxtable">
 <p>[!NOTE] The project is still under development and may not be stable. </p>
@@ -130,40 +134,30 @@ $(document).ready(function(){initNavTree('d0/d30/md_README.html','../../'); init
 <div class="line"># Or configure the project with Ninja</div>
 <div class="line">(build)$&gt; cmake -G Ninja .. &amp;&amp; cmake --build .</div>
 <div class="line"> </div>
-<div class="line"># Set the FLAKKARI_GAME_DIR environment variable</div>
-<div class="line">(build)$&gt; export FLAKKARI_GAME_DIR=&lt;path_to_game_dir&gt;</div>
-<div class="line"> </div>
-<div class="line"># for windows</div>
-<div class="line">(build)$&gt; set FLAKKARI_GAME_DIR=&lt;path_to_game_dir&gt;</div>
-<div class="line"> </div>
 <div class="line"># Run the server executable</div>
-<div class="line">(build)$&gt; ./r-type_server</div>
-</div><!-- fragment --><blockquote class="doxtable">
-<p>[!NOTE]</p><ul>
-<li>the server load Games from the <code>FLAKKARI_GAME_DIR</code> environment variable, so if you want to add a game, you have to put it in this directory before running. If the server is already running, use the <code>addGame &lt;gameName&gt;</code> command to load it. </li>
-</ul>
-</blockquote>
-<blockquote class="doxtable">
-<p>[!NOTE]</p><ul>
-<li>some input commands need administrator privileges to execute. <code>export FLAKKARI_PASSWORD=&lt;password&gt;</code> to set the password for the server to run with administrator privileges. </li>
-</ul>
-</blockquote>
-<p>other build commands: </p><div class="fragment"><div class="line"># Install the project</div>
+<div class="line">(build)$&gt; ./flakkari &lt;GamesDir&gt; &lt;ip&gt; &lt;port&gt;</div>
+</div><!-- fragment --><p>other build commands: </p><div class="fragment"><div class="line"># Install the project</div>
 <div class="line">(build)$&gt; sudo cmake --build . --target install</div>
 <div class="line"> </div>
 <div class="line"># Build project documentation</div>
 <div class="line">(build)$&gt; cmake --build . --target doc</div>
 <div class="line"> </div>
 <div class="line"># Build project package</div>
-<div class="line">(build)$&gt; cmake --build . --target package</div>
-<div class="line">(build)$&gt; sudo dpkg -i r-type_server-&lt;version&gt;-Linux.deb</div>
-</div><!-- fragment --><blockquote class="doxtable">
-<p>[!NOTE]</p><ul>
-<li>the install target will install the server executable in the /usr/local/bin directory, the network library in the /usr/local/lib directory and the header files in the /usr/local/include directory.</li>
-<li>the doc target will generate the doxygen documentation in the docs directory. </li>
-</ul>
-</blockquote>
-<h2><a class="anchor" id="autotoc_md4"></a>
+<div class="line">(build)$&gt; cmake --build . --config Release --target package</div>
+<div class="line"> </div>
+<div class="line"># Install the package</div>
+<div class="line"># For windows systems</div>
+<div class="line">(build)$&gt; flakkari-win64.exe</div>
+<div class="line"> </div>
+<div class="line"># For macos systems</div>
+<div class="line">(build)$&gt; sudo installer -pkg flakkari-macos.pkg -target /</div>
+<div class="line"> </div>
+<div class="line"># For redhat based systems</div>
+<div class="line">(build)$&gt; sudo rpm -i flakkari-linux.rpm</div>
+<div class="line"> </div>
+<div class="line"># For debian based systems</div>
+<div class="line">(build)$&gt; sudo dpkg -i flakkari-linux.deb</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
 :whale: &lt;strong&gt;DOCKER RUN&lt;/strong&gt;</h2>
 <div class="fragment"><div class="line"># install docker on ubuntu</div>
 <div class="line">$ sudo apt-get update</div>
@@ -177,7 +171,7 @@ $(document).ready(function(){initNavTree('d0/d30/md_README.html','../../'); init
 <div class="line">$ docker build -t flakkari .</div>
 <div class="line"> </div>
 <div class="line"># run docker image</div>
-<div class="line">$ docker run Flakkari -p 4242:4242</div>
+<div class="line">$ docker run -p 8081:8081 -it flakkari</div>
 <div class="line"> </div>
 <div class="line"># list docker images</div>
 <div class="line">$ docker ps</div>

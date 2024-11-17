@@ -38,70 +38,79 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Change Log", "d4/d40/md_CHANGELOG.html", [
-      [ "[Unreleased]", "d4/d40/md_CHANGELOG.html#autotoc_md11", null ],
-      [ "[0.2.0] - 2024-01-9", "d4/d40/md_CHANGELOG.html#autotoc_md12", [
-        [ "Added", "d4/d40/md_CHANGELOG.html#autotoc_md13", null ],
-        [ "Fixed", "d4/d40/md_CHANGELOG.html#autotoc_md14", null ],
-        [ "Changed", "d4/d40/md_CHANGELOG.html#autotoc_md15", null ],
-        [ "Removed", "d4/d40/md_CHANGELOG.html#autotoc_md16", null ]
+      [ "[Unreleased]", "d4/d40/md_CHANGELOG.html#autotoc_md11", [
+        [ "Added", "d4/d40/md_CHANGELOG.html#autotoc_md12", null ],
+        [ "Fixed", "d4/d40/md_CHANGELOG.html#autotoc_md13", null ],
+        [ "Changed", "d4/d40/md_CHANGELOG.html#autotoc_md14", null ],
+        [ "Removed", "d4/d40/md_CHANGELOG.html#autotoc_md15", null ]
       ] ],
-      [ "[0.1.0] - 2023-12-24", "d4/d40/md_CHANGELOG.html#autotoc_md17", [
-        [ "Added", "d4/d40/md_CHANGELOG.html#autotoc_md18", null ],
-        [ "Fixed", "d4/d40/md_CHANGELOG.html#autotoc_md19", null ],
-        [ "Changed", "d4/d40/md_CHANGELOG.html#autotoc_md20", null ],
-        [ "Removed", "d4/d40/md_CHANGELOG.html#autotoc_md21", null ]
+      [ "[0.4.0] - 2024-11-08", "d4/d40/md_CHANGELOG.html#autotoc_md16", [
+        [ "Fixed", "d4/d40/md_CHANGELOG.html#autotoc_md17", null ]
+      ] ],
+      [ "[0.3.0] - 2024-11-07", "d4/d40/md_CHANGELOG.html#autotoc_md18", [
+        [ "Added", "d4/d40/md_CHANGELOG.html#autotoc_md19", null ],
+        [ "Fixed", "d4/d40/md_CHANGELOG.html#autotoc_md20", null ],
+        [ "Changed", "d4/d40/md_CHANGELOG.html#autotoc_md21", null ]
+      ] ],
+      [ "[0.2.0] - 2024-01-9", "d4/d40/md_CHANGELOG.html#autotoc_md22", [
+        [ "Added", "d4/d40/md_CHANGELOG.html#autotoc_md23", null ],
+        [ "Changed", "d4/d40/md_CHANGELOG.html#autotoc_md24", null ]
+      ] ],
+      [ "[0.1.0] - 2023-12-24", "d4/d40/md_CHANGELOG.html#autotoc_md25", [
+        [ "Added", "d4/d40/md_CHANGELOG.html#autotoc_md26", null ],
+        [ "Changed", "d4/d40/md_CHANGELOG.html#autotoc_md27", null ]
       ] ]
     ] ],
     [ "CONTRIBUTING GUIDELINES", "d2/dc1/md_CONTRIBUTING.html", [
-      [ "</blockquote>", "d2/dc1/md_CONTRIBUTING.html#autotoc_md23", null ],
-      [ "Table of Contents", "d2/dc1/md_CONTRIBUTING.html#autotoc_md24", null ],
-      [ "Introduction", "d2/dc1/md_CONTRIBUTING.html#autotoc_md26", null ],
-      [ "Code of Conduct", "d2/dc1/md_CONTRIBUTING.html#autotoc_md28", null ],
-      [ "How to Contribute", "d2/dc1/md_CONTRIBUTING.html#autotoc_md30", [
-        [ "Creating an Issue", "d2/dc1/md_CONTRIBUTING.html#autotoc_md31", null ],
-        [ "Creating a Pull Request", "d2/dc1/md_CONTRIBUTING.html#autotoc_md32", null ],
-        [ "Improve the Documentation", "d2/dc1/md_CONTRIBUTING.html#autotoc_md33", null ]
+      [ "</blockquote>", "d2/dc1/md_CONTRIBUTING.html#autotoc_md29", null ],
+      [ "Table of Contents", "d2/dc1/md_CONTRIBUTING.html#autotoc_md30", null ],
+      [ "Introduction", "d2/dc1/md_CONTRIBUTING.html#autotoc_md32", null ],
+      [ "Code of Conduct", "d2/dc1/md_CONTRIBUTING.html#autotoc_md34", null ],
+      [ "How to Contribute", "d2/dc1/md_CONTRIBUTING.html#autotoc_md36", [
+        [ "Creating an Issue", "d2/dc1/md_CONTRIBUTING.html#autotoc_md37", null ],
+        [ "Creating a Pull Request", "d2/dc1/md_CONTRIBUTING.html#autotoc_md38", null ],
+        [ "Improve the Documentation", "d2/dc1/md_CONTRIBUTING.html#autotoc_md39", null ]
       ] ],
-      [ "Project Structure", "d2/dc1/md_CONTRIBUTING.html#autotoc_md35", [
-        [ "Technical Documentation", "d2/dc1/md_CONTRIBUTING.html#autotoc_md36", null ],
-        [ "Laplace Libraries", "d2/dc1/md_CONTRIBUTING.html#autotoc_md37", null ]
+      [ "Project Structure", "d2/dc1/md_CONTRIBUTING.html#autotoc_md41", [
+        [ "Technical Documentation", "d2/dc1/md_CONTRIBUTING.html#autotoc_md42", null ],
+        [ "Laplace Libraries", "d2/dc1/md_CONTRIBUTING.html#autotoc_md43", null ]
       ] ],
-      [ "Commit Guidelines", "d2/dc1/md_CONTRIBUTING.html#autotoc_md38", [
-        [ "Format", "d2/dc1/md_CONTRIBUTING.html#autotoc_md39", null ],
-        [ "Style", "d2/dc1/md_CONTRIBUTING.html#autotoc_md40", null ]
+      [ "Commit Guidelines", "d2/dc1/md_CONTRIBUTING.html#autotoc_md44", [
+        [ "Format", "d2/dc1/md_CONTRIBUTING.html#autotoc_md45", null ],
+        [ "Style", "d2/dc1/md_CONTRIBUTING.html#autotoc_md46", null ]
       ] ],
-      [ "Support and Contact", "d2/dc1/md_CONTRIBUTING.html#autotoc_md42", null ]
+      [ "Support and Contact", "d2/dc1/md_CONTRIBUTING.html#autotoc_md48", null ]
     ] ],
     [ "Contributors", "d0/d98/md_CONTRIBUTORS.html", [
-      [ "👥 Flakkari Team", "d0/d98/md_CONTRIBUTORS.html#autotoc_md44", null ]
+      [ "👥 Flakkari Team", "d0/d98/md_CONTRIBUTORS.html#autotoc_md50", null ]
     ] ],
     [ "Contributor Covenant Code of Conduct", "dc/d30/md__github_CODE_OF_CONDUCT.html", [
-      [ "Our Pledge", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md46", null ],
-      [ "Our Standards", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md47", null ],
-      [ "Enforcement Responsibilities", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md48", null ],
-      [ "Scope", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md49", null ],
-      [ "Enforcement", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md50", null ],
-      [ "Enforcement Guidelines", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md51", [
-        [ "1. Correction", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md52", null ],
-        [ "2. Warning", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md53", null ],
-        [ "3. Temporary Ban", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md54", null ],
-        [ "4. Permanent Ban", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md55", null ]
+      [ "Our Pledge", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md52", null ],
+      [ "Our Standards", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md53", null ],
+      [ "Enforcement Responsibilities", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md54", null ],
+      [ "Scope", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md55", null ],
+      [ "Enforcement", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md56", null ],
+      [ "Enforcement Guidelines", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md57", [
+        [ "1. Correction", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md58", null ],
+        [ "2. Warning", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md59", null ],
+        [ "3. Temporary Ban", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md60", null ],
+        [ "4. Permanent Ban", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md61", null ]
       ] ],
-      [ "Attribution", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md56", null ]
+      [ "Attribution", "dc/d30/md__github_CODE_OF_CONDUCT.html#autotoc_md62", null ]
     ] ],
     [ "Support this Project", "d8/dcd/md__github_FUNDING.html", [
-      [ "Funding Methods", "d8/dcd/md__github_FUNDING.html#autotoc_md58", null ],
-      [ "Benefits for Financial Contributors", "d8/dcd/md__github_FUNDING.html#autotoc_md59", null ]
+      [ "Funding Methods", "d8/dcd/md__github_FUNDING.html#autotoc_md64", null ],
+      [ "Benefits for Financial Contributors", "d8/dcd/md__github_FUNDING.html#autotoc_md65", null ]
     ] ],
     [ "Changes", "dc/d8d/md__github_PULL_REQUEST_TEMPLATE.html", [
-      [ "Standards checklist:", "dc/d8d/md__github_PULL_REQUEST_TEMPLATE.html#autotoc_md61", null ],
-      [ "Additional information", "dc/d8d/md__github_PULL_REQUEST_TEMPLATE.html#autotoc_md62", null ]
+      [ "Standards checklist:", "dc/d8d/md__github_PULL_REQUEST_TEMPLATE.html#autotoc_md67", null ],
+      [ "Additional information", "dc/d8d/md__github_PULL_REQUEST_TEMPLATE.html#autotoc_md68", null ]
     ] ],
     [ "Support for Flakkari", "d0/da2/md__github_SUPPORT.html", [
-      [ "Reporting Issues", "d0/da2/md__github_SUPPORT.html#autotoc_md64", null ],
-      [ "Questions and Discussions", "d0/da2/md__github_SUPPORT.html#autotoc_md65", null ],
-      [ "Additional Resources", "d0/da2/md__github_SUPPORT.html#autotoc_md66", null ],
-      [ "Question Template", "d0/da2/md__github_SUPPORT.html#autotoc_md67", null ]
+      [ "Reporting Issues", "d0/da2/md__github_SUPPORT.html#autotoc_md70", null ],
+      [ "Questions and Discussions", "d0/da2/md__github_SUPPORT.html#autotoc_md71", null ],
+      [ "Additional Resources", "d0/da2/md__github_SUPPORT.html#autotoc_md72", null ],
+      [ "Question Template", "d0/da2/md__github_SUPPORT.html#autotoc_md73", null ]
     ] ],
     [ "Deprecated List", "da/d58/deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
@@ -143,9 +152,9 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "d2/dea/classFlakkari_1_1Network_1_1Socket.html#ac358ddb593d31b718ada58d8f2595e1d",
-"d6/dec/classFlakkari_1_1Network_1_1PPOLL.html#a2df8e02bb5eaab8c03be7e9e7f8f8950",
-"db/d4e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Control.html#a90da19e325c00f54a5a4583158b8c311",
-"de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a45a325b744df9a5cd22066bcad3670ad"
+"d6/de9/UDPServer_8hpp.html#af4ff2a4bab0bc918722708b0cca24faf",
+"db/d4e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Control.html#a06a1ec6318ff484b7baa9fd7dc72aaea",
+"de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a2db5984a4a29c0cf7d1d1655ecdf3c59"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

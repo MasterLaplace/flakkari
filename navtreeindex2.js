@@ -1,5 +1,11 @@
 var NAVTREEINDEX2 =
 {
+"d6/de9/UDPServer_8hpp.html#af4ff2a4bab0bc918722708b0cca24faf":[11,0,1,4,4,1],
+"d6/de9/UDPServer_8hpp.html#afcf80a6d91178952d107ad00b165752b":[11,0,1,4,4,3],
+"d6/de9/UDPServer_8hpp_source.html":[11,0,1,4,4],
+"d6/dec/classFlakkari_1_1Network_1_1PPOLL.html":[10,0,0,2,2],
+"d6/dec/classFlakkari_1_1Network_1_1PPOLL.html#a00ce0251419604cf0e7ab503c99b8282":[10,0,0,2,2,15],
+"d6/dec/classFlakkari_1_1Network_1_1PPOLL.html#a2be2175b663630628bd3d590fc7b6229":[10,0,0,2,2,6],
 "d6/dec/classFlakkari_1_1Network_1_1PPOLL.html#a2df8e02bb5eaab8c03be7e9e7f8f8950":[10,0,0,2,2,13],
 "d6/dec/classFlakkari_1_1Network_1_1PPOLL.html#a6cb1aa49875d845d2663b9081c2fa0cb":[10,0,0,2,2,16],
 "d6/dec/classFlakkari_1_1Network_1_1PPOLL.html#a6f49c131ca0c43a72fb0088ef7f6d419":[10,0,0,2,2,11],
@@ -93,8 +99,8 @@ var NAVTREEINDEX2 =
 "d8/dca/Spawned_8hpp.html":[11,0,1,0,0,0,2,8],
 "d8/dca/Spawned_8hpp_source.html":[11,0,1,0,0,0,2,8],
 "d8/dcd/md__github_FUNDING.html":[5],
-"d8/dcd/md__github_FUNDING.html#autotoc_md58":[5,0],
-"d8/dcd/md__github_FUNDING.html#autotoc_md59":[5,1],
+"d8/dcd/md__github_FUNDING.html#autotoc_md64":[5,0],
+"d8/dcd/md__github_FUNDING.html#autotoc_md65":[5,1],
 "d8/dff/ClientManager_8hpp.html":[11,0,1,4,0,3],
 "d8/dff/ClientManager_8hpp.html#aa6b68279f4f585ea9777891e8fe60f55":[11,0,1,4,0,3,1],
 "d8/dff/ClientManager_8hpp_source.html":[11,0,1,4,0,3],
@@ -243,11 +249,5 @@ var NAVTREEINDEX2 =
 "db/d1b/Packet_8hpp_source.html":[11,0,1,3,4],
 "db/d23/help-example.html":[12,10],
 "db/d34/IOMultiplexer_8cpp.html":[11,0,1,2,4],
-"db/d4e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Control.html":[10,0,0,0,0,0,0,1],
-"db/d4e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Control.html#a06a1ec6318ff484b7baa9fd7dc72aaea":[10,0,0,0,0,0,0,1,7],
-"db/d4e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Control.html#a0799d063909e9eb67708491b5861b13b":[10,0,0,0,0,0,0,1,0],
-"db/d4e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Control.html#a22a9a6b94362f9a9bf4d91833b0d0307":[10,0,0,0,0,0,0,1,8],
-"db/d4e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Control.html#a659250028272df53e36b3debb6785a46":[10,0,0,0,0,0,0,1,2],
-"db/d4e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Control.html#a71481e0345acfda15802414213db7876":[10,0,0,0,0,0,0,1,4],
-"db/d4e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Control.html#a8a75da23694f9286a47fe8f58e84bcca":[10,0,0,0,0,0,0,1,5]
+"db/d4e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Control.html":[10,0,0,0,0,0,0,1]
 };
