@@ -37,4 +37,16 @@ void position(Registry &r, float deltaTime);
 
 } // namespace Flakkari::Engine::ECS::Systems::_2D
 
+namespace Flakkari::Engine::ECS::Systems::_3D {
+
+/**
+ * @brief Updates the position of all entities with a Transform and a Movable component based on their velocity.
+ *
+ * @param r  The registry containing the entities to update.
+ * @param deltaTime  The time elapsed since the last update.
+ */
+void apply_movable(Registry &r, float deltaTime);
+
+} // namespace Flakkari::Engine::ECS::Systems::_3D
+
 #endif /* !FLAKKARI_SYSTEMS_HPP_ */

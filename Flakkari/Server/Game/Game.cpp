@@ -68,6 +68,10 @@ void Game::loadSystems(Engine::ECS::Registry &registry, const std::string &name)
 {
     if (name == "position")
         registry.add_system([this](Engine::ECS::Registry &r) { Engine::ECS::Systems::_2D::position(r, _deltaTime); });
+
+    else if (name == "apply_movable")
+        registry.add_system(
+            [this](Engine::ECS::Registry &r) { Engine::ECS::Systems::_3D::apply_movable(r, _deltaTime); });
 }
 
 void Game::loadComponents(Engine::ECS::Registry &registry, const nl_component &components,

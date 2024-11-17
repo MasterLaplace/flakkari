@@ -76,3 +76,28 @@ void update_control(Registry &r)
 }
 
 } // namespace Flakkari::Engine::ECS::Systems::_2D
+
+namespace Flakkari::Engine::ECS::Systems::_3D {
+
+void apply_movable(Registry &r, float deltaTime)
+{
+    if (!r.isRegistered<ECS::Components::_3D::Transform>() || !r.isRegistered<ECS::Components::_3D::Movable>())
+        return;
+    auto &positions = r.getComponents<ECS::Components::_3D::Transform>();
+    auto &velocities = r.getComponents<ECS::Components::_3D::Movable>();
+
+    for (Entity i(0); i < positions.size() && i < velocities.size(); ++i)
+    {
+        auto &pos = positions[i];
+        auto &vel = velocities[i];
+
+        if (pos.has_value() && vel.has_value())
+        {
+            pos->_position.vec.x += vel->_velocity.vec.x * vel->_acceleration.vec.x * deltaTime;
+            pos->_position.vec.y += vel->_velocity.vec.y * vel->_acceleration.vec.y * deltaTime;
+            pos->_position.vec.z += vel->_velocity.vec.z * vel->_acceleration.vec.z * deltaTime;
+        }
+    }
+}
+
+} // namespace Flakkari::Engine::ECS::Systems::_3D
