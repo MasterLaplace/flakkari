@@ -22,6 +22,7 @@
 #include "Registry.hpp"
 
 #include "Components/Components2D.hpp"
+#include "Components/Components3D.hpp"
 #include "Components/ComponentsCommon.hpp"
 
 namespace Flakkari::Engine::ECS {
@@ -86,11 +87,11 @@ public:
             {
                 registry.registerComponent<Engine::ECS::Components::_2D::Control>();
                 Engine::ECS::Components::_2D::Control control;
-                control.up = componentContent["up"];
-                control.down = componentContent["down"];
-                control.left = componentContent["left"];
-                control.right = componentContent["right"];
-                control.shoot = componentContent["shoot"];
+                control._up = componentContent["up"];
+                control._down = componentContent["down"];
+                control._left = componentContent["left"];
+                control._right = componentContent["right"];
+                control._shoot = componentContent["shoot"];
                 registry.add_component<Engine::ECS::Components::_2D::Control>(entity, std::move(control));
                 continue;
             }
@@ -99,10 +100,10 @@ public:
             {
                 registry.registerComponent<Engine::ECS::Components::_2D::Movable>();
                 Engine::ECS::Components::_2D::Movable movable;
-                movable.velocity =
+                movable._velocity =
                     Engine::Math::Vector2f(componentContent["velocity"]["x"], componentContent["velocity"]["y"]);
-                movable.acceleration = Engine::Math::Vector2f(componentContent["acceleration"]["x"],
-                                                              componentContent["acceleration"]["y"]);
+                movable._acceleration = Engine::Math::Vector2f(componentContent["acceleration"]["x"],
+                                                               componentContent["acceleration"]["y"]);
                 registry.add_component<Engine::ECS::Components::_2D::Movable>(entity, std::move(movable));
                 continue;
             }
@@ -111,12 +112,12 @@ public:
             {
                 registry.registerComponent<Engine::ECS::Components::_2D::RigidBody>();
                 Engine::ECS::Components::_2D::RigidBody rigidBody;
-                rigidBody.mass = componentContent["mass"];
-                rigidBody.restitution = componentContent["restitution"];
-                rigidBody.friction = componentContent["friction"];
-                rigidBody.gravityScale = componentContent["gravityScale"];
-                rigidBody.isGravityAffected = componentContent["isGravityAffected"];
-                rigidBody.isKinematic = componentContent["isKinematic"];
+                rigidBody._mass = componentContent["mass"];
+                rigidBody._restitution = componentContent["restitution"];
+                rigidBody._friction = componentContent["friction"];
+                rigidBody._gravityScale = componentContent["gravityScale"];
+                rigidBody._isGravityAffected = componentContent["isGravityAffected"];
+                rigidBody._isKinematic = componentContent["isKinematic"];
                 registry.add_component<Engine::ECS::Components::_2D::RigidBody>(entity, std::move(rigidBody));
                 continue;
             }
@@ -125,12 +126,99 @@ public:
             {
                 registry.registerComponent<Engine::ECS::Components::_2D::Transform>();
                 Engine::ECS::Components::_2D::Transform transform;
-                transform.position =
+                transform._position =
                     Engine::Math::Vector2f(componentContent["position"]["x"], componentContent["position"]["y"]);
-                transform.rotation = componentContent["rotation"];
-                transform.scale =
+                transform._rotation = componentContent["rotation"];
+                transform._scale =
                     Engine::Math::Vector2f(componentContent["scale"]["x"], componentContent["scale"]["y"]);
                 registry.add_component<Engine::ECS::Components::_2D::Transform>(entity, std::move(transform));
+                continue;
+            }
+
+            //*_ 3D Components _*//
+
+            if (componentName == "BoxCollider")
+            {
+                registry.registerComponent<Engine::ECS::Components::_3D::BoxCollider>();
+                Engine::ECS::Components::_3D::BoxCollider boxCollider;
+                boxCollider._size = Engine::Math::Vector3f(componentContent["size"]["x"], componentContent["size"]["y"],
+                                                           componentContent["size"]["z"]);
+                boxCollider._center = Engine::Math::Vector3f(
+                    componentContent["center"]["x"], componentContent["center"]["y"], componentContent["center"]["z"]);
+                registry.add_component<Engine::ECS::Components::_3D::BoxCollider>(entity, std::move(boxCollider));
+                continue;
+            }
+
+            if (componentName == "3D_Control")
+            {
+                registry.registerComponent<Engine::ECS::Components::_3D::Control>();
+                Engine::ECS::Components::_3D::Control control;
+                control._move_up = componentContent["move_up"];
+                control._move_down = componentContent["move_down"];
+                control._move_left = componentContent["move_left"];
+                control._move_right = componentContent["move_right"];
+                control._move_front = componentContent["move_front"];
+                control._move_back = componentContent["move_back"];
+                control._look_up = componentContent["look_up"];
+                control._look_down = componentContent["look_down"];
+                control._look_left = componentContent["look_left"];
+                control._look_right = componentContent["look_right"];
+                control._shoot = componentContent["shoot"];
+                registry.add_component<Engine::ECS::Components::_3D::Control>(entity, std::move(control));
+                continue;
+            }
+
+            if (componentName == "3D_Movable")
+            {
+                registry.registerComponent<Engine::ECS::Components::_3D::Movable>();
+                Engine::ECS::Components::_3D::Movable movable;
+                movable._velocity =
+                    Engine::Math::Vector3f(componentContent["velocity"]["x"], componentContent["velocity"]["y"],
+                                           componentContent["velocity"]["z"]);
+                movable._acceleration =
+                    Engine::Math::Vector3f(componentContent["acceleration"]["x"], componentContent["acceleration"]["y"],
+                                           componentContent["acceleration"]["z"]);
+                registry.add_component<Engine::ECS::Components::_3D::Movable>(entity, std::move(movable));
+                continue;
+            }
+
+            if (componentName == "RigidBody")
+            {
+                registry.registerComponent<Engine::ECS::Components::_3D::RigidBody>();
+                Engine::ECS::Components::_3D::RigidBody rigidBody;
+                rigidBody._mass = componentContent["mass"];
+                rigidBody._drag = componentContent["drag"];
+                rigidBody._angularDrag = componentContent["angularDrag"];
+                rigidBody._useGravity = componentContent["useGravity"];
+                rigidBody._isKinematic = componentContent["isKinematic"];
+                registry.add_component<Engine::ECS::Components::_3D::RigidBody>(entity, std::move(rigidBody));
+                continue;
+            }
+
+            if (componentName == "SphereCollider")
+            {
+                registry.registerComponent<Engine::ECS::Components::_3D::SphereCollider>();
+                Engine::ECS::Components::_3D::SphereCollider sphereCollider;
+                sphereCollider._center = Engine::Math::Vector3f(
+                    componentContent["center"]["x"], componentContent["center"]["y"], componentContent["center"]["z"]);
+                sphereCollider._radius = componentContent["radius"];
+                registry.add_component<Engine::ECS::Components::_3D::SphereCollider>(entity, std::move(sphereCollider));
+                continue;
+            }
+
+            if (componentName == "3D_Transform")
+            {
+                registry.registerComponent<Engine::ECS::Components::_3D::Transform>();
+                Engine::ECS::Components::_3D::Transform transform;
+                transform._position =
+                    Engine::Math::Vector3f(componentContent["position"]["x"], componentContent["position"]["y"],
+                                           componentContent["position"]["z"]);
+                transform._rotation =
+                    Engine::Math::Vector3f(componentContent["rotation"]["x"], componentContent["rotation"]["y"],
+                                           componentContent["rotation"]["z"]);
+                transform._scale = Engine::Math::Vector3f(
+                    componentContent["scale"]["x"], componentContent["scale"]["y"], componentContent["scale"]["z"]);
+                registry.add_component<Engine::ECS::Components::_3D::Transform>(entity, std::move(transform));
                 continue;
             }
 

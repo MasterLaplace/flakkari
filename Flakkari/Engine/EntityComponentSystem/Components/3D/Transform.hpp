@@ -2,29 +2,29 @@
 ** EPITECH PROJECT, 2024
 ** Title: Flakkari
 ** Author: MasterLaplace
-** Created: 2024-01-06
+** Created: 2024-11-11
 ** File description:
 ** Transform
 */
 
-#ifndef FLAKKARI_TRANSFORM_HPP_
-#define FLAKKARI_TRANSFORM_HPP_
+#ifndef FLAKKARI_3D_TRANSFORM_HPP_
+#define FLAKKARI_3D_TRANSFORM_HPP_
 
 #include "../../../Math/Vector.hpp"
 
-namespace Flakkari::Engine::ECS::Components::_2D {
+namespace Flakkari::Engine::ECS::Components::_3D {
 LPL_PACKED_START
 
 /**
- * @brief Transform component for 2D entities
+ * @brief Transform component for 3D entities
  */
 struct Transform {
-    Math::Vector2f _position;
-    Math::Vector2f _scale;
-    float _rotation;
+    Math::Vector3f _position;
+    Math::Vector3f _scale;
+    Math::Vector3f _rotation;
 
-    Transform() : _position(0, 0), _scale(1, 1), _rotation(0){};
-    Transform(const Math::Vector2f &position, const Math::Vector2f &scale, float rotation)
+    Transform() : _position(0, 0, 0), _scale(1, 1, 1), _rotation(0, 0, 0){};
+    Transform(const Math::Vector2f &position, const Math::Vector2f &scale, const Math::Vector3f &rotation)
         : _position(position), _scale(scale), _rotation(rotation){};
     Transform(const Transform &other) : _position(other._position), _scale(other._scale), _rotation(other._rotation){};
 
@@ -44,6 +44,6 @@ struct Transform {
 };
 
 LPL_PACKED_END
-} // namespace Flakkari::Engine::ECS::Components::_2D
+} // namespace Flakkari::Engine::ECS::Components::_3D
 
-#endif /* !FLAKKARI_TRANSFORM_HPP_ */
+#endif /* !FLAKKARI_3D_TRANSFORM_HPP_ */

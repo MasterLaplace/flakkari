@@ -17,13 +17,15 @@
 #define FLAKKARI_SYSTEMS_HPP_
 
 #include "../Components/Components2D.hpp"
+#include "../Components/Components3D.hpp"
 #include "../Components/ComponentsCommon.hpp"
 #include "../Registry.hpp"
 
 #include <chrono>
 #include <cmath>
+#include <cstdlib>
 
-namespace Flakkari::Engine::ECS::Systems {
+namespace Flakkari::Engine::ECS::Systems::_2D {
 
 /**
  * @brief Updates the position of all entities with a Position and a Movable component based on their velocity.
@@ -35,6 +37,32 @@ namespace Flakkari::Engine::ECS::Systems {
  */
 void position(Registry &r, float deltaTime);
 
-} // namespace Flakkari::Engine::ECS::Systems
+} // namespace Flakkari::Engine::ECS::Systems::_2D
+
+namespace Flakkari::Engine::ECS::Systems::_3D {
+
+/**
+ * @brief Updates the position of all entities with a Transform and a Movable component based on their velocity.
+ *
+ * @param r  The registry containing the entities to update.
+ * @param deltaTime  The time elapsed since the last update.
+ */
+void apply_movable(Registry &r, float deltaTime);
+
+/**
+ * @brief Spawns a random entity within a skybox.
+ *
+ * @param r  The registry containing the entities to update.
+ */
+void spawn_random_within_skybox(Registry &r);
+
+/**
+ * @brief Handles collisions between entities.
+ *
+ * @param r  The registry containing the entities to update.
+ */
+void handle_collisions(Registry &r);
+
+} // namespace Flakkari::Engine::ECS::Systems::_3D
 
 #endif /* !FLAKKARI_SYSTEMS_HPP_ */

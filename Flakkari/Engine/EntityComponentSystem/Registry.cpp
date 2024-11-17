@@ -13,6 +13,15 @@ namespace Flakkari::Engine::ECS {
 
 using entity_type = Registry::entity_type;
 
+void Registry::clear()
+{
+    _components.clear();
+    _eraseFunctions.clear();
+    _systems.clear();
+    _deadEntities = std::queue<entity_type>();
+    _nextEntity = 0;
+}
+
 entity_type Registry::spawn_entity()
 {
     if (!_deadEntities.empty())

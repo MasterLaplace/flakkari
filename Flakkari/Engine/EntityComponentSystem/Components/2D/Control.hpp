@@ -19,34 +19,34 @@ LPL_PACKED_START
  * @brief  Control component for 2D entities (player, enemies, etc...)
  *
  * @details
- *  up:     move up (give access to the move up)
- *  down:   move down (give access to the move down)
- *  left:   move left (give access to the move left)
- *  right:  move right (give access to the move right)
- *  shoot:  shoot (give access to the shoot)
+ *  _up:     move up (give access to the move up)
+ *  _down:   move down (give access to the move down)
+ *  _left:   move left (give access to the move left)
+ *  _right:  move right (give access to the move right)
+ *  _shoot:  shoot (give access to the shoot)
  */
 struct Control {
-    bool up;
-    bool down;
-    bool left;
-    bool right;
-    bool shoot;
+    bool _up;
+    bool _down;
+    bool _left;
+    bool _right;
+    bool _shoot;
 
-    Control() : up(false), down(false), left(false), right(false), shoot(false){};
+    Control() : _up(false), _down(false), _left(false), _right(false), _shoot(false){};
     Control(bool up, bool down, bool left, bool right, bool shoot)
-        : up(up), down(down), left(left), right(right), shoot(shoot){};
+        : _up(up), _down(down), _left(left), _right(right), _shoot(shoot){};
     Control(const Control &other)
-        : up(other.up), down(other.down), left(other.left), right(other.right), shoot(other.shoot){};
+        : _up(other._up), _down(other._down), _left(other._left), _right(other._right), _shoot(other._shoot){};
 
     Control &operator=(const Control &other)
     {
         if (this != &other)
         {
-            up = other.up;
-            down = other.down;
-            left = other.left;
-            right = other.right;
-            shoot = other.shoot;
+            _up = other._up;
+            _down = other._down;
+            _left = other._left;
+            _right = other._right;
+            _shoot = other._shoot;
         }
 
         return *this;

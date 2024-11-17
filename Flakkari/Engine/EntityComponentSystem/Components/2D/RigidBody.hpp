@@ -7,8 +7,8 @@
 ** RigidBody
 */
 
-#ifndef RIGIDBODY_HPP_
-#define RIGIDBODY_HPP_
+#ifndef FLAKKARI_RIGIDBODY_HPP_
+#define FLAKKARI_RIGIDBODY_HPP_
 
 #include "../../../Math/Vector.hpp"
 
@@ -20,31 +20,33 @@ LPL_PACKED_START
  *
  */
 struct RigidBody {
-    float mass;
-    float restitution;
-    float friction;
-    float gravityScale;
-    bool isGravityAffected = true;
-    bool isKinematic = false;
+    float _mass;
+    float _restitution;
+    float _friction;
+    float _gravityScale;
+    bool _isGravityAffected = true;
+    bool _isKinematic = false;
 
-    RigidBody() : mass(0), restitution(0), friction(0), gravityScale(0), isGravityAffected(false), isKinematic(false){};
+    RigidBody()
+        : _mass(0), _restitution(0), _friction(0), _gravityScale(0), _isGravityAffected(false), _isKinematic(false){};
     RigidBody(const RigidBody &other)
-        : mass(other.mass), restitution(other.restitution), friction(other.friction), gravityScale(other.gravityScale),
-          isGravityAffected(other.isGravityAffected), isKinematic(other.isKinematic){};
+        : _mass(other._mass), _restitution(other._restitution), _friction(other._friction),
+          _gravityScale(other._gravityScale), _isGravityAffected(other._isGravityAffected),
+          _isKinematic(other._isKinematic){};
     RigidBody(float mass, float restitution, float friction, float gravityScale)
-        : mass(mass), restitution(restitution), friction(friction), gravityScale(gravityScale), isGravityAffected(true),
-          isKinematic(false){};
+        : _mass(mass), _restitution(restitution), _friction(friction), _gravityScale(gravityScale),
+          _isGravityAffected(true), _isKinematic(false){};
 
     RigidBody &operator=(const RigidBody &other)
     {
         if (this != &other)
         {
-            mass = other.mass;
-            restitution = other.restitution;
-            friction = other.friction;
-            gravityScale = other.gravityScale;
-            isGravityAffected = other.isGravityAffected;
-            isKinematic = other.isKinematic;
+            _mass = other._mass;
+            _restitution = other._restitution;
+            _friction = other._friction;
+            _gravityScale = other._gravityScale;
+            _isGravityAffected = other._isGravityAffected;
+            _isKinematic = other._isKinematic;
         }
 
         return *this;
@@ -56,4 +58,4 @@ struct RigidBody {
 LPL_PACKED_END
 } // namespace Flakkari::Engine::ECS::Components::_2D
 
-#endif /* !RIGIDBODY_HPP_ */
+#endif /* !FLAKKARI_RIGIDBODY_HPP_ */

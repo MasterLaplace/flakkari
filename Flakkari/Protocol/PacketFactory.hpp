@@ -109,11 +109,11 @@ public:
         if (transform.has_value())
         {
             packet << ComponentId::TRANSFORM;
-            packet << transform->position.vec.x;
-            packet << transform->position.vec.y;
-            packet << transform->rotation;
-            packet << transform->scale.vec.x;
-            packet << transform->scale.vec.y;
+            packet << transform->_position.vec.x;
+            packet << transform->_position.vec.y;
+            packet << transform->_rotation;
+            packet << transform->_scale.vec.x;
+            packet << transform->_scale.vec.y;
         }
 
         auto movable = registry.getComponents<Engine::ECS::Components::_2D::Movable>()[entity];
@@ -121,10 +121,10 @@ public:
         if (movable.has_value())
         {
             packet << ComponentId::MOVABLE;
-            packet << movable->velocity.vec.x;
-            packet << movable->velocity.vec.y;
-            packet << movable->acceleration.vec.x;
-            packet << movable->acceleration.vec.y;
+            packet << movable->_velocity.vec.x;
+            packet << movable->_velocity.vec.y;
+            packet << movable->_acceleration.vec.x;
+            packet << movable->_acceleration.vec.y;
         }
 
         auto control = registry.getComponents<Engine::ECS::Components::_2D::Control>()[entity];
@@ -132,11 +132,11 @@ public:
         if (control.has_value())
         {
             packet << ComponentId::CONTROL;
-            packet << control->up;
-            packet << control->down;
-            packet << control->left;
-            packet << control->right;
-            packet << control->shoot;
+            packet << control->_up;
+            packet << control->_down;
+            packet << control->_left;
+            packet << control->_right;
+            packet << control->_shoot;
         }
 
         auto collider = registry.getComponents<Engine::ECS::Components::_2D::Collider>()[entity];
@@ -153,11 +153,11 @@ public:
         if (rigidbody.has_value())
         {
             packet << ComponentId::RIGIDBODY;
-            packet << rigidbody->mass;
-            packet << rigidbody->restitution;
-            packet << rigidbody->friction;
-            packet << rigidbody->gravityScale;
-            packet << rigidbody->isKinematic;
+            packet << rigidbody->_mass;
+            packet << rigidbody->_restitution;
+            packet << rigidbody->_friction;
+            packet << rigidbody->_gravityScale;
+            packet << rigidbody->_isKinematic;
         }
 
         auto health = registry.getComponents<Engine::ECS::Components::Common::Health>()[entity];
@@ -278,15 +278,15 @@ public:
                                           Engine::ECS::Components::_2D::Movable vel)
     {
         packet << entity;
-        packet << pos.position.vec.x;
-        packet << pos.position.vec.y;
-        packet << pos.rotation;
-        packet << pos.scale.vec.x;
-        packet << pos.scale.vec.y;
-        packet << vel.velocity.vec.x;
-        packet << vel.velocity.vec.y;
-        packet << vel.acceleration.vec.x;
-        packet << vel.acceleration.vec.y;
+        packet << pos._position.vec.x;
+        packet << pos._position.vec.y;
+        packet << pos._rotation;
+        packet << pos._scale.vec.x;
+        packet << pos._scale.vec.y;
+        packet << vel._velocity.vec.x;
+        packet << vel._velocity.vec.y;
+        packet << vel._acceleration.vec.x;
+        packet << vel._acceleration.vec.y;
     }
 };
 
