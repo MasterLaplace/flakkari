@@ -32,7 +32,7 @@ static const nl_template &getTemplateByName(const nl_templates &templates, const
 }
 
 void RegistryEntityByTemplate(Registry &registry, Entity entity, const nl_template &templateJson,
-    const nl_templates &templates)
+                              const nl_templates &templates)
 {
     for (auto &component : templateJson.items())
     {
@@ -257,7 +257,8 @@ void RegistryEntityByTemplate(Registry &registry, Entity entity, const nl_templa
         if (componentName == "Template")
         {
             registry.registerComponent<Engine::ECS::Components::Common::Template>();
-            Engine::ECS::Components::Common::Template template_(componentContent, getTemplateByName(templates, componentContent));
+            Engine::ECS::Components::Common::Template template_(componentContent,
+                                                                getTemplateByName(templates, componentContent));
             registry.add_component<Engine::ECS::Components::Common::Template>(entity, std::move(template_));
             continue;
         }

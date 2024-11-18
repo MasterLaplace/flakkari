@@ -23,11 +23,11 @@
 #define FLAKKARI_GRAPHICS_MODE
 
 #if defined(USE_SFML) && defined(FLAKKARI_GRAPHICS_MODE)
-#include <SFML/Graphics.hpp>
+#    include <SFML/Graphics.hpp>
 #else if defined(USE_RAYLIB) && defined(FLAKKARI_GRAPHICS_MODE)
-#define WIN32_LEAN_AND_MEAN  // Exclude rarely-used stuff from Windows headers
-#define NOGDI               // Avoid Graphics Device Interface conflicts
-#include "raylib.h"
+#    define WIN32_LEAN_AND_MEAN // Exclude rarely-used stuff from Windows headers
+#    define NOGDI               // Avoid Graphics Device Interface conflicts
+#    include "raylib.h"
 #endif
 
 #include <fstream>

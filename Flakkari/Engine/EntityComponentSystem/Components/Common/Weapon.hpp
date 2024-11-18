@@ -47,7 +47,7 @@ struct Weapon {
     Weapon() = default;
     Weapon(const Weapon &other) = default;
     Weapon(std::size_t min_dmg, std::size_t max_dmg, float chargeMax, float rate, std::size_t lvl)
-        : minDamage(min_dmg), maxDamage(max_dmg), chargeMaxTime(chargeMax), fireRate(rate), level(lvl) {};
+        : minDamage(min_dmg), maxDamage(max_dmg), chargeMaxTime(chargeMax), fireRate(rate), level(lvl){};
 
     Weapon &operator=(const Weapon &other)
     {

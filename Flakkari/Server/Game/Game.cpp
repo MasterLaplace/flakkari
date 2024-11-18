@@ -84,7 +84,7 @@ void Game::loadSystems(Engine::ECS::Registry &registry, const std::string &scene
         });
 
     else if (sysName == "handle_collisions")
-        registry.add_system([this,sceneName ](Engine::ECS::Registry &r) {
+        registry.add_system([this, sceneName](Engine::ECS::Registry &r) {
             std::unordered_map<Engine::ECS::Entity, bool> entities;
             Engine::ECS::Systems::_3D::handle_collisions(r, entities);
 
@@ -119,7 +119,8 @@ void Game::loadEntityFromTemplate(Engine::ECS::Registry &registry, const nl_enti
     {
         if (entity.value() != templateInfo.value().begin().key())
             continue;
-        Engine::ECS::Factory::RegistryEntityByTemplate(registry, newEntity, templateInfo.value().begin().value(), templates);
+        Engine::ECS::Factory::RegistryEntityByTemplate(registry, newEntity, templateInfo.value().begin().value(),
+                                                       templates);
     }
 }
 
@@ -618,8 +619,8 @@ void Game::run()
     camera.projection = CAMERA_PERSPECTIVE;        // Camera mode type
     while (_running)
 
-    while (_running && !WindowShouldClose())
-        update();
+        while (_running && !WindowShouldClose())
+            update();
 
     KillWindow();
 #endif
