@@ -19,6 +19,7 @@ set(SOURCES
 
     Flakkari/Engine/EntityComponentSystem/Systems/Systems.cpp
     Flakkari/Engine/EntityComponentSystem/Registry.cpp
+    Flakkari/Engine/EntityComponentSystem/Factory.cpp
 
     Flakkari/Server/UDPServer.cpp
     Flakkari/Server/Client/Client.cpp
@@ -58,7 +59,7 @@ set(HEADERS
     Flakkari/Engine/EntityComponentSystem/Entity.hpp
     Flakkari/Engine/EntityComponentSystem/SparseArrays.hpp
     Flakkari/Engine/EntityComponentSystem/Registry.hpp
-    Flakkari/Engine/EntityComponentSystem/EntityFactory.hpp
+    Flakkari/Engine/EntityComponentSystem/Factory.hpp
 
     Flakkari/Server/UDPServer.hpp
 
@@ -110,8 +111,15 @@ FetchContent_Declare(
     GIT_TAG v1.0.2
 )
 
+FetchContent_Declare(
+    raylib
+    GIT_REPOSITORY git@github.com:MasterLaplace/raylib.git
+    GIT_TAG master
+)
+
 FetchContent_MakeAvailable(nlohmann_json)
 FetchContent_MakeAvailable(Singleton)
+FetchContent_MakeAvailable(raylib)
 
 # Separate Build Artifacts:
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
@@ -172,6 +180,7 @@ target_include_directories(flakkari PRIVATE ${singleton_SOURCE_DIR})
 
 # Link Libraries:
 target_link_libraries(flakkari PRIVATE nlohmann_json::nlohmann_json)
+target_link_libraries(flakkari PUBLIC raylib)
 
 # Documentation: sudo apt-get install graphviz
 find_package(Doxygen)
@@ -269,10 +278,6 @@ add_library(flakkari_network SHARED ${SOURCES_LIB_NETWORK} ${HEADER_LIB_NETWORK}
 
 # Include Directories:
 target_include_directories(flakkari_network PRIVATE ${CMAKE_SOURCE_DIR}/Flakkari)
-target_include_directories(flakkari_network PRIVATE ${singleton_SOURCE_DIR})
-
-# Link Libraries:
-target_link_libraries(flakkari_network PRIVATE nlohmann_json::nlohmann_json)
 
 # Install dynamic library:
 install(TARGETS flakkari_network DESTINATION lib)

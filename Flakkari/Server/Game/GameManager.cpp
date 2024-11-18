@@ -169,9 +169,9 @@ void GameManager::removeClientFromGame(const std::string &gameName, const std::s
 
         if (instance->getPlayers().empty())
         {
-            _gamesInstances[gameName].erase(
-                std::find(_gamesInstances[gameName].begin(), _gamesInstances[gameName].end(), instance));
+            _gamesInstances[gameName].pop_back();
             FLAKKARI_LOG_INFO("game \"" + gameName + "\" removed");
+            break;
         }
         else if (instance->getPlayers().size() > minPlayers)
         {

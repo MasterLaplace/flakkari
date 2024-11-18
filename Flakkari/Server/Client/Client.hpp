@@ -82,12 +82,20 @@ public:
     bool incrementWarningCount();
 
     /**
+     * @brief Add a packet to the client's receive queue and set the api version
+     * used by the client
+     *
+     * @param packet  The packet to add
+     */
+    void addPacketToReceiveQueue(const Protocol::Packet<Protocol::CommandId> &packet);
+
+    /**
      * @brief Add a packet to the client's send queue and set the api version
      * used by the client
      *
      * @param packet  The packet to add
      */
-    void addPacketToQueue(const Protocol::Packet<Protocol::CommandId> &packet);
+    void addPacketToSendQueue(const Protocol::Packet<Protocol::CommandId> &packet);
 
     /**
      * @brief Get the client's address
@@ -125,6 +133,8 @@ public:
     {
         return _receiveQueue;
     }
+
+    [[nodiscard]] Network::PacketQueue<Protocol::Packet<Protocol::CommandId>> &getSendQueue() { return _receiveQueue; }
 
 private:
     std::chrono::steady_clock::time_point _lastActivity;

@@ -44,10 +44,16 @@ bool Client::incrementWarningCount()
     return _warningCount >= _maxWarningCount;
 }
 
-void Client::addPacketToQueue(const Protocol::Packet<Protocol::CommandId> &packet)
+void Client::addPacketToReceiveQueue(const Protocol::Packet<Protocol::CommandId> &packet)
 {
     _apiVersion = packet.header._apiVersion;
     _receiveQueue.push_back(packet);
+}
+
+void Client::addPacketToSendQueue(const Protocol::Packet<Protocol::CommandId> &packet)
+{
+    _apiVersion = packet.header._apiVersion;
+    _sendQueue.push_back(packet);
 }
 
 } /* namespace Flakkari */

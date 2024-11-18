@@ -15,31 +15,6 @@
 
 namespace Flakkari {
 
-void Game::sendAllEntities(const std::string &sceneName, std::shared_ptr<Client> player)
-{
-    auto &registry = _scenes[sceneName];
-
-    auto &transforms = registry.getComponents<Engine::ECS::Components::_2D::Transform>();
-
-    for (Engine::ECS::Entity i(0); i < transforms.size(); ++i)
-    {
-        auto &transform = transforms[i];
-
-        if (!transform.has_value())
-            continue;
-
-        Protocol::Packet<Protocol::CommandId> packet;
-        packet.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;
-        packet.header._apiVersion = player->getApiVersion();
-        packet << i;
-        packet.injectString(sceneName);
-        Protocol::PacketFactory::addComponentsToPacketByEntity<Protocol::CommandId>(packet, registry, i);
-
-        ClientManager::GetInstance().sendPacketToClient(player->getAddress(), packet.serialize());
-        ClientManager::UnlockInstance();
-    }
-}
-
 Game::Game(const std::string &name, std::shared_ptr<nlohmann::json> config)
 {
     _name = name;
@@ -64,219 +39,75 @@ Game::~Game()
     FLAKKARI_LOG_INFO("game \"" + _name + "\" is now stopped");
 }
 
-void Game::loadSystems(Engine::ECS::Registry &registry, const std::string &name)
+void Game::loadSystems(Engine::ECS::Registry &registry, const std::string &sceneName, const std::string &sysName)
 {
-    if (name == "position")
+    if (sysName == "position")
         registry.add_system([this](Engine::ECS::Registry &r) { Engine::ECS::Systems::_2D::position(r, _deltaTime); });
 
-    else if (name == "apply_movable")
-        registry.add_system(
-            [this](Engine::ECS::Registry &r) { Engine::ECS::Systems::_3D::apply_movable(r, _deltaTime); });
+    // else if (sysName == "apply_movable")
+    //     registry.add_system(
+    //         [this](Engine::ECS::Registry &r) { Engine::ECS::Systems::_3D::apply_movable(r, _deltaTime); });
 
-    else if (name == "spawn_random_within_skybox")
-        registry.add_system([](Engine::ECS::Registry &r) { Engine::ECS::Systems::_3D::spawn_random_within_skybox(r); });
+    else if (sysName == "spawn_enemy")
+        registry.add_system([this, sceneName](Engine::ECS::Registry &r) {
+            std::string templateName;
+            Engine::ECS::Entity entity;
+            if (Engine::ECS::Systems::_3D::spawn_enemy(r, templateName, entity))
+            {
+                Protocol::Packet<Protocol::CommandId> packet;
+                packet.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;
+                packet << entity;
+                packet.injectString(sceneName);
+                packet.injectString(templateName);
 
-    else if (name == "handle_collisions")
-        registry.add_system([](Engine::ECS::Registry &r) { Engine::ECS::Systems::_3D::handle_collisions(r); });
-}
+                Protocol::PacketFactory::addComponentsToPacketByEntity(packet, r, entity);
 
-void Game::loadComponents(Engine::ECS::Registry &registry, const nl_component &components,
-                          Engine::ECS::Entity newEntity)
-{
-    if (!components.is_object())
-        return;
-    for (auto &component : components.items())
-    {
-        auto componentName = component.key();
-        auto componentContent = component.value();
+                this->sendOnSameScene(sceneName, packet);
+            }
+        });
 
-        //*_ 2D Components _*//
+    else if (sysName == "spawn_random_within_skybox")
+        registry.add_system([this, sceneName](Engine::ECS::Registry &r) {
+            std::vector<Engine::ECS::Entity> entities(10);
+            Engine::ECS::Systems::_3D::spawn_random_within_skybox(r, entities);
 
-        if (componentName == "Transform")
-        {
-            registry.registerComponent<Engine::ECS::Components::_2D::Transform>();
-            Engine::ECS::Components::_2D::Transform transform;
-            transform._position =
-                Engine::Math::Vector2f(componentContent["position"]["x"], componentContent["position"]["y"]);
-            transform._rotation = componentContent["rotation"];
-            transform._scale = Engine::Math::Vector2f(componentContent["scale"]["x"], componentContent["scale"]["y"]);
-            registry.add_component<Engine::ECS::Components::_2D::Transform>(newEntity, std::move(transform));
-            continue;
-        }
+            for (auto &entity : entities)
+            {
+                Protocol::Packet<Protocol::CommandId> packet;
+                packet.header._commandId = Protocol::CommandId::REQ_ENTITY_UPDATE;
+                packet << entity;
 
-        if (componentName == "Movable")
-        {
-            registry.registerComponent<Engine::ECS::Components::_2D::Movable>();
-            Engine::ECS::Components::_2D::Movable movable;
-            movable._velocity =
-                Engine::Math::Vector2f(componentContent["velocity"]["x"], componentContent["velocity"]["y"]);
-            movable._acceleration =
-                Engine::Math::Vector2f(componentContent["acceleration"]["x"], componentContent["acceleration"]["y"]);
-            registry.add_component<Engine::ECS::Components::_2D::Movable>(newEntity, std::move(movable));
-            continue;
-        }
+                Protocol::PacketFactory::addComponentsToPacketByEntity(packet, r, entity);
 
-        if (componentName == "Control")
-        {
-            registry.registerComponent<Engine::ECS::Components::_2D::Control>();
-            Engine::ECS::Components::_2D::Control control;
-            control._up = componentContent["up"];
-            control._down = componentContent["down"];
-            control._left = componentContent["left"];
-            control._right = componentContent["right"];
-            control._shoot = componentContent["shoot"];
-            registry.add_component<Engine::ECS::Components::_2D::Control>(newEntity, std::move(control));
-            continue;
-        }
+                this->sendOnSameScene(sceneName, packet);
+            }
+        });
 
-        if (componentName == "Collider")
-        {
-            registry.registerComponent<Engine::ECS::Components::_2D::Collider>();
-            Engine::ECS::Components::_2D::Collider collider;
-            collider._size = Engine::Math::Vector2f(componentContent["size"]["x"], componentContent["size"]["y"]);
-            registry.add_component<Engine::ECS::Components::_2D::Collider>(newEntity, std::move(collider));
-            continue;
-        }
+    else if (sysName == "handle_collisions")
+        registry.add_system([this,sceneName ](Engine::ECS::Registry &r) {
+            std::unordered_map<Engine::ECS::Entity, bool> entities;
+            Engine::ECS::Systems::_3D::handle_collisions(r, entities);
 
-        //*_ 3D Components _*//
+            for (auto &entity : entities)
+            {
+                if (!entity.second)
+                {
+                    Protocol::Packet<Protocol::CommandId> packet;
+                    packet.header._commandId = Protocol::CommandId::REQ_ENTITY_DESTROY;
+                    packet << entity.first;
+                    this->sendOnSameScene(sceneName, packet);
+                    continue;
+                }
 
-        if (componentName == "BoxCollider")
-        {
-            registry.registerComponent<Engine::ECS::Components::_3D::BoxCollider>();
-            Engine::ECS::Components::_3D::BoxCollider boxCollider;
-            boxCollider._size = Engine::Math::Vector3f(componentContent["size"]["x"], componentContent["size"]["y"],
-                                                       componentContent["size"]["z"]);
-            boxCollider._center = Engine::Math::Vector3f(
-                componentContent["center"]["x"], componentContent["center"]["y"], componentContent["center"]["z"]);
-            registry.add_component<Engine::ECS::Components::_3D::BoxCollider>(newEntity, std::move(boxCollider));
-            continue;
-        }
+                Protocol::Packet<Protocol::CommandId> packet;
+                packet.header._commandId = Protocol::CommandId::REQ_ENTITY_UPDATE;
+                packet << entity.first;
 
-        if (componentName == "3D_Control")
-        {
-            registry.registerComponent<Engine::ECS::Components::_3D::Control>();
-            Engine::ECS::Components::_3D::Control control;
-            control._move_up = componentContent["move_up"];
-            control._move_down = componentContent["move_down"];
-            control._move_left = componentContent["move_left"];
-            control._move_right = componentContent["move_right"];
-            control._move_front = componentContent["move_front"];
-            control._move_back = componentContent["move_back"];
-            control._look_up = componentContent["look_up"];
-            control._look_down = componentContent["look_down"];
-            control._look_left = componentContent["look_left"];
-            control._look_right = componentContent["look_right"];
-            control._shoot = componentContent["shoot"];
-            registry.add_component<Engine::ECS::Components::_3D::Control>(newEntity, std::move(control));
-            continue;
-        }
+                Protocol::PacketFactory::addComponentsToPacketByEntity(packet, r, entity.first);
 
-        if (componentName == "3D_Movable")
-        {
-            registry.registerComponent<Engine::ECS::Components::_3D::Movable>();
-            Engine::ECS::Components::_3D::Movable movable;
-            movable._velocity =
-                Engine::Math::Vector3f(componentContent["velocity"]["x"], componentContent["velocity"]["y"],
-                                       componentContent["velocity"]["z"]);
-            movable._acceleration =
-                Engine::Math::Vector3f(componentContent["acceleration"]["x"], componentContent["acceleration"]["y"],
-                                       componentContent["acceleration"]["z"]);
-            registry.add_component<Engine::ECS::Components::_3D::Movable>(newEntity, std::move(movable));
-            continue;
-        }
-
-        if (componentName == "RigidBody")
-        {
-            registry.registerComponent<Engine::ECS::Components::_3D::RigidBody>();
-            Engine::ECS::Components::_3D::RigidBody rigidBody;
-            rigidBody._mass = componentContent["mass"];
-            rigidBody._drag = componentContent["drag"];
-            rigidBody._angularDrag = componentContent["angularDrag"];
-            rigidBody._useGravity = componentContent["useGravity"];
-            rigidBody._isKinematic = componentContent["isKinematic"];
-            registry.add_component<Engine::ECS::Components::_3D::RigidBody>(newEntity, std::move(rigidBody));
-            continue;
-        }
-
-        if (componentName == "SphereCollider")
-        {
-            registry.registerComponent<Engine::ECS::Components::_3D::SphereCollider>();
-            Engine::ECS::Components::_3D::SphereCollider sphereCollider;
-            sphereCollider._center = Engine::Math::Vector3f(
-                componentContent["center"]["x"], componentContent["center"]["y"], componentContent["center"]["z"]);
-            sphereCollider._radius = componentContent["radius"];
-            registry.add_component<Engine::ECS::Components::_3D::SphereCollider>(newEntity, std::move(sphereCollider));
-            continue;
-        }
-
-        if (componentName == "3D_Transform")
-        {
-            registry.registerComponent<Engine::ECS::Components::_3D::Transform>();
-            Engine::ECS::Components::_3D::Transform transform;
-            transform._position =
-                Engine::Math::Vector3f(componentContent["position"]["x"], componentContent["position"]["y"],
-                                       componentContent["position"]["z"]);
-            transform._rotation =
-                Engine::Math::Vector3f(componentContent["rotation"]["x"], componentContent["rotation"]["y"],
-                                       componentContent["rotation"]["z"]);
-            transform._scale = Engine::Math::Vector3f(componentContent["scale"]["x"], componentContent["scale"]["y"],
-                                                      componentContent["scale"]["z"]);
-            registry.add_component<Engine::ECS::Components::_3D::Transform>(newEntity, std::move(transform));
-            continue;
-        }
-
-        //*_ Common Components _*//
-
-        if (componentName == "Evolve")
-        {
-            registry.registerComponent<Engine::ECS::Components::Common::Evolve>();
-            Engine::ECS::Components::Common::Evolve evolve;
-            evolve.name = componentContent["name"].get<std::string>().c_str();
-            registry.add_component<Engine::ECS::Components::Common::Evolve>(newEntity, std::move(evolve));
-            continue;
-        }
-
-        if (componentName == "Spawned")
-        {
-            registry.registerComponent<Engine::ECS::Components::Common::Spawned>();
-            Engine::ECS::Components::Common::Spawned spawned;
-            spawned.has_spawned = componentContent["has_spawned"];
-            registry.add_component<Engine::ECS::Components::Common::Spawned>(newEntity, std::move(spawned));
-            continue;
-        }
-
-        if (componentName == "Tag")
-        {
-            registry.registerComponent<Engine::ECS::Components::Common::Tag>();
-            Engine::ECS::Components::Common::Tag tag;
-            tag.tag = componentContent.get<std::string>().c_str();
-            registry.add_component<Engine::ECS::Components::Common::Tag>(newEntity, std::move(tag));
-            continue;
-        }
-
-        if (componentName == "Weapon")
-        {
-            registry.registerComponent<Engine::ECS::Components::Common::Weapon>();
-            Engine::ECS::Components::Common::Weapon weapon;
-            weapon.fireRate = componentContent["fireRate"];
-            weapon.damage = componentContent["damage"];
-            weapon.level = componentContent["level"];
-            registry.add_component<Engine::ECS::Components::Common::Weapon>(newEntity, std::move(weapon));
-            continue;
-        }
-
-        if (componentName == "Health")
-        {
-            registry.registerComponent<Engine::ECS::Components::Common::Health>();
-            Engine::ECS::Components::Common::Health health;
-            health.maxHealth = componentContent["maxHealth"];
-            health.currentHealth = componentContent["currentHealth"];
-            health.maxShield = componentContent["maxShield"];
-            health.shield = componentContent["shield"];
-            registry.add_component<Engine::ECS::Components::Common::Health>(newEntity, std::move(health));
-            continue;
-        }
-    }
+                this->sendOnSameScene(sceneName, packet);
+            }
+        });
 }
 
 void Game::loadEntityFromTemplate(Engine::ECS::Registry &registry, const nl_entity &entity,
@@ -284,16 +115,11 @@ void Game::loadEntityFromTemplate(Engine::ECS::Registry &registry, const nl_enti
 {
     Engine::ECS::Entity newEntity = registry.spawn_entity();
 
-    for (auto &componentInfo : entity.begin().value().items())
+    for (auto &templateInfo : templates.items())
     {
-        for (auto &templateInfo : templates.items())
-        {
-            if (templateInfo.key() != componentInfo.key())
-                continue;
-            loadComponents(registry, templateInfo.value(), newEntity);
-            registry.registerComponent<Engine::ECS::Components::Common::Template>();
-            registry.add_component<Engine::ECS::Components::Common::Template>(newEntity, templateInfo.key());
-        }
+        if (entity.value() != templateInfo.value().begin().key())
+            continue;
+        Engine::ECS::Factory::RegistryEntityByTemplate(registry, newEntity, templateInfo.value().begin().value(), templates);
     }
 }
 
@@ -308,10 +134,10 @@ void Game::loadScene(const std::string &sceneName)
             Engine::ECS::Registry registry;
 
             for (auto &system : sceneInfo.value()["systems"].items())
-                loadSystems(registry, system.value());
+                loadSystems(registry, sceneName, system.value());
 
             for (auto &entity : sceneInfo.value()["entities"].items())
-                loadEntityFromTemplate(registry, entity.value().items(), sceneInfo.value()["templates"]);
+                loadEntityFromTemplate(registry, entity, sceneInfo.value()["templates"]);
 
             _scenes[sceneName] = registry;
             return;
@@ -332,8 +158,7 @@ void Game::sendOnSameScene(const std::string &sceneName, Protocol::Packet<Protoc
 
         packet.header._apiVersion = player->getApiVersion();
 
-        ClientManager::GetInstance().sendPacketToClient(player->getAddress(), packet.serialize());
-        ClientManager::UnlockInstance();
+        player->addPacketToSendQueue(packet);
     }
 }
 
@@ -353,8 +178,7 @@ void Game::sendOnSameSceneExcept(const std::string &sceneName, Protocol::Packet<
 
         packet.header._apiVersion = player->getApiVersion();
 
-        ClientManager::GetInstance().sendPacketToClient(player->getAddress(), packet.serialize());
-        ClientManager::UnlockInstance();
+        player->addPacketToSendQueue(packet);
     }
 }
 
@@ -397,6 +221,40 @@ void Game::sendUpdatePosition(std::shared_ptr<Client> player, Engine::ECS::Compo
                      ", " + std::to_string(vel._velocity.vec.y) + ")" + ", Acc: (" +
                      std::to_string(vel._acceleration.vec.x) + ", " + std::to_string(vel._acceleration.vec.y) + ")" +
                      ">");
+    sendOnSameScene(player->getSceneName(), packet);
+}
+
+void Game::sendUpdatePosition(std::shared_ptr<Client> player, Engine::ECS::Components::_3D::Transform pos,
+                              Engine::ECS::Components::_3D::Movable vel)
+{
+    Protocol::Packet<Protocol::CommandId> packet;
+    packet.header._commandId = Protocol::CommandId::REQ_ENTITY_MOVED;
+    packet << player->getEntity();
+    packet << pos._position.vec.x;
+    packet << pos._position.vec.y;
+    packet << pos._position.vec.z;
+    packet << pos._rotation.vec.x;
+    packet << pos._rotation.vec.y;
+    packet << pos._rotation.vec.z;
+    packet << pos._scale.vec.x;
+    packet << pos._scale.vec.y;
+    packet << pos._scale.vec.z;
+    packet << vel._velocity.vec.x;
+    packet << vel._velocity.vec.y;
+    packet << vel._velocity.vec.z;
+    packet << vel._acceleration.vec.x;
+    packet << vel._acceleration.vec.y;
+    packet << vel._acceleration.vec.z;
+
+    FLAKKARI_LOG_LOG("packet size: " + std::to_string(packet.size()) +
+                     " bytes\n"
+                     "packet sent: <Id: " +
+                     std::to_string(player->getEntity()) + ", Pos: (" + std::to_string(pos._position.vec.x) + ", " +
+                     std::to_string(pos._position.vec.y) + ", " + std::to_string(pos._position.vec.z) + ")" +
+                     ", Vel: (" + std::to_string(vel._velocity.vec.x) + ", " + std::to_string(vel._velocity.vec.y) +
+                     ", " + std::to_string(vel._velocity.vec.z) + ")" + ", Acc: (" +
+                     std::to_string(vel._acceleration.vec.x) + ", " + std::to_string(vel._acceleration.vec.y) + ", " +
+                     std::to_string(vel._acceleration.vec.z) + ")" + ">");
     sendOnSameScene(player->getSceneName(), packet);
 }
 
@@ -495,6 +353,75 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     }
 }
 
+void Game::handleEvents(std::shared_ptr<Client> player, Protocol::Packet<Protocol::CommandId> packet)
+{
+    auto sceneName = player->getSceneName();
+    auto entity = player->getEntity();
+    auto &registry = _scenes[sceneName];
+    auto &ctrl = registry.getComponents<Engine::ECS::Components::_3D::Control>()[entity];
+    auto &vel = registry.getComponents<Engine::ECS::Components::_3D::Movable>()[entity];
+    auto &pos = registry.getComponents<Engine::ECS::Components::_3D::Transform>()[entity];
+
+    if (!ctrl.has_value() || !vel.has_value() || !pos.has_value())
+        return;
+
+    // there is the number of the events in the two first (size of ushort) byte of the payload
+    uint16_t count_events = *(uint16_t *) packet.payload.data();
+    // there is the number of the axis events in the two next (size of ushort) byte of the payload after the events
+    uint16_t count_axis =
+        *(uint16_t *) (packet.payload.data() + sizeof(uint16_t) + count_events * sizeof(Protocol::Event));
+
+    // jump to the first event
+    auto data = packet.payload.data() + sizeof(uint16_t);
+
+    for (uint16_t i = 0; i < count_events; ++i)
+    {
+        Protocol::Event event = *(Protocol::Event *) (data + i * sizeof(Protocol::Event));
+
+        if (event.id == Protocol::EventId::MOVE_FRONT && ctrl->_move_front)
+        {
+            Engine::Math::Vector3f direction = pos->_rotation * Engine::Math::Vector3f(0, 0, 1) * vel->_velocity;
+            pos->_position += direction * _deltaTime;
+            continue;
+        }
+        else if (event.id == Protocol::EventId::MOVE_BACK && ctrl->_move_down)
+        {
+            Engine::Math::Vector3f direction = pos->_rotation * Engine::Math::Vector3f(0, 0, -1) * vel->_velocity;
+            pos->_position += direction * _deltaTime;
+            continue;
+        }
+    }
+
+    // jump to the first axis event
+    data += count_events * sizeof(Protocol::Event);
+
+    for (uint16_t i = 0; i < count_axis; ++i)
+    {
+        Protocol::EventAxis event = *(Protocol::EventAxis *) (data + i * sizeof(Protocol::EventAxis));
+
+        if (event.id == Protocol::EventAxisId::LOOK_RIGHT && ctrl->_look_right)
+        {
+            pos->_rotation.vec.y += event.value * 100 * _deltaTime;
+            continue;
+        }
+        else if (event.id == Protocol::EventAxisId::LOOK_LEFT && ctrl->_look_left)
+        {
+            pos->_rotation.vec.y -= event.value * 100 * _deltaTime;
+            continue;
+        }
+        else if (event.id == Protocol::EventAxisId::LOOK_UP && ctrl->_look_up)
+        {
+            pos->_rotation.vec.x += event.value * 100 * _deltaTime;
+            continue;
+        }
+        else if (event.id == Protocol::EventAxisId::LOOK_DOWN && ctrl->_look_down)
+        {
+            pos->_rotation.vec.x -= event.value * 100 * _deltaTime;
+            continue;
+        }
+    }
+}
+
 void Game::updateIncomingPackets(unsigned char maxMessagePerFrame)
 {
     for (auto &player : _players)
@@ -513,20 +440,70 @@ void Game::updateIncomingPackets(unsigned char maxMessagePerFrame)
             if (packet.header._commandId == Protocol::CommandId::REQ_USER_UPDATE)
                 handleEvent(player, packet);
 
-            if (packet.header._commandId == Protocol::CommandId::REQ_HEARTBEAT)
+            else if (packet.header._commandId == Protocol::CommandId::REQ_USER_UPDATES)
+                handleEvents(player, packet);
+
+            else if (packet.header._commandId == Protocol::CommandId::REQ_HEARTBEAT)
             {
                 Protocol::Packet<Protocol::CommandId> repPacket;
                 repPacket.header._commandId = Protocol::CommandId::REP_HEARTBEAT;
                 repPacket.header._apiVersion = packet.header._apiVersion;
-                ClientManager::GetInstance().sendPacketToClient(player->getAddress(), repPacket.serialize());
-                ClientManager::UnlockInstance();
+
+                player->addPacketToSendQueue(repPacket);
             }
+        }
+    }
+}
+
+void Game::updateOutcomingPackets(unsigned char maxMessagePerFrame)
+{
+    for (auto &player : _players)
+    {
+        if (!player->isConnected())
+            continue;
+        auto &packets = player->getSendQueue();
+        auto messageCount = maxMessagePerFrame;
+
+        Network::Buffer buffer;
+
+        while (!packets.empty() && messageCount > 0)
+        {
+            auto packet = packets.pop_front();
+            messageCount--;
+
+            buffer += packet.serialize();
+
+            ClientManager::GetInstance().sendPacketToClient(player->getAddress(), buffer);
+            ClientManager::UnlockInstance();
         }
     }
 }
 
 void Game::update()
 {
+#if defined(USE_SFML) && defined(FLAKKARI_GRAPHICS_MODE)
+    while (const std::optional event = window.pollEvent())
+    {
+        // Window closed or escape key pressed: exit
+        if (event->is<sf::Event::Closed>() ||
+            (event->is<sf::Event::KeyPressed>() &&
+             event->getIf<sf::Event::KeyPressed>()->code == sf::Keyboard::Key::Escape))
+            window.close();
+    }
+    window.clear();
+#else if defined(USE_RAYLIB) && defined(FLAKKARI_GRAPHICS_MODE)
+    UpdateCamera(&camera, CAMERA_FREE);
+
+    if (IsKeyPressed('Z'))
+        camera.target = Vector3{0.0f, 0.0f, 0.0f};
+
+    BeginDrawing();
+
+    ClearBackground(RAYWHITE);
+
+    BeginMode3D(camera);
+#endif
+
     auto now = std::chrono::steady_clock::now();
     _deltaTime = std::chrono::duration_cast<std::chrono::duration<float>>(now - _time).count();
     _time = now;
@@ -536,7 +513,82 @@ void Game::update()
     updateIncomingPackets();
 
     for (auto &scene : _scenes)
-        scene.second.run_systems();
+    {
+        auto &registry = scene.second;
+
+        registry.run_systems();
+
+        auto &transforms = registry.getComponents<Engine::ECS::Components::_3D::Transform>();
+        auto &boxs = registry.getComponents<Engine::ECS::Components::_3D::BoxCollider>();
+        auto &spheres = registry.getComponents<Engine::ECS::Components::_3D::SphereCollider>();
+        auto &tags = registry.getComponents<Engine::ECS::Components::Common::Tag>();
+
+        for (Engine::ECS::Entity i(0); i < transforms.size(); ++i)
+        {
+            auto &transform = transforms[i];
+            auto &box = boxs[i];
+            auto &sphere = spheres[i];
+            auto &tag = tags[i];
+
+            if (!transform.has_value() || !tag.has_value())
+                continue;
+
+#if defined(USE_SFML) && defined(FLAKKARI_GRAPHICS_MODE)
+            if (tag->tag == "Player")
+            {
+                sf::CircleShape circle(sphere->_radius);
+                circle.setFillColor(sf::Color::Blue);
+                circle.setPosition(sf::Vector2f(transform->_position.vec.x + 120, transform->_position.vec.y + 120));
+                window.draw(circle);
+            }
+            else if (tag->tag == "Enemy")
+            {
+                sf::CircleShape circle(sphere->_radius);
+                circle.setFillColor(sf::Color::Red);
+                circle.setPosition(sf::Vector2f(transform->_position.vec.x + 120, transform->_position.vec.y + 120));
+                window.draw(circle);
+            }
+            else if (tag->tag == "Bullet")
+            {
+                sf::RectangleShape rectangle(sf::Vector2f(box->_size.vec.x, box->_size.vec.y));
+                rectangle.setScale(sf::Vector2f(transform->_scale.vec.x, transform->_scale.vec.y));
+                rectangle.setPosition(sf::Vector2f(transform->_position.vec.x + 120, transform->_position.vec.y + 120));
+                rectangle.setFillColor(sf::Color::Yellow);
+                window.draw(rectangle);
+            }
+#else if defined(USE_RAYLIB) && defined(FLAKKARI_GRAPHICS_MODE)
+            if (tag->tag == "Player")
+            {
+                Vector3 position = {transform->_position.vec.x, transform->_position.vec.y, transform->_position.vec.z};
+                DrawSphere(position, sphere->_radius, BLUE);
+            }
+            else if (tag->tag == "Enemy")
+            {
+                Vector3 position = {transform->_position.vec.x, transform->_position.vec.y, transform->_position.vec.z};
+                DrawSphere(position, sphere->_radius, RED);
+            }
+            else if (tag->tag == "Bullet")
+            {
+                Vector3 position = {transform->_position.vec.x, transform->_position.vec.y, transform->_position.vec.z};
+                DrawCube(position, box->_size.vec.x, box->_size.vec.y, box->_size.vec.z, YELLOW);
+            }
+#endif
+        }
+    }
+
+    updateOutcomingPackets();
+
+#if defined(USE_SFML) && defined(FLAKKARI_GRAPHICS_MODE)
+    window.display();
+#else if defined(USE_RAYLIB) && defined(FLAKKARI_GRAPHICS_MODE)
+    DrawGrid(500, 1.0f);
+
+    EndMode3D();
+
+    DrawFPS(10, 10);
+
+    EndDrawing();
+#endif
 }
 
 void Game::start()
@@ -549,8 +601,28 @@ void Game::start()
 
 void Game::run()
 {
-    while (_running)
+#if defined(USE_SFML) && defined(FLAKKARI_GRAPHICS_MODE)
+    window.create(sf::VideoMode(sf::Vector2u(800, 600)), "Flakkari Graphics: " + _name);
+
+    while (_running || window.isOpen())
         update();
+#else if defined(USE_RAYLIB) && defined(FLAKKARI_GRAPHICS_MODE)
+    SetTraceLogLevel(LOG_NONE);
+    InitWindow(800, 600, std::string("Flakkari Graphics: " + _name).c_str());
+
+    // Define the camera to look into our 3d world
+    camera.position = Vector3{0.0f, 10.0f, 10.0f}; // Camera position
+    camera.target = Vector3{0.0f, 0.0f, 0.0f};     // Camera looking at point
+    camera.up = Vector3{0.0f, 1.0f, 0.0f};         // Camera up vector (rotation towards target)
+    camera.fovy = 120.0f;                          // Camera field-of-view Y
+    camera.projection = CAMERA_PERSPECTIVE;        // Camera mode type
+    while (_running)
+
+    while (_running && !WindowShouldClose())
+        update();
+
+    KillWindow();
+#endif
 }
 
 bool Game::addPlayer(std::shared_ptr<Client> player)
@@ -570,7 +642,7 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
     auto p_Template = (*_config)["playerTemplate"];
     auto player_info = ResourceManager::GetInstance().getTemplateById(_name, sceneGame, p_Template);
 
-    loadComponents(registry, player_info.value_or(nullptr), newEntity);
+    Engine::ECS::Factory::RegistryEntityByTemplate(registry, newEntity, player_info.value_or(nullptr));
     ResourceManager::UnlockInstance();
 
     registry.registerComponent<Engine::ECS::Components::Common::NetworkIp>();
@@ -585,8 +657,6 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
     _players.push_back(player);
     FLAKKARI_LOG_INFO("client \"" + std::string(*address) + "\" added to game \"" + _name + "\"");
 
-    // this->sendAllEntities(sceneGame, player);    // send all entities to the new player
-
     Protocol::Packet<Protocol::CommandId> packet;
     packet.header._commandId = Protocol::CommandId::REP_CONNECT;
     packet.header._apiVersion = player->getApiVersion();
@@ -594,8 +664,8 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
     packet.injectString(sceneGame);
     packet.injectString(player->getName().value_or(""));
     packet.injectString(p_Template);
-    ClientManager::GetInstance().sendPacketToClient(address, packet.serialize());
-    ClientManager::UnlockInstance();
+
+    player->addPacketToSendQueue(packet);
 
     Protocol::Packet<Protocol::CommandId> packet2;
     packet2.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;
@@ -623,10 +693,10 @@ bool Game::removePlayer(std::shared_ptr<Client> player)
     packet.header._commandId = Protocol::CommandId::REQ_ENTITY_DESTROY;
     packet << entity;
 
-    sendOnSameScene(sceneGame, packet);
-
-    registry.kill_entity(entity);
     _players.erase(it);
+    registry.kill_entity(entity);
+
+    sendOnSameScene(sceneGame, packet);
     FLAKKARI_LOG_INFO("client \"" + std::string(*player->getAddress()) + "\" removed from game \"" + _name + "\"");
     return true;
 }

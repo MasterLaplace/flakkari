@@ -26,6 +26,7 @@
 #include "Common/Spawned.hpp"  // Spawned component (spawned)
 #include "Common/Tag.hpp"      // Tag component (tag)
 #include "Common/Template.hpp" // Template component (name)
+#include "Common/Timer.hpp"    // Timer component (time)
 #include "Common/Weapon.hpp"   // Weapon component (name)
 
 #include "Common/NetworkEvent.hpp" // NetworkEvent component (event)
