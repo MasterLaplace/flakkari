@@ -24,6 +24,7 @@ struct RigidBody {
     float _angularDrag;
     bool _useGravity = true;
     bool _isKinematic = false;
+    uint8_t padding : 6 = 0;
 
     RigidBody() : _mass(0), _drag(0), _angularDrag(0), _useGravity(false), _isKinematic(false){};
     RigidBody(const RigidBody &other)
