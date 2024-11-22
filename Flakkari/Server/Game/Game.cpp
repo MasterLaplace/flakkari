@@ -232,9 +232,67 @@ void Game::sendUpdatePosition(std::shared_ptr<Client> player, Engine::ECS::Compo
     sendOnSameScene(player->getSceneName(), packet);
 }
 
-void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol::CommandId> packet)
+static bool handleMoveEvent(Protocol::Event &event, Engine::ECS::Components::_3D::Control &ctrl,
+                            Engine::ECS::Components::_3D::Movable &vel, Engine::ECS::Components::_3D::Transform &pos)
 {
-    auto sceneName = player->getSceneName();
+    auto setAcceleration = [&](const Engine::Math::Vector3f &acceleration) {
+        vel._acceleration = pos._rotation * acceleration;
+    };
+
+    switch (event.id)
+    {
+    ////////////////////////////////////////////////////////////////////////////
+    //? C# (Unity)
+    // Math::Vector3f direction = playerCamera.transform.forward * velocity;
+    // playerCamera.transform.position += direction * Time.deltaTime;
+    //? C++ (Flakkari)
+    // vel._acceleration = pos._rotation * Math::Vector3f(0, 0, 1);
+    // pos._position += vel._velocity * vel._acceleration * _deltaTime;
+    ////////////////////////////////////////////////////////////////////////////
+    case Protocol::EventId::MOVE_FRONT:
+        if (ctrl._move_front)
+            setAcceleration(event.state == Protocol::EventState::PRESSED ? Engine::Math::Vector3f(0, 0, 1) :
+                                                                           Engine::Math::Vector3f(0, 0, 0));
+        return true;
+    ////////////////////////////////////////////////////////////////////////////
+    //? C# (Unity)
+    // Vector3 direction = playerCamera.transform.forward * velocity;
+    // playerCamera.transform.position += -direction * Time.deltaTime;
+    //? C++ (Flakkari)
+    // vel._acceleration = pos._rotation * Math::Vector3f(0, 0, -1);
+    // pos._position += vel._velocity * vel._acceleration * _deltaTime;
+    ////////////////////////////////////////////////////////////////////////////
+    case Protocol::EventId::MOVE_BACK:
+        if (ctrl._move_back)
+            setAcceleration(event.state == Protocol::EventState::PRESSED ? Engine::Math::Vector3f(0, 0, -1) :
+                                                                           Engine::Math::Vector3f(0, 0, 0));
+        return true;
+    case Protocol::EventId::MOVE_RIGHT:
+        if (ctrl._move_right)
+            vel._acceleration = event.state == Protocol::EventState::PRESSED ? Engine::Math::Vector3f(1, 0, 0) :
+                                                                               Engine::Math::Vector3f(0, 0, 0);
+        return true;
+    case Protocol::EventId::MOVE_LEFT:
+        if (ctrl._move_left)
+            vel._acceleration = event.state == Protocol::EventState::PRESSED ? Engine::Math::Vector3f(-1, 0, 0) :
+                                                                               Engine::Math::Vector3f(0, 0, 0);
+        return true;
+    case Protocol::EventId::MOVE_UP:
+        if (ctrl._move_up)
+            vel._acceleration = event.state == Protocol::EventState::PRESSED ? Engine::Math::Vector3f(0, 1, 0) :
+                                                                               Engine::Math::Vector3f(0, 0, 0);
+        return true;
+    case Protocol::EventId::MOVE_DOWN:
+        if (ctrl._move_down)
+            vel._acceleration = event.state == Protocol::EventState::PRESSED ? Engine::Math::Vector3f(0, -1, 0) :
+                                                                               Engine::Math::Vector3f(0, 0, 0);
+        return true;
+    default: return false;
+    }
+}
+
+void Game::handleEvents(std::shared_ptr<Client> player, Protocol::Packet<Protocol::CommandId> packet)
+{
     auto entity = player->getEntity();
     auto &registry = _scenes[player->getSceneName()];
     auto &ctrl = registry.getComponents<Engine::ECS::Components::_3D::Control>()[entity];
@@ -244,85 +302,61 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
     if (!ctrl.has_value() || !vel.has_value() || !pos.has_value())
         return;
 
-    Protocol::Event event = *(Protocol::Event *) packet.payload.data();
-    if (event.id == Protocol::EventId::MOVE_UP && ctrl->_up)
+    // there is the number of the events in the two first (size of ushort) byte of the payload
+    uint16_t count_events = *(uint16_t *) packet.payload.data();
+    // there is the number of the axis events in the two next (size of ushort) byte of the payload after the events
+    uint16_t count_axis =
+        *(uint16_t *) (packet.payload.data() + sizeof(uint16_t) + count_events * sizeof(Protocol::Event));
+
+    // jump to the first event
+    auto data = packet.payload.data() + sizeof(uint16_t);
+
+    for (uint16_t i = 0; i < count_events; ++i)
     {
-        if (netEvent->events.size() < size_t(event.id))
-            netEvent->events.resize(size_t(event.id) + 1);
-        netEvent->events[size_t(event.id)] = (unsigned short) event.state;
+        Protocol::Event event = *(Protocol::Event *) (data + i * sizeof(Protocol::Event));
 
-        FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
-
-        if (event.state == Protocol::EventState::PRESSED)
-            vel->_velocity.vec.y = -1;
-        if (event.state == Protocol::EventState::RELEASED)
-            vel->_velocity.vec.y = 0;
-        sendUpdatePosition(player, pos.value(), vel.value());
-        return;
-    }
-    if (event.id == Protocol::EventId::MOVE_DOWN && ctrl->_down)
-    {
-        if (netEvent->events.size() < size_t(event.id))
-            netEvent->events.resize(size_t(event.id) + 1);
-        netEvent->events[size_t(event.id)] = (unsigned short) event.state;
-
-        FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
-
-        if (event.state == Protocol::EventState::PRESSED)
-            vel->_velocity.vec.y = 1;
-        if (event.state == Protocol::EventState::RELEASED)
-            vel->_velocity.vec.y = 0;
-        sendUpdatePosition(player, pos.value(), vel.value());
-        return;
-    }
-    if (event.id == Protocol::EventId::MOVE_LEFT && ctrl->_left)
-    {
-        if (netEvent->events.size() < size_t(event.id))
-            netEvent->events.resize(size_t(event.id) + 1);
-        netEvent->events[size_t(event.id)] = (unsigned short) event.state;
-
-        FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
-
-        if (event.state == Protocol::EventState::PRESSED)
-            vel->_velocity.vec.x = -1;
-        if (event.state == Protocol::EventState::RELEASED)
-            vel->_velocity.vec.x = 0;
-        sendUpdatePosition(player, pos.value(), vel.value());
-        return;
-    }
-    if (event.id == Protocol::EventId::MOVE_RIGHT && ctrl->_right)
-    {
-        if (netEvent->events.size() < size_t(event.id))
-            netEvent->events.resize(size_t(event.id) + 1);
-        netEvent->events[size_t(event.id)] = (unsigned short) event.state;
-
-        FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
-
-        if (event.state == Protocol::EventState::PRESSED)
-            vel->_velocity.vec.x = 1;
-        if (event.state == Protocol::EventState::RELEASED)
-            vel->_velocity.vec.x = 0;
-        sendUpdatePosition(player, pos.value(), vel.value());
-        return;
-    }
-    if (event.id == Protocol::EventId::SHOOT && ctrl->_shoot)
-    {
-        if (netEvent->events.size() < size_t(event.id))
-            netEvent->events.resize(size_t(event.id) + 1);
-        netEvent->events[size_t(event.id)] = (unsigned short) event.state;
-
-        FLAKKARI_LOG_INFO("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
-
-        if (event.state == Protocol::EventState::RELEASED)
+        if (handleMoveEvent(event, ctrl.value(), vel.value(), pos.value()))
         {
-            Protocol::Packet<Protocol::CommandId> shootPacket;
-            shootPacket.header._commandId = Protocol::CommandId::REQ_ENTITY_SHOOT;
-            shootPacket.injectString(player->getSceneName());
-            shootPacket << player->getEntity();
-            // create a bullet with player as parent
-            sendOnSameScene(player->getSceneName(), shootPacket);
+            FLAKKARI_LOG_DEBUG("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
+        sendUpdatePosition(player, pos.value(), vel.value());
+            continue;
+    }
+        else if (event.id == Protocol::EventId::SHOOT && ctrl->_shoot)
+        {
+        if (event.state == Protocol::EventState::PRESSED)
+            {}
+            else if (event.state == Protocol::EventState::RELEASED)
+                continue;
         }
-        return;
+    }
+
+    // jump to the first axis event
+    data += count_events * sizeof(Protocol::Event);
+
+    for (uint16_t i = 0; i < count_axis; ++i)
+    {
+        Protocol::EventAxis event = *(Protocol::EventAxis *) (data + i * sizeof(Protocol::EventAxis));
+
+        if (event.id == Protocol::EventAxisId::LOOK_RIGHT && ctrl->_look_right)
+    {
+            pos->_rotation.vec.y += event.value * 100 * _deltaTime;
+            continue;
+        }
+        else if (event.id == Protocol::EventAxisId::LOOK_LEFT && ctrl->_look_left)
+        {
+            pos->_rotation.vec.y -= event.value * 100 * _deltaTime;
+            continue;
+    }
+        else if (event.id == Protocol::EventAxisId::LOOK_UP && ctrl->_look_up)
+    {
+            pos->_rotation.vec.x += event.value * 100 * _deltaTime;
+            continue;
+        }
+        else if (event.id == Protocol::EventAxisId::LOOK_DOWN && ctrl->_look_down)
+        {
+            pos->_rotation.vec.x -= event.value * 100 * _deltaTime;
+            continue;
+        }
     }
 }
 
@@ -390,7 +424,9 @@ void Game::update()
     updateIncomingPackets();
 
     for (auto &scene : _scenes)
-        scene.second.run_systems();
+        auto &registry = scene.second;
+
+    updateOutcomingPackets();
 }
 
 void Game::start()
