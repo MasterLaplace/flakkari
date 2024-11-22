@@ -130,7 +130,7 @@ ClientManager::receivePacketFromClient(const std::shared_ptr<Network::Address> &
     if (packet.deserialize(buffer))
     {
         FLAKKARI_LOG_LOG("Client " + clientName + " sent a valid packet: " + packet.to_string());
-        tmp_client->addPacketToQueue(packet);
+        tmp_client->addPacketToReceiveQueue(packet);
         return std::nullopt;
     }
 

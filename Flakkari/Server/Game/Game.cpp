@@ -44,7 +44,7 @@ void Game::loadSystems(Engine::ECS::Registry &registry, const std::string &scene
     if (sysName == "position")
         registry.add_system([this](Engine::ECS::Registry &r) { Engine::ECS::Systems::_2D::position(r, _deltaTime); });
 
-    else if (name == "apply_movable")
+    else if (sysName == "apply_movable")
         registry.add_system(
             [this](Engine::ECS::Registry &r) { Engine::ECS::Systems::_3D::apply_movable(r, _deltaTime); });
 
@@ -158,8 +158,7 @@ void Game::sendOnSameScene(const std::string &sceneName, Protocol::Packet<Protoc
 
         packet.header._apiVersion = player->getApiVersion();
 
-        ClientManager::GetInstance().sendPacketToClient(player->getAddress(), packet.serialize());
-        ClientManager::UnlockInstance();
+        player->addPacketToSendQueue(packet);
     }
 }
 
@@ -179,8 +178,7 @@ void Game::sendOnSameSceneExcept(const std::string &sceneName, Protocol::Packet<
 
         packet.header._apiVersion = player->getApiVersion();
 
-        ClientManager::GetInstance().sendPacketToClient(player->getAddress(), packet.serialize());
-        ClientManager::UnlockInstance();
+        player->addPacketToSendQueue(packet);
     }
 }
 
@@ -343,17 +341,40 @@ void Game::updateIncomingPackets(unsigned char maxMessagePerFrame)
             FLAKKARI_LOG_INFO("packet received: " + packet.to_string());
             messageCount--;
 
-            if (packet.header._commandId == Protocol::CommandId::REQ_USER_UPDATE)
-                handleEvent(player, packet);
+            if (packet.header._commandId == Protocol::CommandId::REQ_USER_UPDATES)
+                handleEvents(player, packet);
 
-            if (packet.header._commandId == Protocol::CommandId::REQ_HEARTBEAT)
+            else if (packet.header._commandId == Protocol::CommandId::REQ_HEARTBEAT)
             {
                 Protocol::Packet<Protocol::CommandId> repPacket;
-                repPacket.header._commandId = Protocol::CommandId::REP_HEARTBEAT;
                 repPacket.header._apiVersion = packet.header._apiVersion;
-                ClientManager::GetInstance().sendPacketToClient(player->getAddress(), repPacket.serialize());
-                ClientManager::UnlockInstance();
+                repPacket.header._commandId = Protocol::CommandId::REP_HEARTBEAT;
+
+                player->addPacketToSendQueue(repPacket);
             }
+        }
+    }
+}
+
+void Game::updateOutcomingPackets(unsigned char maxMessagePerFrame)
+{
+    for (auto &player : _players)
+    {
+        if (!player->isConnected())
+            continue;
+        auto &packets = player->getSendQueue();
+        auto messageCount = maxMessagePerFrame;
+
+        Network::Buffer buffer;
+
+        while (!packets.empty() && messageCount > 0)
+        {
+            auto packet = packets.pop_front();
+            messageCount--;
+
+            buffer += packet.serialize();
+            ClientManager::GetInstance().sendPacketToClient(player->getAddress(), buffer);
+                ClientManager::UnlockInstance();
         }
     }
 }
