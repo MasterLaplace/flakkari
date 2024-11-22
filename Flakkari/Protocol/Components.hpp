@@ -96,21 +96,19 @@ enum class ComponentId : uint8_t {
     RIGIDBODY_3D = 15,
     // 20 - 29: Common components
     CHILD = 20,
-    PARENT = 21,
-    TAG = 22,
-    SPAWNED = 23,
-    TEMPLATE = 24,
-    WEAPON = 25,
-    LEVEL = 26,
-    EVOLVE = 27,
-    HEALTH = 28,
-    // 30 - 39: Network components
-    NETWORK_EVENT = 30,
-    NETWORK_IP = 31,
+    EVOLVE = 21,
+    HEALTH = 22,
+    ID = 23,
+    LEVEL = 24,
+    PARENT = 25,
+    TAG = 26,
+    TEMPLATE = 27,
+    TIMER = 28,
+    WEAPON = 29,
     MAX_COMPONENT
 };
 
-static_assert(static_cast<uint8_t>(ComponentId::MAX_COMPONENT) <= 40, "ComponentId::MAX_COMPONENT is too big");
+static_assert(static_cast<uint8_t>(ComponentId::MAX_COMPONENT) <= 30, "ComponentId::MAX_COMPONENT is too big");
 
 class Components final {
 public:
@@ -130,16 +128,15 @@ public:
         case ComponentId::RIGIDBODY: return "RIGIDBODY";
         case ComponentId::RIGIDBODY_3D: return "RIGIDBODY_3D";
         case ComponentId::CHILD: return "CHILD";
-        case ComponentId::PARENT: return "PARENT";
-        case ComponentId::TAG: return "TAG";
-        case ComponentId::SPAWNED: return "SPAWNED";
-        case ComponentId::TEMPLATE: return "TEMPLATE";
-        case ComponentId::WEAPON: return "WEAPON";
-        case ComponentId::LEVEL: return "LEVEL";
         case ComponentId::EVOLVE: return "EVOLVE";
         case ComponentId::HEALTH: return "HEALTH";
-        case ComponentId::NETWORK_EVENT: return "NETWORK_EVENT";
-        case ComponentId::NETWORK_IP: return "NETWORK_IP";
+        case ComponentId::ID: return "ID";
+        case ComponentId::LEVEL: return "LEVEL";
+        case ComponentId::PARENT: return "PARENT";
+        case ComponentId::TAG: return "TAG";
+        case ComponentId::TEMPLATE: return "TEMPLATE";
+        case ComponentId::TIMER: return "TIMER";
+        case ComponentId::WEAPON: return "WEAPON";
         default: return "UNKNOWN";
         }
     }
