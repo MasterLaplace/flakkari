@@ -62,19 +62,10 @@ public: // Loaders
      * @brief Add all the systems of the game to the registry.
      *
      * @param registry  Registry to add the systems to.
-     * @param name  Name of the scene to load.
+     * @param sceneName  Name of the scene to load.
+     * @param sysName  Name of the system to load.
      */
-    void loadSystems(Engine::ECS::Registry &registry, const std::string &name);
-
-    /**
-     * @brief Add all the components of the game to the registry.
-     *
-     * @param registry  Registry to add the components to.
-     * @param componentInfo  Info of the components to add.
-     * @param newEntity  Entity to add the components to.
-     */
-    void loadComponents(Engine::ECS::Registry &registry, const nl_component &componentInfo,
-                        Engine::ECS::Entity newEntity);
+    void loadSystems(Engine::ECS::Registry &registry, const std::string &sceneName, const std::string &sysName);
 
     /**
      * @brief Add all the entities of the game to the registry.
@@ -93,7 +84,6 @@ public: // Loaders
     void loadScene(const std::string &name);
 
 public: // Actions
-    void sendAllEntities(const std::string &sceneName, std::shared_ptr<Client> player);
     void sendOnSameScene(const std::string &sceneName, Protocol::Packet<Protocol::CommandId> &packet);
 
     void sendOnSameSceneExcept(const std::string &sceneName, Protocol::Packet<Protocol::CommandId> &packet,
@@ -112,23 +102,26 @@ public: // Actions
      * @param pos  Position of the player.
      * @param vel  Velocity of the player.
      */
-    void sendUpdatePosition(std::shared_ptr<Client> player, Engine::ECS::Components::_2D::Transform pos,
-                            Engine::ECS::Components::_2D::Movable vel);
+    void sendUpdatePosition(std::shared_ptr<Client> player, Engine::ECS::Components::_3D::Transform pos,
+                            Engine::ECS::Components::_3D::Movable vel);
 
     /**
-     * @brief Handle an event from a player.
+     * @brief Handle the events from a player.
      *
      * @param player  Player that sent the event.
-     * @param packet  Packet containing the event.
+     * @param packet  Packet containing the events.
      */
-    void handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol::CommandId> packet);
+    void handleEvents(std::shared_ptr<Client> player, Protocol::Packet<Protocol::CommandId> packet);
 
     /**
-     * @brief Empty the incoming packets of the players and update the
-     *        game with the new packets.
-     *
+     * @brief Empty the incoming packets of the players and update the game with the new packets.
      */
-    void updateIncomingPackets(unsigned char maxMessagePerFrame = 10);
+    void updateIncomingPackets(unsigned char maxMessagePerFrame = 20);
+
+    /**
+     * @brief Empty the outcoming packets of the players.
+     */
+    void updateOutcomingPackets(unsigned char maxMessagePerFrame = 20);
 
     /**
      * @brief Update the game. This function is called every frame.

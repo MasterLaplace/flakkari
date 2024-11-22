@@ -15,31 +15,6 @@
 
 namespace Flakkari {
 
-void Game::sendAllEntities(const std::string &sceneName, std::shared_ptr<Client> player)
-{
-    auto &registry = _scenes[sceneName];
-
-    auto &transforms = registry.getComponents<Engine::ECS::Components::_2D::Transform>();
-
-    for (Engine::ECS::Entity i(0); i < transforms.size(); ++i)
-    {
-        auto &transform = transforms[i];
-
-        if (!transform.has_value())
-            continue;
-
-        Protocol::Packet<Protocol::CommandId> packet;
-        packet.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;
-        packet.header._apiVersion = player->getApiVersion();
-        packet << i;
-        packet.injectString(sceneName);
-        Protocol::PacketFactory::addComponentsToPacketByEntity<Protocol::CommandId>(packet, registry, i);
-
-        ClientManager::GetInstance().sendPacketToClient(player->getAddress(), packet.serialize());
-        ClientManager::UnlockInstance();
-    }
-}
-
 Game::Game(const std::string &name, std::shared_ptr<nlohmann::json> config)
 {
     _name = name;
@@ -64,219 +39,74 @@ Game::~Game()
     FLAKKARI_LOG_INFO("game \"" + _name + "\" is now stopped");
 }
 
-void Game::loadSystems(Engine::ECS::Registry &registry, const std::string &name)
+void Game::loadSystems(Engine::ECS::Registry &registry, const std::string &sceneName, const std::string &sysName)
 {
-    if (name == "position")
+    if (sysName == "position")
         registry.add_system([this](Engine::ECS::Registry &r) { Engine::ECS::Systems::_2D::position(r, _deltaTime); });
 
     else if (name == "apply_movable")
         registry.add_system(
             [this](Engine::ECS::Registry &r) { Engine::ECS::Systems::_3D::apply_movable(r, _deltaTime); });
 
-    else if (name == "spawn_random_within_skybox")
-        registry.add_system([](Engine::ECS::Registry &r) { Engine::ECS::Systems::_3D::spawn_random_within_skybox(r); });
+    else if (sysName == "spawn_enemy")
+        registry.add_system([this, sceneName](Engine::ECS::Registry &r) {
+            std::string templateName;
+            Engine::ECS::Entity entity;
+            if (Engine::ECS::Systems::_3D::spawn_enemy(r, templateName, entity))
+            {
+                Protocol::Packet<Protocol::CommandId> packet;
+                packet.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;
+                packet << entity;
+                packet.injectString(templateName);
 
-    else if (name == "handle_collisions")
-        registry.add_system([](Engine::ECS::Registry &r) { Engine::ECS::Systems::_3D::handle_collisions(r); });
-}
+                Protocol::PacketFactory::addComponentsToPacketByEntity(packet, r, entity);
 
-void Game::loadComponents(Engine::ECS::Registry &registry, const nl_component &components,
-                          Engine::ECS::Entity newEntity)
-{
-    if (!components.is_object())
-        return;
-    for (auto &component : components.items())
-    {
-        auto componentName = component.key();
-        auto componentContent = component.value();
+                this->sendOnSameScene(sceneName, packet);
+            }
+        });
 
-        //*_ 2D Components _*//
+    else if (sysName == "spawn_random_within_skybox")
+        registry.add_system([this, sceneName](Engine::ECS::Registry &r) {
+            std::vector<Engine::ECS::Entity> entities(10);
+            Engine::ECS::Systems::_3D::spawn_random_within_skybox(r, entities);
 
-        if (componentName == "Transform")
-        {
-            registry.registerComponent<Engine::ECS::Components::_2D::Transform>();
-            Engine::ECS::Components::_2D::Transform transform;
-            transform._position =
-                Engine::Math::Vector2f(componentContent["position"]["x"], componentContent["position"]["y"]);
-            transform._rotation = componentContent["rotation"];
-            transform._scale = Engine::Math::Vector2f(componentContent["scale"]["x"], componentContent["scale"]["y"]);
-            registry.add_component<Engine::ECS::Components::_2D::Transform>(newEntity, std::move(transform));
+            for (auto &entity : entities)
+            {
+                Protocol::Packet<Protocol::CommandId> packet;
+                packet.header._commandId = Protocol::CommandId::REQ_ENTITY_UPDATE;
+                packet << entity;
+
+                Protocol::PacketFactory::addComponentsToPacketByEntity(packet, r, entity);
+
+                this->sendOnSameScene(sceneName, packet);
+            }
+        });
+
+    else if (sysName == "handle_collisions")
+        registry.add_system([this, sceneName](Engine::ECS::Registry &r) {
+            std::unordered_map<Engine::ECS::Entity, bool> entities;
+            Engine::ECS::Systems::_3D::handle_collisions(r, entities);
+
+            for (auto &entity : entities)
+            {
+                if (!entity.second)
+                {
+                    Protocol::Packet<Protocol::CommandId> packet;
+                    packet.header._commandId = Protocol::CommandId::REQ_ENTITY_DESTROY;
+                    packet << entity.first;
+                    this->sendOnSameScene(sceneName, packet);
             continue;
         }
 
-        if (componentName == "Movable")
-        {
-            registry.registerComponent<Engine::ECS::Components::_2D::Movable>();
-            Engine::ECS::Components::_2D::Movable movable;
-            movable._velocity =
-                Engine::Math::Vector2f(componentContent["velocity"]["x"], componentContent["velocity"]["y"]);
-            movable._acceleration =
-                Engine::Math::Vector2f(componentContent["acceleration"]["x"], componentContent["acceleration"]["y"]);
-            registry.add_component<Engine::ECS::Components::_2D::Movable>(newEntity, std::move(movable));
-            continue;
+                Protocol::Packet<Protocol::CommandId> packet;
+                packet.header._commandId = Protocol::CommandId::REQ_ENTITY_UPDATE;
+                packet << entity.first;
+
+                Protocol::PacketFactory::addComponentsToPacketByEntity(packet, r, entity.first);
+
+                this->sendOnSameScene(sceneName, packet);
         }
-
-        if (componentName == "Control")
-        {
-            registry.registerComponent<Engine::ECS::Components::_2D::Control>();
-            Engine::ECS::Components::_2D::Control control;
-            control._up = componentContent["up"];
-            control._down = componentContent["down"];
-            control._left = componentContent["left"];
-            control._right = componentContent["right"];
-            control._shoot = componentContent["shoot"];
-            registry.add_component<Engine::ECS::Components::_2D::Control>(newEntity, std::move(control));
-            continue;
-        }
-
-        if (componentName == "Collider")
-        {
-            registry.registerComponent<Engine::ECS::Components::_2D::Collider>();
-            Engine::ECS::Components::_2D::Collider collider;
-            collider._size = Engine::Math::Vector2f(componentContent["size"]["x"], componentContent["size"]["y"]);
-            registry.add_component<Engine::ECS::Components::_2D::Collider>(newEntity, std::move(collider));
-            continue;
-        }
-
-        //*_ 3D Components _*//
-
-        if (componentName == "BoxCollider")
-        {
-            registry.registerComponent<Engine::ECS::Components::_3D::BoxCollider>();
-            Engine::ECS::Components::_3D::BoxCollider boxCollider;
-            boxCollider._size = Engine::Math::Vector3f(componentContent["size"]["x"], componentContent["size"]["y"],
-                                                       componentContent["size"]["z"]);
-            boxCollider._center = Engine::Math::Vector3f(
-                componentContent["center"]["x"], componentContent["center"]["y"], componentContent["center"]["z"]);
-            registry.add_component<Engine::ECS::Components::_3D::BoxCollider>(newEntity, std::move(boxCollider));
-            continue;
-        }
-
-        if (componentName == "3D_Control")
-        {
-            registry.registerComponent<Engine::ECS::Components::_3D::Control>();
-            Engine::ECS::Components::_3D::Control control;
-            control._move_up = componentContent["move_up"];
-            control._move_down = componentContent["move_down"];
-            control._move_left = componentContent["move_left"];
-            control._move_right = componentContent["move_right"];
-            control._move_front = componentContent["move_front"];
-            control._move_back = componentContent["move_back"];
-            control._look_up = componentContent["look_up"];
-            control._look_down = componentContent["look_down"];
-            control._look_left = componentContent["look_left"];
-            control._look_right = componentContent["look_right"];
-            control._shoot = componentContent["shoot"];
-            registry.add_component<Engine::ECS::Components::_3D::Control>(newEntity, std::move(control));
-            continue;
-        }
-
-        if (componentName == "3D_Movable")
-        {
-            registry.registerComponent<Engine::ECS::Components::_3D::Movable>();
-            Engine::ECS::Components::_3D::Movable movable;
-            movable._velocity =
-                Engine::Math::Vector3f(componentContent["velocity"]["x"], componentContent["velocity"]["y"],
-                                       componentContent["velocity"]["z"]);
-            movable._acceleration =
-                Engine::Math::Vector3f(componentContent["acceleration"]["x"], componentContent["acceleration"]["y"],
-                                       componentContent["acceleration"]["z"]);
-            registry.add_component<Engine::ECS::Components::_3D::Movable>(newEntity, std::move(movable));
-            continue;
-        }
-
-        if (componentName == "RigidBody")
-        {
-            registry.registerComponent<Engine::ECS::Components::_3D::RigidBody>();
-            Engine::ECS::Components::_3D::RigidBody rigidBody;
-            rigidBody._mass = componentContent["mass"];
-            rigidBody._drag = componentContent["drag"];
-            rigidBody._angularDrag = componentContent["angularDrag"];
-            rigidBody._useGravity = componentContent["useGravity"];
-            rigidBody._isKinematic = componentContent["isKinematic"];
-            registry.add_component<Engine::ECS::Components::_3D::RigidBody>(newEntity, std::move(rigidBody));
-            continue;
-        }
-
-        if (componentName == "SphereCollider")
-        {
-            registry.registerComponent<Engine::ECS::Components::_3D::SphereCollider>();
-            Engine::ECS::Components::_3D::SphereCollider sphereCollider;
-            sphereCollider._center = Engine::Math::Vector3f(
-                componentContent["center"]["x"], componentContent["center"]["y"], componentContent["center"]["z"]);
-            sphereCollider._radius = componentContent["radius"];
-            registry.add_component<Engine::ECS::Components::_3D::SphereCollider>(newEntity, std::move(sphereCollider));
-            continue;
-        }
-
-        if (componentName == "3D_Transform")
-        {
-            registry.registerComponent<Engine::ECS::Components::_3D::Transform>();
-            Engine::ECS::Components::_3D::Transform transform;
-            transform._position =
-                Engine::Math::Vector3f(componentContent["position"]["x"], componentContent["position"]["y"],
-                                       componentContent["position"]["z"]);
-            transform._rotation =
-                Engine::Math::Vector3f(componentContent["rotation"]["x"], componentContent["rotation"]["y"],
-                                       componentContent["rotation"]["z"]);
-            transform._scale = Engine::Math::Vector3f(componentContent["scale"]["x"], componentContent["scale"]["y"],
-                                                      componentContent["scale"]["z"]);
-            registry.add_component<Engine::ECS::Components::_3D::Transform>(newEntity, std::move(transform));
-            continue;
-        }
-
-        //*_ Common Components _*//
-
-        if (componentName == "Evolve")
-        {
-            registry.registerComponent<Engine::ECS::Components::Common::Evolve>();
-            Engine::ECS::Components::Common::Evolve evolve;
-            evolve.name = componentContent["name"].get<std::string>().c_str();
-            registry.add_component<Engine::ECS::Components::Common::Evolve>(newEntity, std::move(evolve));
-            continue;
-        }
-
-        if (componentName == "Spawned")
-        {
-            registry.registerComponent<Engine::ECS::Components::Common::Spawned>();
-            Engine::ECS::Components::Common::Spawned spawned;
-            spawned.has_spawned = componentContent["has_spawned"];
-            registry.add_component<Engine::ECS::Components::Common::Spawned>(newEntity, std::move(spawned));
-            continue;
-        }
-
-        if (componentName == "Tag")
-        {
-            registry.registerComponent<Engine::ECS::Components::Common::Tag>();
-            Engine::ECS::Components::Common::Tag tag;
-            tag.tag = componentContent.get<std::string>().c_str();
-            registry.add_component<Engine::ECS::Components::Common::Tag>(newEntity, std::move(tag));
-            continue;
-        }
-
-        if (componentName == "Weapon")
-        {
-            registry.registerComponent<Engine::ECS::Components::Common::Weapon>();
-            Engine::ECS::Components::Common::Weapon weapon;
-            weapon.fireRate = componentContent["fireRate"];
-            weapon.damage = componentContent["damage"];
-            weapon.level = componentContent["level"];
-            registry.add_component<Engine::ECS::Components::Common::Weapon>(newEntity, std::move(weapon));
-            continue;
-        }
-
-        if (componentName == "Health")
-        {
-            registry.registerComponent<Engine::ECS::Components::Common::Health>();
-            Engine::ECS::Components::Common::Health health;
-            health.maxHealth = componentContent["maxHealth"];
-            health.currentHealth = componentContent["currentHealth"];
-            health.maxShield = componentContent["maxShield"];
-            health.shield = componentContent["shield"];
-            registry.add_component<Engine::ECS::Components::Common::Health>(newEntity, std::move(health));
-            continue;
-        }
-    }
+        });
 }
 
 void Game::loadEntityFromTemplate(Engine::ECS::Registry &registry, const nl_entity &entity,
@@ -284,16 +114,12 @@ void Game::loadEntityFromTemplate(Engine::ECS::Registry &registry, const nl_enti
 {
     Engine::ECS::Entity newEntity = registry.spawn_entity();
 
-    for (auto &componentInfo : entity.begin().value().items())
-    {
         for (auto &templateInfo : templates.items())
         {
-            if (templateInfo.key() != componentInfo.key())
+        if (entity.value() != templateInfo.value().begin().key())
                 continue;
-            loadComponents(registry, templateInfo.value(), newEntity);
-            registry.registerComponent<Engine::ECS::Components::Common::Template>();
-            registry.add_component<Engine::ECS::Components::Common::Template>(newEntity, templateInfo.key());
-        }
+        Engine::ECS::Factory::RegistryEntityByTemplate(registry, newEntity, templateInfo.value().begin().value(),
+                                                       templates);
     }
 }
 
@@ -308,10 +134,10 @@ void Game::loadScene(const std::string &sceneName)
             Engine::ECS::Registry registry;
 
             for (auto &system : sceneInfo.value()["systems"].items())
-                loadSystems(registry, system.value());
+                loadSystems(registry, sceneName, system.value());
 
             for (auto &entity : sceneInfo.value()["entities"].items())
-                loadEntityFromTemplate(registry, entity.value().items(), sceneInfo.value()["templates"]);
+                loadEntityFromTemplate(registry, entity, sceneInfo.value()["templates"]);
 
             _scenes[sceneName] = registry;
             return;
@@ -373,30 +199,38 @@ void Game::checkDisconnect()
     }
 }
 
-void Game::sendUpdatePosition(std::shared_ptr<Client> player, Engine::ECS::Components::_2D::Transform pos,
-                              Engine::ECS::Components::_2D::Movable vel)
+void Game::sendUpdatePosition(std::shared_ptr<Client> player, Engine::ECS::Components::_3D::Transform pos,
+                              Engine::ECS::Components::_3D::Movable vel)
 {
     Protocol::Packet<Protocol::CommandId> packet;
     packet.header._commandId = Protocol::CommandId::REQ_ENTITY_MOVED;
     packet << player->getEntity();
     packet << pos._position.vec.x;
     packet << pos._position.vec.y;
-    packet << pos._rotation;
+    packet << pos._position.vec.z;
+    packet << pos._rotation.vec.x;
+    packet << pos._rotation.vec.y;
+    packet << pos._rotation.vec.z;
+    packet << pos._rotation.vec.w;
     packet << pos._scale.vec.x;
     packet << pos._scale.vec.y;
+    packet << pos._scale.vec.z;
     packet << vel._velocity.vec.x;
     packet << vel._velocity.vec.y;
+    packet << vel._velocity.vec.z;
     packet << vel._acceleration.vec.x;
     packet << vel._acceleration.vec.y;
+    packet << vel._acceleration.vec.z;
 
     FLAKKARI_LOG_LOG("packet size: " + std::to_string(packet.size()) +
                      " bytes\n"
                      "packet sent: <Id: " +
                      std::to_string(player->getEntity()) + ", Pos: (" + std::to_string(pos._position.vec.x) + ", " +
-                     std::to_string(pos._position.vec.y) + ")" + ", Vel: (" + std::to_string(vel._velocity.vec.x) +
-                     ", " + std::to_string(vel._velocity.vec.y) + ")" + ", Acc: (" +
-                     std::to_string(vel._acceleration.vec.x) + ", " + std::to_string(vel._acceleration.vec.y) + ")" +
-                     ">");
+                     std::to_string(pos._position.vec.y) + ", " + std::to_string(pos._position.vec.z) + ")" +
+                     ", Vel: (" + std::to_string(vel._velocity.vec.x) + ", " + std::to_string(vel._velocity.vec.y) +
+                     ", " + std::to_string(vel._velocity.vec.z) + ")" + ", Acc: (" +
+                     std::to_string(vel._acceleration.vec.x) + ", " + std::to_string(vel._acceleration.vec.y) + ", " +
+                     std::to_string(vel._acceleration.vec.z) + ")" + ">");
     sendOnSameScene(player->getSceneName(), packet);
 }
 
@@ -404,11 +238,10 @@ void Game::handleEvent(std::shared_ptr<Client> player, Protocol::Packet<Protocol
 {
     auto sceneName = player->getSceneName();
     auto entity = player->getEntity();
-    auto &registry = _scenes[sceneName];
-    auto &ctrl = registry.getComponents<Engine::ECS::Components::_2D::Control>()[entity];
-    auto &vel = registry.getComponents<Engine::ECS::Components::_2D::Movable>()[entity];
-    auto &pos = registry.getComponents<Engine::ECS::Components::_2D::Transform>()[entity];
-    auto &netEvent = registry.getComponents<Engine::ECS::Components::Common::NetworkEvent>()[entity];
+    auto &registry = _scenes[player->getSceneName()];
+    auto &ctrl = registry.getComponents<Engine::ECS::Components::_3D::Control>()[entity];
+    auto &vel = registry.getComponents<Engine::ECS::Components::_3D::Movable>()[entity];
+    auto &pos = registry.getComponents<Engine::ECS::Components::_3D::Transform>()[entity];
 
     if (!ctrl.has_value() || !vel.has_value() || !pos.has_value())
         return;
