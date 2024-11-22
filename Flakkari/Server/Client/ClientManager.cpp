@@ -75,11 +75,10 @@ void ClientManager::checkInactiveClients()
         {
             FLAKKARI_LOG_LOG("Client " + it->first + " disconnected");
             it = _clients.erase(it);
+            continue;
         }
-        else
-        {
+
             ++it;
-        }
     }
 }
 

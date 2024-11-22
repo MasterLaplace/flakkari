@@ -403,38 +403,26 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
     auto p_Template = (*_config)["playerTemplate"];
     auto player_info = ResourceManager::GetInstance().getTemplateById(_name, sceneGame, p_Template);
 
-    loadComponents(registry, player_info.value_or(nullptr), newEntity);
+    Engine::ECS::Factory::RegistryEntityByTemplate(registry, newEntity, player_info.value());
     ResourceManager::UnlockInstance();
 
-    registry.registerComponent<Engine::ECS::Components::Common::NetworkIp>();
-    registry.add_component<Engine::ECS::Components::Common::NetworkIp>(
-        newEntity, Engine::ECS::Components::Common::NetworkIp(std::string(*address)));
-
-    registry.registerComponent<Engine::ECS::Components::Common::Template>();
-    registry.add_component<Engine::ECS::Components::Common::Template>(
-        newEntity, Engine::ECS::Components::Common::Template(std::string(p_Template)));
 
     player->setEntity(newEntity);
     _players.push_back(player);
     FLAKKARI_LOG_INFO("client \"" + std::string(*address) + "\" added to game \"" + _name + "\"");
 
-    // this->sendAllEntities(sceneGame, player);    // send all entities to the new player
-
     Protocol::Packet<Protocol::CommandId> packet;
-    packet.header._commandId = Protocol::CommandId::REP_CONNECT;
     packet.header._apiVersion = player->getApiVersion();
+    packet.header._commandId = Protocol::CommandId::REP_CONNECT;
     packet << newEntity;
-    packet.injectString(sceneGame);
-    packet.injectString(player->getName().value_or(""));
     packet.injectString(p_Template);
-    ClientManager::GetInstance().sendPacketToClient(address, packet.serialize());
-    ClientManager::UnlockInstance();
+
+    player->addPacketToSendQueue(packet);
 
     Protocol::Packet<Protocol::CommandId> packet2;
-    packet2.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;
     packet2.header._apiVersion = packet.header._apiVersion;
+    packet2.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;
     packet2 << newEntity;
-    packet2.injectString(sceneGame);
     packet2.injectString(p_Template);
 
     sendOnSameSceneExcept(sceneGame, packet2, player);
@@ -456,10 +444,10 @@ bool Game::removePlayer(std::shared_ptr<Client> player)
     packet.header._commandId = Protocol::CommandId::REQ_ENTITY_DESTROY;
     packet << entity;
 
-    sendOnSameScene(sceneGame, packet);
-
-    registry.kill_entity(entity);
     _players.erase(it);
+    registry.kill_entity(entity);
+
+    sendOnSameScene(sceneGame, packet);
     FLAKKARI_LOG_INFO("client \"" + std::string(*player->getAddress()) + "\" removed from game \"" + _name + "\"");
     return true;
 }
