@@ -108,6 +108,15 @@ public:
     void removeClientFromGame(const std::string &gameName, const std::shared_ptr<Client> &client);
 
     /**
+     * @brief Get if a player is waiting in the waiting queue of a game
+     *
+     * @param gameName Game to check
+     * @return true No player is waiting
+     * @return false A player is waiting
+     */
+    [[nodiscard]] bool isClientWaiting(const std::string &gameName);
+
+    /**
      * @brief Get the index of a client in the waiting queue
      *
      * @param gameName Game to get the index from
