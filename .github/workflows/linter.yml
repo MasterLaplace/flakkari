@@ -5,6 +5,7 @@ on:
     branches-ignore:
      - 'ga-ignore-**'
      - 'gh-pages'
+    branches: [master, main]
 
 permissions:
   contents: write
