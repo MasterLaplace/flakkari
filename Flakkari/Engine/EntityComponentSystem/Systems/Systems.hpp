@@ -16,10 +16,7 @@
 #ifndef FLAKKARI_SYSTEMS_HPP_
 #define FLAKKARI_SYSTEMS_HPP_
 
-#include "../Components/Components2D.hpp"
-#include "../Components/Components3D.hpp"
-#include "../Components/ComponentsCommon.hpp"
-#include "../Registry.hpp"
+#include "../Factory.hpp"
 
 #include <chrono>
 #include <cmath>
@@ -53,15 +50,39 @@ void apply_movable(Registry &r, float deltaTime);
  * @brief Spawns a random entity within a skybox.
  *
  * @param r  The registry containing the entities to update.
+ * @param entities  The updated entities.
  */
-void spawn_random_within_skybox(Registry &r);
+void spawn_random_within_skybox(Registry &r, std::vector<Entity> &entities);
+
+/**
+ * @brief Spawns an enemy entity.
+ *
+ * @param r  The registry containing the entities to update.
+ * @param templateName  The name of the template to use for the enemy entity.
+ * @param entity  The entity to spawn.
+ * @return true if the enemy was spawned, false otherwise.
+ */
+bool spawn_enemy(Registry &r, std::string &templateName, Entity &entity);
 
 /**
  * @brief Handles collisions between entities.
  *
  * @param r  The registry containing the entities to update.
+ * @param entities  The updated entities map.
+ *
+ * @details This function will handle collisions between entities.
+ *          It will check if the entities are out of the skybox and resolve the collision.
+ *          It will also check for collisions between entities with a BoxCollider component.
+ *          If a collision is detected, it will resolve the collision.
+ *
+ * @details This function will also handle the death of entities.
+ *          If an entity's health reaches 0, it will be killed.
+ *
+ * @details The entities map will store the updated or killed entity
+ *          - false means the entity is killed
+ *          - true means the entity was updated
  */
-void handle_collisions(Registry &r);
+void handle_collisions(Registry &r, std::unordered_map<Entity, bool> &entities);
 
 } // namespace Flakkari::Engine::ECS::Systems::_3D
 
