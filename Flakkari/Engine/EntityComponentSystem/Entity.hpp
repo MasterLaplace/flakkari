@@ -43,10 +43,28 @@ public:
         return *this;
     }
 
+    bool operator==(const Entity& other) const {
+        return _id == other._id;
+    }
+
+    std::size_t getId() const { return _id; }
+
 private:
     std::size_t _id;
 };
 
 } // namespace Flakkari::Engine::ECS
+
+#include <unordered_map>
+
+namespace std {
+    template <>
+    struct hash<Flakkari::Engine::ECS::Entity>
+    {
+        size_t operator()(const Flakkari::Engine::ECS::Entity& entity) const noexcept {
+            return std::hash<std::size_t>()(entity.getId());
+        }
+    };
+}
 
 #endif /* !FLAKKARI_ENTITY_HPP_ */
