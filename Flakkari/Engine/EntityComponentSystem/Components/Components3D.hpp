@@ -17,8 +17,8 @@
 #define FLAKKARI_COMPONENTS3D_HPP_
 
 #include "3D/BoxCollider.hpp"    // Collider component (center, size)
-#include "3D/Control.hpp"        // Control component (up, down, left, right, shoot)
-#include "3D/Movable.hpp"        // Movable component (velocity, acceleration)
+#include "3D/Control.hpp"        // Control component (move_[up, down, left, right, ...], look_[*] shoot)
+#include "3D/Movable.hpp"        // Movable component (velocity, acceleration, minSpeed, maxSpeed)
 #include "3D/RigidBody.hpp"      // RigidBody component (mass, drag, angularDrag, useGravity, isKinematic)
 #include "3D/SphereCollider.hpp" // Collider component (center, radius)
 #include "3D/Transform.hpp"      // Transform component (position, rotation, scale)
