@@ -30,10 +30,8 @@
 
 namespace Flakkari::Protocol {
 
-inline namespace V_0 {
-
 /**
- * @brief Flakkari Packet v0 (new packet)
+ * @brief Flakkari Packet v1 (new packet)
  *
  * @tparam Id: The type of the command id.
  * @param header: The header of the packet.
@@ -155,9 +153,9 @@ template <typename Id> struct Packet {
      */
     [[nodiscard]] bool deserialize(const Network::Buffer &buffer)
     {
-        if (buffer.size() < sizeof(header))
+        if (buffer.size() < header.size())
             return FLAKKARI_LOG_WARNING("Buffer is too small to deserialize a packet."), false;
-        std::memcpy(&header, buffer.data(), sizeof(header));
+        std::memcpy(&header, buffer.data(), header.size());
         if (header._priority >= Priority::MAX_PRIORITY)
             return FLAKKARI_LOG_WARNING("Priority is too big (" + std::to_string((int) header._priority) + ")"), false;
         if (header._apiVersion >= ApiVersion::MAX_VERSION)
@@ -166,14 +164,12 @@ template <typename Id> struct Packet {
         if (header._commandId >= CommandId::MAX_COMMAND_ID)
             return FLAKKARI_LOG_WARNING("CommandId is too big (" + std::to_string((int) header._commandId) + ")"),
                    false;
-        if (header._contentLength > buffer.size() - sizeof(header))
+        if (header._contentLength > buffer.size() - header.size())
             return false;
-        payload = buffer.extractData(sizeof(header), header._contentLength);
+        payload = buffer.extractData(header.size(), header._contentLength);
         return true;
     }
 };
-
-} /* namespace V_0 */
 
 } // namespace Flakkari::Protocol
 

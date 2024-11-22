@@ -21,11 +21,15 @@ LPL_PACKED_START
 struct Movable {
     Math::Vector3f _velocity;
     Math::Vector3f _acceleration;
+    float _minSpeed;
+    float _maxSpeed;
 
-    Movable() : _velocity(0, 0), _acceleration(0, 0) {}
-    Movable(const Math::Vector3f &velocity, const Math::Vector3f &acceleration)
-        : _velocity(velocity), _acceleration(acceleration){};
-    Movable(const Movable &other) : _velocity(other._velocity), _acceleration(other._acceleration){};
+    Movable() : _velocity(0, 0), _acceleration(0, 0), _minSpeed(0), _maxSpeed(0){};
+    Movable(const Math::Vector3f &velocity, const Math::Vector3f &acceleration, float minSpeed, float maxSpeed)
+        : _velocity(velocity), _acceleration(acceleration), _minSpeed(minSpeed), _maxSpeed(maxSpeed){};
+    Movable(const Movable &other)
+        : _velocity(other._velocity), _acceleration(other._acceleration), _minSpeed(other._minSpeed),
+          _maxSpeed(other._maxSpeed){};
 
     Movable &operator=(const Movable &other)
     {
@@ -33,6 +37,8 @@ struct Movable {
         {
             _velocity = other._velocity;
             _acceleration = other._acceleration;
+            _minSpeed = other._minSpeed;
+            _maxSpeed = other._maxSpeed;
         }
 
         return *this;

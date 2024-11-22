@@ -26,72 +26,109 @@ namespace Flakkari::Protocol {
 
 class PacketFactory {
 public:
-    // /**
-    //  * @brief Add all the commons components of an entity to a packet.
-    //  *
-    //  * @tparam Id  Type of the entity id.
-    //  * @param packet  Packet to add the components to.
-    //  * @param registry  Registry to get the components from.
-    //  * @param entity  Entity to get the components from.
-    //  */
-    // template<typename Id>
-    // static void addCommonsToPacketByEntity (
-    //     Protocol::Packet<Id> &packet, Engine::ECS::Registry &registry, Engine::ECS::Entity entity
-    // ) {
-    //     auto child = registry.getComponents<Engine::ECS::Components::Common::Child>();
-    //     auto childEntity = child[entity];
+    /**
+     * @brief Add all the commons components of an entity to a packet.
+     *
+     * @tparam Id  Type of the entity id.
+     * @param packet  Packet to add the components to.
+     * @param registry  Registry to get the components from.
+     * @param entity  Entity to get the components from.
+     */
+    template <typename Id>
+    static void addCommonsToPacketByEntity(Protocol::Packet<Id> &packet, Engine::ECS::Registry &registry,
+                                           Engine::ECS::Entity entity)
+    {
+        auto child = registry.getComponents<Engine::ECS::Components::Common::Child>()[entity];
 
-    //     if (childEntity.has_value()) {
-    //         packet << Protocol::ComponentId::CHILD;
-    //         packet << childEntity->size();
-    //         packet << childEntity->name;
-    //     }
+        if (child.has_value())
+        {
+            packet << Protocol::ComponentId::CHILD;
+            packet.injectString(child->name);
+        }
 
-    //     // auto evolve = registry.getComponents<Engine::ECS::Components::Common::Evolve>();
-    //     // auto evolveEntity = evolve[entity];
+        auto evolve = registry.getComponents<Engine::ECS::Components::Common::Evolve>()[entity];
 
-    //     // if (evolveEntity.has_value()) {
-    //     //     packet << Protocol::ComponentId::EVOLVE;
-    //     //     packet << evolveEntity->size();
-    //     //     packet << evolveEntity->name;
-    //     // }
+        if (evolve.has_value())
+        {
+            packet << Protocol::ComponentId::EVOLVE;
+            packet.injectString(evolve->name);
+        }
 
-    //     // auto id = registry.getComponents<Engine::ECS::Components::Common::Id>();
-    //     // auto idEntity = id[entity];
+        auto health = registry.getComponents<Engine::ECS::Components::Common::Health>()[entity];
 
-    //     // if (idEntity.has_value()) {
-    //     //     packet << Protocol::ComponentId::ID;
-    //     //     packet << idEntity->size();
-    //     //     packet << idEntity->id;
-    //     // }
+        if (health.has_value())
+        {
+            packet << Protocol::ComponentId::HEALTH;
+            packet << health->currentHealth;
+            packet << health->maxHealth;
+            packet << health->shield;
+            packet << health->maxShield;
+        }
 
-    //     auto parent = registry.getComponents<Engine::ECS::Components::Common::Parent>();
-    //     auto parentEntity = parent[entity];
+        auto id = registry.getComponents<Engine::ECS::Components::Common::Id>()[entity];
 
-    //     if (parentEntity.has_value()) {
-    //         packet << Protocol::ComponentId::PARENT;
-    //         packet << parentEntity->size();
-    //         packet << parentEntity->entity;
-    //     }
+        if (id.has_value())
+        {
+            packet << Protocol::ComponentId::ID;
+            packet << id->id;
+        }
 
-    //     auto tag = registry.getComponents<Engine::ECS::Components::Common::Tag>();
-    //     auto tagEntity = tag[entity];
+        auto level = registry.getComponents<Engine::ECS::Components::Common::Level>()[entity];
 
-    //     if (tagEntity.has_value()) {
-    //         packet << Protocol::ComponentId::TAG;
-    //         packet << tagEntity->size();
-    //         packet << tagEntity->tag;
-    //     }
+        if (level.has_value())
+        {
+            packet << Protocol::ComponentId::LEVEL;
+            packet << level->level;
+            packet.injectString(level->currentWeapon);
+            packet << level->currentExp;
+            packet << level->requiredExp;
+        }
 
-    //     auto name = registry.getComponents<Engine::ECS::Components::Common::Template>();
-    //     auto nameEntity = name[entity];
+        auto parent = registry.getComponents<Engine::ECS::Components::Common::Parent>()[entity];
 
-    //     if (nameEntity.has_value()) {
-    //         packet << Protocol::ComponentId::TEMPLATE;
-    //         packet << nameEntity->size();
-    //         packet << nameEntity->name;
-    //     }
-    // }
+        if (parent.has_value())
+        {
+            packet << Protocol::ComponentId::PARENT;
+            packet << parent->entity;
+        }
+
+        auto tag = registry.getComponents<Engine::ECS::Components::Common::Tag>()[entity];
+
+        if (tag.has_value())
+        {
+            packet << Protocol::ComponentId::TAG;
+            packet.injectString(tag->tag);
+        }
+
+        auto template_ = registry.getComponents<Engine::ECS::Components::Common::Template>()[entity];
+
+        if (template_.has_value())
+        {
+            packet << Protocol::ComponentId::TEMPLATE;
+            packet.injectString(template_->name);
+        }
+
+        auto timer = registry.getComponents<Engine::ECS::Components::Common::Timer>()[entity];
+
+        if (timer.has_value())
+        {
+            packet << Protocol::ComponentId::TIMER;
+            packet << timer->lastTime.time_since_epoch().count();
+            packet << timer->maxTime;
+        }
+
+        auto weapon = registry.getComponents<Engine::ECS::Components::Common::Weapon>()[entity];
+
+        if (weapon.has_value())
+        {
+            packet << Protocol::ComponentId::WEAPON;
+            packet << weapon->minDamage;
+            packet << weapon->maxDamage;
+            packet << weapon->chargeMaxTime;
+            packet << weapon->fireRate;
+            packet << weapon->level;
+        }
+    }
 
     /**
      * @brief Add all the 2D components of an entity to a packet.
@@ -159,89 +196,92 @@ public:
             packet << rigidbody->_gravityScale;
             packet << rigidbody->_isKinematic;
         }
+    }
 
-        auto health = registry.getComponents<Engine::ECS::Components::Common::Health>()[entity];
+    /**
+     * @brief Add all the 3D components of an entity to a packet.
+     *
+     * @tparam Id  Type of the entity id.
+     * @param packet  Packet to add the components to.
+     * @param registry  Registry to get the components from.
+     * @param entity  Entity to get the components from.
+     */
+    template <typename Id>
+    static void add3dToPacketByEntity(Packet<Id> &packet, Engine::ECS::Registry &registry, Engine::ECS::Entity entity)
+    {
+        auto transform = registry.getComponents<Engine::ECS::Components::_3D::Transform>()[entity];
 
-        if (health.has_value())
+        if (transform.has_value())
         {
-            packet << ComponentId::HEALTH;
-            packet << health->currentHealth;
-            packet << health->maxHealth;
-            packet << health->shield;
-            packet << health->maxShield;
+            packet << ComponentId::TRANSFORM_3D;
+            packet << transform->_position.vec.x;
+            packet << transform->_position.vec.y;
+            packet << transform->_position.vec.z;
+            packet << transform->_rotation.vec.x;
+            packet << transform->_rotation.vec.y;
+            packet << transform->_rotation.vec.z;
+            packet << transform->_rotation.vec.w;
+            packet << transform->_scale.vec.x;
+            packet << transform->_scale.vec.y;
+            packet << transform->_scale.vec.z;
         }
 
-        auto weapon = registry.getComponents<Engine::ECS::Components::Common::Weapon>()[entity];
+        auto movable = registry.getComponents<Engine::ECS::Components::_3D::Movable>()[entity];
 
-        if (weapon.has_value())
+        if (movable.has_value())
         {
-            packet << ComponentId::WEAPON;
-            packet << weapon->damage;
-            packet << weapon->fireRate;
-            packet << weapon->level;
+            packet << ComponentId::MOVABLE_3D;
+            packet << movable->_velocity.vec.x;
+            packet << movable->_velocity.vec.y;
+            packet << movable->_velocity.vec.z;
+            packet << movable->_acceleration.vec.x;
+            packet << movable->_acceleration.vec.y;
+            packet << movable->_acceleration.vec.z;
+            packet << movable->_minSpeed;
+            packet << movable->_maxSpeed;
         }
 
-        auto level = registry.getComponents<Engine::ECS::Components::Common::Level>()[entity];
+        auto control = registry.getComponents<Engine::ECS::Components::_3D::Control>()[entity];
 
-        if (level.has_value())
+        if (control.has_value())
         {
-            packet << ComponentId::LEVEL;
-            packet << level->level;
-            packet.injectString(level->currentWeapon);
-            packet << level->currentExp;
-            packet << level->requiredExp;
+            packet << ComponentId::CONTROL_3D;
+            packet << control.value().toSerialized();
         }
 
-        auto spawned = registry.getComponents<Engine::ECS::Components::Common::Spawned>()[entity];
+        auto boxCollider = registry.getComponents<Engine::ECS::Components::_3D::BoxCollider>()[entity];
 
-        if (spawned.has_value())
+        if (boxCollider.has_value())
         {
-            packet << ComponentId::SPAWNED;
-            packet << spawned->has_spawned;
+            packet << ComponentId::BOXCOLLIDER;
+            packet << boxCollider->_size.vec.x;
+            packet << boxCollider->_size.vec.y;
+            packet << boxCollider->_size.vec.z;
+            packet << boxCollider->_center.vec.x;
+            packet << boxCollider->_center.vec.y;
+            packet << boxCollider->_center.vec.z;
         }
 
-        auto networkEvent = registry.getComponents<Engine::ECS::Components::Common::NetworkEvent>()[entity];
+        auto sphereCollider = registry.getComponents<Engine::ECS::Components::_3D::SphereCollider>()[entity];
 
-        if (networkEvent.has_value())
+        if (sphereCollider.has_value())
         {
-            packet << ComponentId::NETWORK_EVENT;
-            packet << networkEvent->events.size();
-            for (auto &event : networkEvent->events)
-            {
-                packet << event;
-            }
+            packet << ComponentId::SPHERECOLLIDER;
+            packet << sphereCollider->_center.vec.x;
+            packet << sphereCollider->_center.vec.y;
+            packet << sphereCollider->_center.vec.z;
+            packet << sphereCollider->_radius;
         }
 
-        auto templateName = registry.getComponents<Engine::ECS::Components::Common::Template>()[entity];
+        auto rigidbody = registry.getComponents<Engine::ECS::Components::_3D::RigidBody>()[entity];
 
-        if (templateName.has_value())
+        if (rigidbody.has_value())
         {
-            packet << ComponentId::TEMPLATE;
-            packet.injectString(templateName->name);
-        }
-
-        auto parent = registry.getComponents<Engine::ECS::Components::Common::Parent>()[entity];
-
-        if (parent.has_value())
-        {
-            packet << ComponentId::PARENT;
-            packet << parent->entity;
-        }
-
-        auto child = registry.getComponents<Engine::ECS::Components::Common::Child>()[entity];
-
-        if (child.has_value())
-        {
-            packet << ComponentId::CHILD;
-            packet.injectString(child->name);
-        }
-
-        auto tag = registry.getComponents<Engine::ECS::Components::Common::Tag>()[entity];
-
-        if (tag.has_value())
-        {
-            packet << ComponentId::TAG;
-            packet.injectString(tag->tag);
+            packet << ComponentId::RIGIDBODY_3D;
+            packet << rigidbody->_mass;
+            packet << rigidbody->_drag;
+            packet << rigidbody->_angularDrag;
+            packet << (byte) rigidbody->_useGravity;
         }
     }
 
@@ -259,11 +299,15 @@ public:
     {
         /*_ Common Components _*/
 
-        // addCommonsToPacketByEntity<Id>(packet, registry, entity);
+        addCommonsToPacketByEntity<Id>(packet, registry, entity);
 
         /*_ 2D Components _*/
 
         add2dToPacketByEntity<Id>(packet, registry, entity);
+
+        /*_ 3D Components _*/
+
+        add3dToPacketByEntity<Id>(packet, registry, entity);
     }
 
     struct UpdateMovement {

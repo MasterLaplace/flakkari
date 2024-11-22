@@ -335,6 +335,7 @@ using Vector4f = Vector<float>;
 using Vector4d = Vector<double>;
 using Vector4i = Vector<int>;
 using Vector4u = Vector<unsigned int>;
+using Quaternion = Vector4f;
 using Color = Vector4f;
 
 template <typename Type> std::ostream &operator<<(std::ostream &os, const Vector<Type> &vector);

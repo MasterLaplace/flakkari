@@ -21,10 +21,10 @@ LPL_PACKED_START
 struct Transform {
     Math::Vector3f _position;
     Math::Vector3f _scale;
-    Math::Vector3f _rotation;
+    Math::Quaternion _rotation;
 
     Transform() : _position(0, 0, 0), _scale(1, 1, 1), _rotation(0, 0, 0){};
-    Transform(const Math::Vector2f &position, const Math::Vector2f &scale, const Math::Vector3f &rotation)
+    Transform(const Math::Vector3f &position, const Math::Vector3f &scale, const Math::Quaternion &rotation)
         : _position(position), _scale(scale), _rotation(rotation){};
     Transform(const Transform &other) : _position(other._position), _scale(other._scale), _rotation(other._rotation){};
 

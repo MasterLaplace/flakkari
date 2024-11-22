@@ -19,6 +19,7 @@ set(SOURCES
 
     Flakkari/Engine/EntityComponentSystem/Systems/Systems.cpp
     Flakkari/Engine/EntityComponentSystem/Registry.cpp
+    Flakkari/Engine/EntityComponentSystem/Factory.cpp
 
     Flakkari/Server/UDPServer.cpp
     Flakkari/Server/Client/Client.cpp
@@ -58,7 +59,7 @@ set(HEADERS
     Flakkari/Engine/EntityComponentSystem/Entity.hpp
     Flakkari/Engine/EntityComponentSystem/SparseArrays.hpp
     Flakkari/Engine/EntityComponentSystem/Registry.hpp
-    Flakkari/Engine/EntityComponentSystem/EntityFactory.hpp
+    Flakkari/Engine/EntityComponentSystem/Factory.hpp
 
     Flakkari/Server/UDPServer.hpp
 
@@ -269,10 +270,6 @@ add_library(flakkari_network SHARED ${SOURCES_LIB_NETWORK} ${HEADER_LIB_NETWORK}
 
 # Include Directories:
 target_include_directories(flakkari_network PRIVATE ${CMAKE_SOURCE_DIR}/Flakkari)
-target_include_directories(flakkari_network PRIVATE ${singleton_SOURCE_DIR})
-
-# Link Libraries:
-target_link_libraries(flakkari_network PRIVATE nlohmann_json::nlohmann_json)
 
 # Install dynamic library:
 install(TARGETS flakkari_network DESTINATION lib)

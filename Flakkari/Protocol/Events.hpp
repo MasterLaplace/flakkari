@@ -21,14 +21,18 @@
 
 namespace Flakkari::Protocol {
 
-inline namespace V_0 {
+namespace V_0 {
 
 enum class EventId : uint8_t {
-    MOVE_LEFT = 10,
-    MOVE_RIGHT = 11,
-    MOVE_UP = 12,
-    MOVE_DOWN = 13,
-    SHOOT = 14,
+    MOVE_LEFT = 0,
+    MOVE_RIGHT = 1,
+    MOVE_UP = 2,
+    MOVE_DOWN = 3,
+    SHOOT = 4,
+    MAX_EVENT
+};
+
+enum class EventAxisId : uint8_t {
     MAX_EVENT
 };
 
@@ -42,13 +46,61 @@ enum class EventState : uint8_t {
 LPL_PACKED_START
 
 struct Event {
-    EventId id;
-    EventState state;
+    V_0::EventId id;
+    V_0::EventState state;
+};
+
+struct EventAxis {
+    V_0::EventAxisId id;
 };
 
 LPL_PACKED_END
 
 } /* namespace V_0 */
+
+inline namespace V_1 {
+
+enum class EventId : uint8_t {
+    MOVE_LEFT = 0,
+    MOVE_RIGHT = 1,
+    MOVE_UP = 2,
+    MOVE_DOWN = 3,
+    MOVE_FRONT = 4,
+    MOVE_BACK = 5,
+    SHOOT = 10,
+    MAX_EVENT
+};
+
+enum class EventAxisId : uint8_t {
+    LOOK_LEFT = 1,
+    LOOK_RIGHT = 2,
+    LOOK_UP = 3,
+    LOOK_DOWN = 4,
+    SHOOT = 5,
+    MAX_EVENT
+};
+
+enum class EventState : uint8_t {
+    PRESSED = 0,
+    RELEASED = 1,
+    MAX_STATE
+};
+
+LPL_PACKED_START
+
+struct Event {
+    V_1::EventId id;
+    V_1::EventState state;
+};
+
+struct EventAxis {
+    V_1::EventAxisId id;
+    float value;
+};
+
+LPL_PACKED_END
+
+} /* namespace V_1 */
 
 } // namespace Flakkari::Protocol
 

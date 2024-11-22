@@ -30,6 +30,7 @@ LPL_PACKED_START
  *  _look_left:   look left (give access to the look left)
  *  _look_right:  look right (give access to the look right)
  *  _shoot:       shoot (give access to the shoot)
+ *  _padding:     padding to align the size of the struct
  */
 struct Control {
     bool _move_up = false;
@@ -43,6 +44,7 @@ struct Control {
     bool _look_left = false;
     bool _look_right = false;
     bool _shoot = false;
+    uint8_t _padding : 5 = 0;
 
     Control() = default;
     Control(bool m_up, bool m_down, bool m_left, bool m_right, bool m_front, bool m_back, bool l_up, bool l_down,
@@ -73,6 +75,14 @@ struct Control {
         }
 
         return *this;
+    }
+
+    unsigned short toSerialized()
+    {
+        return static_cast<unsigned short>((_move_up << 0) | (_move_down << 1) | (_move_left << 2) |
+                                           (_move_right << 3) | (_move_front << 4) | (_move_back << 5) |
+                                           (_look_up << 6) | (_look_down << 7) | (_look_left << 8) |
+                                           (_look_right << 9) | (_shoot << 10));
     }
 
     std::size_t size() const { return sizeof(*this); }
