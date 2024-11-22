@@ -24,12 +24,12 @@ struct Movable {
     float _minSpeed;
     float _maxSpeed;
 
-    Movable() : _velocity(0, 0), _acceleration(0, 0), _minSpeed(0), _maxSpeed(0) {};
+    Movable() : _velocity(0, 0), _acceleration(0, 0), _minSpeed(0), _maxSpeed(0){};
     Movable(const Math::Vector3f &velocity, const Math::Vector3f &acceleration, float minSpeed, float maxSpeed)
-        : _velocity(velocity), _acceleration(acceleration), _minSpeed(minSpeed), _maxSpeed(maxSpeed) {};
+        : _velocity(velocity), _acceleration(acceleration), _minSpeed(minSpeed), _maxSpeed(maxSpeed){};
     Movable(const Movable &other)
         : _velocity(other._velocity), _acceleration(other._acceleration), _minSpeed(other._minSpeed),
-          _maxSpeed(other._maxSpeed) {};
+          _maxSpeed(other._maxSpeed){};
 
     Movable &operator=(const Movable &other)
     {

@@ -43,9 +43,7 @@ public:
         return *this;
     }
 
-    bool operator==(const Entity& other) const {
-        return _id == other._id;
-    }
+    bool operator==(const Entity &other) const { return _id == other._id; }
 
     std::size_t getId() const { return _id; }
 
@@ -58,13 +56,12 @@ private:
 #include <unordered_map>
 
 namespace std {
-    template <>
-    struct hash<Flakkari::Engine::ECS::Entity>
+template <> struct hash<Flakkari::Engine::ECS::Entity> {
+    size_t operator()(const Flakkari::Engine::ECS::Entity &entity) const noexcept
     {
-        size_t operator()(const Flakkari::Engine::ECS::Entity& entity) const noexcept {
-            return std::hash<std::size_t>()(entity.getId());
-        }
-    };
-}
+        return std::hash<std::size_t>()(entity.getId());
+    }
+};
+} // namespace std
 
 #endif /* !FLAKKARI_ENTITY_HPP_ */

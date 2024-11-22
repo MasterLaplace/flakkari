@@ -95,8 +95,8 @@ void Game::loadSystems(Engine::ECS::Registry &registry, const std::string &scene
                     packet.header._commandId = Protocol::CommandId::REQ_ENTITY_DESTROY;
                     packet << entity.first;
                     this->sendOnSameScene(sceneName, packet);
-            continue;
-        }
+                    continue;
+                }
 
                 Protocol::Packet<Protocol::CommandId> packet;
                 packet.header._commandId = Protocol::CommandId::REQ_ENTITY_UPDATE;
@@ -105,7 +105,7 @@ void Game::loadSystems(Engine::ECS::Registry &registry, const std::string &scene
                 Protocol::PacketFactory::addComponentsToPacketByEntity(packet, r, entity.first);
 
                 this->sendOnSameScene(sceneName, packet);
-        }
+            }
         });
 }
 
@@ -114,10 +114,10 @@ void Game::loadEntityFromTemplate(Engine::ECS::Registry &registry, const nl_enti
 {
     Engine::ECS::Entity newEntity = registry.spawn_entity();
 
-        for (auto &templateInfo : templates.items())
-        {
+    for (auto &templateInfo : templates.items())
+    {
         if (entity.value() != templateInfo.value().begin().key())
-                continue;
+            continue;
         Engine::ECS::Factory::RegistryEntityByTemplate(registry, newEntity, templateInfo.value().begin().value(),
                                                        templates);
     }
@@ -318,13 +318,14 @@ void Game::handleEvents(std::shared_ptr<Client> player, Protocol::Packet<Protoco
         if (handleMoveEvent(event, ctrl.value(), vel.value(), pos.value()))
         {
             FLAKKARI_LOG_DEBUG("event: " + std::to_string(int(event.id)) + " " + std::to_string(int(event.state)));
-        sendUpdatePosition(player, pos.value(), vel.value());
+            sendUpdatePosition(player, pos.value(), vel.value());
             continue;
-    }
+        }
         else if (event.id == Protocol::EventId::SHOOT && ctrl->_shoot)
         {
-        if (event.state == Protocol::EventState::PRESSED)
-            {}
+            if (event.state == Protocol::EventState::PRESSED)
+            {
+            }
             else if (event.state == Protocol::EventState::RELEASED)
                 continue;
         }
@@ -338,7 +339,7 @@ void Game::handleEvents(std::shared_ptr<Client> player, Protocol::Packet<Protoco
         Protocol::EventAxis event = *(Protocol::EventAxis *) (data + i * sizeof(Protocol::EventAxis));
 
         if (event.id == Protocol::EventAxisId::LOOK_RIGHT && ctrl->_look_right)
-    {
+        {
             pos->_rotation.vec.y += event.value * 100 * _deltaTime;
             continue;
         }
@@ -346,9 +347,9 @@ void Game::handleEvents(std::shared_ptr<Client> player, Protocol::Packet<Protoco
         {
             pos->_rotation.vec.y -= event.value * 100 * _deltaTime;
             continue;
-    }
+        }
         else if (event.id == Protocol::EventAxisId::LOOK_UP && ctrl->_look_up)
-    {
+        {
             pos->_rotation.vec.x += event.value * 100 * _deltaTime;
             continue;
         }
@@ -408,7 +409,7 @@ void Game::updateOutcomingPackets(unsigned char maxMessagePerFrame)
 
             buffer += packet.serialize();
             ClientManager::GetInstance().sendPacketToClient(player->getAddress(), buffer);
-                ClientManager::UnlockInstance();
+            ClientManager::UnlockInstance();
         }
     }
 }
@@ -466,7 +467,6 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
 
     Engine::ECS::Factory::RegistryEntityByTemplate(registry, newEntity, player_info.value());
     ResourceManager::UnlockInstance();
-
 
     player->setEntity(newEntity);
     _players.push_back(player);

@@ -78,7 +78,7 @@ void ClientManager::checkInactiveClients()
             continue;
         }
 
-            ++it;
+        ++it;
     }
 }
 

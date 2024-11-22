@@ -10,9 +10,9 @@
 #ifndef Timer_HPP_
 #define Timer_HPP_
 
+#include <chrono>
 #include <cstring>
 #include <string>
-#include <chrono>
 
 #include "config.h.in"
 
