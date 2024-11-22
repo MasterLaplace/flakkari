@@ -6,9 +6,9 @@ digraph "Flakkari::Engine::ECS::Components::_3D::SphereCollider::size"
   rankdir="RL";
   Node1 [label="Flakkari::Engine::ECS\l::Components::_3D::SphereCollider::size",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
   Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="Flakkari::Engine::ECS\l::Systems::_3D::handle\l_collisions",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#a3970ba1e143439b66eb3aa76ea765f6e",tooltip="Handles collisions between entities."];
+  Node2 [label="Flakkari::Engine::ECS\l::Systems::_3D::handle\l_collisions",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#a4d574733d5ff89325e8664dd162a427b",tooltip="Handles collisions between entities."];
   Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="Flakkari::Game::loadSystems",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#a8c1c536899944afc33cd5dbc60bc6d83",tooltip="Add all the systems of the game to the registry."];
+  Node3 [label="Flakkari::Game::loadSystems",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#a58785188e8d0be4a493f1a03724b427f",tooltip="Add all the systems of the game to the registry."];
   Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 [label="Flakkari::Game::loadScene",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#a7a922284fb3aadc37fcac64724508db0",tooltip="Load a scene from the game."];
   Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

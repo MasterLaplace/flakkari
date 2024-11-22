@@ -93,10 +93,7 @@ $(document).ready(function(){initNavTree('d8/d3d/Systems_8hpp.html','../../'); i
 <div class="title">Systems.hpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<h3 class="version">(68  239 2025 /home/runner/work/Flakkari/Flakkari/Flakkari/Engine/EntityComponentSystem/Systems/Systems.hpp)</h3><div class="textblock"><code>#include &quot;<a class="el" href="../../d0/d43/Components2D_8hpp_source.html">../Components/Components2D.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../df/d72/Components3D_8hpp_source.html">../Components/Components3D.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../d1/d37/ComponentsCommon_8hpp_source.html">../Components/ComponentsCommon.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../db/dd1/Registry_8hpp_source.html">../Registry.hpp</a>&quot;</code><br />
+<h3 class="version">(89  410 3039 /home/runner/work/Flakkari/Flakkari/Flakkari/Engine/EntityComponentSystem/Systems/Systems.hpp)</h3><div class="textblock"><code>#include &quot;<a class="el" href="../../d5/d03/Factory_8hpp_source.html">../Factory.hpp</a>&quot;</code><br />
 <code>#include &lt;chrono&gt;</code><br />
 <code>#include &lt;cmath&gt;</code><br />
 <code>#include &lt;cstdlib&gt;</code><br />
@@ -136,12 +133,15 @@ Functions</h2></td></tr>
 <tr class="memitem:a9448286ff070a8d4c6a778deec46cff1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#a9448286ff070a8d4c6a778deec46cff1">Flakkari::Engine::ECS::Systems::_3D::apply_movable</a> (Registry &amp;r, float deltaTime)</td></tr>
 <tr class="memdesc:a9448286ff070a8d4c6a778deec46cff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the position of all entities with a Transform and a Movable component based on their velocity.  <a href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#a9448286ff070a8d4c6a778deec46cff1">More...</a><br /></td></tr>
 <tr class="separator:a9448286ff070a8d4c6a778deec46cff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8aa2d0ae6922afe5be505e4c18cafe94"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#a8aa2d0ae6922afe5be505e4c18cafe94">Flakkari::Engine::ECS::Systems::_3D::spawn_random_within_skybox</a> (Registry &amp;r)</td></tr>
-<tr class="memdesc:a8aa2d0ae6922afe5be505e4c18cafe94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spawns a random entity within a skybox.  <a href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#a8aa2d0ae6922afe5be505e4c18cafe94">More...</a><br /></td></tr>
-<tr class="separator:a8aa2d0ae6922afe5be505e4c18cafe94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3970ba1e143439b66eb3aa76ea765f6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#a3970ba1e143439b66eb3aa76ea765f6e">Flakkari::Engine::ECS::Systems::_3D::handle_collisions</a> (Registry &amp;r)</td></tr>
-<tr class="memdesc:a3970ba1e143439b66eb3aa76ea765f6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles collisions between entities.  <a href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#a3970ba1e143439b66eb3aa76ea765f6e">More...</a><br /></td></tr>
-<tr class="separator:a3970ba1e143439b66eb3aa76ea765f6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4beb66936d9eaf1b8b9d26e5b77fb6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#ac4beb66936d9eaf1b8b9d26e5b77fb6d">Flakkari::Engine::ECS::Systems::_3D::spawn_random_within_skybox</a> (Registry &amp;r, std::vector&lt; Entity &gt; &amp;entities)</td></tr>
+<tr class="memdesc:ac4beb66936d9eaf1b8b9d26e5b77fb6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spawns a random entity within a skybox.  <a href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#ac4beb66936d9eaf1b8b9d26e5b77fb6d">More...</a><br /></td></tr>
+<tr class="separator:ac4beb66936d9eaf1b8b9d26e5b77fb6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a469bd905b212e65cefca8711b241f320"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#a469bd905b212e65cefca8711b241f320">Flakkari::Engine::ECS::Systems::_3D::spawn_enemy</a> (Registry &amp;r, std::string &amp;templateName, Entity &amp;entity)</td></tr>
+<tr class="memdesc:a469bd905b212e65cefca8711b241f320"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spawns an enemy entity.  <a href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#a469bd905b212e65cefca8711b241f320">More...</a><br /></td></tr>
+<tr class="separator:a469bd905b212e65cefca8711b241f320"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d574733d5ff89325e8664dd162a427b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#a4d574733d5ff89325e8664dd162a427b">Flakkari::Engine::ECS::Systems::_3D::handle_collisions</a> (Registry &amp;r, std::unordered_map&lt; Entity, bool &gt; &amp;entities)</td></tr>
+<tr class="memdesc:a4d574733d5ff89325e8664dd162a427b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles collisions between entities.  <a href="../../dd/d08/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__3D.html#a4d574733d5ff89325e8664dd162a427b">More...</a><br /></td></tr>
+<tr class="separator:a4d574733d5ff89325e8664dd162a427b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="Flakkari::Engine::ECS\l::EntityFactory",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d98/classFlakkari_1_1Engine_1_1ECS_1_1EntityFactory.html",tooltip=" "];
+  Node0 [label="Flakkari::Engine::ECS\l::Entity",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html",tooltip=" "];
 }

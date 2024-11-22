@@ -5,6 +5,7 @@ var structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Control =
     [ "Control", "d9/d0e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Control.html#aa76baaf94eb4898b358569121e93e144", null ],
     [ "operator=", "d9/d0e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Control.html#a8ce23e4cc78bb0b760f849807b58b55f", null ],
     [ "size", "d9/d0e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Control.html#afb152873e3a3197852013cdd1a49d78f", null ],
+    [ "toSerialized", "d9/d0e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Control.html#ac3a5195a0f7442607f49d7fdeaa6c021", null ],
     [ "_look_down", "d9/d0e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Control.html#a0802f23ad0706fc88f776805584d6c07", null ],
     [ "_look_left", "d9/d0e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Control.html#a3e104e95be4167f3a40135ff9d6e62a9", null ],
     [ "_look_right", "d9/d0e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Control.html#ada3e0ff169a984781c267aa53853f279", null ],
@@ -15,5 +16,6 @@ var structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Control =
     [ "_move_left", "d9/d0e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Control.html#a7e3119279486eacf54238421583c98e0", null ],
     [ "_move_right", "d9/d0e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Control.html#a5a8a9e8240f0d72c88bb109f55186731", null ],
     [ "_move_up", "d9/d0e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Control.html#acaf11b0b98a2edbd31a80738daadbf4d", null ],
+    [ "_padding", "d9/d0e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Control.html#a07d9fe388a9b1f70f64a617712165f4c", null ],
     [ "_shoot", "d9/d0e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Control.html#a233f3584366bd4194ba8cdf4e6ae81dc", null ]
 ];

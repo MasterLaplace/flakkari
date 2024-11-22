@@ -105,8 +105,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a44d3501c96988369a9a4211b330d6958"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b56b4a7cadd28bfecd7d29fc443403f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html#a2b56b4a7cadd28bfecd7d29fc443403f">Weapon</a> (const <a class="el" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html">Weapon</a> &amp;other)=default</td></tr>
 <tr class="separator:a2b56b4a7cadd28bfecd7d29fc443403f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9549c17fc8dfe5776a8c439d7b5c66d6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html#a9549c17fc8dfe5776a8c439d7b5c66d6">Weapon</a> (std::size_t dmg, float rate, std::size_t lvl)</td></tr>
-<tr class="separator:a9549c17fc8dfe5776a8c439d7b5c66d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a642159446d7dc1c3fb349b73abd3e6a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html#a642159446d7dc1c3fb349b73abd3e6a8">Weapon</a> (std::size_t min_dmg, std::size_t max_dmg, float chargeMax, float rate, std::size_t lvl)</td></tr>
+<tr class="separator:a642159446d7dc1c3fb349b73abd3e6a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7a65c8da45e86fe51f768c0835fa800"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html">Weapon</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html#ad7a65c8da45e86fe51f768c0835fa800">operator=</a> (const <a class="el" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html">Weapon</a> &amp;other)</td></tr>
 <tr class="separator:ad7a65c8da45e86fe51f768c0835fa800"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5233ae2ac45471b7a73eb6cd1f41f27"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html#ab5233ae2ac45471b7a73eb6cd1f41f27">size</a> () const</td></tr>
@@ -114,8 +114,18 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a7fa75d3efdc63bf4715fc4eca3b3efd4"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html#a7fa75d3efdc63bf4715fc4eca3b3efd4">damage</a></td></tr>
-<tr class="separator:a7fa75d3efdc63bf4715fc4eca3b3efd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad75aca1b77749b0851ecdf173a4b2dea"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html#ad75aca1b77749b0851ecdf173a4b2dea">minDamage</a></td></tr>
+<tr class="separator:ad75aca1b77749b0851ecdf173a4b2dea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a9fc54155ed4007aadbd0cd75b3b0ee"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html#a7a9fc54155ed4007aadbd0cd75b3b0ee">maxDamage</a></td></tr>
+<tr class="separator:a7a9fc54155ed4007aadbd0cd75b3b0ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb3e751de6493730e6037b3a5efe42f2"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html#abb3e751de6493730e6037b3a5efe42f2">chargeTime</a> = 0</td></tr>
+<tr class="separator:abb3e751de6493730e6037b3a5efe42f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a825c3e5578a3e1a3404e25643065bba6"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html#a825c3e5578a3e1a3404e25643065bba6">chargeMaxTime</a></td></tr>
+<tr class="separator:a825c3e5578a3e1a3404e25643065bba6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a2dc933c5dff4e24ed3f7e371f2f522"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html#a0a2dc933c5dff4e24ed3f7e371f2f522">isCharging</a> = false</td></tr>
+<tr class="separator:a0a2dc933c5dff4e24ed3f7e371f2f522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cc4db553350acc29f16fb33dddb5f78"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html#a0cc4db553350acc29f16fb33dddb5f78">timeSinceLastShot</a> = 0</td></tr>
+<tr class="separator:a0cc4db553350acc29f16fb33dddb5f78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3986dc45a28637c6c8f964dfeaa163a0"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html#a3986dc45a28637c6c8f964dfeaa163a0">fireRate</a></td></tr>
 <tr class="separator:a3986dc45a28637c6c8f964dfeaa163a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b4658afad1c27c0df83b594af34f120"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html#a4b4658afad1c27c0df83b594af34f120">level</a></td></tr>
@@ -126,7 +136,7 @@ Data Fields</h2></td></tr>
 <p>The <a class="el" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html" title="Weapon is a structure that defines the characteristics of a weapon.">Weapon</a> structure is used to define the characteristics of a weapon. It is used by the WeaponComponent to handle the firing and reloading logic.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">damage</td><td>The amount of damage dealt by the weapon. fireRate: The rate of fire, shots per second. currentAmmo: Current ammunition in the magazine. reloadTime: Time it takes to reload the weapon in seconds. timeSinceLastShot: Time elapsed since the last shot was fired. isReloading: Is the weapon currently reloading. maxAmmo: Maximum ammunition the weapon can hold. </td></tr>
+    <tr><td class="paramname">minDamage</td><td>The amount of damage dealt by the weapon. maxDamage: The maximum amount of damage dealt by the weapon. chargeTime: The time it takes to shoot a charged bullet. chargeMaxTime: The maximum time it takes to charge a bullet at max power. isCharging: A flag that indicates if the weapon is charging. fireRate: The rate of fire, shots per second. timeSinceLastShot: Time elapsed since the last shot was fired. </td></tr>
   </table>
   </dd>
 </dl>
@@ -182,8 +192,8 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a id="a9549c17fc8dfe5776a8c439d7b5c66d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9549c17fc8dfe5776a8c439d7b5c66d6">&#9670;&nbsp;</a></span>Weapon() <span class="overload">[3/3]</span></h2>
+<a id="a642159446d7dc1c3fb349b73abd3e6a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a642159446d7dc1c3fb349b73abd3e6a8">&#9670;&nbsp;</a></span>Weapon() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -195,7 +205,19 @@ Data Fields</h2></td></tr>
           <td class="memname">Flakkari::Engine::ECS::Components::Common::Weapon::Weapon </td>
           <td>(</td>
           <td class="paramtype">std::size_t&#160;</td>
-          <td class="paramname"><em>dmg</em>, </td>
+          <td class="paramname"><em>min_dmg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>max_dmg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>chargeMax</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -277,14 +299,28 @@ Data Fields</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="a7fa75d3efdc63bf4715fc4eca3b3efd4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7fa75d3efdc63bf4715fc4eca3b3efd4">&#9670;&nbsp;</a></span>damage</h2>
+<a id="a825c3e5578a3e1a3404e25643065bba6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a825c3e5578a3e1a3404e25643065bba6">&#9670;&nbsp;</a></span>chargeMaxTime</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::size_t Flakkari::Engine::ECS::Components::Common::Weapon::damage</td>
+          <td class="memname">float Flakkari::Engine::ECS::Components::Common::Weapon::chargeMaxTime</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abb3e751de6493730e6037b3a5efe42f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb3e751de6493730e6037b3a5efe42f2">&#9670;&nbsp;</a></span>chargeTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Flakkari::Engine::ECS::Components::Common::Weapon::chargeTime = 0</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -305,6 +341,20 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
+<a id="a0a2dc933c5dff4e24ed3f7e371f2f522"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a2dc933c5dff4e24ed3f7e371f2f522">&#9670;&nbsp;</a></span>isCharging</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Flakkari::Engine::ECS::Components::Common::Weapon::isCharging = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a4b4658afad1c27c0df83b594af34f120"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4b4658afad1c27c0df83b594af34f120">&#9670;&nbsp;</a></span>level</h2>
 
@@ -319,8 +369,50 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
+<a id="a7a9fc54155ed4007aadbd0cd75b3b0ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a9fc54155ed4007aadbd0cd75b3b0ee">&#9670;&nbsp;</a></span>maxDamage</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t Flakkari::Engine::ECS::Components::Common::Weapon::maxDamage</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad75aca1b77749b0851ecdf173a4b2dea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad75aca1b77749b0851ecdf173a4b2dea">&#9670;&nbsp;</a></span>minDamage</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t Flakkari::Engine::ECS::Components::Common::Weapon::minDamage</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0cc4db553350acc29f16fb33dddb5f78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cc4db553350acc29f16fb33dddb5f78">&#9670;&nbsp;</a></span>timeSinceLastShot</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Flakkari::Engine::ECS::Components::Common::Weapon::timeSinceLastShot = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>Flakkari/Engine/EntityComponentSystem/Components/Common/<a class="el" href="../../dd/d7d/Weapon_8hpp_source.html">Weapon.hpp (64  211 1605 /home/runner/work/Flakkari/Flakkari/Flakkari/Engine/EntityComponentSystem/Components/Common/Weapon.hpp)</a></li>
+<li>Flakkari/Engine/EntityComponentSystem/Components/Common/<a class="el" href="../../dd/d7d/Weapon_8hpp_source.html">Weapon.hpp (74  259 2084 /home/runner/work/Flakkari/Flakkari/Flakkari/Engine/EntityComponentSystem/Components/Common/Weapon.hpp)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -11,5 +11,6 @@ var namespaceFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common =
     [ "Spawned", "d2/dfd/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Spawned.html", "d2/dfd/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Spawned" ],
     [ "Tag", "d6/d40/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Tag.html", "d6/d40/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Tag" ],
     [ "Template", "d9/dcd/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Template.html", "d9/dcd/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Template" ],
+    [ "Timer", "d2/d13/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Timer.html", "d2/d13/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Timer" ],
     [ "Weapon", "d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html", "d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon" ]
 ];

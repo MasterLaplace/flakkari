@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Flakkari: Flakkari/Engine/EntityComponentSystem/Entity.hpp (52  129 1128 /home/runner/work/Flakkari/Flakkari/Flakkari/Engine/EntityComponentSystem/Entity.hpp) Source File</title>
+<title>Flakkari: Flakkari/Engine/EntityComponentSystem/Entity.hpp (67  172 1525 /home/runner/work/Flakkari/Flakkari/Flakkari/Engine/EntityComponentSystem/Entity.hpp) Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -135,21 +135,41 @@ $(document).ready(function(){initNavTree('de/da6/Entity_8hpp_source.html','../..
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    }</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    std::size_t _id;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;};</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html#a9441b3e54d1dc0977375880cffff381b">   46</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html#a9441b3e54d1dc0977375880cffff381b">operator==</a>(<span class="keyword">const</span> <a class="code" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">Entity</a> &amp;other)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _id == other._id; }</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html#a0ec9379b2bad60e754715b08ba586245">   48</a></span>&#160;    std::size_t <a class="code" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html#a0ec9379b2bad60e754715b08ba586245">getId</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _id; }</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;} <span class="comment">// namespace Flakkari::Engine::ECS</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !FLAKKARI_ENTITY_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    std::size_t _id;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;};</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;} <span class="comment">// namespace Flakkari::Engine::ECS</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="../../d8/dcc/namespacestd.html">   58</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="../../d8/dcc/namespacestd.html">std</a> {</div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="../../de/d41/structstd_1_1hash_3_01Flakkari_1_1Engine_1_1ECS_1_1Entity_01_4.html">   59</a></span>&#160;<span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>hash&lt;<a class="code" href="../../d2/da2/namespaceFlakkari.html">Flakkari</a>::Engine::ECS::Entity&gt; {</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="../../de/d41/structstd_1_1hash_3_01Flakkari_1_1Engine_1_1ECS_1_1Entity_01_4.html#a4c86bde01b731ce02adeef0a2fe1640a">   60</a></span>&#160;    <span class="keywordtype">size_t</span> <a class="code" href="../../de/d41/structstd_1_1hash_3_01Flakkari_1_1Engine_1_1ECS_1_1Entity_01_4.html#a4c86bde01b731ce02adeef0a2fe1640a">operator()</a>(<span class="keyword">const</span> <a class="code" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">Flakkari::Engine::ECS::Entity</a> &amp;entity) <span class="keyword">const</span> noexcept</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordflow">return</span> std::hash&lt;std::size_t&gt;()(entity.getId());</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    }</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;};</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;} <span class="comment">// namespace std</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !FLAKKARI_ENTITY_HPP_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="aclassFlakkari_1_1Engine_1_1ECS_1_1Entity_html"><div class="ttname"><a href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">Flakkari::Engine::ECS::Entity</a></div><div class="ttdef"><b>Definition:</b> Entity.hpp:25</div></div>
+<div class="ttc" id="aclassFlakkari_1_1Engine_1_1ECS_1_1Entity_html_a0ec9379b2bad60e754715b08ba586245"><div class="ttname"><a href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html#a0ec9379b2bad60e754715b08ba586245">Flakkari::Engine::ECS::Entity::getId</a></div><div class="ttdeci">std::size_t getId() const</div><div class="ttdef"><b>Definition:</b> Entity.hpp:48</div></div>
 <div class="ttc" id="aclassFlakkari_1_1Engine_1_1ECS_1_1Entity_html_a40ce91460b9830dd2d839ffea2d76427"><div class="ttname"><a href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html#a40ce91460b9830dd2d839ffea2d76427">Flakkari::Engine::ECS::Entity::operator++</a></div><div class="ttdeci">std::size_t operator++()</div><div class="ttdef"><b>Definition:</b> Entity.hpp:34</div></div>
+<div class="ttc" id="aclassFlakkari_1_1Engine_1_1ECS_1_1Entity_html_a9441b3e54d1dc0977375880cffff381b"><div class="ttname"><a href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html#a9441b3e54d1dc0977375880cffff381b">Flakkari::Engine::ECS::Entity::operator==</a></div><div class="ttdeci">bool operator==(const Entity &amp;other) const</div><div class="ttdef"><b>Definition:</b> Entity.hpp:46</div></div>
 <div class="ttc" id="aclassFlakkari_1_1Engine_1_1ECS_1_1Entity_html_a95a09fb2fa0189e55210ed6a46e1c01c"><div class="ttname"><a href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html#a95a09fb2fa0189e55210ed6a46e1c01c">Flakkari::Engine::ECS::Entity::Entity</a></div><div class="ttdeci">Entity(std::size_t id)</div><div class="ttdef"><b>Definition:</b> Entity.hpp:29</div></div>
 <div class="ttc" id="aclassFlakkari_1_1Engine_1_1ECS_1_1Entity_html_adb0d29b4e90f9741f4baa8d39d78e1b2"><div class="ttname"><a href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html#adb0d29b4e90f9741f4baa8d39d78e1b2">Flakkari::Engine::ECS::Entity::operator=</a></div><div class="ttdeci">Entity &amp; operator=(int id)</div><div class="ttdef"><b>Definition:</b> Entity.hpp:40</div></div>
 <div class="ttc" id="aclassFlakkari_1_1Engine_1_1ECS_1_1Entity_html_ae45bc34e6eeaefedc1b6275a61c636de"><div class="ttname"><a href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html#ae45bc34e6eeaefedc1b6275a61c636de">Flakkari::Engine::ECS::Entity::Entity</a></div><div class="ttdeci">Entity()</div><div class="ttdef"><b>Definition:</b> Entity.hpp:30</div></div>
 <div class="ttc" id="aclassFlakkari_1_1Engine_1_1ECS_1_1Entity_html_aedab6c04423c42a6d96400423d69c657"><div class="ttname"><a href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html#aedab6c04423c42a6d96400423d69c657">Flakkari::Engine::ECS::Entity::operator=</a></div><div class="ttdeci">Entity &amp; operator=(std::size_t id)</div><div class="ttdef"><b>Definition:</b> Entity.hpp:35</div></div>
 <div class="ttc" id="aclassFlakkari_1_1Engine_1_1ECS_1_1Registry_html"><div class="ttname"><a href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html">Flakkari::Engine::ECS::Registry</a></div><div class="ttdoc">A class that manages entities, components, and systems in an Entity-Component-System (ECS) architectu...</div><div class="ttdef"><b>Definition:</b> Registry.hpp:42</div></div>
 <div class="ttc" id="anamespaceFlakkari_1_1Engine_1_1ECS_html"><div class="ttname"><a href="../../d7/d16/namespaceFlakkari_1_1Engine_1_1ECS.html">Flakkari::Engine::ECS</a></div><div class="ttdef"><b>Definition:</b> Collider.hpp:16</div></div>
+<div class="ttc" id="anamespaceFlakkari_html"><div class="ttname"><a href="../../d2/da2/namespaceFlakkari.html">Flakkari</a></div><div class="ttdef"><b>Definition:</b> Collider.hpp:16</div></div>
+<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="../../d8/dcc/namespacestd.html">std</a></div><div class="ttdef"><b>Definition:</b> Entity.hpp:58</div></div>
+<div class="ttc" id="astructstd_1_1hash_3_01Flakkari_1_1Engine_1_1ECS_1_1Entity_01_4_html_a4c86bde01b731ce02adeef0a2fe1640a"><div class="ttname"><a href="../../de/d41/structstd_1_1hash_3_01Flakkari_1_1Engine_1_1ECS_1_1Entity_01_4.html#a4c86bde01b731ce02adeef0a2fe1640a">std::hash&lt; Flakkari::Engine::ECS::Entity &gt;::operator()</a></div><div class="ttdeci">size_t operator()(const Flakkari::Engine::ECS::Entity &amp;entity) const noexcept</div><div class="ttdef"><b>Definition:</b> Entity.hpp:60</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

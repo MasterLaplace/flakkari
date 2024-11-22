@@ -3,8 +3,8 @@ var namespaceFlakkari_1_1Protocol_1_1V__0 =
     [ "Commands", "d9/dbb/classFlakkari_1_1Protocol_1_1V__0_1_1Commands.html", null ],
     [ "Components", "d0/d29/classFlakkari_1_1Protocol_1_1V__0_1_1Components.html", null ],
     [ "Event", "d6/d31/structFlakkari_1_1Protocol_1_1V__0_1_1Event.html", "d6/d31/structFlakkari_1_1Protocol_1_1V__0_1_1Event" ],
+    [ "EventAxis", "db/d3a/structFlakkari_1_1Protocol_1_1V__0_1_1EventAxis.html", "db/d3a/structFlakkari_1_1Protocol_1_1V__0_1_1EventAxis" ],
     [ "Header", "da/da1/structFlakkari_1_1Protocol_1_1V__0_1_1Header.html", "da/da1/structFlakkari_1_1Protocol_1_1V__0_1_1Header" ],
-    [ "Packet", "de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html", "de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet" ],
     [ "CommandId", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#adeff7b48bf0c05fe02740289753786b3", [
       [ "REQ_CONNECT", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#adeff7b48bf0c05fe02740289753786b3a2055787f9904504cc7eae1eb0ac135ef", null ],
       [ "REP_CONNECT", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#adeff7b48bf0c05fe02740289753786b3a096259a5b90c6f385982b27e112e0b86", null ],
@@ -65,6 +65,9 @@ var namespaceFlakkari_1_1Protocol_1_1V__0 =
       [ "NETWORK_IP", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#acc026c14b6c337e5d5059cab913cd83ba3207d7c8d2f32a32678142d7e6d21462", null ],
       [ "MAX_COMPONENT", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#acc026c14b6c337e5d5059cab913cd83ba65e918f9475ae9e72582cd98362d099f", null ]
     ] ],
+    [ "EventAxisId", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#a4af9ef7f1d2c5c0a3a37912a450a8940", [
+      [ "MAX_EVENT", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#a4af9ef7f1d2c5c0a3a37912a450a8940a13b51cb0d9ae709c26e9878f67e40501", null ]
+    ] ],
     [ "EventId", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#abde3d4f09ed5714bbd52e860fa7714ed", [
       [ "MOVE_LEFT", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#abde3d4f09ed5714bbd52e860fa7714edad7aa835d76fc894935ade13f4d0624f8", null ],
       [ "MOVE_RIGHT", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#abde3d4f09ed5714bbd52e860fa7714eda3dc5ed1f827e8c9a6392edb90af992d5", null ],
@@ -78,12 +81,5 @@ var namespaceFlakkari_1_1Protocol_1_1V__0 =
       [ "PRESSED", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#a9c726caad6715d087f62ed88a6d60227a5381dc876ab002103a027265bc14ae52", null ],
       [ "RELEASED", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#a9c726caad6715d087f62ed88a6d60227a109d54efbb64d71f9a6ab18d0fb8add8", null ],
       [ "MAX_STATE", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#a9c726caad6715d087f62ed88a6d60227a8baabb78e4a87395b5fb06b2e38029b3", null ]
-    ] ],
-    [ "Priority", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#a8ca1eaf005084e91c6387d30a1eba4dd", [
-      [ "LOW", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#a8ca1eaf005084e91c6387d30a1eba4dda41bc94cbd8eebea13ce0491b2ac11b88", null ],
-      [ "MEDIUM", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#a8ca1eaf005084e91c6387d30a1eba4ddac87f3be66ffc3c0d4249f1c2cc5f3cce", null ],
-      [ "HIGH", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#a8ca1eaf005084e91c6387d30a1eba4ddab89de3b4b81c4facfac906edf29aec8c", null ],
-      [ "CRITICAL", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#a8ca1eaf005084e91c6387d30a1eba4dda99cd1c61610c76a57cb8d10d6df6b870", null ],
-      [ "MAX_PRIORITY", "d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#a8ca1eaf005084e91c6387d30a1eba4dda5db538da7a775fe7fbc14ff799df7e29", null ]
     ] ]
 ];

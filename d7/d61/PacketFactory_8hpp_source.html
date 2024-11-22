@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Flakkari: Flakkari/Protocol/PacketFactory.hpp (295   825 10044 /home/runner/work/Flakkari/Flakkari/Flakkari/Protocol/PacketFactory.hpp) Source File</title>
+<title>Flakkari: Flakkari/Protocol/PacketFactory.hpp (339   875 11699 /home/runner/work/Flakkari/Flakkari/Flakkari/Protocol/PacketFactory.hpp) Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -118,275 +118,307 @@ $(document).ready(function(){initNavTree('d7/d61/PacketFactory_8hpp_source.html'
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html">   27</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html">PacketFactory</a> {</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="comment">// /**</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="comment">//  * @brief Add all the commons components of an entity to a packet.</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="comment">//  *</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="comment">//  * @tparam Id  Type of the entity id.</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="comment">//  * @param packet  Packet to add the components to.</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="comment">//  * @param registry  Registry to get the components from.</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="comment">//  * @param entity  Entity to get the components from.</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="comment">//  */</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="comment">// template&lt;typename Id&gt;</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="comment">// static void addCommonsToPacketByEntity (</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="comment">//     Protocol::Packet&lt;Id&gt; &amp;packet, Engine::ECS::Registry &amp;registry, Engine::ECS::Entity entity</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="comment">// ) {</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="comment">//     auto child = registry.getComponents&lt;Engine::ECS::Components::Common::Child&gt;();</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="comment">//     auto childEntity = child[entity];</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="comment">//     if (childEntity.has_value()) {</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="comment">//         packet &lt;&lt; Protocol::ComponentId::CHILD;</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="comment">//         packet &lt;&lt; childEntity-&gt;size();</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="comment">//         packet &lt;&lt; childEntity-&gt;name;</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="comment">//     }</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="comment">//     // auto evolve = registry.getComponents&lt;Engine::ECS::Components::Common::Evolve&gt;();</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="comment">//     // auto evolveEntity = evolve[entity];</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="comment">//     // if (evolveEntity.has_value()) {</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="comment">//     //     packet &lt;&lt; Protocol::ComponentId::EVOLVE;</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="comment">//     //     packet &lt;&lt; evolveEntity-&gt;size();</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="comment">//     //     packet &lt;&lt; evolveEntity-&gt;name;</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="comment">//     // }</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Id&gt;</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#a71d2120c5f43ac18d50b40662f4e6965">   38</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#a71d2120c5f43ac18d50b40662f4e6965">addCommonsToPacketByEntity</a>(<a class="code" href="../../db/d59/structFlakkari_1_1Protocol_1_1Packet.html">Protocol::Packet&lt;Id&gt;</a> &amp;packet, <a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html">Engine::ECS::Registry</a> &amp;registry,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                                           <a class="code" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">Engine::ECS::Entity</a> entity)</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    {</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">auto</span> child = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d8/d37/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Child.html">Engine::ECS::Components::Common::Child</a>&gt;()[entity];</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordflow">if</span> (child.has_value())</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        {</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            packet &lt;&lt; Protocol::ComponentId::CHILD;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            packet.<a class="code" href="../../db/d59/structFlakkari_1_1Protocol_1_1Packet.html#a63aaa79fce263bb0de32d73a8ffdb124">injectString</a>(child-&gt;name);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">auto</span> evolve = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d8/d1c/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Evolve.html">Engine::ECS::Components::Common::Evolve</a>&gt;()[entity];</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordflow">if</span> (evolve.has_value())</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        {</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            packet &lt;&lt; Protocol::ComponentId::EVOLVE;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            packet.<a class="code" href="../../db/d59/structFlakkari_1_1Protocol_1_1Packet.html#a63aaa79fce263bb0de32d73a8ffdb124">injectString</a>(evolve-&gt;name);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        }</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keyword">auto</span> health = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../dd/d44/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Health.html">Engine::ECS::Components::Common::Health</a>&gt;()[entity];</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="comment">//     // auto id = registry.getComponents&lt;Engine::ECS::Components::Common::Id&gt;();</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="comment">//     // auto idEntity = id[entity];</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="comment">//     // if (idEntity.has_value()) {</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="comment">//     //     packet &lt;&lt; Protocol::ComponentId::ID;</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="comment">//     //     packet &lt;&lt; idEntity-&gt;size();</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="comment">//     //     packet &lt;&lt; idEntity-&gt;id;</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="comment">//     // }</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">if</span> (health.has_value())</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        {</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            packet &lt;&lt; Protocol::ComponentId::HEALTH;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            packet &lt;&lt; health-&gt;currentHealth;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            packet &lt;&lt; health-&gt;maxHealth;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            packet &lt;&lt; health-&gt;shield;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            packet &lt;&lt; health-&gt;maxShield;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        }</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="comment">//     auto parent = registry.getComponents&lt;Engine::ECS::Components::Common::Parent&gt;();</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="comment">//     auto parentEntity = parent[entity];</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="comment">//     if (parentEntity.has_value()) {</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="comment">//         packet &lt;&lt; Protocol::ComponentId::PARENT;</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="comment">//         packet &lt;&lt; parentEntity-&gt;size();</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="comment">//         packet &lt;&lt; parentEntity-&gt;entity;</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="comment">//     }</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="comment">//     auto tag = registry.getComponents&lt;Engine::ECS::Components::Common::Tag&gt;();</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="comment">//     auto tagEntity = tag[entity];</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="comment">//     if (tagEntity.has_value()) {</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="comment">//         packet &lt;&lt; Protocol::ComponentId::TAG;</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="comment">//         packet &lt;&lt; tagEntity-&gt;size();</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="comment">//         packet &lt;&lt; tagEntity-&gt;tag;</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="comment">//     }</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="comment">//     auto name = registry.getComponents&lt;Engine::ECS::Components::Common::Template&gt;();</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="comment">//     auto nameEntity = name[entity];</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keyword">auto</span> <span class="keywordtype">id</span> = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../df/d2e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Id.html">Engine::ECS::Components::Common::Id</a>&gt;()[entity];</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordflow">if</span> (<span class="keywordtype">id</span>.has_value())</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        {</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            packet &lt;&lt; Protocol::ComponentId::ID;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            packet &lt;&lt; <span class="keywordtype">id</span>-&gt;id;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        }</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keyword">auto</span> level = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../df/d81/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Level.html">Engine::ECS::Components::Common::Level</a>&gt;()[entity];</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keywordflow">if</span> (level.has_value())</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        {</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            packet &lt;&lt; Protocol::ComponentId::LEVEL;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            packet &lt;&lt; level-&gt;level;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            packet.<a class="code" href="../../db/d59/structFlakkari_1_1Protocol_1_1Packet.html#a63aaa79fce263bb0de32d73a8ffdb124">injectString</a>(level-&gt;currentWeapon);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            packet &lt;&lt; level-&gt;currentExp;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            packet &lt;&lt; level-&gt;requiredExp;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        }</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keyword">auto</span> parent = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d4/dd0/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Parent.html">Engine::ECS::Components::Common::Parent</a>&gt;()[entity];</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="comment">//     if (nameEntity.has_value()) {</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="comment">//         packet &lt;&lt; Protocol::ComponentId::TEMPLATE;</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="comment">//         packet &lt;&lt; nameEntity-&gt;size();</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="comment">//         packet &lt;&lt; nameEntity-&gt;name;</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="comment">//     }</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="comment">// }</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Id&gt;</div>
-<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#aa31054ac0397e1a5cc48aa0575a5829b">  105</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#aa31054ac0397e1a5cc48aa0575a5829b">add2dToPacketByEntity</a>(<a class="code" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html">Packet&lt;Id&gt;</a> &amp;packet, <a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html">Engine::ECS::Registry</a> &amp;registry, <a class="code" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">Engine::ECS::Entity</a> entity)</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    {</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keyword">auto</span> transform = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html">Engine::ECS::Components::_2D::Transform</a>&gt;()[entity];</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordflow">if</span> (transform.has_value())</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        {</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            packet &lt;&lt; ComponentId::TRANSFORM;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            packet &lt;&lt; transform-&gt;_position.vec.x;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            packet &lt;&lt; transform-&gt;_position.vec.y;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            packet &lt;&lt; transform-&gt;_rotation;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            packet &lt;&lt; transform-&gt;_scale.vec.x;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            packet &lt;&lt; transform-&gt;_scale.vec.y;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        }</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <span class="keyword">auto</span> movable = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../df/d64/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Movable.html">Engine::ECS::Components::_2D::Movable</a>&gt;()[entity];</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keywordflow">if</span> (movable.has_value())</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        {</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            packet &lt;&lt; ComponentId::MOVABLE;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            packet &lt;&lt; movable-&gt;_velocity.vec.x;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            packet &lt;&lt; movable-&gt;_velocity.vec.y;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            packet &lt;&lt; movable-&gt;_acceleration.vec.x;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;            packet &lt;&lt; movable-&gt;_acceleration.vec.y;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        }</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        <span class="keyword">auto</span> control = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../db/d4e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Control.html">Engine::ECS::Components::_2D::Control</a>&gt;()[entity];</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        <span class="keywordflow">if</span> (control.has_value())</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        {</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;            packet &lt;&lt; ComponentId::CONTROL;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;            packet &lt;&lt; control-&gt;_up;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;            packet &lt;&lt; control-&gt;_down;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            packet &lt;&lt; control-&gt;_left;</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;            packet &lt;&lt; control-&gt;_right;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;            packet &lt;&lt; control-&gt;_shoot;</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        }</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160; </div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        <span class="keyword">auto</span> collider = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d6/de3/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Collider.html">Engine::ECS::Components::_2D::Collider</a>&gt;()[entity];</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <span class="keywordflow">if</span> (collider.has_value())</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        {</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;            packet &lt;&lt; ComponentId::COLLIDER;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;            packet &lt;&lt; collider-&gt;_size.vec.x;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;            packet &lt;&lt; collider-&gt;_size.vec.y;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        }</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        <span class="keyword">auto</span> rigidbody = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d7/d9e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1RigidBody.html">Engine::ECS::Components::_2D::RigidBody</a>&gt;()[entity];</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;        <span class="keywordflow">if</span> (rigidbody.has_value())</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        {</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;            packet &lt;&lt; ComponentId::RIGIDBODY;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;            packet &lt;&lt; rigidbody-&gt;_mass;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            packet &lt;&lt; rigidbody-&gt;_restitution;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            packet &lt;&lt; rigidbody-&gt;_friction;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            packet &lt;&lt; rigidbody-&gt;_gravityScale;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;            packet &lt;&lt; rigidbody-&gt;_isKinematic;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        }</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; </div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        <span class="keyword">auto</span> health = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../dd/d44/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Health.html">Engine::ECS::Components::Common::Health</a>&gt;()[entity];</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160; </div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="keywordflow">if</span> (health.has_value())</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        {</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;            packet &lt;&lt; ComponentId::HEALTH;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;            packet &lt;&lt; health-&gt;currentHealth;</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;            packet &lt;&lt; health-&gt;maxHealth;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            packet &lt;&lt; health-&gt;shield;</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;            packet &lt;&lt; health-&gt;maxShield;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        }</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        <span class="keyword">auto</span> weapon = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html">Engine::ECS::Components::Common::Weapon</a>&gt;()[entity];</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        <span class="keywordflow">if</span> (weapon.has_value())</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        {</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;            packet &lt;&lt; ComponentId::WEAPON;</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;            packet &lt;&lt; weapon-&gt;damage;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;            packet &lt;&lt; weapon-&gt;fireRate;</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;            packet &lt;&lt; weapon-&gt;level;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        }</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        <span class="keyword">auto</span> level = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../df/d81/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Level.html">Engine::ECS::Components::Common::Level</a>&gt;()[entity];</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160; </div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;        <span class="keywordflow">if</span> (level.has_value())</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;        {</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;            packet &lt;&lt; ComponentId::LEVEL;</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;            packet &lt;&lt; level-&gt;level;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;            packet.<a class="code" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a711f13b9f573d313652c2a5401767750">injectString</a>(level-&gt;currentWeapon);</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;            packet &lt;&lt; level-&gt;currentExp;</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;            packet &lt;&lt; level-&gt;requiredExp;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        }</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160; </div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        <span class="keyword">auto</span> spawned = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d2/dfd/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Spawned.html">Engine::ECS::Components::Common::Spawned</a>&gt;()[entity];</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160; </div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;        <span class="keywordflow">if</span> (spawned.has_value())</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;        {</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;            packet &lt;&lt; ComponentId::SPAWNED;</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;            packet &lt;&lt; spawned-&gt;has_spawned;</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;        }</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160; </div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;        <span class="keyword">auto</span> networkEvent = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d7/dbb/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1NetworkEvent.html">Engine::ECS::Components::Common::NetworkEvent</a>&gt;()[entity];</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160; </div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        <span class="keywordflow">if</span> (networkEvent.has_value())</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;        {</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;            packet &lt;&lt; ComponentId::NETWORK_EVENT;</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;            packet &lt;&lt; networkEvent-&gt;events.<a class="code" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a276e50236c57dae9372b0acd2878b845">size</a>();</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;            <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;event : networkEvent-&gt;events)</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;            {</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;                packet &lt;&lt; event;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;            }</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        }</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;        <span class="keyword">auto</span> templateName = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d9/dcd/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Template.html">Engine::ECS::Components::Common::Template</a>&gt;()[entity];</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160; </div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        <span class="keywordflow">if</span> (templateName.has_value())</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        {</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;            packet &lt;&lt; ComponentId::TEMPLATE;</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;            packet.<a class="code" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a711f13b9f573d313652c2a5401767750">injectString</a>(templateName-&gt;name);</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        }</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        <span class="keyword">auto</span> parent = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d4/dd0/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Parent.html">Engine::ECS::Components::Common::Parent</a>&gt;()[entity];</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160; </div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        <span class="keywordflow">if</span> (parent.has_value())</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        {</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;            packet &lt;&lt; ComponentId::PARENT;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;            packet &lt;&lt; parent-&gt;entity;</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        }</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordflow">if</span> (parent.has_value())</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        {</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            packet &lt;&lt; Protocol::ComponentId::PARENT;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            packet &lt;&lt; parent-&gt;entity;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        }</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keyword">auto</span> tag = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d6/d40/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Tag.html">Engine::ECS::Components::Common::Tag</a>&gt;()[entity];</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keywordflow">if</span> (tag.has_value())</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        {</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            packet &lt;&lt; Protocol::ComponentId::TAG;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            packet.<a class="code" href="../../db/d59/structFlakkari_1_1Protocol_1_1Packet.html#a63aaa79fce263bb0de32d73a8ffdb124">injectString</a>(tag-&gt;tag);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        }</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keyword">auto</span> template_ = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d9/dcd/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Template.html">Engine::ECS::Components::Common::Template</a>&gt;()[entity];</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keywordflow">if</span> (template_.has_value())</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        {</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            packet &lt;&lt; Protocol::ComponentId::TEMPLATE;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            packet.<a class="code" href="../../db/d59/structFlakkari_1_1Protocol_1_1Packet.html#a63aaa79fce263bb0de32d73a8ffdb124">injectString</a>(template_-&gt;name);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        }</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keyword">auto</span> timer = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d2/d13/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Timer.html">Engine::ECS::Components::Common::Timer</a>&gt;()[entity];</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keywordflow">if</span> (timer.has_value())</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        {</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            packet &lt;&lt; Protocol::ComponentId::TIMER;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            packet &lt;&lt; timer-&gt;lastTime.time_since_epoch().count();</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            packet &lt;&lt; timer-&gt;maxTime;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        }</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keyword">auto</span> weapon = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html">Engine::ECS::Components::Common::Weapon</a>&gt;()[entity];</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <span class="keywordflow">if</span> (weapon.has_value())</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        {</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            packet &lt;&lt; Protocol::ComponentId::WEAPON;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            packet &lt;&lt; weapon-&gt;minDamage;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            packet &lt;&lt; weapon-&gt;maxDamage;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;            packet &lt;&lt; weapon-&gt;chargeMaxTime;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;            packet &lt;&lt; weapon-&gt;fireRate;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;            packet &lt;&lt; weapon-&gt;level;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        }</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    }</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Id&gt;</div>
+<div class="line"><a name="l00142"></a><span class="lineno"><a class="line" href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#aa31054ac0397e1a5cc48aa0575a5829b">  142</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#aa31054ac0397e1a5cc48aa0575a5829b">add2dToPacketByEntity</a>(<a class="code" href="../../db/d59/structFlakkari_1_1Protocol_1_1Packet.html">Packet&lt;Id&gt;</a> &amp;packet, <a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html">Engine::ECS::Registry</a> &amp;registry, <a class="code" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">Engine::ECS::Entity</a> entity)</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    {</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <span class="keyword">auto</span> transform = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html">Engine::ECS::Components::_2D::Transform</a>&gt;()[entity];</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        <span class="keywordflow">if</span> (transform.has_value())</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        {</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;            packet &lt;&lt; ComponentId::TRANSFORM;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            packet &lt;&lt; transform-&gt;_position.vec.x;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;            packet &lt;&lt; transform-&gt;_position.vec.y;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;            packet &lt;&lt; transform-&gt;_rotation;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;            packet &lt;&lt; transform-&gt;_scale.vec.x;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;            packet &lt;&lt; transform-&gt;_scale.vec.y;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        }</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        <span class="keyword">auto</span> movable = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../df/d64/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Movable.html">Engine::ECS::Components::_2D::Movable</a>&gt;()[entity];</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; </div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        <span class="keywordflow">if</span> (movable.has_value())</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        {</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;            packet &lt;&lt; ComponentId::MOVABLE;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;            packet &lt;&lt; movable-&gt;_velocity.vec.x;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            packet &lt;&lt; movable-&gt;_velocity.vec.y;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;            packet &lt;&lt; movable-&gt;_acceleration.vec.x;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;            packet &lt;&lt; movable-&gt;_acceleration.vec.y;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        }</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        <span class="keyword">auto</span> control = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../db/d4e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Control.html">Engine::ECS::Components::_2D::Control</a>&gt;()[entity];</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        <span class="keywordflow">if</span> (control.has_value())</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        {</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;            packet &lt;&lt; ComponentId::CONTROL;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;            packet &lt;&lt; control-&gt;_up;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;            packet &lt;&lt; control-&gt;_down;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;            packet &lt;&lt; control-&gt;_left;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;            packet &lt;&lt; control-&gt;_right;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;            packet &lt;&lt; control-&gt;_shoot;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        }</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        <span class="keyword">auto</span> collider = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d6/de3/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Collider.html">Engine::ECS::Components::_2D::Collider</a>&gt;()[entity];</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        <span class="keywordflow">if</span> (collider.has_value())</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        {</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;            packet &lt;&lt; ComponentId::COLLIDER;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;            packet &lt;&lt; collider-&gt;_size.vec.x;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;            packet &lt;&lt; collider-&gt;_size.vec.y;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;        }</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;        <span class="keyword">auto</span> rigidbody = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d7/d9e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1RigidBody.html">Engine::ECS::Components::_2D::RigidBody</a>&gt;()[entity];</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160; </div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;        <span class="keywordflow">if</span> (rigidbody.has_value())</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        {</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;            packet &lt;&lt; ComponentId::RIGIDBODY;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;            packet &lt;&lt; rigidbody-&gt;_mass;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;            packet &lt;&lt; rigidbody-&gt;_restitution;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;            packet &lt;&lt; rigidbody-&gt;_friction;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;            packet &lt;&lt; rigidbody-&gt;_gravityScale;</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;            packet &lt;&lt; rigidbody-&gt;_isKinematic;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;        }</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    }</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160; </div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Id&gt;</div>
+<div class="line"><a name="l00210"></a><span class="lineno"><a class="line" href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#af49e112c75b43110b290d62e477b8e50">  210</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#af49e112c75b43110b290d62e477b8e50">add3dToPacketByEntity</a>(<a class="code" href="../../db/d59/structFlakkari_1_1Protocol_1_1Packet.html">Packet&lt;Id&gt;</a> &amp;packet, <a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html">Engine::ECS::Registry</a> &amp;registry, <a class="code" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">Engine::ECS::Entity</a> entity)</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    {</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        <span class="keyword">auto</span> transform = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../da/dae/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Transform.html">Engine::ECS::Components::_3D::Transform</a>&gt;()[entity];</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160; </div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;        <span class="keywordflow">if</span> (transform.has_value())</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;        {</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;            packet &lt;&lt; ComponentId::TRANSFORM_3D;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;            packet &lt;&lt; transform-&gt;_position.vec.x;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;            packet &lt;&lt; transform-&gt;_position.vec.y;</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;            packet &lt;&lt; transform-&gt;_position.vec.z;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;            packet &lt;&lt; transform-&gt;_rotation.vec.x;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;            packet &lt;&lt; transform-&gt;_rotation.vec.y;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;            packet &lt;&lt; transform-&gt;_rotation.vec.z;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;            packet &lt;&lt; transform-&gt;_rotation.vec.w;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;            packet &lt;&lt; transform-&gt;_scale.vec.x;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;            packet &lt;&lt; transform-&gt;_scale.vec.y;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;            packet &lt;&lt; transform-&gt;_scale.vec.z;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        }</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160; </div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        <span class="keyword">auto</span> movable = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d5/db5/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Movable.html">Engine::ECS::Components::_3D::Movable</a>&gt;()[entity];</div>
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160; </div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        <span class="keyword">auto</span> child = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d8/d37/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Child.html">Engine::ECS::Components::Common::Child</a>&gt;()[entity];</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        <span class="keywordflow">if</span> (child.has_value())</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        {</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;            packet &lt;&lt; ComponentId::CHILD;</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;            packet.<a class="code" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a711f13b9f573d313652c2a5401767750">injectString</a>(child-&gt;name);</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        }</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160; </div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;        <span class="keyword">auto</span> tag = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d6/d40/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Tag.html">Engine::ECS::Components::Common::Tag</a>&gt;()[entity];</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160; </div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;        <span class="keywordflow">if</span> (tag.has_value())</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        {</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;            packet &lt;&lt; ComponentId::TAG;</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;            packet.<a class="code" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a711f13b9f573d313652c2a5401767750">injectString</a>(tag-&gt;tag);</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        }</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    }</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160; </div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Id&gt;</div>
-<div class="line"><a name="l00257"></a><span class="lineno"><a class="line" href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#a1b3ecd6a8b5169c43a3a24d7b6bb6069">  257</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#a1b3ecd6a8b5169c43a3a24d7b6bb6069">addComponentsToPacketByEntity</a>(<a class="code" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html">Packet&lt;Id&gt;</a> &amp;packet, <a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html">Engine::ECS::Registry</a> &amp;registry,</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;                                              <a class="code" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">Engine::ECS::Entity</a> entity)</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    {</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        <span class="comment">/*_ Common Components _*/</span></div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160; </div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        <span class="comment">// addCommonsToPacketByEntity&lt;Id&gt;(packet, registry, entity);</span></div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        <span class="comment">/*_ 2D Components _*/</span></div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160; </div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        add2dToPacketByEntity&lt;Id&gt;(packet, registry, entity);</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    }</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160; </div>
-<div class="line"><a name="l00269"></a><span class="lineno"><a class="line" href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html">  269</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html">UpdateMovement</a> {</div>
-<div class="line"><a name="l00270"></a><span class="lineno"><a class="line" href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html#ad1784b10efd658396bb5609bcc71b331">  270</a></span>&#160;        <a class="code" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">Engine::ECS::Entity</a> <a class="code" href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html#ad1784b10efd658396bb5609bcc71b331">entity</a>;</div>
-<div class="line"><a name="l00271"></a><span class="lineno"><a class="line" href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html#aa179ad41709f694ae529e365d3f142c5">  271</a></span>&#160;        <a class="code" href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html">Engine::ECS::Components::_2D::Transform</a> <a class="code" href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html#aa179ad41709f694ae529e365d3f142c5">pos</a>;</div>
-<div class="line"><a name="l00272"></a><span class="lineno"><a class="line" href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html#a1a44ee99450be0bb9bdc9c7fddde8fcb">  272</a></span>&#160;        <a class="code" href="../../df/d64/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Movable.html">Engine::ECS::Components::_2D::Movable</a> <a class="code" href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html#a1a44ee99450be0bb9bdc9c7fddde8fcb">vel</a>;</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    };</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160; </div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Id&gt;</div>
-<div class="line"><a name="l00276"></a><span class="lineno"><a class="line" href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#a505afdf3420ee17cad08d5371a14b281">  276</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#a505afdf3420ee17cad08d5371a14b281">addUpdateMovementToPacket</a>(<a class="code" href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html">Packet&lt;Id&gt;</a> &amp;packet, <a class="code" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">Engine::ECS::Entity</a> entity,</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;                                          <a class="code" href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html">Engine::ECS::Components::_2D::Transform</a> pos,</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;                                          <a class="code" href="../../df/d64/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Movable.html">Engine::ECS::Components::_2D::Movable</a> vel)</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    {</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;        packet &lt;&lt; entity;</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        packet &lt;&lt; pos.<a class="code" href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a910782bc22b48d54e2a0cc904a661ce0">_position</a>.<a class="code" href="../../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a8ef4a30f836da808861e026b8eddb247">vec</a>.x;</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        packet &lt;&lt; pos.<a class="code" href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a910782bc22b48d54e2a0cc904a661ce0">_position</a>.<a class="code" href="../../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a8ef4a30f836da808861e026b8eddb247">vec</a>.y;</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        packet &lt;&lt; pos.<a class="code" href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a19c42c6f25beb116008dcebf352636ce">_rotation</a>;</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;        packet &lt;&lt; pos.<a class="code" href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a74a694816d4849acccd7451e0d5b63c1">_scale</a>.<a class="code" href="../../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a8ef4a30f836da808861e026b8eddb247">vec</a>.x;</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        packet &lt;&lt; pos.<a class="code" href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a74a694816d4849acccd7451e0d5b63c1">_scale</a>.<a class="code" href="../../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a8ef4a30f836da808861e026b8eddb247">vec</a>.y;</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        packet &lt;&lt; vel.<a class="code" href="../../df/d64/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Movable.html#a2a8f09971c39d55084d176ae2cde20c7">_velocity</a>.<a class="code" href="../../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a8ef4a30f836da808861e026b8eddb247">vec</a>.x;</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        packet &lt;&lt; vel.<a class="code" href="../../df/d64/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Movable.html#a2a8f09971c39d55084d176ae2cde20c7">_velocity</a>.<a class="code" href="../../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a8ef4a30f836da808861e026b8eddb247">vec</a>.y;</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        packet &lt;&lt; vel.<a class="code" href="../../df/d64/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Movable.html#a838ad77dbade7d7b4628587a3f1828fc">_acceleration</a>.<a class="code" href="../../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a8ef4a30f836da808861e026b8eddb247">vec</a>.x;</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        packet &lt;&lt; vel.<a class="code" href="../../df/d64/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Movable.html#a838ad77dbade7d7b4628587a3f1828fc">_acceleration</a>.<a class="code" href="../../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a8ef4a30f836da808861e026b8eddb247">vec</a>.y;</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    }</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;};</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;} <span class="comment">// namespace Flakkari::Protocol</span></div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160; </div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !PACKETFACTORY_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        <span class="keywordflow">if</span> (movable.has_value())</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        {</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;            packet &lt;&lt; ComponentId::MOVABLE_3D;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;            packet &lt;&lt; movable-&gt;_velocity.vec.x;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;            packet &lt;&lt; movable-&gt;_velocity.vec.y;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;            packet &lt;&lt; movable-&gt;_velocity.vec.z;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;            packet &lt;&lt; movable-&gt;_acceleration.vec.x;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;            packet &lt;&lt; movable-&gt;_acceleration.vec.y;</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;            packet &lt;&lt; movable-&gt;_acceleration.vec.z;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;            packet &lt;&lt; movable-&gt;_minSpeed;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;            packet &lt;&lt; movable-&gt;_maxSpeed;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        }</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; </div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        <span class="keyword">auto</span> control = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d9/d0e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Control.html">Engine::ECS::Components::_3D::Control</a>&gt;()[entity];</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        <span class="keywordflow">if</span> (control.has_value())</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;        {</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;            packet &lt;&lt; ComponentId::CONTROL_3D;</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;            packet &lt;&lt; control.value().toSerialized();</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;        }</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160; </div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;        <span class="keyword">auto</span> boxCollider = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../da/d14/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1BoxCollider.html">Engine::ECS::Components::_3D::BoxCollider</a>&gt;()[entity];</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160; </div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        <span class="keywordflow">if</span> (boxCollider.has_value())</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        {</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;            packet &lt;&lt; ComponentId::BOXCOLLIDER;</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;            packet &lt;&lt; boxCollider-&gt;_size.vec.x;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;            packet &lt;&lt; boxCollider-&gt;_size.vec.y;</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;            packet &lt;&lt; boxCollider-&gt;_size.vec.z;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;            packet &lt;&lt; boxCollider-&gt;_center.vec.x;</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;            packet &lt;&lt; boxCollider-&gt;_center.vec.y;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;            packet &lt;&lt; boxCollider-&gt;_center.vec.z;</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        }</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160; </div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        <span class="keyword">auto</span> sphereCollider = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../d2/d45/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1SphereCollider.html">Engine::ECS::Components::_3D::SphereCollider</a>&gt;()[entity];</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160; </div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        <span class="keywordflow">if</span> (sphereCollider.has_value())</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        {</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;            packet &lt;&lt; ComponentId::SPHERECOLLIDER;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;            packet &lt;&lt; sphereCollider-&gt;_center.vec.x;</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;            packet &lt;&lt; sphereCollider-&gt;_center.vec.y;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;            packet &lt;&lt; sphereCollider-&gt;_center.vec.z;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;            packet &lt;&lt; sphereCollider-&gt;_radius;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        }</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160; </div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        <span class="keyword">auto</span> rigidbody = registry.<a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">getComponents</a>&lt;<a class="code" href="../../df/d7e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1RigidBody.html">Engine::ECS::Components::_3D::RigidBody</a>&gt;()[entity];</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160; </div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        <span class="keywordflow">if</span> (rigidbody.has_value())</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        {</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;            packet &lt;&lt; ComponentId::RIGIDBODY_3D;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;            packet &lt;&lt; rigidbody-&gt;_mass;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;            packet &lt;&lt; rigidbody-&gt;_drag;</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;            packet &lt;&lt; rigidbody-&gt;_angularDrag;</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;            packet &lt;&lt; (<a class="code" href="../../d8/d36/Buffer_8hpp.html#a82e74662490118ea208071ba793de76b">byte</a>) rigidbody-&gt;_useGravity;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        }</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    }</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160; </div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Id&gt;</div>
+<div class="line"><a name="l00297"></a><span class="lineno"><a class="line" href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#a1b3ecd6a8b5169c43a3a24d7b6bb6069">  297</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#a1b3ecd6a8b5169c43a3a24d7b6bb6069">addComponentsToPacketByEntity</a>(<a class="code" href="../../db/d59/structFlakkari_1_1Protocol_1_1Packet.html">Packet&lt;Id&gt;</a> &amp;packet, <a class="code" href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html">Engine::ECS::Registry</a> &amp;registry,</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;                                              <a class="code" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">Engine::ECS::Entity</a> entity)</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    {</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;        <span class="comment">/*_ Common Components _*/</span></div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160; </div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        addCommonsToPacketByEntity&lt;Id&gt;(packet, registry, entity);</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160; </div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        <span class="comment">/*_ 2D Components _*/</span></div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160; </div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        add2dToPacketByEntity&lt;Id&gt;(packet, registry, entity);</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160; </div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        <span class="comment">/*_ 3D Components _*/</span></div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160; </div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;        add3dToPacketByEntity&lt;Id&gt;(packet, registry, entity);</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    }</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160; </div>
+<div class="line"><a name="l00313"></a><span class="lineno"><a class="line" href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html">  313</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html">UpdateMovement</a> {</div>
+<div class="line"><a name="l00314"></a><span class="lineno"><a class="line" href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html#ad1784b10efd658396bb5609bcc71b331">  314</a></span>&#160;        <a class="code" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">Engine::ECS::Entity</a> <a class="code" href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html#ad1784b10efd658396bb5609bcc71b331">entity</a>;</div>
+<div class="line"><a name="l00315"></a><span class="lineno"><a class="line" href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html#aa179ad41709f694ae529e365d3f142c5">  315</a></span>&#160;        <a class="code" href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html">Engine::ECS::Components::_2D::Transform</a> <a class="code" href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html#aa179ad41709f694ae529e365d3f142c5">pos</a>;</div>
+<div class="line"><a name="l00316"></a><span class="lineno"><a class="line" href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html#a1a44ee99450be0bb9bdc9c7fddde8fcb">  316</a></span>&#160;        <a class="code" href="../../df/d64/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Movable.html">Engine::ECS::Components::_2D::Movable</a> <a class="code" href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html#a1a44ee99450be0bb9bdc9c7fddde8fcb">vel</a>;</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    };</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160; </div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Id&gt;</div>
+<div class="line"><a name="l00320"></a><span class="lineno"><a class="line" href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#a505afdf3420ee17cad08d5371a14b281">  320</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#a505afdf3420ee17cad08d5371a14b281">addUpdateMovementToPacket</a>(<a class="code" href="../../db/d59/structFlakkari_1_1Protocol_1_1Packet.html">Packet&lt;Id&gt;</a> &amp;packet, <a class="code" href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">Engine::ECS::Entity</a> entity,</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;                                          <a class="code" href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html">Engine::ECS::Components::_2D::Transform</a> pos,</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;                                          <a class="code" href="../../df/d64/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Movable.html">Engine::ECS::Components::_2D::Movable</a> vel)</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    {</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;        packet &lt;&lt; entity;</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;        packet &lt;&lt; pos.<a class="code" href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a910782bc22b48d54e2a0cc904a661ce0">_position</a>.<a class="code" href="../../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a8ef4a30f836da808861e026b8eddb247">vec</a>.x;</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;        packet &lt;&lt; pos.<a class="code" href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a910782bc22b48d54e2a0cc904a661ce0">_position</a>.<a class="code" href="../../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a8ef4a30f836da808861e026b8eddb247">vec</a>.y;</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;        packet &lt;&lt; pos.<a class="code" href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a19c42c6f25beb116008dcebf352636ce">_rotation</a>;</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;        packet &lt;&lt; pos.<a class="code" href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a74a694816d4849acccd7451e0d5b63c1">_scale</a>.<a class="code" href="../../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a8ef4a30f836da808861e026b8eddb247">vec</a>.x;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;        packet &lt;&lt; pos.<a class="code" href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a74a694816d4849acccd7451e0d5b63c1">_scale</a>.<a class="code" href="../../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a8ef4a30f836da808861e026b8eddb247">vec</a>.y;</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;        packet &lt;&lt; vel.<a class="code" href="../../df/d64/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Movable.html#a2a8f09971c39d55084d176ae2cde20c7">_velocity</a>.<a class="code" href="../../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a8ef4a30f836da808861e026b8eddb247">vec</a>.x;</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;        packet &lt;&lt; vel.<a class="code" href="../../df/d64/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Movable.html#a2a8f09971c39d55084d176ae2cde20c7">_velocity</a>.<a class="code" href="../../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a8ef4a30f836da808861e026b8eddb247">vec</a>.y;</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;        packet &lt;&lt; vel.<a class="code" href="../../df/d64/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Movable.html#a838ad77dbade7d7b4628587a3f1828fc">_acceleration</a>.<a class="code" href="../../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a8ef4a30f836da808861e026b8eddb247">vec</a>.x;</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;        packet &lt;&lt; vel.<a class="code" href="../../df/d64/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Movable.html#a838ad77dbade7d7b4628587a3f1828fc">_acceleration</a>.<a class="code" href="../../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a8ef4a30f836da808861e026b8eddb247">vec</a>.y;</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    }</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;};</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160; </div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;} <span class="comment">// namespace Flakkari::Protocol</span></div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160; </div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !PACKETFACTORY_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="aBuffer_8hpp_html_a82e74662490118ea208071ba793de76b"><div class="ttname"><a href="../../d8/d36/Buffer_8hpp.html#a82e74662490118ea208071ba793de76b">byte</a></div><div class="ttdeci">std::uint8_t byte</div><div class="ttdef"><b>Definition:</b> Buffer.hpp:25</div></div>
 <div class="ttc" id="aPacket_8hpp_html"><div class="ttname"><a href="../../db/d1b/Packet_8hpp.html">Packet.hpp</a></div></div>
 <div class="ttc" id="aSystems_8hpp_html"><div class="ttname"><a href="../../d8/d3d/Systems_8hpp.html">Systems.hpp</a></div></div>
 <div class="ttc" id="aclassFlakkari_1_1Engine_1_1ECS_1_1Entity_html"><div class="ttname"><a href="../../d1/d1f/classFlakkari_1_1Engine_1_1ECS_1_1Entity.html">Flakkari::Engine::ECS::Entity</a></div><div class="ttdef"><b>Definition:</b> Entity.hpp:25</div></div>
 <div class="ttc" id="aclassFlakkari_1_1Engine_1_1ECS_1_1Registry_html"><div class="ttname"><a href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html">Flakkari::Engine::ECS::Registry</a></div><div class="ttdoc">A class that manages entities, components, and systems in an Entity-Component-System (ECS) architectu...</div><div class="ttdef"><b>Definition:</b> Registry.hpp:42</div></div>
 <div class="ttc" id="aclassFlakkari_1_1Engine_1_1ECS_1_1Registry_html_a99a1a0865c82335ffe9c5848b45182c7"><div class="ttname"><a href="../../d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#a99a1a0865c82335ffe9c5848b45182c7">Flakkari::Engine::ECS::Registry::getComponents</a></div><div class="ttdeci">SparseArrays&lt; Component &gt; &amp; getComponents()</div><div class="ttdoc">Get the Components object from the registry.</div><div class="ttdef"><b>Definition:</b> Registry.hpp:193</div></div>
 <div class="ttc" id="aclassFlakkari_1_1Protocol_1_1PacketFactory_html"><div class="ttname"><a href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html">Flakkari::Protocol::PacketFactory</a></div><div class="ttdef"><b>Definition:</b> PacketFactory.hpp:27</div></div>
-<div class="ttc" id="aclassFlakkari_1_1Protocol_1_1PacketFactory_html_a1b3ecd6a8b5169c43a3a24d7b6bb6069"><div class="ttname"><a href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#a1b3ecd6a8b5169c43a3a24d7b6bb6069">Flakkari::Protocol::PacketFactory::addComponentsToPacketByEntity</a></div><div class="ttdeci">static void addComponentsToPacketByEntity(Packet&lt; Id &gt; &amp;packet, Engine::ECS::Registry &amp;registry, Engine::ECS::Entity entity)</div><div class="ttdoc">Add all the components of an entity to a packet.</div><div class="ttdef"><b>Definition:</b> PacketFactory.hpp:257</div></div>
-<div class="ttc" id="aclassFlakkari_1_1Protocol_1_1PacketFactory_html_a505afdf3420ee17cad08d5371a14b281"><div class="ttname"><a href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#a505afdf3420ee17cad08d5371a14b281">Flakkari::Protocol::PacketFactory::addUpdateMovementToPacket</a></div><div class="ttdeci">static void addUpdateMovementToPacket(Packet&lt; Id &gt; &amp;packet, Engine::ECS::Entity entity, Engine::ECS::Components::_2D::Transform pos, Engine::ECS::Components::_2D::Movable vel)</div><div class="ttdef"><b>Definition:</b> PacketFactory.hpp:276</div></div>
-<div class="ttc" id="aclassFlakkari_1_1Protocol_1_1PacketFactory_html_aa31054ac0397e1a5cc48aa0575a5829b"><div class="ttname"><a href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#aa31054ac0397e1a5cc48aa0575a5829b">Flakkari::Protocol::PacketFactory::add2dToPacketByEntity</a></div><div class="ttdeci">static void add2dToPacketByEntity(Packet&lt; Id &gt; &amp;packet, Engine::ECS::Registry &amp;registry, Engine::ECS::Entity entity)</div><div class="ttdoc">Add all the 2D components of an entity to a packet.</div><div class="ttdef"><b>Definition:</b> PacketFactory.hpp:105</div></div>
+<div class="ttc" id="aclassFlakkari_1_1Protocol_1_1PacketFactory_html_a1b3ecd6a8b5169c43a3a24d7b6bb6069"><div class="ttname"><a href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#a1b3ecd6a8b5169c43a3a24d7b6bb6069">Flakkari::Protocol::PacketFactory::addComponentsToPacketByEntity</a></div><div class="ttdeci">static void addComponentsToPacketByEntity(Packet&lt; Id &gt; &amp;packet, Engine::ECS::Registry &amp;registry, Engine::ECS::Entity entity)</div><div class="ttdoc">Add all the components of an entity to a packet.</div><div class="ttdef"><b>Definition:</b> PacketFactory.hpp:297</div></div>
+<div class="ttc" id="aclassFlakkari_1_1Protocol_1_1PacketFactory_html_a505afdf3420ee17cad08d5371a14b281"><div class="ttname"><a href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#a505afdf3420ee17cad08d5371a14b281">Flakkari::Protocol::PacketFactory::addUpdateMovementToPacket</a></div><div class="ttdeci">static void addUpdateMovementToPacket(Packet&lt; Id &gt; &amp;packet, Engine::ECS::Entity entity, Engine::ECS::Components::_2D::Transform pos, Engine::ECS::Components::_2D::Movable vel)</div><div class="ttdef"><b>Definition:</b> PacketFactory.hpp:320</div></div>
+<div class="ttc" id="aclassFlakkari_1_1Protocol_1_1PacketFactory_html_a71d2120c5f43ac18d50b40662f4e6965"><div class="ttname"><a href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#a71d2120c5f43ac18d50b40662f4e6965">Flakkari::Protocol::PacketFactory::addCommonsToPacketByEntity</a></div><div class="ttdeci">static void addCommonsToPacketByEntity(Protocol::Packet&lt; Id &gt; &amp;packet, Engine::ECS::Registry &amp;registry, Engine::ECS::Entity entity)</div><div class="ttdoc">Add all the commons components of an entity to a packet.</div><div class="ttdef"><b>Definition:</b> PacketFactory.hpp:38</div></div>
+<div class="ttc" id="aclassFlakkari_1_1Protocol_1_1PacketFactory_html_aa31054ac0397e1a5cc48aa0575a5829b"><div class="ttname"><a href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#aa31054ac0397e1a5cc48aa0575a5829b">Flakkari::Protocol::PacketFactory::add2dToPacketByEntity</a></div><div class="ttdeci">static void add2dToPacketByEntity(Packet&lt; Id &gt; &amp;packet, Engine::ECS::Registry &amp;registry, Engine::ECS::Entity entity)</div><div class="ttdoc">Add all the 2D components of an entity to a packet.</div><div class="ttdef"><b>Definition:</b> PacketFactory.hpp:142</div></div>
+<div class="ttc" id="aclassFlakkari_1_1Protocol_1_1PacketFactory_html_af49e112c75b43110b290d62e477b8e50"><div class="ttname"><a href="../../d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#af49e112c75b43110b290d62e477b8e50">Flakkari::Protocol::PacketFactory::add3dToPacketByEntity</a></div><div class="ttdeci">static void add3dToPacketByEntity(Packet&lt; Id &gt; &amp;packet, Engine::ECS::Registry &amp;registry, Engine::ECS::Entity entity)</div><div class="ttdoc">Add all the 3D components of an entity to a packet.</div><div class="ttdef"><b>Definition:</b> PacketFactory.hpp:210</div></div>
 <div class="ttc" id="anamespaceFlakkari_1_1Protocol_html"><div class="ttname"><a href="../../dc/d58/namespaceFlakkari_1_1Protocol.html">Flakkari::Protocol</a></div><div class="ttdef"><b>Definition:</b> Commands.hpp:23</div></div>
 <div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Child_html"><div class="ttname"><a href="../../d8/d37/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Child.html">Flakkari::Engine::ECS::Components::Common::Child</a></div><div class="ttdoc">Child component for ECS entities that have a child entity attached to them.</div><div class="ttdef"><b>Definition:</b> Child.hpp:23</div></div>
+<div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Evolve_html"><div class="ttname"><a href="../../d8/d1c/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Evolve.html">Flakkari::Engine::ECS::Components::Common::Evolve</a></div><div class="ttdoc">Evolve component for ECS entities that can evolve in to another Component.</div><div class="ttdef"><b>Definition:</b> Evolve.hpp:23</div></div>
 <div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Health_html"><div class="ttname"><a href="../../dd/d44/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Health.html">Flakkari::Engine::ECS::Components::Common::Health</a></div><div class="ttdoc">Health is a structure that represents the life of an &quot;living object&quot;.</div><div class="ttdef"><b>Definition:</b> Health.hpp:24</div></div>
+<div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Id_html"><div class="ttname"><a href="../../df/d2e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Id.html">Flakkari::Engine::ECS::Components::Common::Id</a></div><div class="ttdef"><b>Definition:</b> Id.hpp:20</div></div>
 <div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Level_html"><div class="ttname"><a href="../../df/d81/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Level.html">Flakkari::Engine::ECS::Components::Common::Level</a></div><div class="ttdoc">FontInfo is a structure that holds information about a Font.</div><div class="ttdef"><b>Definition:</b> Level.hpp:24</div></div>
-<div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1NetworkEvent_html"><div class="ttname"><a href="../../d7/dbb/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1NetworkEvent.html">Flakkari::Engine::ECS::Components::Common::NetworkEvent</a></div><div class="ttdef"><b>Definition:</b> NetworkEvent.hpp:17</div></div>
 <div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Parent_html"><div class="ttname"><a href="../../d4/dd0/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Parent.html">Flakkari::Engine::ECS::Components::Common::Parent</a></div><div class="ttdoc">Parent component for ECS entities that have a parent entity attached to them.</div><div class="ttdef"><b>Definition:</b> Parent.hpp:25</div></div>
-<div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Spawned_html"><div class="ttname"><a href="../../d2/dfd/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Spawned.html">Flakkari::Engine::ECS::Components::Common::Spawned</a></div><div class="ttdoc">Spawned component for ECS entities that have a script attached to them.</div><div class="ttdef"><b>Definition:</b> Spawned.hpp:26</div></div>
 <div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Tag_html"><div class="ttname"><a href="../../d6/d40/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Tag.html">Flakkari::Engine::ECS::Components::Common::Tag</a></div><div class="ttdoc">Tag component for ECS entities that have a script attached to them.</div><div class="ttdef"><b>Definition:</b> Tag.hpp:22</div></div>
-<div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Template_html"><div class="ttname"><a href="../../d9/dcd/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Template.html">Flakkari::Engine::ECS::Components::Common::Template</a></div><div class="ttdef"><b>Definition:</b> Template.hpp:17</div></div>
+<div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Template_html"><div class="ttname"><a href="../../d9/dcd/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Template.html">Flakkari::Engine::ECS::Components::Common::Template</a></div><div class="ttdef"><b>Definition:</b> Template.hpp:18</div></div>
+<div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Timer_html"><div class="ttname"><a href="../../d2/d13/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Timer.html">Flakkari::Engine::ECS::Components::Common::Timer</a></div><div class="ttdoc">Timer component for ECS entities that have a timer attached to them.</div><div class="ttdef"><b>Definition:</b> Timer.hpp:27</div></div>
 <div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon_html"><div class="ttname"><a href="../../d0/dd4/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1Common_1_1Weapon.html">Flakkari::Engine::ECS::Components::Common::Weapon</a></div><div class="ttdoc">Weapon is a structure that defines the characteristics of a weapon.</div><div class="ttdef"><b>Definition:</b> Weapon.hpp:37</div></div>
 <div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Collider_html"><div class="ttname"><a href="../../d6/de3/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Collider.html">Flakkari::Engine::ECS::Components::_2D::Collider</a></div><div class="ttdoc">Collider component for 2D entities.</div><div class="ttdef"><b>Definition:</b> Collider.hpp:22</div></div>
 <div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Control_html"><div class="ttname"><a href="../../db/d4e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Control.html">Flakkari::Engine::ECS::Components::_2D::Control</a></div><div class="ttdoc">Control component for 2D entities (player, enemies, etc...)</div><div class="ttdef"><b>Definition:</b> Control.hpp:28</div></div>
@@ -398,14 +430,19 @@ $(document).ready(function(){initNavTree('d7/d61/PacketFactory_8hpp_source.html'
 <div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform_html_a19c42c6f25beb116008dcebf352636ce"><div class="ttname"><a href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a19c42c6f25beb116008dcebf352636ce">Flakkari::Engine::ECS::Components::_2D::Transform::_rotation</a></div><div class="ttdeci">float _rotation</div><div class="ttdef"><b>Definition:</b> Transform.hpp:24</div></div>
 <div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform_html_a74a694816d4849acccd7451e0d5b63c1"><div class="ttname"><a href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a74a694816d4849acccd7451e0d5b63c1">Flakkari::Engine::ECS::Components::_2D::Transform::_scale</a></div><div class="ttdeci">Math::Vector2f _scale</div><div class="ttdef"><b>Definition:</b> Transform.hpp:23</div></div>
 <div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform_html_a910782bc22b48d54e2a0cc904a661ce0"><div class="ttname"><a href="../../d6/dd8/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__2D_1_1Transform.html#a910782bc22b48d54e2a0cc904a661ce0">Flakkari::Engine::ECS::Components::_2D::Transform::_position</a></div><div class="ttdeci">Math::Vector2f _position</div><div class="ttdef"><b>Definition:</b> Transform.hpp:22</div></div>
+<div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1BoxCollider_html"><div class="ttname"><a href="../../da/d14/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1BoxCollider.html">Flakkari::Engine::ECS::Components::_3D::BoxCollider</a></div><div class="ttdoc">BoxCollider component for 3D entities.</div><div class="ttdef"><b>Definition:</b> BoxCollider.hpp:21</div></div>
+<div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Control_html"><div class="ttname"><a href="../../d9/d0e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Control.html">Flakkari::Engine::ECS::Components::_3D::Control</a></div><div class="ttdoc">Control component for 3D entities (player, enemies, etc...)</div><div class="ttdef"><b>Definition:</b> Control.hpp:35</div></div>
+<div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Movable_html"><div class="ttname"><a href="../../d5/db5/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Movable.html">Flakkari::Engine::ECS::Components::_3D::Movable</a></div><div class="ttdoc">Movable component for 3D entities.</div><div class="ttdef"><b>Definition:</b> Movable.hpp:21</div></div>
+<div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1RigidBody_html"><div class="ttname"><a href="../../df/d7e/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1RigidBody.html">Flakkari::Engine::ECS::Components::_3D::RigidBody</a></div><div class="ttdoc">RigidBody represent the physical properties of a rigid body in a game engine.</div><div class="ttdef"><b>Definition:</b> RigidBody.hpp:21</div></div>
+<div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1SphereCollider_html"><div class="ttname"><a href="../../d2/d45/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1SphereCollider.html">Flakkari::Engine::ECS::Components::_3D::SphereCollider</a></div><div class="ttdoc">SphereCollider component for 3D entities.</div><div class="ttdef"><b>Definition:</b> SphereCollider.hpp:21</div></div>
+<div class="ttc" id="astructFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Transform_html"><div class="ttname"><a href="../../da/dae/structFlakkari_1_1Engine_1_1ECS_1_1Components_1_1__3D_1_1Transform.html">Flakkari::Engine::ECS::Components::_3D::Transform</a></div><div class="ttdoc">Transform component for 3D entities.</div><div class="ttdef"><b>Definition:</b> Transform.hpp:21</div></div>
 <div class="ttc" id="astructFlakkari_1_1Engine_1_1Math_1_1Vector_html_a8ef4a30f836da808861e026b8eddb247"><div class="ttname"><a href="../../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a8ef4a30f836da808861e026b8eddb247">Flakkari::Engine::Math::Vector::vec</a></div><div class="ttdeci">struct Flakkari::Engine::Math::Vector::@0::@2 vec</div></div>
-<div class="ttc" id="astructFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement_html"><div class="ttname"><a href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html">Flakkari::Protocol::PacketFactory::UpdateMovement</a></div><div class="ttdef"><b>Definition:</b> PacketFactory.hpp:269</div></div>
-<div class="ttc" id="astructFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement_html_a1a44ee99450be0bb9bdc9c7fddde8fcb"><div class="ttname"><a href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html#a1a44ee99450be0bb9bdc9c7fddde8fcb">Flakkari::Protocol::PacketFactory::UpdateMovement::vel</a></div><div class="ttdeci">Engine::ECS::Components::_2D::Movable vel</div><div class="ttdef"><b>Definition:</b> PacketFactory.hpp:272</div></div>
-<div class="ttc" id="astructFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement_html_aa179ad41709f694ae529e365d3f142c5"><div class="ttname"><a href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html#aa179ad41709f694ae529e365d3f142c5">Flakkari::Protocol::PacketFactory::UpdateMovement::pos</a></div><div class="ttdeci">Engine::ECS::Components::_2D::Transform pos</div><div class="ttdef"><b>Definition:</b> PacketFactory.hpp:271</div></div>
-<div class="ttc" id="astructFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement_html_ad1784b10efd658396bb5609bcc71b331"><div class="ttname"><a href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html#ad1784b10efd658396bb5609bcc71b331">Flakkari::Protocol::PacketFactory::UpdateMovement::entity</a></div><div class="ttdeci">Engine::ECS::Entity entity</div><div class="ttdef"><b>Definition:</b> PacketFactory.hpp:270</div></div>
-<div class="ttc" id="astructFlakkari_1_1Protocol_1_1V__0_1_1Packet_html"><div class="ttname"><a href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html">Flakkari::Protocol::Packet</a></div><div class="ttdoc">Flakkari Packet v0 (new packet)</div><div class="ttdef"><b>Definition:</b> Packet.hpp:42</div></div>
-<div class="ttc" id="astructFlakkari_1_1Protocol_1_1V__0_1_1Packet_html_a276e50236c57dae9372b0acd2878b845"><div class="ttname"><a href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a276e50236c57dae9372b0acd2878b845">Flakkari::Protocol::V_0::Packet::size</a></div><div class="ttdeci">std::size_t size() const</div><div class="ttdef"><b>Definition:</b> Packet.hpp:46</div></div>
-<div class="ttc" id="astructFlakkari_1_1Protocol_1_1V__0_1_1Packet_html_a711f13b9f573d313652c2a5401767750"><div class="ttname"><a href="../../de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a711f13b9f573d313652c2a5401767750">Flakkari::Protocol::V_0::Packet::injectString</a></div><div class="ttdeci">void injectString(std::string str)</div><div class="ttdoc">Inject a string into the packet.</div><div class="ttdef"><b>Definition:</b> Packet.hpp:127</div></div>
+<div class="ttc" id="astructFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement_html"><div class="ttname"><a href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html">Flakkari::Protocol::PacketFactory::UpdateMovement</a></div><div class="ttdef"><b>Definition:</b> PacketFactory.hpp:313</div></div>
+<div class="ttc" id="astructFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement_html_a1a44ee99450be0bb9bdc9c7fddde8fcb"><div class="ttname"><a href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html#a1a44ee99450be0bb9bdc9c7fddde8fcb">Flakkari::Protocol::PacketFactory::UpdateMovement::vel</a></div><div class="ttdeci">Engine::ECS::Components::_2D::Movable vel</div><div class="ttdef"><b>Definition:</b> PacketFactory.hpp:316</div></div>
+<div class="ttc" id="astructFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement_html_aa179ad41709f694ae529e365d3f142c5"><div class="ttname"><a href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html#aa179ad41709f694ae529e365d3f142c5">Flakkari::Protocol::PacketFactory::UpdateMovement::pos</a></div><div class="ttdeci">Engine::ECS::Components::_2D::Transform pos</div><div class="ttdef"><b>Definition:</b> PacketFactory.hpp:315</div></div>
+<div class="ttc" id="astructFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement_html_ad1784b10efd658396bb5609bcc71b331"><div class="ttname"><a href="../../df/df6/structFlakkari_1_1Protocol_1_1PacketFactory_1_1UpdateMovement.html#ad1784b10efd658396bb5609bcc71b331">Flakkari::Protocol::PacketFactory::UpdateMovement::entity</a></div><div class="ttdeci">Engine::ECS::Entity entity</div><div class="ttdef"><b>Definition:</b> PacketFactory.hpp:314</div></div>
+<div class="ttc" id="astructFlakkari_1_1Protocol_1_1Packet_html"><div class="ttname"><a href="../../db/d59/structFlakkari_1_1Protocol_1_1Packet.html">Flakkari::Protocol::Packet</a></div><div class="ttdoc">Flakkari Packet v1 (new packet)</div><div class="ttdef"><b>Definition:</b> Packet.hpp:40</div></div>
+<div class="ttc" id="astructFlakkari_1_1Protocol_1_1Packet_html_a63aaa79fce263bb0de32d73a8ffdb124"><div class="ttname"><a href="../../db/d59/structFlakkari_1_1Protocol_1_1Packet.html#a63aaa79fce263bb0de32d73a8ffdb124">Flakkari::Protocol::Packet::injectString</a></div><div class="ttdeci">void injectString(std::string str)</div><div class="ttdoc">Inject a string into the packet.</div><div class="ttdef"><b>Definition:</b> Packet.hpp:125</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

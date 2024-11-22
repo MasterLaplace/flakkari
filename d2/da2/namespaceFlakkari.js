@@ -12,6 +12,6 @@ var namespaceFlakkari =
     [ "ResourceManager", "d0/d1e/classFlakkari_1_1ResourceManager.html", "d0/d1e/classFlakkari_1_1ResourceManager" ],
     [ "UDPServer", "d0/dd1/classFlakkari_1_1UDPServer.html", "d0/dd1/classFlakkari_1_1UDPServer" ],
     [ "nl_component", "d2/da2/namespaceFlakkari.html#a60f33623bdcaae18c88b3d1fdd23f8d1", null ],
-    [ "nl_entity", "d2/da2/namespaceFlakkari.html#a1edf95c009bfde69a893a24a79c6e960", null ],
+    [ "nl_entity", "d2/da2/namespaceFlakkari.html#ad1efee88764fd4ea2bb0e702a4340858", null ],
     [ "nl_template", "d2/da2/namespaceFlakkari.html#ab2033bc03f2244ca24f381a162aec359", null ]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['shoot_1113',['SHOOT',['../d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#abde3d4f09ed5714bbd52e860fa7714eda0504ea30baff7b670a10cb44f8e5cca2',1,'Flakkari::Protocol::V_0']]],
-  ['silent_1114',['SILENT',['../d5/d86/classFlakkari_1_1Logger.html#ae7f3aac1504a1a6bffc4b32bcf10ff9ca7e92d833d7720dbe631730a6cea03346',1,'Flakkari::Logger']]],
-  ['spawned_1115',['SPAWNED',['../d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#acc026c14b6c337e5d5059cab913cd83bab209a200f960648aa69d26a909752826',1,'Flakkari::Protocol::V_0']]]
+  ['parent_1172',['PARENT',['../d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#acc026c14b6c337e5d5059cab913cd83ba654549fd15738332e933b52baf3cbc65',1,'Flakkari::Protocol::V_0::PARENT()'],['../db/dc9/namespaceFlakkari_1_1Protocol_1_1V__1.html#a4cb459c0dee4a436d6a14ad870ca9e1aa654549fd15738332e933b52baf3cbc65',1,'Flakkari::Protocol::V_1::PARENT()']]],
+  ['pressed_1173',['PRESSED',['../d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#a9c726caad6715d087f62ed88a6d60227a5381dc876ab002103a027265bc14ae52',1,'Flakkari::Protocol::V_0::PRESSED()'],['../db/dc9/namespaceFlakkari_1_1Protocol_1_1V__1.html#a95c9bd4fdbd92a8bff77aec5eee083d3a5381dc876ab002103a027265bc14ae52',1,'Flakkari::Protocol::V_1::PRESSED()']]]
 ];

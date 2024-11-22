@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['evolve_1050',['EVOLVE',['../d1/d2c/namespaceFlakkari_1_1Protocol_1_1V__0.html#acc026c14b6c337e5d5059cab913cd83baeb1a384923bf9a900174479aa56298e5',1,'Flakkari::Protocol::V_0']]]
+  ['debug_1142',['DEBUG',['../d5/d86/classFlakkari_1_1Logger.html#ae7f3aac1504a1a6bffc4b32bcf10ff9cadc30ec20708ef7b0f641ef78b7880a15',1,'Flakkari::Logger']]]
 ];

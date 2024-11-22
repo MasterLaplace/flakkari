@@ -1,0 +1,22 @@
+digraph "Flakkari::Protocol::Packet::size"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="Flakkari::Protocol\l::Packet::size",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Flakkari::Game::sendUpdate\lPosition",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#a1b14145854aaa09a75e830ed6f740456",tooltip="Send a packet to a player."];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="Flakkari::Game::handleEvents",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#aa756e63e4f39ceb17cffb3b35efe89b5",tooltip="Handle the events from a player."];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="Flakkari::Game::updateIncoming\lPackets",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#a6594373893294e8ace1a1cdc34a31383",tooltip="Empty the incoming packets of the players and update the game with the new packets."];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="Flakkari::Game::update",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#aa3fb1b7dc6a9c7e9177242a37bf3339f",tooltip="Update the game. This function is called every frame."];
+  Node5 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="Flakkari::Game::run",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#a9372052fa595db8fe17f12e71dcee676",tooltip="Run the game. This function is called when the game is started. It will run the game loop."];
+  Node6 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="Flakkari::Game::start",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#af4062192215ec0e249ad0929e17ac4e0",tooltip="Start the game. This function is called when the game is launched. It will start the game loop."];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="Flakkari::Protocol\l::Packet::serialize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d59/structFlakkari_1_1Protocol_1_1Packet.html#a8979b53373cdbe1806d9cc167d6b8f91",tooltip="Serialize the packet into a buffer to be sent over the network."];
+}

@@ -6,21 +6,11 @@ digraph "Flakkari::Engine::ECS::Components::_2D::Transform::size"
   rankdir="RL";
   Node1 [label="Flakkari::Engine::ECS\l::Components::_2D::Transform::size",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
   Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="Flakkari::Game::handleEvent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#ab9a93d80ef12ab3b1af69201cce681d0",tooltip="Handle an event from a player."];
+  Node2 [label="Flakkari::Engine::ECS\l::Systems::_2D::position",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d92/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__2D.html#aab7adbed4293a12c180840bde1569d88",tooltip="Updates the position of all entities with a Position and a Movable component based on their velocity."];
   Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="Flakkari::Game::updateIncoming\lPackets",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#a53f86f8b71e686405dfa5be3b6ee67bf",tooltip="Empty the incoming packets of the players and update the game with the new packets."];
+  Node3 [label="Flakkari::Game::loadSystems",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#a58785188e8d0be4a493f1a03724b427f",tooltip="Add all the systems of the game to the registry."];
   Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="Flakkari::Game::update",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#aa3fb1b7dc6a9c7e9177242a37bf3339f",tooltip="Update the game. This function is called every frame."];
+  Node4 [label="Flakkari::Game::loadScene",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#a7a922284fb3aadc37fcac64724508db0",tooltip="Load a scene from the game."];
   Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="Flakkari::Game::run",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#a9372052fa595db8fe17f12e71dcee676",tooltip="Run the game. This function is called when the game is started. It will run the game loop."];
-  Node5 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="Flakkari::Game::start",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#af4062192215ec0e249ad0929e17ac4e0",tooltip="Start the game. This function is called when the game is launched. It will start the game loop."];
-  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7 [label="Flakkari::Engine::ECS\l::Systems::_2D::position",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d92/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__2D.html#aab7adbed4293a12c180840bde1569d88",tooltip="Updates the position of all entities with a Position and a Movable component based on their velocity."];
-  Node7 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 [label="Flakkari::Game::loadSystems",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#a8c1c536899944afc33cd5dbc60bc6d83",tooltip="Add all the systems of the game to the registry."];
-  Node8 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="Flakkari::Game::loadScene",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#a7a922284fb3aadc37fcac64724508db0",tooltip="Load a scene from the game."];
-  Node9 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node10 [label="Flakkari::Game::Game",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#af903c4e86315c6c0f3e339476c7e155c",tooltip="Construct a new Game object and load the config file of the game."];
+  Node5 [label="Flakkari::Game::Game",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#af903c4e86315c6c0f3e339476c7e155c",tooltip="Construct a new Game object and load the config file of the game."];
 }

@@ -6,7 +6,7 @@ digraph "Flakkari::ClientManager::addClient"
   rankdir="LR";
   Node1 [label="Flakkari::ClientManager\l::addClient",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Add a client to the client manager or update the last activity of the client."];
   Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="Flakkari::Protocol\l::V_0::Packet::deserialize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d9d/structFlakkari_1_1Protocol_1_1V__0_1_1Packet.html#a0d6fb9d2f315e1ce6ee1cd2abd31906c",tooltip="Deserialize the buffer into a packet."];
+  Node2 [label="Flakkari::Protocol\l::Packet::deserialize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d59/structFlakkari_1_1Protocol_1_1Packet.html#a14c7a93d5175df091256374f407ad186",tooltip="Deserialize the buffer into a packet."];
   Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 [label="Flakkari::Network::\lBuffer::extractData",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/df8/classFlakkari_1_1Network_1_1Buffer.html#ad7ad2e3a4a5727c72a585093d93cd016",tooltip="Get the data of the buffer."];
   Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

@@ -1,0 +1,14 @@
+digraph "Flakkari::Engine::ECS::Systems::_3D::spawn_random_within_skybox"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="Flakkari::Engine::ECS\l::Systems::_3D::spawn\l_random_within_skybox",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Spawns a random entity within a skybox."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Flakkari::Game::loadSystems",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#a58785188e8d0be4a493f1a03724b427f",tooltip="Add all the systems of the game to the registry."];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="Flakkari::Game::loadScene",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#a7a922284fb3aadc37fcac64724508db0",tooltip="Load a scene from the game."];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="Flakkari::Game::Game",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#af903c4e86315c6c0f3e339476c7e155c",tooltip="Construct a new Game object and load the config file of the game."];
+}
