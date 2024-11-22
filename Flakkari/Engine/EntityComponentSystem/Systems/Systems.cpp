@@ -229,6 +229,11 @@ bool spawn_enemy(Registry &r, std::string &templateName, Entity &entity)
         entity = r.spawn_entity();
         templateName = template_->name;
         Factory::RegistryEntityByTemplate(r, entity, template_->content);
+
+        auto &enemyTransform = r.getComponents<ECS::Components::_3D::Transform>()[entity];
+        enemyTransform->_position.vec.x = randomRange(-maxRangeX, maxRangeX);
+        enemyTransform->_position.vec.y = randomRange(-maxRangeY, maxRangeY);
+        enemyTransform->_position.vec.z = randomRange(-maxRangeZ, maxRangeZ);
         return true;
     }
     return false;
