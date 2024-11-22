@@ -424,7 +424,11 @@ void Game::update()
     updateIncomingPackets();
 
     for (auto &scene : _scenes)
+    {
         auto &registry = scene.second;
+
+        registry.run_systems();
+    }
 
     updateOutcomingPackets();
 }
