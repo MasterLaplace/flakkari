@@ -84,7 +84,7 @@ void ClientManager::checkInactiveClients()
 
 void ClientManager::sendPacketToClient(const std::shared_ptr<Network::Address> &client, const Network::Buffer &packet)
 {
-    std::thread([this, client, packet] { _socket->sendTo(client, packet); }).detach();
+    _socket->sendTo(client, packet);
 }
 
 void ClientManager::sendPacketToAllClients(const Network::Buffer &packet)

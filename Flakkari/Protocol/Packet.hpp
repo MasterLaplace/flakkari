@@ -47,7 +47,7 @@ template <typename Id> struct Packet {
     {
         std::string str = "Packet<Id: " + Commands::command_to_string(header._commandId) +
                           ", ContentLength: " + std::to_string(int(header._contentLength)) +
-                          ", SequenceNumber: " + std::to_string(int(header._sequenceNumber)) +
+                          ", SequenceNumber: " + std::to_string(long(header._sequenceNumber)) +
                           ", Payload: " + std::string((const char *) payload.data(), payload.size()) + ">";
         return str;
     }
