@@ -182,6 +182,30 @@ void Game::sendOnSameSceneExcept(const std::string &sceneName, Protocol::Packet<
     }
 }
 
+void Game::sendAllEntitiesToPlayer(std::shared_ptr<Client> player, const std::string &sceneGame)
+{
+    auto &registry = _scenes[sceneGame];
+    auto &transforms = registry.getComponents<Engine::ECS::Components::_3D::Transform>();
+    auto &tags = registry.getComponents<Engine::ECS::Components::Common::Tag>();
+
+    for (Engine::ECS::Entity i(0); i < transforms.size(); ++i)
+    {
+        if (!transforms[i].has_value() || !tags[i].has_value() || i == player->getEntity())
+            continue;
+        if (tags[i]->tag == "Skybox")
+            continue;
+        Protocol::Packet<Protocol::CommandId> packet;
+        packet.header._apiVersion = player->getApiVersion();
+        packet.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;
+        packet << i;
+        packet.injectString(tags[i]->tag);
+
+        Protocol::PacketFactory::addComponentsToPacketByEntity(packet, registry, i);
+
+        player->addPacketToSendQueue(packet);
+    }
+}
+
 void Game::checkDisconnect()
 {
     for (auto &player : _players)
@@ -408,6 +432,9 @@ void Game::updateOutcomingPackets(unsigned char maxMessagePerFrame)
             messageCount--;
 
             buffer += packet.serialize();
+        }
+        if (buffer.size() > 0)
+        {
             ClientManager::GetInstance().sendPacketToClient(player->getAddress(), buffer);
             ClientManager::UnlockInstance();
         }
@@ -487,6 +514,8 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
     packet2.injectString(p_Template);
 
     sendOnSameSceneExcept(sceneGame, packet2, player);
+
+    sendAllEntitiesToPlayer(player, sceneGame);
     return true;
 }
 
