@@ -110,7 +110,7 @@ void ClientManager::sendPacketToAllClientsExcept(const std::shared_ptr<Network::
     }
 }
 
-std::optional<std::pair<const std::string &, std::shared_ptr<Client>>>
+std::optional<std::pair<std::string, std::shared_ptr<Client>>>
 ClientManager::receivePacketFromClient(const std::shared_ptr<Network::Address> &client, const Network::Buffer &buffer)
 {
     auto clientName = client->toString().value_or("");
@@ -130,6 +130,13 @@ ClientManager::receivePacketFromClient(const std::shared_ptr<Network::Address> &
     if (packet.deserialize(buffer))
     {
         FLAKKARI_LOG_LOG("Client " + clientName + " sent a valid packet: " + packet.to_string());
+
+        if (packet.header._commandId == Protocol::CommandId::REQ_DISCONNECT)
+        {
+            FLAKKARI_LOG_LOG("Client " + clientName + " disconnected");
+            return std::make_pair(tmp_client->getGameName(), tmp_client);
+        }
+
         tmp_client->addPacketToReceiveQueue(packet);
         return std::nullopt;
     }
@@ -143,7 +150,6 @@ ClientManager::receivePacketFromClient(const std::shared_ptr<Network::Address> &
 
     _bannedClients.push_back(ip);
     FLAKKARI_LOG_LOG("Client " + clientName + " banned");
-    _clients.erase(clientName);
     return std::make_pair(tmp_client->getGameName(), tmp_client);
 }
 
