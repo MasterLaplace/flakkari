@@ -2,7 +2,7 @@ var namespaceFlakkari_1_1Engine_1_1Math =
 [
     [ "Vector", "de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html", "de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector" ],
     [ "Color", "d8/d84/namespaceFlakkari_1_1Engine_1_1Math.html#a2ceabef4e3c9cef648eebed769d7f6ac", null ],
-    [ "Quaternion", "d8/d84/namespaceFlakkari_1_1Engine_1_1Math.html#a6de4783f429f9369558a91e132718013", null ],
+    [ "Quaternion", "d8/d84/namespaceFlakkari_1_1Engine_1_1Math.html#abae794bb4fbc7f9a5ec3e92f35bfdc38", null ],
     [ "Vector2d", "d8/d84/namespaceFlakkari_1_1Engine_1_1Math.html#a80e83c1ca78c54bf06fc71802bfc2e16", null ],
     [ "Vector2f", "d8/d84/namespaceFlakkari_1_1Engine_1_1Math.html#ae0a20778e2d5a91e499b8bbf5160fce2", null ],
     [ "Vector2i", "d8/d84/namespaceFlakkari_1_1Engine_1_1Math.html#a9a5786b2b7fcb3b521a20dc19aedff6a", null ],

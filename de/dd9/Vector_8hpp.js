@@ -2,7 +2,7 @@ var Vector_8hpp =
 [
     [ "Vector", "de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html", "de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector" ],
     [ "Color", "de/dd9/Vector_8hpp.html#a2ceabef4e3c9cef648eebed769d7f6ac", null ],
-    [ "Quaternion", "de/dd9/Vector_8hpp.html#a6de4783f429f9369558a91e132718013", null ],
+    [ "Quaternion", "de/dd9/Vector_8hpp.html#abae794bb4fbc7f9a5ec3e92f35bfdc38", null ],
     [ "Vector2d", "de/dd9/Vector_8hpp.html#a80e83c1ca78c54bf06fc71802bfc2e16", null ],
     [ "Vector2f", "de/dd9/Vector_8hpp.html#ae0a20778e2d5a91e499b8bbf5160fce2", null ],
     [ "Vector2i", "de/dd9/Vector_8hpp.html#a9a5786b2b7fcb3b521a20dc19aedff6a", null ],

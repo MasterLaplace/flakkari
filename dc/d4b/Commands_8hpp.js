@@ -66,8 +66,6 @@ var Commands_8hpp =
       [ "REP_ENTITY_MOVED", "dc/d4b/Commands_8hpp.html#ae68eb0705ee27e6b3c4e7362bf345914af356dcd8071c30868e91edb9c38270e6", null ],
       [ "REQ_ENTITY_SHOOT", "dc/d4b/Commands_8hpp.html#ae68eb0705ee27e6b3c4e7362bf345914acb9ef4fae79099965e8a3e44d215bb9d", null ],
       [ "REP_ENTITY_SHOOT", "dc/d4b/Commands_8hpp.html#ae68eb0705ee27e6b3c4e7362bf345914a01509acbd1749b614eb8f768b64d0914", null ],
-      [ "REQ_USER_UPDATE", "dc/d4b/Commands_8hpp.html#ae68eb0705ee27e6b3c4e7362bf345914a3db67bb4bd73991fe8309b451a42179b", null ],
-      [ "REP_USER_UPDATE", "dc/d4b/Commands_8hpp.html#ae68eb0705ee27e6b3c4e7362bf345914a6fe317c6b970ace678f2a214b9c6fd21", null ],
       [ "REQ_USER_UPDATES", "dc/d4b/Commands_8hpp.html#ae68eb0705ee27e6b3c4e7362bf345914a47348371a2a2a952902c589af8aff6c2", null ],
       [ "REP_USER_UPDATES", "dc/d4b/Commands_8hpp.html#ae68eb0705ee27e6b3c4e7362bf345914adf1ef944a52cc07550219f0697b7fa32", null ],
       [ "REQ_CREATE_ROOM", "dc/d4b/Commands_8hpp.html#ae68eb0705ee27e6b3c4e7362bf345914a60bc333479de4b64daf05bacee020f6e", null ],
