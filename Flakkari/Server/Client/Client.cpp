@@ -23,7 +23,7 @@ Client::~Client() { _isConnected = false; }
 
 bool Client::isConnected(float timeout)
 {
-    if (!this || !_isConnected)
+    if (!_isConnected)
         return false;
     return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - _lastActivity).count() <
            timeout;

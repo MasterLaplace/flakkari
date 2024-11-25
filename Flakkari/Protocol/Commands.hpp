@@ -195,8 +195,10 @@ enum class CommandId : uint8_t {
     REQ_ENTITY_SHOOT = 28,   // Server -> Client [Shoot entity]: (id)(component (position, rotation, velocity, etc))
     REP_ENTITY_SHOOT = 29,   // Client -> Server [Entity shot]: ()
     // 30 - 39: User
-    REQ_USER_UPDATES = 30, // Client -> Server [Update user multi-events]: (event_id, state|event_id, float)
-    REP_USER_UPDATES = 31, // Server -> Client [User updated]: ()
+    REQ_USER_UPDATE = 30,  // Client -> Server [Update user]: (event_id, state)
+    REP_USER_UPDATE = 31,  // Server -> Client [User updated]: ()
+    REQ_USER_UPDATES = 32, // Client -> Server [Update user multi-events]: (event_id, state|event_id, float)
+    REP_USER_UPDATES = 33, // Server -> Client [User updated]: ()
     // 40 - 49: Chat
     // 50 - 59: Matchmaking
     REQ_CREATE_ROOM = 50, // Client -> Server [Create room]: (user_id)
@@ -242,6 +244,8 @@ public:
         case CommandId::REP_ENTITY_MOVED: return "REP_ENTITY_MOVED";
         case CommandId::REQ_ENTITY_SHOOT: return "REQ_ENTITY_SHOOT";
         case CommandId::REP_ENTITY_SHOOT: return "REP_ENTITY_SHOOT";
+        case CommandId::REQ_USER_UPDATE: return "REQ_USER_UPDATE";
+        case CommandId::REP_USER_UPDATE: return "REP_USER_UPDATE";
         case CommandId::REQ_USER_UPDATES: return "REQ_USER_UPDATES";
         case CommandId::REP_USER_UPDATES: return "REP_USER_UPDATES";
         case CommandId::REQ_CREATE_ROOM: return "REQ_CREATE_ROOM";

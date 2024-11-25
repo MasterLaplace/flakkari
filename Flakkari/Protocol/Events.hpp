@@ -67,11 +67,16 @@ enum class EventId : uint8_t {
     MOVE_DOWN = 3,
     MOVE_FRONT = 4,
     MOVE_BACK = 5,
-    LOOK_LEFT = 6,
-    LOOK_RIGHT = 7,
-    LOOK_UP = 8,
-    LOOK_DOWN = 9,
     SHOOT = 10,
+    MAX_EVENT
+};
+
+enum class EventAxisId : uint8_t {
+    LOOK_LEFT = 1,
+    LOOK_RIGHT = 2,
+    LOOK_UP = 3,
+    LOOK_DOWN = 4,
+    SHOOT = 5,
     MAX_EVENT
 };
 
@@ -86,15 +91,11 @@ LPL_PACKED_START
 struct Event {
     V_1::EventId id;
     V_1::EventState state;
-
-    void print() const { std::cout << "Event: " << int(id) << " " << int(state) << std::endl; }
 };
 
 struct EventAxis {
-    V_1::EventId id;
+    V_1::EventAxisId id;
     float value;
-
-    void print() const { std::cout << "EventAxis: " << int(id) << " " << value << std::endl; }
 };
 
 LPL_PACKED_END

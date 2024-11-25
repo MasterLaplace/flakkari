@@ -48,7 +48,7 @@ void Game::loadSystems(Engine::ECS::Registry &registry, const std::string &scene
         registry.add_system(
             [this](Engine::ECS::Registry &r) { Engine::ECS::Systems::_3D::apply_movable(r, _deltaTime); });
 
-    if (sysName == "spawn_enemy")
+    else if (sysName == "spawn_enemy")
         registry.add_system([this, sceneName](Engine::ECS::Registry &r) {
             std::string templateName;
             Engine::ECS::Entity entity;
@@ -182,30 +182,6 @@ void Game::sendOnSameSceneExcept(const std::string &sceneName, Protocol::Packet<
     }
 }
 
-void Game::sendAllEntitiesToPlayer(std::shared_ptr<Client> player, const std::string &sceneGame)
-{
-    auto &registry = _scenes[sceneGame];
-    auto &transforms = registry.getComponents<Engine::ECS::Components::_3D::Transform>();
-    auto &tags = registry.getComponents<Engine::ECS::Components::Common::Tag>();
-
-    for (Engine::ECS::Entity i(0); i < transforms.size(); ++i)
-    {
-        if (!transforms[i].has_value() || !tags[i].has_value() || i == player->getEntity())
-            continue;
-        if (tags[i]->tag == "Skybox")
-            continue;
-        Protocol::Packet<Protocol::CommandId> packet;
-        packet.header._apiVersion = player->getApiVersion();
-        packet.header._commandId = Protocol::CommandId::REQ_ENTITY_SPAWN;
-        packet << i;
-        packet.injectString(tags[i]->tag);
-
-        Protocol::PacketFactory::addComponentsToPacketByEntity(packet, registry, i);
-
-        player->addPacketToSendQueue(packet);
-    }
-}
-
 void Game::checkDisconnect()
 {
     for (auto &player : _players)
@@ -230,10 +206,10 @@ void Game::sendUpdatePosition(std::shared_ptr<Client> player, Engine::ECS::Compo
     packet << pos._position.vec.x;
     packet << pos._position.vec.y;
     packet << pos._position.vec.z;
-    packet << (float) pos._rotation.vec.x;
-    packet << (float) pos._rotation.vec.y;
-    packet << (float) pos._rotation.vec.z;
-    packet << (float) pos._rotation.vec.w;
+    packet << pos._rotation.vec.x;
+    packet << pos._rotation.vec.y;
+    packet << pos._rotation.vec.z;
+    packet << pos._rotation.vec.w;
     packet << pos._scale.vec.x;
     packet << pos._scale.vec.y;
     packet << pos._scale.vec.z;
@@ -260,7 +236,7 @@ static bool handleMoveEvent(Protocol::Event &event, Engine::ECS::Components::_3D
                             Engine::ECS::Components::_3D::Movable &vel, Engine::ECS::Components::_3D::Transform &pos)
 {
     auto setAcceleration = [&](const Engine::Math::Vector3f &acceleration) {
-        vel._acceleration = pos._rotation.multiplyWithFloatVector(acceleration);
+        vel._acceleration = pos._rotation * acceleration;
     };
 
     switch (event.id)
@@ -356,22 +332,30 @@ void Game::handleEvents(std::shared_ptr<Client> player, Protocol::Packet<Protoco
     }
 
     // jump to the first axis event
-    data += count_events * sizeof(Protocol::Event) + sizeof(uint16_t);
+    data += count_events * sizeof(Protocol::Event);
 
     for (uint16_t i = 0; i < count_axis; ++i)
     {
         Protocol::EventAxis event = *(Protocol::EventAxis *) (data + i * sizeof(Protocol::EventAxis));
 
-        if (event.id == Protocol::EventId::LOOK_RIGHT && ctrl->_look_right)
+        if (event.id == Protocol::EventAxisId::LOOK_RIGHT && ctrl->_look_right)
         {
-            pos->_rotation.rotate(Engine::Math::Vector3d(0, 0, 1), -event.value);
-            sendUpdatePosition(player, pos.value(), vel.value());
+            pos->_rotation.vec.y += event.value * 100 * _deltaTime;
             continue;
         }
-        else if (event.id == Protocol::EventId::LOOK_UP && ctrl->_look_up)
+        else if (event.id == Protocol::EventAxisId::LOOK_LEFT && ctrl->_look_left)
         {
-            pos->_rotation.rotate(Engine::Math::Vector3d(1, 0, 0), -event.value);
-            sendUpdatePosition(player, pos.value(), vel.value());
+            pos->_rotation.vec.y -= event.value * 100 * _deltaTime;
+            continue;
+        }
+        else if (event.id == Protocol::EventAxisId::LOOK_UP && ctrl->_look_up)
+        {
+            pos->_rotation.vec.x += event.value * 100 * _deltaTime;
+            continue;
+        }
+        else if (event.id == Protocol::EventAxisId::LOOK_DOWN && ctrl->_look_down)
+        {
+            pos->_rotation.vec.x -= event.value * 100 * _deltaTime;
             continue;
         }
     }
@@ -424,9 +408,6 @@ void Game::updateOutcomingPackets(unsigned char maxMessagePerFrame)
             messageCount--;
 
             buffer += packet.serialize();
-        }
-        if (buffer.size() > 0)
-        {
             ClientManager::GetInstance().sendPacketToClient(player->getAddress(), buffer);
             ClientManager::UnlockInstance();
         }
@@ -506,8 +487,6 @@ bool Game::addPlayer(std::shared_ptr<Client> player)
     packet2.injectString(p_Template);
 
     sendOnSameSceneExcept(sceneGame, packet2, player);
-
-    sendAllEntitiesToPlayer(player, sceneGame);
     return true;
 }
 
