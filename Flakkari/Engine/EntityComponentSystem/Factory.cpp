@@ -182,7 +182,7 @@ void RegistryEntityByTemplate(Registry &registry, Entity entity, const nl_templa
                 Engine::Math::Vector3f(componentContent["position"]["x"], componentContent["position"]["y"],
                                        componentContent["position"]["z"]);
             transform._rotation =
-                Engine::Math::Vector3f(componentContent["rotation"]["x"], componentContent["rotation"]["y"],
+                Engine::Math::Vector3d(componentContent["rotation"]["x"], componentContent["rotation"]["y"],
                                        componentContent["rotation"]["z"]);
             transform._scale = Engine::Math::Vector3f(componentContent["scale"]["x"], componentContent["scale"]["y"],
                                                       componentContent["scale"]["z"]);

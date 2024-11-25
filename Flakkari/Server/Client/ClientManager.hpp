@@ -137,9 +137,9 @@ public:
      * @param client  The client's address
      * @param packet  The packet received
      * @return std::optional<std::pair<const std::string &, std::shared_ptr<Client>>
-     *         The client's name and the client object
+     *         A pair of the client's game name and the client object
      */
-    std::optional<std::pair<const std::string &, std::shared_ptr<Client>>>
+    std::optional<std::pair<std::string, std::shared_ptr<Client>>>
     receivePacketFromClient(const std::shared_ptr<Network::Address> &client, const Network::Buffer &packet);
 
     /**

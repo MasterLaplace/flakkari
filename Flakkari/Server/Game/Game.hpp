@@ -89,6 +89,8 @@ public: // Actions
     void sendOnSameSceneExcept(const std::string &sceneName, Protocol::Packet<Protocol::CommandId> &packet,
                                std::shared_ptr<Client> except);
 
+    void sendAllEntitiesToPlayer(std::shared_ptr<Client> player, const std::string &sceneGame);
+
     /**
      * @brief Check if a player is disconnected.
      *

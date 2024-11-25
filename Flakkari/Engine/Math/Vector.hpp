@@ -82,6 +82,12 @@ template <typename Type> struct Vector {
         return Vector<Type>(v[0] * other.v[0], v[1] * other.v[1], v[2] * other.v[2], v[3] * other.v[3]);
     }
 
+    Vector<float> multiplyWithFloatVector(const Vector<float> &other) const
+    {
+        return Vector<float>((float) v[0] * other.v[0], (float) v[1] * other.v[1], (float) v[2] * other.v[2],
+                             (float) v[3] * other.v[3]);
+    }
+
     Vector<Type> operator/(const Vector<Type> &other) const
     {
         return Vector<Type>(v[0] / other.v[0], v[1] / other.v[1], v[2] / other.v[2], v[3] / other.v[3]);
@@ -193,9 +199,7 @@ template <typename Type> struct Vector {
 
     Type operator[](const int &index) const { return v[index]; }
 
-    Type length() const { return sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]); }
-
-    Type lengthSquared() const { return v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]; }
+    Type length() const { return sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]); }
 
     Vector<Type> &normalize()
     {
@@ -205,7 +209,6 @@ template <typename Type> struct Vector {
         v[0] /= len;
         v[1] /= len;
         v[2] /= len;
-        v[3] /= len;
         return *this;
     }
 
@@ -214,7 +217,7 @@ template <typename Type> struct Vector {
         Type len = length();
         if (len == 0)
             return *this;
-        return Vector<Type>(v[0] / len, v[1] / len, v[2] / len, v[3] / len);
+        return Vector<Type>(v[0] / len, v[1] / len, v[2] / len);
     }
 
     Type dot(const Vector<Type> &other) const
@@ -307,19 +310,28 @@ template <typename Type> struct Vector {
         v[1] = y;
     }
 
-    void rotate(const Vector<Type> &axis, double angleRadians)
+    void quaternionRotate(Type x, Type y, Type z, Type w)
     {
-        Type c = cos(angleRadians);
-        Type s = sin(angleRadians);
-        Type x = v[0] * (c + axis.x * axis.x * (1 - c)) + v[1] * (axis.x * axis.y * (1 - c) - axis.z * s) +
-                 v[2] * (axis.x * axis.z * (1 - c) + axis.y * s);
-        Type y = v[0] * (axis.y * axis.x * (1 - c) + axis.z * s) + v[1] * (c + axis.y * axis.y * (1 - c)) +
-                 v[2] * (axis.y * axis.z * (1 - c) - axis.x * s);
-        Type z = v[0] * (axis.z * axis.x * (1 - c) - axis.y * s) + v[1] * (axis.z * axis.y * (1 - c) + axis.x * s) +
-                 v[2] * (c + axis.z * axis.z * (1 - c));
-        v[0] = x;
-        v[1] = y;
-        v[2] = z;
+        v[0] = v[3] * x + v[0] * w + v[1] * z - v[2] * y;
+        v[1] = v[3] * y - v[0] * z + v[1] * w + v[2] * x;
+        v[2] = v[3] * z + v[0] * y - v[1] * x + v[2] * w;
+        v[3] = v[3] * w - v[0] * x - v[1] * y - v[2] * z;
+    }
+
+    /**
+     * @brief Rotate the vector around an axis by an angle in radians.
+     *
+     * @param axis  The axis to rotate around.
+     * @param angleRadians  The angle in radians.
+     */
+    void rotate(const Vector<Type> &axis, float angleDegrees)
+    {
+        double _pi = 3.14159265358979323846;
+        double angleRadians = (angleDegrees * _pi / 180) / 2.0;
+        double sinHalfAngle = sin(angleRadians);
+        auto normalizedAxis = axis.normalized();
+        quaternionRotate(normalizedAxis.v[0] * sinHalfAngle, normalizedAxis.v[1] * sinHalfAngle,
+                         normalizedAxis.v[2] * sinHalfAngle, cos(angleRadians));
     }
 };
 
@@ -335,7 +347,7 @@ using Vector4f = Vector<float>;
 using Vector4d = Vector<double>;
 using Vector4i = Vector<int>;
 using Vector4u = Vector<unsigned int>;
-using Quaternion = Vector4f;
+using Quaternion = Vector4d;
 using Color = Vector4f;
 
 template <typename Type> std::ostream &operator<<(std::ostream &os, const Vector<Type> &vector);

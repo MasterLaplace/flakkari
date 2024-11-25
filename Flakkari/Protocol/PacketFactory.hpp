@@ -217,10 +217,10 @@ public:
             packet << transform->_position.vec.x;
             packet << transform->_position.vec.y;
             packet << transform->_position.vec.z;
-            packet << transform->_rotation.vec.x;
-            packet << transform->_rotation.vec.y;
-            packet << transform->_rotation.vec.z;
-            packet << transform->_rotation.vec.w;
+            packet << (float) transform->_rotation.vec.x;
+            packet << (float) transform->_rotation.vec.y;
+            packet << (float) transform->_rotation.vec.z;
+            packet << (float) transform->_rotation.vec.w;
             packet << transform->_scale.vec.x;
             packet << transform->_scale.vec.y;
             packet << transform->_scale.vec.z;

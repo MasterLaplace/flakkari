@@ -62,6 +62,8 @@ bool UDPServer::handleInput(int fd)
 void UDPServer::handlePacket()
 {
     auto packet = _socket->receiveFrom();
+    if (!packet.has_value())
+        return;
     auto resultAddClient = ClientManager::GetInstance().addClient(packet->first, packet->second);
     ClientManager::UnlockInstance();
     if (!resultAddClient.has_value())
