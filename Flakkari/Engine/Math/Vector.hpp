@@ -84,7 +84,8 @@ template <typename Type> struct Vector {
 
     Vector<float> multiplyWithFloatVector(const Vector<float> &other) const
     {
-        return Vector<float>((float)v[0] * other.v[0], (float)v[1] * other.v[1], (float)v[2] * other.v[2], (float)v[3] * other.v[3]);
+        return Vector<float>((float) v[0] * other.v[0], (float) v[1] * other.v[1], (float) v[2] * other.v[2],
+                             (float) v[3] * other.v[3]);
     }
 
     Vector<Type> operator/(const Vector<Type> &other) const
@@ -330,7 +331,7 @@ template <typename Type> struct Vector {
         double sinHalfAngle = sin(angleRadians);
         auto normalizedAxis = axis.normalized();
         quaternionRotate(normalizedAxis.v[0] * sinHalfAngle, normalizedAxis.v[1] * sinHalfAngle,
-                                  normalizedAxis.v[2] * sinHalfAngle, cos(angleRadians));
+                         normalizedAxis.v[2] * sinHalfAngle, cos(angleRadians));
     }
 };
 

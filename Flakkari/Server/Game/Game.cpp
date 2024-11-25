@@ -230,10 +230,10 @@ void Game::sendUpdatePosition(std::shared_ptr<Client> player, Engine::ECS::Compo
     packet << pos._position.vec.x;
     packet << pos._position.vec.y;
     packet << pos._position.vec.z;
-    packet << (float)pos._rotation.vec.x;
-    packet << (float)pos._rotation.vec.y;
-    packet << (float)pos._rotation.vec.z;
-    packet << (float)pos._rotation.vec.w;
+    packet << (float) pos._rotation.vec.x;
+    packet << (float) pos._rotation.vec.y;
+    packet << (float) pos._rotation.vec.z;
+    packet << (float) pos._rotation.vec.w;
     packet << pos._scale.vec.x;
     packet << pos._scale.vec.y;
     packet << pos._scale.vec.z;

@@ -87,18 +87,14 @@ struct Event {
     V_1::EventId id;
     V_1::EventState state;
 
-    void print () const {
-        std::cout << "Event: " << int(id) << " " << int(state) << std::endl;
-    }
+    void print() const { std::cout << "Event: " << int(id) << " " << int(state) << std::endl; }
 };
 
 struct EventAxis {
     V_1::EventId id;
     float value;
 
-    void print () const {
-        std::cout << "EventAxis: " << int(id) << " " << value << std::endl;
-    }
+    void print() const { std::cout << "EventAxis: " << int(id) << " " << value << std::endl; }
 };
 
 LPL_PACKED_END
