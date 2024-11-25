@@ -151,11 +151,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d2/da2/namespaceFlakkari.html",
-"d5/dd2/classFlakkari_1_1Engine_1_1ECS_1_1SparseArrays.html#a87da9ff2e7dc24e56e50999088fefd5f",
-"d9/d45/3D_2RigidBody_8hpp.html",
-"dc/d4b/Commands_8hpp.html#adeff7b48bf0c05fe02740289753786b3aa91fe0f27ffce574894d81cc77c9ab7e",
-"de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a64ded9f85030d7dd62c545b210e5c308"
+"d2/d4f/classFlakkari_1_1Network_1_1Serializer.html",
+"d5/dd2/classFlakkari_1_1Engine_1_1ECS_1_1SparseArrays.html#a84e83028920797f88a9f93825951059a",
+"d9/d36/ClientManager_8cpp.html",
+"dc/d4b/Commands_8hpp.html#adeff7b48bf0c05fe02740289753786b3a6cad133f06de69ded18de2d5118c8440",
+"de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a3a8fc62f107fdaea1a873f26f4957a07"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

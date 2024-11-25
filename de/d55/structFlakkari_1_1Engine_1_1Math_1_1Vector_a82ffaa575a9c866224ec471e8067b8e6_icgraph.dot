@@ -9,6 +9,4 @@ digraph "Flakkari::Engine::Math::Vector::length"
   Node2 [label="Flakkari::Engine::Math\l::Vector::normalize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#ad50813ef6ff128c116cc2fcdf7c08201",tooltip=" "];
   Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 [label="Flakkari::Engine::Math\l::Vector::normalized",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#adbc7111875b242a2b1d9f3dc98ed5cca",tooltip=" "];
-  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="Flakkari::Engine::Math\l::Vector::rotate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a3ceb92a1a8b480666637854707be73e3",tooltip="Rotate the vector around an axis by an angle in radians."];
 }

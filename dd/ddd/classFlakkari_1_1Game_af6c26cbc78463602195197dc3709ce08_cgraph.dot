@@ -16,10 +16,5 @@ digraph "Flakkari::Game::addPlayer"
   Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node6 [label="Flakkari::Engine::ECS\l::Registry::remove_component",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d58/classFlakkari_1_1Engine_1_1ECS_1_1Registry.html#afec03d0edf17b2ad7098604ae70d0f33",tooltip="Remove a component from an entity in the registry."];
   Node1 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7 [label="Flakkari::Game::sendAllEntities\lToPlayer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#a334db913f1401e0ff19b3b28df38a9ba",tooltip=" "];
-  Node7 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 [label="Flakkari::Protocol\l::PacketFactory::addComponents\lToPacketByEntity",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d06/classFlakkari_1_1Protocol_1_1PacketFactory.html#a1b3ecd6a8b5169c43a3a24d7b6bb6069",tooltip="Add all the components of an entity to a packet."];
-  Node7 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="Flakkari::Game::sendOnSame\lSceneExcept",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#aad2da6e3812a3e756753375a6fa7894b",tooltip=" "];
+  Node7 [label="Flakkari::Game::sendOnSame\lSceneExcept",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddd/classFlakkari_1_1Game.html#aad2da6e3812a3e756753375a6fa7894b",tooltip=" "];
 }

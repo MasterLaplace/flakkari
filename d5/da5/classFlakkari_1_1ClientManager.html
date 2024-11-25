@@ -134,9 +134,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a67424e87853a0717ecc718802a3dfaad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#a67424e87853a0717ecc718802a3dfaad">sendPacketToAllClientsExcept</a> (const std::shared_ptr&lt; Network::Address &gt; &amp;client, const <a class="el" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Network::Buffer</a> &amp;packet)</td></tr>
 <tr class="memdesc:a67424e87853a0717ecc718802a3dfaad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a packet to all clients except one.  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#a67424e87853a0717ecc718802a3dfaad">More...</a><br /></td></tr>
 <tr class="separator:a67424e87853a0717ecc718802a3dfaad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af76b97015c7f14ada28d68086de2dae5"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::pair&lt; std::string, std::shared_ptr&lt; <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html">Client</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#af76b97015c7f14ada28d68086de2dae5">receivePacketFromClient</a> (const std::shared_ptr&lt; Network::Address &gt; &amp;client, const <a class="el" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Network::Buffer</a> &amp;packet)</td></tr>
-<tr class="memdesc:af76b97015c7f14ada28d68086de2dae5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive a packet from a client.  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#af76b97015c7f14ada28d68086de2dae5">More...</a><br /></td></tr>
-<tr class="separator:af76b97015c7f14ada28d68086de2dae5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af06fee7a25e3bef6f7bf7dcf34ecb944"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::pair&lt; const std::string &amp;, std::shared_ptr&lt; <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html">Client</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#af06fee7a25e3bef6f7bf7dcf34ecb944">receivePacketFromClient</a> (const std::shared_ptr&lt; Network::Address &gt; &amp;client, const <a class="el" href="../../d4/df8/classFlakkari_1_1Network_1_1Buffer.html">Network::Buffer</a> &amp;packet)</td></tr>
+<tr class="memdesc:af06fee7a25e3bef6f7bf7dcf34ecb944"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive a packet from a client.  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#af06fee7a25e3bef6f7bf7dcf34ecb944">More...</a><br /></td></tr>
+<tr class="separator:af06fee7a25e3bef6f7bf7dcf34ecb944"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a531c94c6cbb43fc6c706fa57cafd8b7c"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html">Client</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/da5/classFlakkari_1_1ClientManager.html#a531c94c6cbb43fc6c706fa57cafd8b7c">getClient</a> (const std::shared_ptr&lt; Network::Address &gt; &amp;client)</td></tr>
 <tr class="memdesc:a531c94c6cbb43fc6c706fa57cafd8b7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html" title="Client class that handles the client&#39;s activity and disconnection timeout.">Client</a> object.  <a href="../../d5/da5/classFlakkari_1_1ClientManager.html#a531c94c6cbb43fc6c706fa57cafd8b7c">More...</a><br /></td></tr>
 <tr class="separator:a531c94c6cbb43fc6c706fa57cafd8b7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -424,14 +424,14 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="af76b97015c7f14ada28d68086de2dae5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af76b97015c7f14ada28d68086de2dae5">&#9670;&nbsp;</a></span>receivePacketFromClient()</h2>
+<a id="af06fee7a25e3bef6f7bf7dcf34ecb944"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af06fee7a25e3bef6f7bf7dcf34ecb944">&#9670;&nbsp;</a></span>receivePacketFromClient()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::optional&lt; std::pair&lt; std::string, std::shared_ptr&lt; <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html">Client</a> &gt; &gt; &gt; Flakkari::ClientManager::receivePacketFromClient </td>
+          <td class="memname">std::optional&lt; std::pair&lt; const std::string &amp;, std::shared_ptr&lt; <a class="el" href="../../d9/d34/classFlakkari_1_1Client.html">Client</a> &gt; &gt; &gt; Flakkari::ClientManager::receivePacketFromClient </td>
           <td>(</td>
           <td class="paramtype">const std::shared_ptr&lt; Network::Address &gt; &amp;&#160;</td>
           <td class="paramname"><em>client</em>, </td>
@@ -458,11 +458,11 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::optional&lt;std::pair&lt;const std::string &amp;, std::shared_ptr&lt;Client&gt;&gt; A pair of the client's game name and the client object </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>std::optional&lt;std::pair&lt;const std::string &amp;, std::shared_ptr&lt;Client&gt;&gt; The client's name and the client object </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d5/da5/classFlakkari_1_1ClientManager_af76b97015c7f14ada28d68086de2dae5_cgraph.png" border="0" usemap="#ad5/da5/classFlakkari_1_1ClientManager_af76b97015c7f14ada28d68086de2dae5_cgraph" alt=""/></div>
+<div class="center"><img src="../../d5/da5/classFlakkari_1_1ClientManager_af06fee7a25e3bef6f7bf7dcf34ecb944_cgraph.png" border="0" usemap="#ad5/da5/classFlakkari_1_1ClientManager_af06fee7a25e3bef6f7bf7dcf34ecb944_cgraph" alt=""/></div>
 </div>
 
 </div>
@@ -594,8 +594,8 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>Flakkari/Server/Client/<a class="el" href="../../d8/dff/ClientManager_8hpp_source.html">ClientManager.hpp (180  660 5703 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Client/ClientManager.hpp)</a></li>
-<li>Flakkari/Server/Client/<a class="el" href="../../d9/d36/ClientManager_8cpp.html">ClientManager.cpp (170  401 5369 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Client/ClientManager.cpp)</a></li>
+<li>Flakkari/Server/Client/<a class="el" href="../../d8/dff/ClientManager_8hpp_source.html">ClientManager.hpp (180  658 5696 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Client/ClientManager.hpp)</a></li>
+<li>Flakkari/Server/Client/<a class="el" href="../../d9/d36/ClientManager_8cpp.html">ClientManager.cpp (164  393 5214 /home/runner/work/Flakkari/Flakkari/Flakkari/Server/Client/ClientManager.cpp)</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

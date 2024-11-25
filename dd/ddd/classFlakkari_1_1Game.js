@@ -13,7 +13,6 @@ var classFlakkari_1_1Game =
     [ "loadSystems", "dd/ddd/classFlakkari_1_1Game.html#a58785188e8d0be4a493f1a03724b427f", null ],
     [ "removePlayer", "dd/ddd/classFlakkari_1_1Game.html#a223cb1b29ff76b417f493a3c74144160", null ],
     [ "run", "dd/ddd/classFlakkari_1_1Game.html#a9372052fa595db8fe17f12e71dcee676", null ],
-    [ "sendAllEntitiesToPlayer", "dd/ddd/classFlakkari_1_1Game.html#a334db913f1401e0ff19b3b28df38a9ba", null ],
     [ "sendOnSameScene", "dd/ddd/classFlakkari_1_1Game.html#a049bba6f759cc1f72ed3ae6cbd14804f", null ],
     [ "sendOnSameSceneExcept", "dd/ddd/classFlakkari_1_1Game.html#aad2da6e3812a3e756753375a6fa7894b", null ],
     [ "sendUpdatePosition", "dd/ddd/classFlakkari_1_1Game.html#a1b14145854aaa09a75e830ed6f740456", null ],

@@ -1,9 +1,4 @@
 var searchData=
 [
-  ['udpserver_980',['UDPServer',['../d0/dd1/classFlakkari_1_1UDPServer.html#a476f3aba5b97812d3f445629b75ccbd5',1,'Flakkari::UDPServer']]],
-  ['update_981',['update',['../dd/ddd/classFlakkari_1_1Game.html#aa3fb1b7dc6a9c7e9177242a37bf3339f',1,'Flakkari::Game']]],
-  ['update_5fcontrol_982',['update_control',['../d9/d92/namespaceFlakkari_1_1Engine_1_1ECS_1_1Systems_1_1__2D.html#a618f477ddb7d9ec7688c7c7d39f34a85',1,'Flakkari::Engine::ECS::Systems::_2D']]],
-  ['updategame_983',['updateGame',['../dc/de7/classFlakkari_1_1GameManager.html#a6953f181b45d50081efc2b60b4e1049c',1,'Flakkari::GameManager']]],
-  ['updateincomingpackets_984',['updateIncomingPackets',['../dd/ddd/classFlakkari_1_1Game.html#a6594373893294e8ace1a1cdc34a31383',1,'Flakkari::Game']]],
-  ['updateoutcomingpackets_985',['updateOutcomingPackets',['../dd/ddd/classFlakkari_1_1Game.html#a8242bf617bde8579f1728eb1da86a301',1,'Flakkari::Game']]]
+  ['vector_981',['Vector',['../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a74eb3ef94cd6f84cdc85425425df8359',1,'Flakkari::Engine::Math::Vector::Vector()'],['../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#afcbc3e7c96e099836f37c2517d4fc1c7',1,'Flakkari::Engine::Math::Vector::Vector(Type x, Type y, Type z, Type w)'],['../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a98e13573c41fc47d10c7b529ca7614e1',1,'Flakkari::Engine::Math::Vector::Vector(Type x, Type y, Type z)'],['../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a38317faa2d3e9187d510ebf01db07c83',1,'Flakkari::Engine::Math::Vector::Vector(Type x, Type y)'],['../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a62d4f9735bef9523fd9da7a66bc2aaa3',1,'Flakkari::Engine::Math::Vector::Vector(Type x)'],['../de/d55/structFlakkari_1_1Engine_1_1Math_1_1Vector.html#a99c9f26eeb0629a1dae81f57b0c8a8a3',1,'Flakkari::Engine::Math::Vector::Vector(const Vector&lt; Type &gt; &amp;other)']]]
 ];
