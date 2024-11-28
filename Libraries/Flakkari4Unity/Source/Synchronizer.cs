@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System;
 using UnityEngine;
 
 namespace Flakkari4Unity
@@ -6,6 +8,20 @@ namespace Flakkari4Unity
     public class Synchronizer : MonoBehaviour
     {
         private readonly Dictionary<ulong, ECS.Entity> entities = new();
+        private static readonly ConcurrentQueue<Action> actions = new();
+
+        public static void Enqueue(Action action)
+        {
+            actions.Enqueue(action);
+        }
+
+        private void Update()
+        {
+            while (actions.TryDequeue(out var action))
+            {
+                action.Invoke();
+            }
+        }
 
         public void AddEntity(ulong id, ECS.Entity entity, byte[] payload)
         {

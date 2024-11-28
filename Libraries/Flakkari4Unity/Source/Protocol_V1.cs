@@ -154,21 +154,13 @@ namespace Flakkari4Unity.Protocol
             REP_ENTITY_SHOOT = 29,
 
             /// <summary>
-            /// User command: Request to update a user.
-            /// </summary>
-            REQ_USER_UPDATE = 30,
-            /// <summary>
-            /// User command: Response to user update request.
-            /// </summary>
-            REP_USER_UPDATE = 31,
-            /// <summary>
             /// User command: Request to update a user with a list of events.
             /// </summary>
-            REQ_USER_UPDATES = 32,
+            REQ_USER_UPDATES = 30,
             /// <summary>
             /// User command: Response to user update request with a list of events.
             /// </summary>
-            REP_USER_UPDATES = 33,
+            REP_USER_UPDATES = 31,
 
             /// <summary>
             /// Matchmaking command: Request to create a room.
@@ -256,17 +248,17 @@ namespace Flakkari4Unity.Protocol
         /// </summary>
         public enum EventId : byte
         {
-            MOVE_LEFT = 10,
-            MOVE_RIGHT = 11,
-            MOVE_UP = 12,
-            MOVE_DOWN = 13,
-            MOVE_FRONT = 14,
-            MOVE_BACK = 15,
-            LOOK_LEFT = 16,
-            LOOK_RIGHT = 17,
-            LOOK_UP = 18,
-            LOOK_DOWN = 19,
-            SHOOT = 20,
+            MOVE_LEFT = 0,
+            MOVE_RIGHT = 1,
+            MOVE_UP = 2,
+            MOVE_DOWN = 3,
+            MOVE_FRONT = 4,
+            MOVE_BACK = 5,
+            LOOK_LEFT = 6,
+            LOOK_RIGHT = 7,
+            LOOK_UP = 8,
+            LOOK_DOWN = 9,
+            SHOOT = 10,
             MAX_EVENT
         }
 

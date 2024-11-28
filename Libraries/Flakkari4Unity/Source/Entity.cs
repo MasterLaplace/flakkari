@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 using CurrentProtocol = Flakkari4Unity.Protocol.V1;
@@ -100,14 +101,20 @@ namespace Flakkari4Unity.ECS
 
                     case CurrentProtocol.ComponentId.BOXCOLLIDER:
                         i++;
-                        var boxCollider = gameObject.AddComponent<Components._3D.BoxCollider>();
-                        boxCollider.Deserialize(data, ref i);
+                        var boxCollider = gameObject.AddComponent<BoxCollider>();
+                        boxCollider.center = new Vector3(BitConverter.ToSingle(data, i), BitConverter.ToSingle(data, i + sizeof(float)), BitConverter.ToSingle(data, i + sizeof(float) * 2));
+                        i += sizeof(float) * 3;
+                        boxCollider.size = new Vector3(BitConverter.ToSingle(data, i), BitConverter.ToSingle(data, i + sizeof(float)), BitConverter.ToSingle(data, i + sizeof(float) * 2));
+                        i += sizeof(float) * 3;
                         break;
 
                     case CurrentProtocol.ComponentId.SPHERECOLLIDER:
                         i++;
-                        var sphereCollider = gameObject.AddComponent<Components._3D.SphereCollider>();
-                        sphereCollider.Deserialize(data, ref i);
+                        var sphereCollider = gameObject.AddComponent<SphereCollider>();
+                        sphereCollider.center = new Vector3(BitConverter.ToSingle(data, i), BitConverter.ToSingle(data, i + sizeof(float)), BitConverter.ToSingle(data, i + sizeof(float) * 2));
+                        i += sizeof(float) * 3;
+                        sphereCollider.radius = BitConverter.ToSingle(data, i);
+                        i += sizeof(float);
                         break;
 
                     case CurrentProtocol.ComponentId.RIGIDBODY_3D:
@@ -204,14 +211,20 @@ namespace Flakkari4Unity.ECS
 
                     case CurrentProtocol.ComponentId.BOXCOLLIDER:
                         i++;
-                        var boxCollider = gameObject.GetComponent<Components._3D.BoxCollider>();
-                        boxCollider.Deserialize(data, ref i);
+                        var boxCollider = gameObject.GetComponent<BoxCollider>();
+                        boxCollider.center = new Vector3(BitConverter.ToSingle(data, i), BitConverter.ToSingle(data, i + sizeof(float)), BitConverter.ToSingle(data, i + sizeof(float) * 2));
+                        i += sizeof(float) * 3;
+                        boxCollider.size = new Vector3(BitConverter.ToSingle(data, i), BitConverter.ToSingle(data, i + sizeof(float)), BitConverter.ToSingle(data, i + sizeof(float) * 2));
+                        i += sizeof(float) * 3;
                         break;
 
                     case CurrentProtocol.ComponentId.SPHERECOLLIDER:
                         i++;
-                        var sphereCollider = gameObject.GetComponent<Components._3D.SphereCollider>();
-                        sphereCollider.Deserialize(data, ref i);
+                        var sphereCollider = gameObject.GetComponent<SphereCollider>();
+                        sphereCollider.center = new Vector3(BitConverter.ToSingle(data, i), BitConverter.ToSingle(data, i + sizeof(float)), BitConverter.ToSingle(data, i + sizeof(float) * 2));
+                        i += sizeof(float) * 3;
+                        sphereCollider.radius = BitConverter.ToSingle(data, i);
+                        i += sizeof(float);
                         break;
 
                     case CurrentProtocol.ComponentId.RIGIDBODY_3D:

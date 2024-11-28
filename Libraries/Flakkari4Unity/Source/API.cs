@@ -24,19 +24,35 @@ namespace Flakkari4Unity.API
             );
         }
 
-        public static void ResConnect(byte[] payload, ref Synchronizer synchronizer, out ulong entityId)
+        /// <summary>
+        /// Processes the RES_CONNECT message and extracts the entity ID and template name.
+        /// </summary>
+        /// <param name="payload">The byte array containing the payload of the RES_CONNECT message.</param>
+        /// <param name="entityId">The extracted entity ID from the payload.</param>
+        /// <param name="templateName">The extracted template name from the payload.</param>
+        /// <returns>The remaining payload after extracting the entity ID and template name.</returns>
+        public static byte[] ResConnect(byte[] payload, out ulong entityId, out string templateName)
         {
             entityId = BitConverter.ToUInt64(payload, 0);
             int index = sizeof(ulong);
 
-            ulong length = BitConverter.ToUInt64(payload, index);
-            index += sizeof(ulong);
-            string templateName = System.Text.Encoding.UTF8.GetString(payload, index, (int)length);
+            uint length = BitConverter.ToUInt32(payload, index);
+            index += sizeof(uint);
+            templateName = System.Text.Encoding.UTF8.GetString(payload, index, (int)length);
             index += (int)length;
+            return payload.Skip(index).ToArray();
+        }
 
-            GameObject player = Instantiate(Resources.Load<GameObject>(templateName));
-            player.name = templateName + "_" + entityId;
-            synchronizer.AddEntity(entityId, player.GetComponent<ECS.Entity>(), payload.Skip(index).ToArray());
+        /// <summary>
+        /// Creates a REQ_DISCONNECT message to disconnect from the server.
+        /// </summary>
+        /// <returns>A byte array representing the serialized REQ_DISCONNECT message.</returns>
+        public static byte[] ReqDisconnect()
+        {
+            return CurrentProtocol.Packet.Serialize(
+                CurrentProtocol.Priority.HIGH,
+                CurrentProtocol.CommandId.REQ_DISCONNECT
+            );
         }
 
         /// <summary>
@@ -54,19 +70,28 @@ namespace Flakkari4Unity.API
             );
         }
 
-        public static void ReqEntitySpawn(byte[] payload, ref Synchronizer synchronizer)
+        /// <summary>
+        /// Creates a REQ_DISCONNECT message to disconnect from the server.
+        /// </summary>
+        /// <returns>A byte array representing the serialized REQ_DISCONNECT message.</returns>
+        public static byte[] ReqDisconnect()
         {
-            ulong entityId = BitConverter.ToUInt64(payload, 0);
+            return CurrentProtocol.Packet.Serialize(
+                CurrentProtocol.Priority.HIGH,
+                CurrentProtocol.CommandId.REQ_DISCONNECT
+            );
+        }
+
+        public static byte[] ReqEntitySpawn(byte[] payload, out ulong entityId, out string templateName)
+        {
+            entityId = BitConverter.ToUInt64(payload, 0);
             int index = sizeof(ulong);
 
-            ulong length = BitConverter.ToUInt64(payload, index);
-            index += sizeof(ulong);
-            string templateName = System.Text.Encoding.UTF8.GetString(payload, index, (int)length);
+            uint length = BitConverter.ToUInt32(payload, index);
+            index += sizeof(uint);
+            templateName = System.Text.Encoding.UTF8.GetString(payload, index, (int)length);
             index += (int)length;
-
-            GameObject entity = Instantiate(Resources.Load<GameObject>(templateName));
-            entity.name = templateName + "_" + entityId;
-            synchronizer.AddEntity(entityId, entity.GetComponent<ECS.Entity>(), payload.Skip(index).ToArray());
+            return payload.Skip(index).ToArray();
         }
 
         public static void ReqEntityUpdate(byte[] payload, ref Synchronizer synchronizer)
@@ -122,21 +147,6 @@ namespace Flakkari4Unity.API
                 CurrentProtocol.Priority.HIGH,
                 CurrentProtocol.CommandId.REQ_USER_UPDATES,
                 payload
-            );
-        }
-
-        public static byte[] ReqUserUpdate(CurrentProtocol.EventId id, CurrentProtocol.EventState state)
-        {
-            CurrentProtocol.Event _event = new()
-            {
-                id = id,
-                state = state
-            };
-
-            return CurrentProtocol.Packet.Serialize(
-                CurrentProtocol.Priority.HIGH,
-                CurrentProtocol.CommandId.REQ_USER_UPDATE,
-                CurrentProtocol.Event.Serialize(_event)
             );
         }
 
