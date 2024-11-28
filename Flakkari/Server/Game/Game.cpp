@@ -48,7 +48,7 @@ void Game::loadSystems(Engine::ECS::Registry &registry, const std::string &scene
         registry.add_system(
             [this](Engine::ECS::Registry &r) { Engine::ECS::Systems::_3D::apply_movable(r, _deltaTime); });
 
-    if (sysName == "spawn_enemy")
+    else if (sysName == "spawn_enemy")
         registry.add_system([this, sceneName](Engine::ECS::Registry &r) {
             std::string templateName;
             Engine::ECS::Entity entity;
