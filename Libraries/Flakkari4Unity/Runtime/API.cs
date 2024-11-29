@@ -64,21 +64,10 @@ namespace Flakkari4Unity.API
         /// </remarks>
         public static byte[] ReqKeepAlive()
         {
+            // Debug.Log("REQ_HEARTBEAT message sent to the server.");
             return CurrentProtocol.Packet.Serialize(
                 CurrentProtocol.Priority.LOW,
                 CurrentProtocol.CommandId.REQ_HEARTBEAT
-            );
-        }
-
-        /// <summary>
-        /// Creates a REQ_DISCONNECT message to disconnect from the server.
-        /// </summary>
-        /// <returns>A byte array representing the serialized REQ_DISCONNECT message.</returns>
-        public static byte[] ReqDisconnect()
-        {
-            return CurrentProtocol.Packet.Serialize(
-                CurrentProtocol.Priority.HIGH,
-                CurrentProtocol.CommandId.REQ_DISCONNECT
             );
         }
 
