@@ -9,7 +9,7 @@ var classFlakkari_1_1ClientManager =
     [ "getClient", "d5/da5/classFlakkari_1_1ClientManager.html#ad759b860b67fd213cfe0205202ed38c7", null ],
     [ "isBanned", "d5/da5/classFlakkari_1_1ClientManager.html#a5d7bf49567aaf1c2c5ffb3f1a8779866", null ],
     [ "operator[]", "d5/da5/classFlakkari_1_1ClientManager.html#a80847b54307f6cf7ec64f8f493b5ed9c", null ],
-    [ "receivePacketFromClient", "d5/da5/classFlakkari_1_1ClientManager.html#af06fee7a25e3bef6f7bf7dcf34ecb944", null ],
+    [ "receivePacketFromClient", "d5/da5/classFlakkari_1_1ClientManager.html#af76b97015c7f14ada28d68086de2dae5", null ],
     [ "removeClient", "d5/da5/classFlakkari_1_1ClientManager.html#ae2b5d566645a617a7826112ddb1f2052", null ],
     [ "sendPacketToAllClients", "d5/da5/classFlakkari_1_1ClientManager.html#ad78ea9290521ff53e1c81decffef6698", null ],
     [ "sendPacketToAllClientsExcept", "d5/da5/classFlakkari_1_1ClientManager.html#a67424e87853a0717ecc718802a3dfaad", null ],
