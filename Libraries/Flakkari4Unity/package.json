@@ -1,0 +1,11 @@
+{
+    "name": "com.master-laplace.flakkari4unity",
+    "version": "1.0.0",
+    "displayName": "Flakkari Protocol for Unity",
+    "description": "A protocol library for communicating with the Flakkari server in Unity.",
+    "unity": "2022.3",
+    "dependencies": {},
+    "author": {
+        "name": "Master Laplace"
+    }
+}

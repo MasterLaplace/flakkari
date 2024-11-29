@@ -326,7 +326,7 @@ template <typename Type> struct Vector {
      */
     void rotate(const Vector<Type> &axis, float angleDegrees)
     {
-        double _pi = 3.14159265358979323846;
+        const double _pi = 3.14159265358979323846;
         double angleRadians = (angleDegrees * _pi / 180) / 2.0;
         double sinHalfAngle = sin(angleRadians);
         auto normalizedAxis = axis.normalized();

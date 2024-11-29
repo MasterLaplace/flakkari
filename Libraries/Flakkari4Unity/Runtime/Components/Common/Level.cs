@@ -14,8 +14,8 @@ namespace Flakkari4Unity.ECS.Components.Common
         {
             level = BitConverter.ToUInt64(data, i);
             i += sizeof(ulong);
-            ulong length = BitConverter.ToUInt64(data, i);
-            i += sizeof(ulong);
+            uint length = BitConverter.ToUInt32(data, i);
+            i += sizeof(uint);
             currentWeapon = System.Text.Encoding.UTF8.GetString(data, i, (int)length);
             i += (int)length;
             currentExp = BitConverter.ToUInt64(data, i);
