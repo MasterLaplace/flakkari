@@ -53,10 +53,12 @@ private:
 
     static constexpr const char *HELP_MESSAGE =
         "Usage: ./r-type_server <gameDir> <ip> <port>\n"
-        "  <gameDir>  The directory of the games folder\n"
-        "  <ip>       The ip to bind the server to (default: localhost)\n"
-        "  <port>     The port to bind the server to (default: 8081)\n"
-        "  -h|--help  Display this help message\n\n"
+        "  <gameDir>        The directory of the games folder\n"
+        "  <ip>             The ip to bind the server to (default: localhost)\n"
+        "  <port>           The port to bind the server to (default: 8081)\n"
+        "  -d|--default     Use default values (Games, localhost, 8081)\n"
+        "  -v|--version     Display the version of the Flakkari Library\n"
+        "  -h|--help        Display this help message\n\n"
         "Example: ./r-type_server Games localhost 8081\n\n"
         "More information at https://github.com/MasterLaplace/Falkkari\n"
         "Flakkari Library v" FLAKKARI_VERSION_STRING " - © 2024 MasterLaplace\n";

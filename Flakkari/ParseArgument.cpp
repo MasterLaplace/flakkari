@@ -37,6 +37,16 @@ ParseArgument::ParseArgument(int ac, const char *av[])
             _port = static_cast<unsigned short>(std::stoi(av[i + 1]));
             ++i;
         }
+        else if (std::string(av[i]) == "-h" || std::string(av[i]) == "--help")
+        {
+            std::cout << HELP_MESSAGE << std::endl;
+            exit(0);
+        }
+        else if (std::string(av[i]) == "-v" || std::string(av[i]) == "--version")
+        {
+            std::cout << "Flakkari Library v" FLAKKARI_VERSION_STRING " - © 2024 MasterLaplace" << std::endl;
+            exit(0);
+        }
     }
 
     if (_ip.empty())
