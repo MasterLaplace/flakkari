@@ -57,6 +57,8 @@
 
 Flakkari is a UDP/TCP server initially developed for the R-Type Epitech project and updated for the Video Games course at University Laval. It enables network-based gameplay, supporting multiple games and clients simultaneously through its multi-threaded architecture. The server is designed to handle high concurrency and ensure low latency, making it suitable for real-time multiplayer games. Flakkari also includes features such as game state synchronization, player authentication, and robust error handling to provide a seamless gaming experience.
 
+Flakkari also has a [Unity client](Libraries/Flakkari4Unity/README.md) library to facilitate the development of multiplayer games. This library is available in C# and can be used to connect to the Flakkari server, send and receive messages and manage game events. It is designed to be easy to integrate into existing game projects and provides advanced features to simplify the development of multiplayer games.
+
 > [!NOTE]
 > The project is still under development and may not be stable.
 
@@ -83,6 +85,26 @@ $> cd build
 # Run the server executable
 (build)$> ./flakkari <GamesDir> <ip> <port>
 ```
+
+To run the server with
+- the games directory: `./Games` that contains the games configurations
+
+- the IP address: `localhost`
+
+- the port: `8081`
+
+expected architecture of the games list directory:
+
+```shell
+Games
+├── Game_01
+│   ├── assets
+│   └── config.cfg
+└── Game_02
+    └── config.cfg
+```
+
+#### :hammer: **BUILD COMMANDS**
 
 other build commands:
 ```shell
@@ -152,7 +174,7 @@ For detailed documentation on the Flakkari protocol, see:
 
 ## :rocket: LATEST RELEASE
 
-> :clipboard: [Change Log](CHANGELOG.md).
+> :clipboard: [Change Log](CHANGELOG.md) and [Security Policy](SECURITY.md)
 
 - [![Latest Release](https://img.shields.io/github/v/release/MasterLaplace/Flakkari.svg?label=version)](https://github.com/MasterLaplace/Flakkari/releases/latest/)
 
