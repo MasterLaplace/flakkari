@@ -46,6 +46,24 @@ public:
      */
     ~ParseArgument() = default;
 
+    /**
+     * @brief Gets the game directory.
+     * @return A constant reference to the game directory string.
+     */
+    const std::string &getGameDir() const;
+
+    /**
+     * @brief Gets the IP address.
+     * @return A constant reference to the IP address string.
+     */
+    const std::string &getIp() const;
+
+    /**
+     * @brief Gets the port number.
+     * @return The port number as an unsigned short.
+     */
+    unsigned short getPort() const;
+
 private:
     std::string _gameDir;     ///< The game directory.
     std::string _ip;          ///< The IP address, default is "localhost".

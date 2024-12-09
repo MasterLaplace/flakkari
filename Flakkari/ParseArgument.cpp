@@ -35,6 +35,8 @@ ParseArgument::ParseArgument(int ac, const char *av[])
         else if (std::string(av[i]) == "-port")
         {
             _port = static_cast<unsigned short>(std::stoi(av[i + 1]));
+            if (_port < 1024 || _port > 65535)
+                throw std::runtime_error("Invalid port number, must be between 1024 and 65535");
             ++i;
         }
         else if (std::string(av[i]) == "-h" || std::string(av[i]) == "--help")

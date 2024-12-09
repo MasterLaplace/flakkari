@@ -9,11 +9,11 @@
 
 int main(int ac, const char *av[])
 {
-    if (ac != 4)
-        return FLAKKARI_LOG_ERROR("Usage: ./r-type_server <gameDir> <ip> <port>"), 84;
     try
     {
-        Flakkari::UDPServer server(av[1], av[2], static_cast<unsigned short>(std::stoi(av[3])));
+        Flakkari::ParseArgument parseArg(ac, av);
+
+        Flakkari::UDPServer server(parseArg.getGameDir(), parseArg.getIp(), parseArg.getPort());
         server.run();
     }
     catch (const std::exception &e)
