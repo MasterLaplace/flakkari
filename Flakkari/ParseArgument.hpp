@@ -15,9 +15,9 @@
  **************************************************************************/
 
 #ifndef ARGUMENTS_HPP_
-#    define ARGUMENTS_HPP_
+#define ARGUMENTS_HPP_
 
-#    include "Server/UDPServer.hpp"
+#include "Server/UDPServer.hpp"
 
 /**
  * @namespace Flakkari
@@ -47,9 +47,9 @@ public:
     ~ParseArgument() = default;
 
 private:
-    std::string _gameDir;          ///< The game directory.
-    std::string _ip; ///< The IP address, default is "localhost".
-    unsigned short _port = 0;   ///< The port number, default is 8081.
+    std::string _gameDir;     ///< The game directory.
+    std::string _ip;          ///< The IP address, default is "localhost".
+    unsigned short _port = 0; ///< The port number, default is 8081.
 
     static constexpr const char *HELP_MESSAGE =
         "Usage: ./r-type_server <gameDir> <ip> <port>\n"
