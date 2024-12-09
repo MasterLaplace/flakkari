@@ -51,11 +51,29 @@ ParseArgument::ParseArgument(int ac, const char *av[])
         }
     }
 
-    if (_ip.empty())
+    if (_gameDir.empty())
+        GetGameDirEnv();
+
         _ip = "localhost";
 
     if (_port == 0)
         _port = 8081;
+}
+
+const std::string &ParseArgument::getGameDir() const { return _gameDir; }
+
+const std::string &ParseArgument::getIp() const { return _ip; }
+
+unsigned short ParseArgument::getPort() const { return _port; }
+
+void ParseArgument::GetGameDirEnv()
+{
+    const char *dir = std::getenv("FLAKKARI_GAME_DIR");
+
+    if (dir)
+        _gameDir = dir;
+    else
+        throw std::runtime_error("FLAKKARI_GAME_DIR not set");
 }
 
 } /* namespace Flakkari */

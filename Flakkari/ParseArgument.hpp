@@ -65,6 +65,12 @@ public:
     unsigned short getPort() const;
 
 private:
+    /**
+     * @brief Retrieves the game directory from the environment.
+     */
+    void GetGameDirEnv();
+
+private:
     std::string _gameDir;     ///< The game directory.
     std::string _ip;          ///< The IP address, default is "localhost".
     unsigned short _port = 0; ///< The port number, default is 8081.
