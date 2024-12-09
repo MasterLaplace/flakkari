@@ -54,6 +54,7 @@ ParseArgument::ParseArgument(int ac, const char *av[])
     if (_gameDir.empty())
         GetGameDirEnv();
 
+    if (_ip.empty())
         _ip = "localhost";
 
     if (_port == 0)
