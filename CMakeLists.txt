@@ -6,6 +6,7 @@ project(Flakkari-Server VERSION 0.5.0 LANGUAGES CXX)
 # Add all your source and headers files:
 set(SOURCES
     Flakkari/core.cpp
+    Flakkari/ParseArgument.cpp
 
     Flakkari/Logger/Logger.cpp
 
@@ -33,6 +34,8 @@ set(SOURCES
 )
 
 set(HEADERS
+    Flakkari/ParseArgument.hpp
+
     Flakkari/Logger/Logger.hpp
 
     Flakkari/Network/Network.hpp
