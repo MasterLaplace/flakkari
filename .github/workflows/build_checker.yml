@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          choco install cmake -y
+          choco install cmake --version=3.31.1 -y
 
       - name: Configure and Build
         run: |
