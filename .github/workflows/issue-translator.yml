@@ -1,0 +1,15 @@
+name: Issue translator
+on:
+  issue_comment:
+    types: [created]
+  issues:
+    types: [opened]
+
+jobs:
+  translate_issue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: usthe/issues-translate-action@v2.7
+        with:
+          IS_MODIFY_TITLE: true
+          CUSTOM_BOT_NOTE: Bot detected the issue body's language is not English, translate it automatically.
