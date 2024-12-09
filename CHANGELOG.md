@@ -15,7 +15,26 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ### Removed
 
 
+## [0.5.0] - 2024-11-29
+
+### Added
+
+- Implement 3d components - by @MasterLaplace in [#49](https://github.com/MasterLaplace/Flakkari/pull/49)
+- Implement flakkari protocol v1 - by @MasterLaplace in [#52](https://github.com/MasterLaplace/Flakkari/pull/52)
+- Implement unity library - by @MasterLaplace in [#54](https://github.com/MasterLaplace/Flakkari/pull/54)
+- Handle Camera's direction and Disconnect Request - by @MasterLaplace in [#56](https://github.com/MasterLaplace/Flakkari/pull/56)
+
+### Fixed
+
+- Build package and handle event - by @MasterLaplace in [#50](https://github.com/MasterLaplace/Flakkari/pull/50)
+
+### Changed
+
+- Update Flakkari4Unity Library to synchronize correctly with Protocol v1 - by @MasterLaplace in [#58](https://github.com/MasterLaplace/Flakkari/pull/58)
+
 ## [0.4.0] - 2024-11-08
+
+### Added
 
 - Include Singleton library - by @MasterLaplace in [#39](https://github.com/MasterLaplace/Flakkari/pull/39)
 - Enhance GitHub workflows with build provenance and linter permissions - by @MasterLaplace in ([7026c57](https://github.com/MasterLaplace/Flakkari/commit/7026c5730a5adb2171a7e955a8aa43dfb538f056))
