@@ -19,6 +19,12 @@
 
 #include "Server/UDPServer.hpp"
 
+#if defined(FLAKKARI_SYSTEM_WINDOWS)
+#    include <iphlpapi.h>
+#else
+#    include <ifaddrs.h>
+#endif
+
 /**
  * @namespace Flakkari
  * The Flakkari namespace contains classes and functions related to the Flakkari project.
@@ -65,6 +71,18 @@ public:
     unsigned short getPort() const;
 
 private:
+    /**
+     * @brief Retrieves IPv4 addresses.
+     * @return True if successful, false otherwise.
+     */
+    bool GetIPv4Addresses();
+
+    /**
+     * @brief Retrieves IPv6 addresses.
+     * @return True if successful, false otherwise.
+     */
+    bool GetIPv6Addresses();
+
     /**
      * @brief Retrieves the game directory from the environment.
      */
