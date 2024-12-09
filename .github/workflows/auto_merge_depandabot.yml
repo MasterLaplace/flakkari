@@ -1,0 +1,62 @@
+name: Auto Merge Depandabot PRs
+
+on:
+  pull_request:
+    types: [opened, labeled]
+    branches: [master, main]
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+  security-events: write
+  pull-requests: write
+
+jobs:
+  auto_merge_depandabot_pr:
+    name: Auto Merge Depandabot PR
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'dependencies') && contains(github.event.pull_request.labels.*.name, 'github-actions') }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract Badge URL
+        id: extract_url
+        run: |
+          pr_body="${{ github.event.pull_request.body }}"
+          badge_url=$(echo "$pr_body" | grep -oP '(?<=\[!\[Dependabot compatibility score]\().+?(?=\))')
+          echo "badge_url=$badge_url" >> $GITHUB_ENV
+
+      - name: Download and Parse SVG
+        id: parse_svg
+        run: |
+          echo "Downloading SVG from: ${{ env.badge_url }}"
+          svg_content=$(curl -s "${{ env.badge_url }}")
+          compatibility_score=$(echo "$svg_content" | grep -oP '(?<=<title>compatibility: )\d+(?=%</title>)')
+          echo "compatibility_score=$compatibility_score" >> $GITHUB_ENV
+
+      - name: Validate Compatibility Score
+        id: validate_score
+        run: |
+          if [[ "${{ env.compatibility_score }}" -ge 70 ]]; then
+            echo "Score is sufficient: ${{ env.compatibility_score }}%"
+            echo "should_merge=true" >> $GITHUB_ENV
+          else
+            echo "Score is too low: ${{ env.compatibility_score }}%"
+            echo "should_merge=false" >> $GITHUB_ENV
+          fi
+
+      - name: Attest Build Provenance
+        if: ${{ env.should_merge == 'true' }}
+        uses: actions/attest-build-provenance@v1.4.4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          subject-name: "Auto Merge Depandabot PR"
+          subject-path: ".github/workflows/auto_merge_depandabot.yml"
+
+      - name: Merge PR
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ github.event.pull_request.number }}
+          merge-method: squash
