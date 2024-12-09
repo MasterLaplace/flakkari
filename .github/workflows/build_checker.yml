@@ -1,10 +1,17 @@
-name: Build Checker Windows
+name: Build Checker CI
 
 on:
   push:
     branches-ignore:
      - 'ga-ignore-**'
      - 'gh-pages'
+    paths:
+      - '**.cpp'
+      - '**.hpp'
+      - '**.c'
+      - '**.h'
+      - '**.in'
+      - '**.txt'
 
 jobs:
   build_checker_windows:
