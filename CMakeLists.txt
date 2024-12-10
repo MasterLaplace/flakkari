@@ -177,6 +177,10 @@ target_include_directories(flakkari PRIVATE ${singleton_SOURCE_DIR})
 # Link Libraries:
 target_link_libraries(flakkari PRIVATE nlohmann_json::nlohmann_json)
 
+if (WIN32)
+    target_link_libraries(flakkari PRIVATE Iphlpapi)
+endif()
+
 # Documentation: sudo apt-get install graphviz
 find_package(Doxygen)
 if (DOXYGEN_FOUND)

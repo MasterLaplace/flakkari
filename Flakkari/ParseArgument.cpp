@@ -35,7 +35,7 @@ ParseArgument::ParseArgument(int ac, const char *av[])
         else if (std::string(av[i]) == "-port")
         {
             _port = static_cast<unsigned short>(std::stoi(av[i + 1]));
-            if (_port < 1024 || _port > 65535)
+            if (_port < 1024 || (uint32_t)_port > 65535)
                 throw std::runtime_error("Invalid port number, must be between 1024 and 65535");
             ++i;
         }
@@ -90,7 +90,7 @@ bool ParseArgument::GetIPv4Addresses()
     {
         free(pAdapterAddresses);
         WSACleanup();
-        throw std::runtime_error("GetAdaptersAddresses failed with error: " + std::to_string(dwRetVal));
+        return FLAKKARI_LOG_ERROR("GetAdaptersAddresses failed with error: " + std::to_string(dwRetVal)), false;
     }
 
     IP_ADAPTER_ADDRESSES *pAdapter = pAdapterAddresses;
@@ -107,8 +107,8 @@ bool ParseArgument::GetIPv4Addresses()
 
             char ipStr[INET_ADDRSTRLEN];
             inet_ntop(AF_INET, &(sa_in->sin_addr), ipStr, INET_ADDRSTRLEN);
-            FLAKKARI_LOG_INFO("Adresse IPv4 de l'interface " + std::string(pAdapter->AdapterName) + ": " + ipStr);
             _ip = ipStr;
+            FLAKKARI_LOG_INFO("Adresse IPv4 de l'interface " + std::string(pAdapter->AdapterName) + ": " + _ip);
         }
         pAdapter = pAdapter->Next;
     }
@@ -120,7 +120,7 @@ bool ParseArgument::GetIPv4Addresses()
     struct ifaddrs *ifa = nullptr;
 
     if (getifaddrs(&ifAddrStruct) == -1)
-        throw std::runtime_error("getifaddrs failed!");
+        return FLAKKARI_LOG_ERROR("getifaddrs failed!"), false;
 
     for (ifa = ifAddrStruct; ifa != nullptr; ifa = ifa->ifa_next)
     {
@@ -132,11 +132,15 @@ bool ParseArgument::GetIPv4Addresses()
         inet_ntop(AF_INET, tmpAddrPtr, addressBuffer, INET_ADDRSTRLEN);
 
         if (strcmp(addressBuffer, "127.0.0.1") != 0)
-            FLAKKARI_LOG_INFO("Interface " + ifa->ifa_name + " a l'adresse IPv4 : " + addressBuffer);
+        {
+            _ip = addressBuffer;
+            FLAKKARI_LOG_INFO("Interface " + std::string(ifa->ifa_name) + " a l'adresse IPv4 : " + _ip);
+        }
     }
 
     freeifaddrs(ifAddrStruct);
 #endif
+    return true;
 }
 
 bool ParseArgument::GetIPv6Addresses()
@@ -162,7 +166,7 @@ bool ParseArgument::GetIPv6Addresses()
     {
         free(pAdapterAddresses);
         WSACleanup();
-        throw std::runtime_error("GetAdaptersAddresses failed with error: " + std::to_string(dwRetVal));
+        return FLAKKARI_LOG_ERROR("GetAdaptersAddresses failed with error: " + std::to_string(dwRetVal)), false;
     }
 
     IP_ADAPTER_ADDRESSES *pAdapter = pAdapterAddresses;
@@ -181,8 +185,8 @@ bool ParseArgument::GetIPv6Addresses()
             inet_ntop(AF_INET6, &(sa_in6->sin6_addr), ipStr, INET6_ADDRSTRLEN);
             if (strcmp(ipStr, "::1") != 0)
             {
-                FLAKKARI_LOG_INFO("IPv6 address of interface " + std::string(pAdapter->AdapterName) + ": " + ipStr);
                 _ip = ipStr;
+                FLAKKARI_LOG_INFO("IPv6 address of interface " + std::string(pAdapter->AdapterName) + ": " + _ip);
             }
         }
         pAdapter = pAdapter->Next;
@@ -195,7 +199,7 @@ bool ParseArgument::GetIPv6Addresses()
     struct ifaddrs *ifa = nullptr;
 
     if (getifaddrs(&ifAddrStruct) == -1)
-        throw std::runtime_error("getifaddrs failed!");
+        return FLAKKARI_LOG_ERROR("getifaddrs failed!"), false;
 
     for (ifa = ifAddrStruct; ifa != nullptr; ifa = ifa->ifa_next)
     {
@@ -207,19 +211,33 @@ bool ParseArgument::GetIPv6Addresses()
         inet_ntop(AF_INET6, tmpAddrPtr, addressBuffer, INET6_ADDRSTRLEN);
 
         if (strcmp(addressBuffer, "::1") != 0)
-            FLAKKARI_LOG_INFO("Interface " + ifa->ifa_name + " a l'adresse IPv6 : " + addressBuffer);
+        {
+            _ip = addressBuffer;
+            FLAKKARI_LOG_INFO("Interface " + std::cout(ifa->ifa_name) + " a l'adresse IPv6 : " + _ip);
+        }
     }
 
     freeifaddrs(ifAddrStruct);
 #endif
+    return true;
 }
 
 void ParseArgument::GetGameDirEnv()
 {
+#if defined(FLAKKARI_SYSTEM_WINDOWS)
+    char *dir = nullptr;
+    size_t len = 0;
+    if (_dupenv_s(&dir, &len, "FLAKKARI_GAME_DIR") == 0 && dir != nullptr)
+    {
+        _gameDir = dir;
+        free(dir);
+    }
+#else
     const char *dir = std::getenv("FLAKKARI_GAME_DIR");
 
     if (dir)
         _gameDir = dir;
+#endif
     else
         throw std::runtime_error("FLAKKARI_GAME_DIR not set");
 }
