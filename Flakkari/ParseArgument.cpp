@@ -35,7 +35,7 @@ ParseArgument::ParseArgument(int ac, const char *av[])
         else if (std::string(av[i]) == "-port")
         {
             _port = static_cast<unsigned short>(std::stoi(av[i + 1]));
-            if (_port < 1024 || (uint32_t)_port > 65535)
+            if (_port < 1024)
                 throw std::runtime_error("Invalid port number, must be between 1024 and 65535");
             ++i;
         }
@@ -213,7 +213,7 @@ bool ParseArgument::GetIPv6Addresses()
         if (strcmp(addressBuffer, "::1") != 0)
         {
             _ip = addressBuffer;
-            FLAKKARI_LOG_INFO("Interface " + std::cout(ifa->ifa_name) + " a l'adresse IPv6 : " + _ip);
+            FLAKKARI_LOG_INFO("Interface " + std::string(ifa->ifa_name) + " a l'adresse IPv6 : " + _ip);
         }
     }
 
