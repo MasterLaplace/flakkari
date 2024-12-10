@@ -16,6 +16,13 @@
 <link href="../../search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../search/searchdata.js"></script>
 <script type="text/javascript" src="../../search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="../../doxygen.css" rel="stylesheet" type="text/css" />
 <link href="../../doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 <link href="../../doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
@@ -29,7 +36,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../Flakkari-200x200.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Flakkari
-   &#160;<span id="projectnumber">0.4.0</span>
+   &#160;<span id="projectnumber">0.5.0</span>
    </div>
    <div id="projectbrief">Flakkari made in C++ for EPITECH project.</div>
   </td>
@@ -94,14 +101,18 @@ $(document).ready(function(){initNavTree('d5/da5/classFlakkari_1_1ClientManager.
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="../../d8/dff/ClientManager_8hpp_source.html">ClientManager.hpp</a>&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for Flakkari::ClientManager:</div>
-<div class="dyncontent">
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="../../closed.png" alt="+"/> Inheritance diagram for Flakkari::ClientManager:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d8/d6c/classFlakkari_1_1ClientManager__inherit__graph.png" border="0" usemap="#aFlakkari_1_1ClientManager_inherit__map" alt="Inheritance graph"/></div>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
-<div class="dynheader">
-Collaboration diagram for Flakkari::ClientManager:</div>
-<div class="dyncontent">
+<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="../../closed.png" alt="+"/> Collaboration diagram for Flakkari::ClientManager:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d9/d6f/classFlakkari_1_1ClientManager__coll__graph.png" border="0" usemap="#aFlakkari_1_1ClientManager_coll__map" alt="Collaboration graph"/></div>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -250,9 +261,11 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>std::optional&lt;std::pair&lt;std::string, std::shared_ptr&lt;Client&gt;&gt; The client's name and the client object </dd></dl>
 <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../de/d22/Flakkari_2Server_2Client_2ClientManager_8cpp-example.html#a0">Flakkari/Server/Client/ClientManager.cpp</a>.</dd>
 </dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
+<div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d5/da5/classFlakkari_1_1ClientManager_adb7842df0768fcab21fb46b1b2a60b75_cgraph.png" border="0" usemap="#ad5/da5/classFlakkari_1_1ClientManager_adb7842df0768fcab21fb46b1b2a60b75_cgraph" alt=""/></div>
 </div>
 
@@ -389,9 +402,11 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>true If the client is banned </dd>
 <dd>
 false If the client is not banned </dd></dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
+<div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="../../closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d5/da5/classFlakkari_1_1ClientManager_a5d7bf49567aaf1c2c5ffb3f1a8779866_icgraph.png" border="0" usemap="#ad5/da5/classFlakkari_1_1ClientManager_a5d7bf49567aaf1c2c5ffb3f1a8779866_icgraph" alt=""/></div>
 </div>
 
@@ -459,9 +474,11 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::optional&lt;std::pair&lt;const std::string &amp;, std::shared_ptr&lt;Client&gt;&gt; A pair of the client's game name and the client object </dd></dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
+<div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="../../closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="../../d5/da5/classFlakkari_1_1ClientManager_af76b97015c7f14ada28d68086de2dae5_cgraph.png" border="0" usemap="#ad5/da5/classFlakkari_1_1ClientManager_af76b97015c7f14ada28d68086de2dae5_cgraph" alt=""/></div>
 </div>
 

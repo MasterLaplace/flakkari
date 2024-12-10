@@ -16,6 +16,13 @@
 <link href="../../search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../search/searchdata.js"></script>
 <script type="text/javascript" src="../../search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="../../doxygen.css" rel="stylesheet" type="text/css" />
 <link href="../../doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 <link href="../../doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
@@ -29,7 +36,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../Flakkari-200x200.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Flakkari
-   &#160;<span id="projectnumber">0.4.0</span>
+   &#160;<span id="projectnumber">0.5.0</span>
    </div>
    <div id="projectbrief">Flakkari made in C++ for EPITECH project.</div>
   </td>
@@ -111,6 +118,7 @@ $(document).ready(function(){initNavTree('d0/d30/md_README.html','../../'); init
 <h2><a class="anchor" id="autotoc_md2"></a>
 :pencil: &lt;strong&gt;DESCRIPTION&lt;/strong&gt;</h2>
 <p><a class="el" href="../../d2/da2/namespaceFlakkari.html">Flakkari</a> is a UDP/TCP server initially developed for the R-Type Epitech project and updated for the Video Games course at University Laval. It enables network-based gameplay, supporting multiple games and clients simultaneously through its multi-threaded architecture. The server is designed to handle high concurrency and ensure low latency, making it suitable for real-time multiplayer games. <a class="el" href="../../d2/da2/namespaceFlakkari.html">Flakkari</a> also includes features such as game state synchronization, player authentication, and robust error handling to provide a seamless gaming experience.</p>
+<p><a class="el" href="../../d2/da2/namespaceFlakkari.html">Flakkari</a> also has a Unity client library to facilitate the development of multiplayer games. This library is available in C# and can be used to connect to the <a class="el" href="../../d2/da2/namespaceFlakkari.html">Flakkari</a> server, send and receive messages and manage game events. It is designed to be easy to integrate into existing game projects and provides advanced features to simplify the development of multiplayer games.</p>
 <blockquote class="doxtable">
 <p>[!NOTE] The project is still under development and may not be stable. </p>
 </blockquote>
@@ -132,7 +140,21 @@ $(document).ready(function(){initNavTree('d0/d30/md_README.html','../../'); init
 <div class="line"> </div>
 <div class="line"># Run the server executable</div>
 <div class="line">(build)$&gt; ./flakkari &lt;GamesDir&gt; &lt;ip&gt; &lt;port&gt;</div>
-</div><!-- fragment --><p>other build commands: </p><div class="fragment"><div class="line"># Install the project</div>
+</div><!-- fragment --><p>To run the server with</p><ul>
+<li>the games directory: <code>./Games</code> that contains the games configurations</li>
+<li>the IP address: <code>localhost</code></li>
+<li>the port: <code>8081</code></li>
+</ul>
+<p>expected architecture of the games list directory:</p>
+<div class="fragment"><div class="line">Games</div>
+<div class="line">├── Game_01</div>
+<div class="line">│   ├── assets</div>
+<div class="line">│   └── config.cfg</div>
+<div class="line">└── Game_02</div>
+<div class="line">    └── config.cfg</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md4"></a>
+:hammer: &lt;strong&gt;BUILD COMMANDS&lt;/strong&gt;</h3>
+<p>other build commands: </p><div class="fragment"><div class="line"># Install the project</div>
 <div class="line">(build)$&gt; sudo cmake --build . --target install</div>
 <div class="line"> </div>
 <div class="line"># Build project documentation</div>
@@ -153,7 +175,7 @@ $(document).ready(function(){initNavTree('d0/d30/md_README.html','../../'); init
 <div class="line"> </div>
 <div class="line"># For debian based systems</div>
 <div class="line">(build)$&gt; sudo dpkg -i flakkari-linux.deb</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
 :whale: &lt;strong&gt;DOCKER RUN&lt;/strong&gt;</h2>
 <div class="fragment"><div class="line"># install docker on ubuntu</div>
 <div class="line">$ sudo apt-get update</div>
@@ -177,7 +199,7 @@ $(document).ready(function(){initNavTree('d0/d30/md_README.html','../../'); init
 <div class="line"> </div>
 <div class="line"># remove docker image</div>
 <div class="line">$ docker rm &lt;container-id&gt;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md6"></a>
 :wrench: &lt;strong&gt;DOCUMENTATION&lt;/strong&gt;</h2>
 <p>Wiki:</p><ul>
 <li><a href="https://MasterLaplace.github.io/Flakkari/"><b>Technical Documentation &amp; Wiki</b></a></li>
@@ -185,19 +207,19 @@ $(document).ready(function(){initNavTree('d0/d30/md_README.html','../../'); init
 <p>For detailed documentation on the <a class="el" href="../../d2/da2/namespaceFlakkari.html">Flakkari</a> protocol, see:</p><ul>
 <li><a href="../../docs/RFC.txt"><b>Flakkari Protocol Documentation</b></a></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md6"></a>
+<h1><a class="anchor" id="autotoc_md7"></a>
 :rocket: LATEST RELEASE</h1>
 <blockquote class="doxtable">
-<p>:clipboard: <a class="el" href="../../d4/d40/md_CHANGELOG.html">Change Log</a>. </p>
+<p>:clipboard: <a class="el" href="../../d4/d40/md_CHANGELOG.html">Change Log</a> and Security Policy </p>
 </blockquote>
 <ul>
 <li><a href="https://github.com/MasterLaplace/Flakkari/releases/latest/"><img src="https://img.shields.io/github/v/release/MasterLaplace/Flakkari.svg?label=version" alt="Latest Release" style="pointer-events: none;" class="inline"/></a></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md7"></a>
+<h1><a class="anchor" id="autotoc_md8"></a>
 :scroll: &lt;strong&gt;LICENSE&lt;/strong&gt;</h1>
 <p>This project is licensed under the terms of the <a href="../.././LICENSE">MIT License</a>.</p>
 <p>Copyright © 2023-2024 <a href="https://github.com/MasterLaplace">Master_Laplace</a>.</p>
-<h2><a class="anchor" id="autotoc_md8"></a>
+<h2><a class="anchor" id="autotoc_md9"></a>
 :mailbox_with_mail: &lt;strong&gt;CONTACTS&lt;/strong&gt;</h2>
 <p>This server project has been carried out by:</p>
 <table align="center">
